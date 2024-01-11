@@ -69,6 +69,7 @@ public class PoseEstimator extends SubsystemBase {
     this.rotationSupplier = rotationSupplier;
     this.modulePositionSupplier = modulePositionSupplier;
 
+    //FIXME: Get Rid of this poseEstimator and use in built
     poseEstimator = new SwerveDrivePoseEstimator(
         DrivetrainConstants.KINEMATICS,
         rotationSupplier.get(),
@@ -113,14 +114,17 @@ public class PoseEstimator extends SubsystemBase {
       // the estimated pose
       // needs to be transformed to the new coordinate system.
       var newPose = flipAlliance(getCurrentPose());
+      //FIXME: Get Rid of this poseEstimator and use in built
       poseEstimator.resetPosition(rotationSupplier.get(), modulePositionSupplier.get(), newPose);
     }
   }
 
   @Override
   public void periodic() {
+    //FIXME: Get Rid of this poseEstimator and use in built
     // Update pose estimator with drivetrain sensors
     poseEstimator.update(rotationSupplier.get(), modulePositionSupplier.get());
+
     if (VisionConstants.USE_VISION) {
       estimatorChecker(frontRightEstimator);
       estimatorChecker(frontLeftEstimator);
@@ -132,6 +136,7 @@ public class PoseEstimator extends SubsystemBase {
 
     // estimatorChecker(backEstimator);
 
+    //FIXME: Get Rid of this poseEstimator and use in built
     // Set the pose on the dashboard
     var dashboardPose = poseEstimator.getEstimatedPosition();
     if (originPosition == kRedAllianceWallRightSide) {
@@ -149,6 +154,7 @@ public class PoseEstimator extends SubsystemBase {
         pose.getRotation().getDegrees());
   }
 
+  //FIXME: Get Rid of this poseEstimator and use in built
   public Pose2d getCurrentPose() {
     return poseEstimator.getEstimatedPosition();
   }
@@ -161,6 +167,7 @@ public class PoseEstimator extends SubsystemBase {
    * @param newPose new pose
    */
   public void setCurrentPose(Pose2d newPose) {
+    //FIXME: Get Rid of this poseEstimator and use in built
     poseEstimator.resetPosition(rotationSupplier.get(), modulePositionSupplier.get(), newPose);
   }
 
@@ -228,6 +235,7 @@ public class PoseEstimator extends SubsystemBase {
       if (originPosition == kRedAllianceWallRightSide) {
         pose2d = flipAlliance(pose2d);
       }
+      //FIXME: Get Rid of this poseEstimator and use in built
       poseEstimator.addVisionMeasurement(pose2d, cameraPose.timestampSeconds,
           confidenceCalculator(cameraPose));
     }
