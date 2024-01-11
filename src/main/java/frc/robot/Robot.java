@@ -16,7 +16,8 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.Vision;
+import frc.robot.subsystems.PoseEstimator;
+import frc.robot.subsystems.VisionRunnable;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -28,8 +29,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  public Vision vision;
-  private Thread visionThread;
+  public PoseEstimator poseEstimator;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -40,11 +40,11 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    vision = Vision.getInstance();
+    poseEstimator = new PoseEstimator(null, null);
 
-    visionThread = new Thread(vision);
+    // visionThread = new Thread(vision);
 
-    visionThread.start();
+    // visionThread.start();
   }
 
   /**
@@ -58,13 +58,14 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     // System.out.print(visionThread.isAlive());
-    SmartDashboard.putNumber("Difference X", vision.getCurrentPoseOne().getX() - vision.getCurrentPoseTwo().getX());
-    SmartDashboard.putNumber("X1", vision.getCurrentPoseOne().getX());
-    SmartDashboard.putNumber("y1", vision.getCurrentPoseOne().getY());
-    SmartDashboard.putNumber("z1", vision.getCurrentPoseOne().getZ());
-    SmartDashboard.putNumber("X2", vision.getCurrentPoseTwo().getX());
-    SmartDashboard.putNumber("Difference Y", vision.getCurrentPoseOne().getY() - vision.getCurrentPoseTwo().getY());
-    SmartDashboard.putNumber("Difference Z", vision.getCurrentPoseOne().getZ() - vision.getCurrentPoseTwo().getZ());
+    SmartDashboard.putNumber("X", poseEstimator.getCurrentPose().getX());
+    SmartDashboard.putNumber("Y", poseEstimator.getCurrentPose().getY());
+    // SmartDashboard.putNumber("X1", vision.getCurrentPoseOne().getX());
+    // SmartDashboard.putNumber("y1", vision.getCurrentPoseOne().getY());
+    // SmartDashboard.putNumber("z1", vision.getCurrentPoseOne().getZ());
+    // SmartDashboard.putNumber("X2", vision.getCurrentPoseTwo().getX());
+    // SmartDashboard.putNumber("Difference Y", vision.getCurrentPoseOne().getY() - vision.getCurrentPoseTwo().getY());
+    // SmartDashboard.putNumber("Difference Z", vision.getCurrentPoseOne().getZ() - vision.getCurrentPoseTwo().getZ());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
