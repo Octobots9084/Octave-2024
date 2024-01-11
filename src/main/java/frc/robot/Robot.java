@@ -8,6 +8,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import org.photonvision.PhotonCamera;
+import org.photonvision.estimation.VisionEstimation;
+
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
@@ -16,6 +19,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.VisionRunnable;
 
@@ -29,7 +33,15 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  public PoseEstimator poseEstimator;
+
+  public final VisionRunnable frontRightEstimator = new VisionRunnable(new PhotonCamera("frontRightCamera"),
+      VisionConstants.ROBOT_TO_FRONT_LEFT_CAMERA);
+  public final VisionRunnable frontLeftEstimator = new VisionRunnable(new PhotonCamera("frontLeftCamera"),
+      VisionConstants.ROBOT_TO_FRONT_LEFT_CAMERA);
+  public final VisionRunnable backRightEstimator = new VisionRunnable(new PhotonCamera("backRightCamera"),
+      VisionConstants.ROBOT_TO_BACK_RIGHT_CAMERA);
+  public final VisionRunnable backLeftEstimator = new VisionRunnable(new PhotonCamera("backLeftCamera"),
+      VisionConstants.ROBOT_TO_BACK_LEFT_CAMERA);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -40,7 +52,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    poseEstimator = new PoseEstimator(null, null);
 
     // visionThread = new Thread(vision);
 
@@ -58,8 +69,12 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     // System.out.print(visionThread.isAlive());
-    SmartDashboard.putNumber("X", poseEstimator.getCurrentPose().getX());
-    SmartDashboard.putNumber("Y", poseEstimator.getCurrentPose().getY());
+    SmartDashboard.putNumber("Front X Difference",
+        frontRightEstimator.grabLatestEstimatedPose().estimatedPose.toPose2d().getX()
+            - frontLeftEstimator.grabLatestEstimatedPose().estimatedPose.toPose2d().getX());
+    SmartDashboard.putNumber("Front Y Difference",
+        frontRightEstimator.grabLatestEstimatedPose().estimatedPose.toPose2d().getY()
+            - frontLeftEstimator.grabLatestEstimatedPose().estimatedPose.toPose2d().getY());
     // SmartDashboard.putNumber("X1", vision.getCurrentPoseOne().getX());
     // SmartDashboard.putNumber("y1", vision.getCurrentPoseOne().getY());
     // SmartDashboard.putNumber("z1", vision.getCurrentPoseOne().getZ());

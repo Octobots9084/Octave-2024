@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.photonvision.EstimatedRobotPose;
