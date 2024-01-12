@@ -19,34 +19,34 @@ import edu.wpi.first.math.util.Units;
 
 public final class Constants {
 
-        public static final class DrivetrainConstants {
-                /**
-                * The left-to-right distance between the drivetrain wheels
-                * <p>
-                * Should be measured from center to center.
-                */
-                public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.3556;
-                /**
-                 * The front-to-back distance between the drivetrain wheels.
-                 * <p>
-                 * Should be measured from center to center.
-                 */
-                public static final double DRIVETRAIN_WHEELBASE_METERS = 0.3556;
+        // public static final class DrivetrainConstants {
+        //         /**
+        //         * The left-to-right distance between the drivetrain wheels
+        //         * <p>
+        //         * Should be measured from center to center.
+        //         */
+        //         public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.3556;
+        //         /**
+        //          * The front-to-back distance between the drivetrain wheels.
+        //          * <p>
+        //          * Should be measured from center to center.
+        //          */
+        //         public static final double DRIVETRAIN_WHEELBASE_METERS = 0.3556;
 
-                public static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(
-                                // Front left
-                                new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
-                                                DRIVETRAIN_WHEELBASE_METERS / 2.0),
-                                // Front right
-                                new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
-                                                -DRIVETRAIN_WHEELBASE_METERS / 2.0),
-                                // Back left
-                                new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
-                                                DRIVETRAIN_WHEELBASE_METERS / 2.0),
-                                // Back right
-                                new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
-                                                -DRIVETRAIN_WHEELBASE_METERS / 2.0));
-        }
+        //         public static final SwerveDriveKinematics KINEMATICS = new SwerveDriveKinematics(
+        //                         // Front left
+        //                         new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
+        //                                         DRIVETRAIN_WHEELBASE_METERS / 2.0),
+        //                         // Front right
+        //                         new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
+        //                                         -DRIVETRAIN_WHEELBASE_METERS / 2.0),
+        //                         // Back left
+        //                         new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
+        //                                         DRIVETRAIN_WHEELBASE_METERS / 2.0),
+        //                         // Back right
+        //                         new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0,
+        //                                         -DRIVETRAIN_WHEELBASE_METERS / 2.0));
+        // }
 
         public static final class VisionConstants {
                 public static final double FIELD_LENGTH_METERS = Units.inchesToMeters(651.25);
