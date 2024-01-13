@@ -8,6 +8,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.util.SparkMax.SparkMaxConfig;
+import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
 public class Pivot extends SubsystemBase{
@@ -28,7 +29,7 @@ public class Pivot extends SubsystemBase{
         leadMotor = new CANSparkMax(0, MotorType.kBrushless);
         followMotor = new CANSparkMax(0, MotorType.kBrushless);
         SparkMaxConfig follow = new SparkMaxConfig(new SparkMaxStatusFrames(500, 20, 500, 500, 500, 20, 500), 1000, true, IdleMode.kBrake, 30, 30, false, leadMotor);
-        SparkMaxConfig lead = new SparkMaxConfig(new SparkMaxStatusFrames(500, 20, 500, 500, 500, 20, 500), 1000, true, IdleMode.kBrake, 30, 30, false, followMotor);
+        SparkMaxConfig lead = new SparkMaxConfig(new SparkMaxStatusFrames(500, 20, 500, 500, 500, 20, 500), 1000, true, SparkMaxEncoderType.Absolute, IdleMode.kBrake, 30, 30, false, false, 1);
     }
     
     public void setLocation(double target){
