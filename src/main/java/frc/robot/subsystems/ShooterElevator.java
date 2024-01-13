@@ -8,7 +8,7 @@ import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
-public class elevator {
+public class ShooterElevator {
     public CANSparkMax motor1;
     public CANSparkMax motor2;
     //TODO:make this exist
@@ -23,7 +23,7 @@ public class elevator {
     30, 30, false, false, 50);
     private SparkMaxConfig followConfig = new SparkMaxConfig(new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300), 1, true, IdleMode.kBrake, 30, 30, false, motor1);
     
-    public elevator (CANSparkMax motor1, CANSparkMax motor2) {
+    public ShooterElevator (CANSparkMax motor1, CANSparkMax motor2) {
         this.motor1 = motor1;
         this.motor2 = motor2;
         SparkMaxSetup.setup(motor1, elevateConfig);
@@ -32,7 +32,7 @@ public class elevator {
 
     public double zero() {
         while(!limSwitch) {
-            motor1.setVoltage(0.1);
+            motor1.setVoltage(-0.1);
         }
         motor1.stopMotor();
 
