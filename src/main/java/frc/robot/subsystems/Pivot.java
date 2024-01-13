@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
@@ -29,6 +30,7 @@ public class Pivot extends SubsystemBase{
         followMotor = new CANSparkMax(0, MotorType.kBrushless);
         SparkMaxConfig follow = new SparkMaxConfig(new SparkMaxStatusFrames(500, 20, 500, 500, 500, 20, 500), 1000, true, IdleMode.kBrake, 30, 30, false, leadMotor);
         SparkMaxConfig lead = new SparkMaxConfig(new SparkMaxStatusFrames(500, 20, 500, 500, 500, 20, 500), 1000, true, IdleMode.kBrake, 30, 30, false, followMotor);
+        followMotor.follow(leadMotor);
     }
     
     public void setLocation(double target){
@@ -42,6 +44,14 @@ public class Pivot extends SubsystemBase{
 
     public void setPosition(double newPosition){
         position = newPosition;
+    }
+
+    public void brakeMode(){
+        leadMotor.setIdleMode(IdleMode.kBrake);
+    }
+
+    public void coastMode(){
+        leadMotor.setIdleMode(IdleMode.kCoast);
     }
 }
 
