@@ -12,6 +12,9 @@ import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
 public class ShootingRetainer extends SubsystemBase{
+
+    //Written by Olorin//
+    
     public static ShootingRetainer shootingRetainer;
     private CANSparkMax motor1;
     private SparkMaxConfig motor1Config;
