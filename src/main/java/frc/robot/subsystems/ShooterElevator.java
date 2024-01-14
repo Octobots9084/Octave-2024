@@ -32,7 +32,7 @@ public class ShooterElevator {
 
     public double zero() {
         while(!limSwitch) {
-            motor1.setVoltage(0.1);
+            motor1.setVoltage(-0.1);
         }
         motor1.stopMotor();
 

@@ -7,7 +7,9 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.ArmPositions;
 import frc.robot.util.SparkMax.SparkMaxConfig;
 import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
@@ -34,26 +36,29 @@ public class Pivot extends SubsystemBase{
         followMotor.follow(leadMotor);
     }
     
-    public void setLocation(double target){
+    public void setPosition(double target){
         target = MathUtil.clamp(target, minLimit, maxLimit);
         leadMotor.getPIDController().setReference(target, ControlType.kPosition);
+        position = target;
+    }
+    
+    public void setPosition(ArmPositions armPositions) {
+        setPosition(armPositions);
     }
 
     public double getPosition(){
+        return leadMotor.getEncoder().getPosition();
+    }
+
+    public double getLastTargetPosition(){
         return position;
     }
 
-    public void setPosition(double newPosition){
-        position = newPosition;
+    public void setIdleMode(IdleMode idleMode){
+        leadMotor.setIdleMode(idleMode);
     }
 
-    public void brakeMode(){
-        leadMotor.setIdleMode(IdleMode.kBrake);
-    }
 
-    public void coastMode(){
-        leadMotor.setIdleMode(IdleMode.kCoast);
-    }
 }
 
 

@@ -11,6 +11,9 @@ import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
 public class IntakeRetainer {
+
+    //Written by Olorin//
+
     public static IntakeRetainer intakeRetainer;
     private CANSparkMax motor1;
     private SparkMaxConfig motor1Config;
