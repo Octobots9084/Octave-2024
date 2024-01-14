@@ -8,7 +8,8 @@ public enum ShooterSpeeds {
     PANIC(-1,-1),
     AMP(1,0.5),
     TRAP(1,0.5);
-    double track, flywheels;
+    public double track;
+	public double flywheels;
     ShooterSpeeds(double track, double flywheels) {
         this.track = track;
         this.flywheels = flywheels;

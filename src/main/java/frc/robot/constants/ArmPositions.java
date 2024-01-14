@@ -5,7 +5,7 @@ package frc.robot.constants;
         AMP(0,0),
         TRAP(0,0);
         
-        double elevator, pivot;
+        public double elevator, pivot;
     ArmPositions(double elevator, double pivot) {
         this.elevator = elevator;
         this.pivot = pivot;

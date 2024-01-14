@@ -8,7 +8,8 @@ public enum IntakeSpeeds {
     REJECT(-1,0),
     PANIC(-1,-1);
 
-    double roller, track;
+    public double roller;
+    public double track;
     IntakeSpeeds(double roller, double track){
         this.roller = roller;
         this.track = track;

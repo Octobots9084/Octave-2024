@@ -2,19 +2,23 @@ package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.revrobotics.CANSparkMax;
 
+import frc.robot.constants.IntakeSpeeds;
 import frc.robot.util.PIDConfig;
 import frc.robot.util.SparkMax.SparkMaxConfig;
 import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
-public class IntakeRetainer {
+public class IntakeTrack extends SubsystemBase{
 
     //Written by Olorin//
 
-    public static IntakeRetainer intakeRetainer;
+    public static IntakeTrack intakeRetainer;
     private CANSparkMax motor1;
     private SparkMaxConfig motor1Config;
     private boolean retainingNote;
@@ -25,18 +29,15 @@ public class IntakeRetainer {
     3. needs to be able to
      */
 
-    public static IntakeRetainer getInstance(){
+    public static IntakeTrack getInstance(){
         if (intakeRetainer == null){
-            intakeRetainer = new IntakeRetainer();
+            intakeRetainer = new IntakeTrack();
         }
         return intakeRetainer;
     }
 
-    public IntakeRetainer(){
+    public IntakeTrack(){
         motor1 = new CANSparkMax(0, MotorType.kBrushless);
-
-        //TODO: This config is garbage data
-        //TODO: Figure out what timeout does
         motor1Config = new SparkMaxConfig(new SparkMaxStatusFrames(
             500,
             10,
@@ -67,4 +68,11 @@ public class IntakeRetainer {
         motor1.set(speed);
     }
 
+    public void setSpeed(IntakeSpeeds intakeSpeeds) {
+        setSpeed(intakeSpeeds.track);
+    }
+
+    public boolean isRetainingNote() {
+        return retainingNote;
+    }
 }

@@ -1,31 +1,40 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
+
+import frc.robot.constants.ArmPositions;
 import frc.robot.util.SparkMax.SparkMaxConfig;
 import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
-public class ShooterElevator {
-    public CANSparkMax motor1;
-    public CANSparkMax motor2;
-    //TODO:make this exist
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+
+public class ShooterElevator extends SubsystemBase{
+    private static ShooterElevator shooterElevator;
+    public static ShooterElevator getInstance() {
+        if (shooterElevator == null) {
+            shooterElevator = new ShooterElevator();
+        }
+        return shooterElevator;
+    }
+
+    CANSparkMax motor1, motor2;
     public boolean limSwitch;
-    //TODO:get real value from CAD when possible
     private double gearing = 1;
-    //TODO:placeholder values
     public double max = 10;
     public double min = 1;
-    //TODO:placeholder
     private SparkMaxConfig elevateConfig = new SparkMaxConfig(new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300), 1, true, SparkMaxEncoderType.Relative, IdleMode.kBrake,
     30, 30, false, false, 50);
     private SparkMaxConfig followConfig = new SparkMaxConfig(new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300), 1, true, IdleMode.kBrake, 30, 30, false, motor1);
     
-    public ShooterElevator (CANSparkMax motor1, CANSparkMax motor2) {
-        this.motor1 = motor1;
-        this.motor2 = motor2;
+    public ShooterElevator () {
+        motor1 = new CANSparkMax(0, MotorType.kBrushless);
+        motor2 = new CANSparkMax(0, MotorType.kBrushless);
         SparkMaxSetup.setup(motor1, elevateConfig);
         SparkMaxSetup.setup(motor2, followConfig);
     }
@@ -39,14 +48,16 @@ public class ShooterElevator {
         return motor1.getEncoder().getPosition() / gearing;
     }
 
-    public void setPosition(double pos) {
-        if((max > pos) && (min < pos)) {
-            motor1.getPIDController().setReference(gearing*pos, ControlType.kPosition);
-        } 
+    public void setPosition(double position) {
+        motor1.getPIDController().setReference(position, ControlType.kPosition);
+    }
+
+    public void setPosition(ArmPositions armPositions) {
+        setPosition(armPositions.elevator);
     }
 
     public double getPosition() {
-        return motor1.getEncoder().getPosition() / gearing;
+        return motor1.getEncoder().getPosition();
     }
 
     public void goToMax() {
