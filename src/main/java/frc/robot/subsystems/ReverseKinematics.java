@@ -17,12 +17,12 @@ public class ReverseKinematics {
     // velocities are positive going towards the target and negative when moving away
 
     public static double calcLaunchXVel(double xPos, double xVel) {
-        System.out.println("launch x velocity: " + (xPos/(constTargetHeightDiff/calcLaunchVerticalVel()) - xVel));
+        //System.out.println("launch x velocity: " + (xPos/(constTargetHeightDiff/calcLaunchVerticalVel()) - xVel));
         return xPos/(2*constTargetHeightDiff/calcLaunchVerticalVel()) - xVel;
     }
 
     public static double calcLaunchYVel(double yPos, double yVel) {
-        System.out.println("launch y velocity: " + (yPos/(constTargetHeightDiff/calcLaunchVerticalVel()) - yVel));
+        //System.out.println("launch y velocity: " + (yPos/(constTargetHeightDiff/calcLaunchVerticalVel()) - yVel));
         return yPos/(2*constTargetHeightDiff/calcLaunchVerticalVel()) - yVel;
     }
 
