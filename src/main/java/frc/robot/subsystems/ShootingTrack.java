@@ -5,17 +5,18 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.constants.ShooterSpeeds;
 import frc.robot.util.PIDConfig;
 import frc.robot.util.SparkMax.SparkMaxConfig;
 import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
-public class ShootingRetainer extends SubsystemBase{
+public class ShootingTrack extends SubsystemBase{
 
     //Written by Olorin//
     
-    public static ShootingRetainer shootingRetainer;
+    public static ShootingTrack shootingRetainer;
     private CANSparkMax motor1;
     private SparkMaxConfig motor1Config;
     private boolean retainingNote;
@@ -26,18 +27,16 @@ public class ShootingRetainer extends SubsystemBase{
     3. needs to be able to
      */
 
-    public static ShootingRetainer getInstance(){
+    public static ShootingTrack getInstance(){
         if (shootingRetainer == null){
-            shootingRetainer = new ShootingRetainer();
+            shootingRetainer = new ShootingTrack();
         }
         return shootingRetainer;
     }
 
-    public ShootingRetainer(){
+    public ShootingTrack(){
         motor1 = new CANSparkMax(0, MotorType.kBrushless);
 
-        //TODO: This config is garbage data
-        //TODO: Figure out what timeout does
         motor1Config = new SparkMaxConfig(new SparkMaxStatusFrames(
             500,
             10,
@@ -61,10 +60,14 @@ public class ShootingRetainer extends SubsystemBase{
     }
 
     public boolean checkRetainer(){
-        return true;
+        return retainingNote;
     }
     
     public void setSpeed(double speed){
         motor1.set(speed);
+    }
+
+    public void setSpeed(ShooterSpeeds shooterSpeeds) {
+        setSpeed(shooterSpeeds.track);
     }
 }
