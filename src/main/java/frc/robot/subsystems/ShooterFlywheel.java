@@ -38,4 +38,12 @@ public class ShooterFlywheel extends SubsystemBase{
     public double getLastTargetSpeed() {
        return lastSpeed; 
     }
+
+    public double getFlywheelSpeed() {
+        return motorOne.getEncoder().getVelocity();
+    }
+
+    public double getAuxiluryFlywheelSpeed() {
+        return motorTwo.getEncoder().getVelocity();
+    }
 }
