@@ -1,8 +1,8 @@
 package frc.robot.util.SparkMax;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.PeriodicFrame;
-import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
 
 public class SparkMaxSetup {
     /**
