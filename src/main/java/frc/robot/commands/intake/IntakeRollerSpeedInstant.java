@@ -1,20 +1,20 @@
 package frc.robot.commands.intake;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.IntakeRoller;
 import frc.robot.constants.IntakeSpeeds;
 
-public class SetIntakeRoller extends Command{
+public class IntakeRollerSpeedInstant extends InstantCommand{
     IntakeRoller intakeroller;
-    IntakeSpeeds speed; 
-    public SetIntakeRoller(IntakeSpeeds givein) {
-        this.speed = givein;
+    IntakeSpeeds intakeSpeeds; 
+    public IntakeRollerSpeedInstant(IntakeSpeeds intakeSpeeds) {
+        this.intakeSpeeds = intakeSpeeds;
         intakeroller = IntakeRoller.getInstance();
         super.addRequirements(intakeroller);
     }
 
     @Override 
     public void initialize() {
-       intakeroller.setVelocity(speed);
+       intakeroller.setVelocity(intakeSpeeds);
     }
 }

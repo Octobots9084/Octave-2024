@@ -5,10 +5,10 @@ import frc.robot.constants.ClimbPositions;
 import frc.robot.subsystems.Climb;
 import frc.robot.util.MathUtil;
 
-public class MoveClimb extends Command{
+public class ClimbPosTolerance extends Command{
     ClimbPositions climbPositions;
     Climb climb;
-    public MoveClimb(ClimbPositions climbPositions) {
+    public ClimbPosTolerance(ClimbPositions climbPositions) {
         this.climbPositions = climbPositions;
         climb = Climb.getInstance();
         super.addRequirements(climb);

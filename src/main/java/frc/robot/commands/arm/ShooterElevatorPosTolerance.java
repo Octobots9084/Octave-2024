@@ -5,10 +5,10 @@ import frc.robot.constants.ArmPositions;
 import frc.robot.subsystems.ShooterElevator;
 import frc.robot.util.MathUtil;
 
-public class MoveElevator extends Command{
+public class ShooterElevatorPosTolerance extends Command{
     ArmPositions armPositions;
     ShooterElevator shooterElevator;
-    public MoveElevator(ArmPositions armPositions) {
+    public ShooterElevatorPosTolerance(ArmPositions armPositions) {
         this.armPositions = armPositions;
         shooterElevator = ShooterElevator.getInstance();
         super.addRequirements(shooterElevator);
