@@ -13,8 +13,6 @@ import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
 public class ShooterTrack extends SubsystemBase{
-
-    //Written by Olorin//
     
     public static ShooterTrack shootingRetainer;
     private CANSparkMax motor1;
@@ -69,5 +67,9 @@ public class ShooterTrack extends SubsystemBase{
 
     public void setSpeed(ShooterSpeeds shooterSpeeds) {
         setSpeed(shooterSpeeds.track);
+    }
+
+    public boolean getSensor() {
+        return true;
     }
 }
