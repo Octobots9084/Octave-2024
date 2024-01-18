@@ -16,8 +16,6 @@ import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
 public class IntakeTrack extends SubsystemBase{
 
-    //Written by Olorin//
-
     public static IntakeTrack intakeRetainer;
     private CANSparkMax motor1;
     private SparkMaxConfig motor1Config;
@@ -74,5 +72,9 @@ public class IntakeTrack extends SubsystemBase{
 
     public boolean isRetainingNote() {
         return retainingNote;
+    }
+
+    public boolean getSensor() {
+        return true;
     }
 }
