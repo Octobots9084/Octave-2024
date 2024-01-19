@@ -22,6 +22,8 @@ public class Climb extends SubsystemBase{
     }
 
     CANSparkMax motor1, motor2;
+    public boolean limSwitch;
+    private double gearing = 1;
     public Climb() {
         motor1 = new CANSparkMax(0, MotorType.kBrushless);
         motor2 = new CANSparkMax(0, MotorType.kBrushless);
@@ -71,5 +73,14 @@ public class Climb extends SubsystemBase{
 
     public double getPosition() {
         return motor1.getEncoder().getPosition();
+    }
+
+    public double zero() {
+        while(!limSwitch) {
+            motor1.setVoltage(-0.1);
+        }
+        motor1.stopMotor();
+
+        return motor1.getEncoder().getPosition() / gearing;
     }
 }
