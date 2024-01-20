@@ -1,5 +1,6 @@
 package frc.robot.commands.complex;
 
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.climb.ClimbPosTolerance;
 import frc.robot.constants.ClimbPositions;
@@ -11,10 +12,12 @@ public class Undunk extends SequentialCommandGroup{
     public Undunk() {
         addCommands(
             new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY),
+            new ParallelCommandGroup(
             new ShooterElevatorPosTolerance(ArmPositions.TRAP_SEGUEAY),
-            new ClimbPosTolerance(ClimbPositions.UP),
-            new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
-            new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)
+            new ClimbPosTolerance(ClimbPositions.UP)
+            ),
+            new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
+            new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)
         );
     }
 }
