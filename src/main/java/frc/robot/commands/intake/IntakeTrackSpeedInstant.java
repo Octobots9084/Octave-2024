@@ -1,18 +1,18 @@
-package frc.robot.commands.arm;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.IntakeSpeeds;
-import frc.robot.subsystems.ShootingTrack;
+import frc.robot.subsystems.IntakeTrack;
 
-public class SetShootingTrack extends Command{
+public class IntakeTrackSpeedInstant extends Command{
     //created by Olorin
 
     IntakeSpeeds intakeSpeed;
-    ShootingTrack track;
+    IntakeTrack track;
 
-    public SetShootingTrack(IntakeSpeeds intakeSpeed) {
+    public IntakeTrackSpeedInstant(IntakeSpeeds intakeSpeed) {
         this.intakeSpeed = intakeSpeed;
-        track = ShootingTrack.getInstance();
+        track = IntakeTrack.getInstance();
         super.addRequirements(track);
     }
 

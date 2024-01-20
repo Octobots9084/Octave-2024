@@ -13,11 +13,11 @@ import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
-public class Pivot extends SubsystemBase{
-    public static Pivot pivot;
-    public static Pivot getInstance(){
+public class ShooterPivot extends SubsystemBase{
+    public static ShooterPivot pivot;
+    public static ShooterPivot getInstance(){
         if(pivot == null){
-            pivot = new Pivot();
+            pivot = new ShooterPivot();
         }
         return pivot;
     }
@@ -27,7 +27,7 @@ public class Pivot extends SubsystemBase{
     private double position;
 
 
-    public Pivot(){
+    public ShooterPivot(){
         leadMotor = new CANSparkMax(0, MotorType.kBrushless);
         followMotor = new CANSparkMax(0, MotorType.kBrushless);
         SparkMaxConfig follow = new SparkMaxConfig(new SparkMaxStatusFrames(500, 20, 500, 500, 500, 20, 500), 1000, true, IdleMode.kBrake, 30, 30, false, leadMotor);

@@ -2,15 +2,15 @@ package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.ArmPositions;
-import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.ShooterPivot;
 import frc.robot.util.MathUtil;
 
-public class MovePivot extends Command{
+public class ShooterPivotPosTolerance extends Command{
     ArmPositions armPositions;
-    Pivot pivot;
-    public MovePivot(ArmPositions armPositions) {
+    ShooterPivot pivot;
+    public ShooterPivotPosTolerance(ArmPositions armPositions) {
         this.armPositions = armPositions;
-        pivot = Pivot.getInstance();
+        pivot = ShooterPivot.getInstance();
         super.addRequirements(pivot);
     }
 

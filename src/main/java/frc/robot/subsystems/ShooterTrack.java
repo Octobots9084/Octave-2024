@@ -12,11 +12,9 @@ import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
-public class ShootingTrack extends SubsystemBase{
-
-    //Written by Olorin//
+public class ShooterTrack extends SubsystemBase{
     
-    public static ShootingTrack shootingRetainer;
+    public static ShooterTrack shootingRetainer;
     private CANSparkMax motor1;
     private SparkMaxConfig motor1Config;
     private boolean retainingNote;
@@ -27,14 +25,14 @@ public class ShootingTrack extends SubsystemBase{
     3. needs to be able to
      */
 
-    public static ShootingTrack getInstance(){
+    public static ShooterTrack getInstance(){
         if (shootingRetainer == null){
-            shootingRetainer = new ShootingTrack();
+            shootingRetainer = new ShooterTrack();
         }
         return shootingRetainer;
     }
 
-    public ShootingTrack(){
+    public ShooterTrack(){
         motor1 = new CANSparkMax(0, MotorType.kBrushless);
 
         motor1Config = new SparkMaxConfig(new SparkMaxStatusFrames(
@@ -69,5 +67,9 @@ public class ShootingTrack extends SubsystemBase{
 
     public void setSpeed(ShooterSpeeds shooterSpeeds) {
         setSpeed(shooterSpeeds.track);
+    }
+
+    public boolean getSensor() {
+        return true;
     }
 }
