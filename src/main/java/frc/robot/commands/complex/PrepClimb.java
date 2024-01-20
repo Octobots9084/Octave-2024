@@ -7,7 +7,6 @@ import frc.robot.constants.ClimbPositions;
 public class PrepClimb extends SequentialCommandGroup{
     public PrepClimb() {
         addCommands(
-            new ClimbPosTolerance(ClimbPositions.DOWN).withTimeout(1),
             new ClimbPosTolerance(ClimbPositions.UP).withTimeout(2)
         );
     }
