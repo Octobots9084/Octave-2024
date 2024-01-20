@@ -114,30 +114,5 @@ public final class Constants {
     public static final double DISTANCE_WEIGHT = 7;
     public static final int TAG_PRESENCE_WEIGHT = 10;
 
-    /**
-     * Standard deviations of model states. Increase these numbers to trust your
-     * model's state estimates less. This
-     * matrix is in the form [x, y, theta]ᵀ, with units in meters and radians, then
-     * meters.
-     * If these numbers are less than one, multiplying will do bad things
-     */
-
-    public static final Matrix<N3, N1> VISION_MEASUREMENT_STANDARD_DEVIATIONS = MatBuilder.fill(Nat.N3(),
-        Nat.N1(), 1, // x
-        1, // y
-        1 * Math.PI); // theta
-
-    /**
-     * Standard deviations of the vision measurements. Increase these numbers to
-     * trust global measurements from vision
-     * less. This matrix is in the form [x, y, theta]ᵀ, with units in meters and
-     * radians.
-     * If these numbers are less than one, multiplying will do bad things
-     */
-    public static final Matrix<N3, N1> STATE_STANDARD_DEVIATIONS = MatBuilder.fill(Nat.N3(), Nat.N1(),
-        .1, // x
-        .1, // y 
-        .1);
-
   }
 }

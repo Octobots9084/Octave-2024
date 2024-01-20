@@ -20,11 +20,10 @@ import swervelib.math.SwerveMath;
 /**
  * A more advanced Swerve Control System that has 4 buttons for which direction to face
  */
-public class AbsoluteDriveAdv extends Command
-{
+public class AbsoluteDriveAdv extends Command {
 
   private final SwerveSubsystem swerve;
-  private final DoubleSupplier  vX, vY;
+  private final DoubleSupplier vX, vY;
   private final DoubleSupplier headingAdjust;
   private boolean resetHeading = false;
   private final BooleanSupplier lookAway, lookTowards, lookLeft, lookRight;
@@ -49,8 +48,7 @@ public class AbsoluteDriveAdv extends Command
    * @param lookRight         Face the robot right
    */
   public AbsoluteDriveAdv(SwerveSubsystem swerve, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier headingAdjust,
-                                                   BooleanSupplier lookAway, BooleanSupplier lookTowards, BooleanSupplier lookLeft, BooleanSupplier lookRight)
-  {
+      BooleanSupplier lookAway, BooleanSupplier lookTowards, BooleanSupplier lookLeft, BooleanSupplier lookRight) {
     this.swerve = swerve;
     this.vX = vX;
     this.vY = vY;
@@ -64,41 +62,37 @@ public class AbsoluteDriveAdv extends Command
   }
 
   @Override
-  public void initialize()
-  {
+  public void initialize() {
     resetHeading = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute()
-  {
+  public void execute() {
     double headingX = 0;
     double headingY = 0;
-    
+
     // These are written to allow combinations for 45 angles
     // Face Away from Drivers
-    if(lookAway.getAsBoolean()){
+    if (lookAway.getAsBoolean()) {
       headingY = -1;
     }
     // Face Right
-    if(lookRight.getAsBoolean()){
+    if (lookRight.getAsBoolean()) {
       headingX = 1;
     }
     // Face Left
-    if(lookLeft.getAsBoolean()){
+    if (lookLeft.getAsBoolean()) {
       headingX = -1;
     }
     // Face Towards the Drivers
-    if(lookTowards.getAsBoolean()){
+    if (lookTowards.getAsBoolean()) {
       headingY = 1;
     }
 
     // Prevent Movement After Auto
-    if(resetHeading)
-    {
-      if(headingX == 0 && headingY == 0 && Math.abs(headingAdjust.getAsDouble()) > 0)
-      {
+    if (resetHeading) {
+      if (headingX == 0 && headingY == 0 && Math.abs(headingAdjust.getAsDouble()) > 0) {
         // Get the curret Heading
         Rotation2d currentHeading = swerve.getHeading();
 
@@ -111,37 +105,33 @@ public class AbsoluteDriveAdv extends Command
     }
 
     ChassisSpeeds desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(), headingX, headingY);
-  
+
     // Limit velocity to prevent tippy
     Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);
     translation = SwerveMath.limitVelocity(translation, swerve.getFieldVelocity(), swerve.getPose(),
-                                           Constants.LOOP_TIME, Constants.ROBOT_MASS, List.of(Constants.CHASSIS),
-                                           swerve.getSwerveDriveConfiguration());
+        Constants.LOOP_TIME, Constants.ROBOT_MASS, List.of(Constants.CHASSIS),
+        swerve.getSwerveDriveConfiguration());
     SmartDashboard.putNumber("LimitedTranslation", translation.getX());
     SmartDashboard.putString("Translation", translation.toString());
 
     // Make the robot move
-    if(headingX == 0 && headingY == 0 && Math.abs(headingAdjust.getAsDouble()) > 0){
+    if (headingX == 0 && headingY == 0 && Math.abs(headingAdjust.getAsDouble()) > 0) {
       resetHeading = true;
       swerve.drive(translation, (Constants.OperatorConstants.TURN_CONSTANT * -headingAdjust.getAsDouble()), true);
-    }
-    else{
+    } else {
       swerve.drive(translation, desiredSpeeds.omegaRadiansPerSecond, true);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted)
-  {
+  public void end(boolean interrupted) {
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished()
-  {
+  public boolean isFinished() {
     return false;
   }
-
 
 }

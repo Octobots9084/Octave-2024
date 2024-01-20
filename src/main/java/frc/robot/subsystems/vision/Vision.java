@@ -11,6 +11,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.FieldConstants;;
 
@@ -55,6 +56,8 @@ public class Vision implements Runnable {
           //Updates the pose estimator
           photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
             var estimatedPose = estimatedRobotPose.estimatedPose;
+            SmartDashboard.putNumber("estimatedPoseX", estimatedPose.toPose2d().getX());
+            SmartDashboard.putNumber("estimatedPoseY", estimatedPose.toPose2d().getY());
             /** 
             * If present then makes sure the measurement is on the field and
             * sets the atomic estimated pose to the current estimated pose
@@ -63,6 +66,8 @@ public class Vision implements Runnable {
             if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.length
                 && estimatedPose.getY() > 0.0
                 && estimatedPose.getY() <= FieldConstants.width) {
+              // System.out.println("atomicEstimatedRobotPose");
+              SmartDashboard.putString("atomicEstimatedRobotPose", "atomicEstimatedRobotPose working");
               atomicEstimatedRobotPose.set(estimatedRobotPose);
             }
           });
@@ -83,7 +88,7 @@ public class Vision implements Runnable {
    * @return latest estimated pose
    */
   public EstimatedRobotPose grabLatestEstimatedPose() {
-    return atomicEstimatedRobotPose.get();
+    return atomicEstimatedRobotPose.getAndSet(null);
   }
 
 }
