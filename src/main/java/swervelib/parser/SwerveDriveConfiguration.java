@@ -83,13 +83,20 @@ public class SwerveDriveConfiguration
   }
 
   /**
-   * Assume the first module is the furthest. Usually front-left.
+   * Calculate the Drive Base Radius
    *
    * @return Drive base radius from center of robot to the farthest wheel in meters.
    */
   public double getDriveBaseRadiusMeters()
   {
-    Translation2d furthestModule = moduleLocationsMeters[0];
-    return Math.abs(Math.sqrt(Math.pow(furthestModule.getX(), 2) + Math.pow(furthestModule.getY(), 2)));
+    Translation2d centerOfModules = moduleLocationsMeters[0];
+
+    //Calculate the Center by adding all module offsets together.
+    for(int i=1; i<moduleLocationsMeters.length; i++){
+      centerOfModules = centerOfModules.plus(moduleLocationsMeters[i]);
+    }  
+    
+    //Return Largest Radius
+    return centerOfModules.getDistance(moduleLocationsMeters[0]);
   }
 }

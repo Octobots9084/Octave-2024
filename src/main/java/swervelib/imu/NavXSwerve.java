@@ -1,15 +1,14 @@
 package swervelib.imu;
 
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.math.geometry.Quaternion;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.util.Optional;
+import swervelib.telemetry.Alert;
 
 /**
  * Communicates with the NavX as the IMU.
@@ -25,6 +24,10 @@ public class NavXSwerve extends SwerveIMU
    * Offset for the NavX.
    */
   private Rotation3d offset = new Rotation3d();
+  /**
+   * An {@link Alert} for if there is an error instantiating the NavX.
+   */
+  private Alert      navXError;
 
   /**
    * Constructor for the NavX swerve.
@@ -33,6 +36,7 @@ public class NavXSwerve extends SwerveIMU
    */
   public NavXSwerve(SerialPort.Port port)
   {
+    navXError = new Alert("IMU", "Error instantiating NavX.", Alert.AlertType.ERROR_TRACE);
     try
     {
       /* Communicate w/navX-MXP via the MXP SPI Bus.                                     */
@@ -43,7 +47,8 @@ public class NavXSwerve extends SwerveIMU
       SmartDashboard.putData(gyro);
     } catch (RuntimeException ex)
     {
-      DriverStation.reportError("Error instantiating navX:  " + ex.getMessage(), true);
+      navXError.setText("Error instantiating NavX: " + ex.getMessage());
+      navXError.set(true);
     }
   }
 
@@ -64,7 +69,8 @@ public class NavXSwerve extends SwerveIMU
       SmartDashboard.putData(gyro);
     } catch (RuntimeException ex)
     {
-      DriverStation.reportError("Error instantiating navX:  " + ex.getMessage(), true);
+      navXError.setText("Error instantiating NavX: " + ex.getMessage());
+      navXError.set(true);
     }
   }
 
@@ -85,7 +91,8 @@ public class NavXSwerve extends SwerveIMU
       SmartDashboard.putData(gyro);
     } catch (RuntimeException ex)
     {
-      DriverStation.reportError("Error instantiating navX:  " + ex.getMessage(), true);
+      navXError.setText("Error instantiating NavX: " + ex.getMessage());
+      navXError.set(true);
     }
   }
 
@@ -96,10 +103,7 @@ public class NavXSwerve extends SwerveIMU
   public void factoryDefault()
   {
     // gyro.reset(); // Reported to be slow
-    offset = new Rotation3d(new Quaternion(gyro.getQuaternionW(),
-                                           gyro.getQuaternionX(),
-                                           gyro.getQuaternionY(),
-                                           gyro.getQuaternionZ()));
+    offset = gyro.getRotation3d();
   }
 
   /**
@@ -125,12 +129,10 @@ public class NavXSwerve extends SwerveIMU
    *
    * @return {@link Rotation3d} from the IMU.
    */
+  @Override
   public Rotation3d getRawRotation3d()
   {
-    return new Rotation3d(new Quaternion(gyro.getQuaternionW(),
-                                         gyro.getQuaternionX(),
-                                         gyro.getQuaternionY(),
-                                         gyro.getQuaternionZ())); 
+    return gyro.getRotation3d();
   }
 
   /**
@@ -141,7 +143,7 @@ public class NavXSwerve extends SwerveIMU
   @Override
   public Rotation3d getRotation3d()
   {
-    return getRawRotation3d().minus(offset);
+    return gyro.getRotation3d().minus(offset);
   }
 
   /**
