@@ -17,12 +17,12 @@ public class ReverseKinematics {
     // velocities are positive going towards the target and negative when moving away
 
     public static double calcLaunchXVel(double xPos, double xVel) {
-        //System.out.println("launch x velocity: " + (xPos/(constTargetHeightDiff/calcLaunchVerticalVel()) - xVel));
+        System.out.println("launch x velocity: " + (xPos/(constTargetHeightDiff/calcLaunchVerticalVel()) - xVel));
         return xPos/(2*constTargetHeightDiff/calcLaunchVerticalVel()) - xVel;
     }
 
     public static double calcLaunchYVel(double yPos, double yVel) {
-        //System.out.println("launch y velocity: " + (yPos/(constTargetHeightDiff/calcLaunchVerticalVel()) - yVel));
+        System.out.println("launch y velocity: " + (yPos/(constTargetHeightDiff/calcLaunchVerticalVel()) - yVel));
         return yPos/(2*constTargetHeightDiff/calcLaunchVerticalVel()) - yVel;
     }
 
@@ -32,7 +32,7 @@ public class ReverseKinematics {
 
     // returns the angle (wrt parralel to the target opening) to the target opening from the robot
     public static double calcRobotAngle(double xPos, double yPos, double xVel, double yVel) {
-        return Math.atan(calcLaunchYVel(yPos, yVel)/calcLaunchXVel(xPos, xVel));
+        return xPos >= 0 ? Math.atan(calcLaunchYVel(yPos, yVel)/calcLaunchXVel(xPos, xVel)) : (Math.PI / 2.0) - Math.atan(calcLaunchYVel(yPos, yVel)/calcLaunchXVel(xPos, xVel));
     }
 
     // xPos is the distance from being in line with the amp
