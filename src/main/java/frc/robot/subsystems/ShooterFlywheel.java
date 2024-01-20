@@ -31,12 +31,12 @@ public class ShooterFlywheel extends SubsystemBase{
         motorTwo = new CANSparkFlex(12, MotorType.kBrushless);
         
         motor1pid = motorOne.getPIDController();
-        motor1pid.setP(0.0);
-        motor1pid.setFF(0.1);
+        motor1pid.setP(0);
+        motor1pid.setFF(0.000155);
 
         motor2pid = motorTwo.getPIDController();
-        motor2pid.setP(0.0);
-        motor2pid.setFF(0.1);
+        motor2pid.setP(0);
+        motor2pid.setFF(0.000155);
 
         motorTwo.follow(motorOne);
     }
@@ -44,6 +44,11 @@ public class ShooterFlywheel extends SubsystemBase{
     public void setFlywheelSpeed(double newSpeed){
         lastSpeed = newSpeed;
         motorOne.getPIDController().setReference(newSpeed, ControlType.kVelocity);
+    }
+
+    public void increaseFlywheelSpeed(double increment) {
+        lastSpeed += increment;
+        motorOne.getPIDController().setReference(lastSpeed, ControlType.kVelocity);
     }
     
     public void setFlywheelSpeed(ShooterSpeeds shooterSpeeds){
