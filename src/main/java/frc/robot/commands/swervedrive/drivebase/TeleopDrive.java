@@ -57,19 +57,9 @@ public class TeleopDrive extends Command {
     SmartDashboard.putNumber("omega", angVelocity);
 
     // Drive using raw values.
-    swerve.drive(new Translation2d(xVelocity * swerve.maximumSpeed, yVelocity * swerve.maximumSpeed),
+    swerve.drive(new Translation2d(xVelocity * swerve.MAXIMUM_SPEED, yVelocity * swerve.MAXIMUM_SPEED),
         angVelocity * controller.config.maxAngularVelocity,
         driveMode.getAsBoolean());
   }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
 }

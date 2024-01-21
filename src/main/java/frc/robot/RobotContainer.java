@@ -36,106 +36,104 @@ import com.pathplanner.lib.auto.AutoBuilder;
  */
 public class RobotContainer {
 
-  // The robot's subsystems and commands are defined here...
-  private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
-      "swerve"));
-  // CommandJoystick rotationController = new CommandJoystick(1);
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  CommandJoystick driverController = new CommandJoystick(1);
+    // The robot's subsystems and commands are defined here...
+    private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+            "swerve"));
+    // Replace with CommandPS4Controller or CommandJoystick if needed
+    CommandJoystick driverController = new CommandJoystick(Constants.OperatorConstants.JOYSTICK_PORT);
 
-  // CommandJoystick driverController = new
-  // CommandJoystick(3);//(OperatorConstants.DRIVER_CONTROLLER_PORT);
-  XboxController driverXbox = new XboxController(0);
+    // CommandJoystick driverController = new
+    XboxController driverXbox = new XboxController(0);
 
-  private final SendableChooser<Command> autoChooser;
+    private final SendableChooser<Command> autoChooser;
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    // Configure the trigger bindings
-    configureBindings();
-    AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
-        // Applies deadbands and inverts controls because joysticks
-        // are back-right positive while robot
-        // controls are front-left positive
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-            OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-            OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverXbox.getRightX(),
-        () -> -driverXbox.getRightY());
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        // Configure the trigger bindings
+        configureBindings();
+        AbsoluteDrive closedAbsoluteDrive = new AbsoluteDrive(drivebase,
+                // Applies deadbands and inverts controls because joysticks
+                // are back-right positive while robot
+                // controls are front-left positive
+                () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
+                        OperatorConstants.LEFT_Y_DEADBAND),
+                () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
+                        OperatorConstants.LEFT_X_DEADBAND),
+                () -> -driverXbox.getRightX(),
+                () -> -driverXbox.getRightY());
 
-    AbsoluteFieldDrive closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-            OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-            OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRawAxis(2));
+        AbsoluteFieldDrive closedFieldAbsoluteDrive = new AbsoluteFieldDrive(drivebase,
+                () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
+                        OperatorConstants.LEFT_Y_DEADBAND),
+                () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
+                        OperatorConstants.LEFT_X_DEADBAND),
+                () -> driverXbox.getRawAxis(2));
 
-    AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-            OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-            OperatorConstants.LEFT_X_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getRightX(),
-            OperatorConstants.RIGHT_X_DEADBAND),
-        driverXbox::getYButtonPressed,
-        driverXbox::getAButtonPressed,
-        driverXbox::getXButtonPressed,
-        driverXbox::getBButtonPressed);
+        AbsoluteDriveAdv closedAbsoluteDriveAdv = new AbsoluteDriveAdv(drivebase,
+                () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
+                        OperatorConstants.LEFT_Y_DEADBAND),
+                () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
+                        OperatorConstants.LEFT_X_DEADBAND),
+                () -> MathUtil.applyDeadband(driverXbox.getRightX(),
+                        OperatorConstants.RIGHT_X_DEADBAND),
+                driverXbox::getYButtonPressed,
+                driverXbox::getAButtonPressed,
+                driverXbox::getXButtonPressed,
+                driverXbox::getBButtonPressed);
 
-    TeleopDrive simClosedFieldRel = new TeleopDrive(drivebase,
-        () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-            OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-            OperatorConstants.LEFT_X_DEADBAND),
-        () -> driverXbox.getRawAxis(2), () -> true);
-    TeleopDrive closedFieldRel = new TeleopDrive(
-        drivebase,
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(1),
-            OperatorConstants.LEFT_Y_DEADBAND),
-        () -> MathUtil.applyDeadband(driverController.getRawAxis(0),
-            OperatorConstants.LEFT_X_DEADBAND),
-        () -> -driverController.getRawAxis(4), () -> true);
+        TeleopDrive simClosedFieldRel = new TeleopDrive(drivebase,
+                () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
+                        OperatorConstants.LEFT_Y_DEADBAND),
+                () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
+                        OperatorConstants.LEFT_X_DEADBAND),
+                () -> driverXbox.getRawAxis(2), () -> true);
+        TeleopDrive closedFieldRel = new TeleopDrive(
+                drivebase,
+                () -> MathUtil.applyDeadband(driverController.getRawAxis(1),
+                        OperatorConstants.LEFT_Y_DEADBAND),
+                () -> MathUtil.applyDeadband(driverController.getRawAxis(0),
+                        OperatorConstants.LEFT_X_DEADBAND),
+                () -> -driverController.getRawAxis(4), () -> true);
 
-    drivebase.setDefaultCommand(
-        !RobotBase.isSimulation() ? closedFieldRel : closedAbsoluteDriveAdv);
-    autoChooser = AutoBuilder.buildAutoChooser();
-    SmartDashboard.putData("Auto Chooser", autoChooser);
-  }
+        drivebase.setDefaultCommand(
+                !RobotBase.isSimulation() ? closedFieldRel : closedAbsoluteDriveAdv);
+        autoChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Auto Chooser", autoChooser);
+    }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be
-   * created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
-   * an arbitrary predicate, or via the
-   * named factories in
-   * {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses
-   * for
-   * {@link CommandXboxController
-   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4}
-   * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick
-   * Flight joysticks}.
-   */
-  private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    /**
+     * Use this method to define your trigger->command mappings. Triggers can be
+     * created via the
+     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+     * an arbitrary predicate, or via the
+     * named factories in
+     * {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses
+     * for
+     * {@link CommandXboxController
+     * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4}
+     * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick
+     * Flight joysticks}.
+     */
+    private void configureBindings() {
+        // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-    driverController.button(1).onTrue((new InstantCommand(drivebase::zeroGyro)));
-    new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
-    // new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
-    // InstantCommand(drivebase::lock, drivebase)));
-  }
+        driverController.button(1).onTrue((new InstantCommand(drivebase::zeroGyro)));
+        new JoystickButton(driverXbox, 3).onTrue(new InstantCommand(drivebase::addFakeVisionReading));
+        // new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
+        // InstantCommand(drivebase::lock, drivebase)));
+    }
 
-  public void setDriveMode() {
-    // drivebase.setDefaultCommand();
-  }
+    public void setDriveMode() {
+        // drivebase.setDefaultCommand();
+    }
 
-  public Command getAutonomousCommand() {
-    return autoChooser.getSelected();
-  }
+    public Command getAutonomousCommand() {
+        return autoChooser.getSelected();
+    }
 
-  public void setMotorBrake(boolean brake) {
-    drivebase.setMotorBrake(brake);
-  }
+    public void setMotorBrake(boolean brake) {
+        drivebase.setMotorBrake(brake);
+    }
 }

@@ -1,6 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.subsystems.swervedrive;
 
@@ -21,6 +18,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+
 import java.io.File;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
@@ -41,7 +40,7 @@ public class SwerveSubsystem extends SubsystemBase {
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public double maximumSpeed = 1;
+  public static double MAXIMUM_SPEED = 5;
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -53,13 +52,10 @@ public class SwerveSubsystem extends SubsystemBase {
     // objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try {
-      swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed, 360,
+      swerveDrive = new SwerveParser(directory).createSwerveDrive(MAXIMUM_SPEED, 360,
 
           SwerveMath.calculateMetersPerRotation(0.076, 40.0 / 11.0));
-      // Alternative method if you don't want to supply the conversion factor via JSON
-      // files.
-      // swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed,
-      // angleConversionFactor, driveConversionFactor);
+
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -79,11 +75,9 @@ public class SwerveSubsystem extends SubsystemBase {
         this::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-            new PIDConstants(1, 0.0, 0.0),
+            Constants.Auton.TranslationPID,
             // Translation PID constants
-            new PIDConstants(1.5,
-                0,
-                0),
+            Constants.Auton.angleAutoPID,
             // Rotation PID constants
             10,
             // Max module speed, in m/s
@@ -137,7 +131,7 @@ public class SwerveSubsystem extends SubsystemBase {
       DoubleSupplier angularRotationX) {
     return run(() -> {
       // Make the robot move
-      swerveDrive.drive(new Translation2d(translationX.getAsDouble() * maximumSpeed, translationY.getAsDouble()),
+      swerveDrive.drive(new Translation2d(translationX.getAsDouble() * MAXIMUM_SPEED, translationY.getAsDouble()),
           angularRotationX.getAsDouble() * swerveDrive.swerveController.config.maxAngularVelocity,
           true,
           false);
@@ -151,7 +145,7 @@ public class SwerveSubsystem extends SubsystemBase {
    * @param controllerCfg Swerve Controller.
    */
   public SwerveSubsystem(SwerveDriveConfiguration driveCfg, SwerveControllerConfiguration controllerCfg) {
-    swerveDrive = new SwerveDrive(driveCfg, controllerCfg, maximumSpeed);
+    swerveDrive = new SwerveDrive(driveCfg, controllerCfg, MAXIMUM_SPEED);
   }
 
   /**
@@ -200,14 +194,6 @@ public class SwerveSubsystem extends SubsystemBase {
    */
   public void drive(ChassisSpeeds velocity) {
     swerveDrive.drive(velocity);
-  }
-
-  @Override
-  public void periodic() {
-  }
-
-  @Override
-  public void simulationPeriodic() {
   }
 
   /**
@@ -299,14 +285,14 @@ public class SwerveSubsystem extends SubsystemBase {
    * @return {@link ChassisSpeeds} which can be sent to th Swerve Drive.
    */
   public ChassisSpeeds getTargetSpeeds(double xInput, double yInput, double headingX, double headingY) {
-    xInput = Math.pow(xInput, 3);
-    yInput = Math.pow(yInput, 3);
-    return swerveDrive.swerveController.getTargetSpeeds(xInput,
-        yInput,
+    double curvedXInput = Math.pow(xInput, 3);
+    double curvedYInput = Math.pow(yInput, 3);
+    return swerveDrive.swerveController.getTargetSpeeds(curvedXInput,
+        curvedYInput,
         headingX,
         headingY,
         getHeading().getRadians(),
-        maximumSpeed);
+        MAXIMUM_SPEED);
   }
 
   /**
@@ -320,13 +306,13 @@ public class SwerveSubsystem extends SubsystemBase {
    * @return {@link ChassisSpeeds} which can be sent to th Swerve Drive.
    */
   public ChassisSpeeds getTargetSpeeds(double xInput, double yInput, Rotation2d angle) {
-    xInput = Math.pow(xInput, 3);
-    yInput = Math.pow(yInput, 3);
-    return swerveDrive.swerveController.getTargetSpeeds(xInput,
-        yInput,
+    double curvedXInput = Math.pow(xInput, 3);
+    double curvedYInput = Math.pow(yInput, 3);
+    return swerveDrive.swerveController.getTargetSpeeds(curvedXInput,
+        curvedYInput,
         angle.getRadians(),
         getHeading().getRadians(),
-        maximumSpeed);
+        MAXIMUM_SPEED);
   }
 
   /**
