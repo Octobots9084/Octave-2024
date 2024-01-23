@@ -18,8 +18,8 @@ public class ReverseKinematics {
     private static double vf = 10;
 
     // X and Y positions of the subwoofer with regards to (0,0) on the robot's Pose2d
-    private static double subwooferYPos = 5;
-    private static double subwooferXPos = 2;
+    private static double subwooferYPos = 0;
+    private static double subwooferXPos = 0;
 
     // converts Pose2d coords into positions relative to the target
     private static Pose2d convert2dCoords(Pose2d pos) {
