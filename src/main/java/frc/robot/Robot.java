@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
     // let the robot stop
     // immediately when disabled, but then also let it be pushed more
     disabledTimer = new Timer();
+
   }
 
   /**
@@ -134,15 +135,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    m_robotContainer.getRobotPose();
   }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+
     try {
-      new SwerveParser(new File(Filesystem.getDeployDirectory(), "swerve"));
+      File swerveFile = new File(Filesystem.getDeployDirectory(), "swerve");
+      new SwerveParser(swerveFile);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
