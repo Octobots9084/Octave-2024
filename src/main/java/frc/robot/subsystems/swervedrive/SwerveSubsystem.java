@@ -2,19 +2,16 @@
 package frc.robot.subsystems.swervedrive;
 
 import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -37,6 +34,7 @@ public class SwerveSubsystem extends SubsystemBase {
    * Swerve drive object.
    */
   private final SwerveDrive swerveDrive;
+  private static SwerveSubsystem swerveSubsystem;
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
@@ -47,7 +45,7 @@ public class SwerveSubsystem extends SubsystemBase {
    *
    * @param directory Directory of swerve drive config files.
    */
-  public SwerveSubsystem(File directory) {
+  private SwerveSubsystem(File directory) {
 
     // objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
@@ -63,6 +61,19 @@ public class SwerveSubsystem extends SubsystemBase {
                                              // angle.
 
     setupPathPlanner();
+  }
+
+  public static SwerveSubsystem getInstance() {
+    if (swerveSubsystem == null) {
+      swerveSubsystem = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
+          "swerve"));
+    }
+
+    return swerveSubsystem;
+  }
+
+  public SwerveDrive getSwerveDrive() {
+    return this.swerveDrive;
   }
 
   /**
