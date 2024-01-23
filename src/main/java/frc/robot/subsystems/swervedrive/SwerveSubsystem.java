@@ -30,6 +30,8 @@ import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class SwerveSubsystem extends SubsystemBase {
 
+  private Rotation2d shootingRequest;
+  private boolean shootingRequestActive;
   /**
    * Swerve drive object.
    */
@@ -149,6 +151,7 @@ public class SwerveSubsystem extends SubsystemBase {
     });
   }
 
+
   /**
    * Construct the swerve drive.
    *
@@ -189,6 +192,14 @@ public class SwerveSubsystem extends SubsystemBase {
         false); // Open loop is disabled since it shouldn't be used most of the time.
   }
 
+  public void setShootingRequest(Rotation2d target){
+    shootingRequest = target;
+  }
+
+  public void setShootingRequestActive(boolean isActive){
+    shootingRequestActive = isActive;
+  }
+  
   /**
    * Drive the robot given a chassis field oriented velocity.
    *
