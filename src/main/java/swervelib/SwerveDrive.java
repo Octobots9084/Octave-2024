@@ -126,7 +126,7 @@ public class SwerveDrive {
   /**
    * Swerve IMU device for sensing the heading of the robot.
    */
-  private SwerveIMU imu;
+  public SwerveIMU imu;
   /**
    * Simulation of the swerve drive.
    */
