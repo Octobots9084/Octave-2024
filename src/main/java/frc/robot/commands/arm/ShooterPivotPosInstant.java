@@ -7,6 +7,7 @@ import frc.robot.subsystems.ShooterPivot;
 public class ShooterPivotPosInstant extends InstantCommand{
     ArmPositions armPositions;
     ShooterPivot pivot;
+    
     public ShooterPivotPosInstant(ArmPositions armPositions) {
         this.armPositions = armPositions;
         pivot = ShooterPivot.getInstance();
