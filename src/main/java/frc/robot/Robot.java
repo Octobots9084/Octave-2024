@@ -141,8 +141,10 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+
     try {
-      new SwerveParser(new File(Filesystem.getDeployDirectory(), "swerve"));
+      File swerveFile = new File(Filesystem.getDeployDirectory(), "swerve");
+      new SwerveParser(swerveFile);
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
