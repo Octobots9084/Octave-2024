@@ -58,6 +58,7 @@ public final class Constants {
         public static final double LEFT_Y_DEADBAND = 0.01;
         public static final double RIGHT_X_DEADBAND = 0.01;
         public static final double TURN_CONSTANT = 6;
+        public static final int JOYSTICK_PORT = 1;
     }
 
     public static class FieldConstants {
@@ -117,6 +118,5 @@ public final class Constants {
         public static final double DISTANCE_WEIGHT = 7;
         public static final int TAG_PRESENCE_WEIGHT = 10;
 
-        public static final int JOYSTICK_PORT = 1;
     }
 }

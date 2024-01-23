@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.vision.VisionEstimation;
 import swervelib.imu.NavXSwerve;
 
 import java.io.File;
@@ -38,6 +39,8 @@ public class RobotContainer {
     CommandJoystick driverController = new CommandJoystick(Constants.OperatorConstants.JOYSTICK_PORT);
 
     // CommandJoystick driverController = new
+
+    private final VisionEstimation visionEstimation = new VisionEstimation(SwerveSubsystem.getInstance());
 
     private final SendableChooser<Command> autoChooser;
 
@@ -142,5 +145,13 @@ public class RobotContainer {
 
     public void setMotorBrake(boolean brake) {
         SwerveSubsystem.getInstance().setMotorBrake(brake);
+    }
+
+    public void getRobotPose() {
+        SwerveSubsystem.getInstance().getPose();
+    }
+
+    public VisionEstimation getVisionEstimation() {
+        return visionEstimation;
     }
 }
