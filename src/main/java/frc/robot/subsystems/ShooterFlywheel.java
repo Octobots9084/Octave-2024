@@ -25,6 +25,7 @@ public class ShooterFlywheel extends SubsystemBase{
     private SparkPIDController motor2pid;
 
     private double lastSpeed;
+    private double circumference;
 
     public ShooterFlywheel(){
         motorOne = new CANSparkFlex(3, MotorType.kBrushless);
@@ -39,6 +40,11 @@ public class ShooterFlywheel extends SubsystemBase{
         motor2pid.setFF(0.000155);
 
         motorTwo.follow(motorOne);
+
+        // FIXME
+        circumference = 1; 
+        // this needs to be made accurate later
+        // it is the circumference of a launcher flywheel
     }
 
     public void setFlywheelSpeed(double newSpeed){
@@ -53,6 +59,14 @@ public class ShooterFlywheel extends SubsystemBase{
     
     public void setFlywheelSpeed(ShooterSpeeds shooterSpeeds){
         setFlywheelSpeed(shooterSpeeds.flywheels);
+    }
+
+    public void setFlyWheelSpeedMeters(double speed) {
+        motorOne.getPIDController().setReference(lastSpeed/circumference, ControlType.kVelocity);
+    }
+
+    public double getFlywheelSpeedMeters() {
+        return getFlywheelSpeed()*circumference;
     }
 
     public double getLastTargetSpeed() {
