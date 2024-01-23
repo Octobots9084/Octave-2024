@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.swervedrive.PathfindingTest;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import swervelib.imu.NavXSwerve;
@@ -124,8 +125,13 @@ public class RobotContainer {
                         NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
                         AHRS gyro = (AHRS) navx.getIMU();
                         gyro.reset();
-
+                      
                 })));
+
+                driverController.button(3).onTrue(
+                        PathfindingTest.getTest()
+                        );
+
 
                 // new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
                 // InstantCommand(SwerveSubsystem.getInstance()::lock,
