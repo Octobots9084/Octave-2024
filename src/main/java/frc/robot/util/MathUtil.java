@@ -64,18 +64,18 @@ public class MathUtil {
      * @since 0.1.0
      */
     public static double fitDeadband(double val, double deadband) {
-        if (!(Math.abs(val) < deadband)) {
+        if (Math.abs(val) >= deadband) {
             if (val > 0) {
                 if (val >= 1) {
                     return 1;
                 } else {
-                    return (val - deadband) * 1 / (1 - deadband);
+                    return (val - deadband) / (1 - deadband);
                 }
             } else if (val < 0) {
                 if (val <= -1) {
                     return -1;
                 } else {
-                    return (val + deadband) * 1 / (1 - deadband);
+                    return (val + deadband) / (1 - deadband);
                 }
             }
         }
