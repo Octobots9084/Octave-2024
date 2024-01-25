@@ -65,7 +65,7 @@ public class ReverseKinematics {
 
     // returns the angle of the launcher required
     // 0 is parallel to the floor, pi/2 is vertically upwards
-    public static double calcsubwooferLaunchAngle(Pose2d pos, ChassisSpeeds speed) {
+    public static double calcSubwooferLaunchAngle(Pose2d pos, ChassisSpeeds speed) {
         pos = convert2dCoords(pos);
         speed = convertSpeed(pos, speed);
         return Math.atan(calcLaunchVerticalVel()/Math.sqrt(Math.pow(calcLaunchXVel(pos, speed), 2) + Math.pow(calcLaunchYVel(pos, speed), 2)));
