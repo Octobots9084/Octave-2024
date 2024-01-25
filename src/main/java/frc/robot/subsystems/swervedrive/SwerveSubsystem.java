@@ -31,7 +31,7 @@ import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 public class SwerveSubsystem extends SubsystemBase {
 
   private Rotation2d shootingRequest;
-  private boolean shootingRequestActive;
+  private boolean shootingRequestActive = false;
   /**
    * Swerve drive object.
    */
@@ -199,6 +199,14 @@ public class SwerveSubsystem extends SubsystemBase {
   public void setShootingRequestActive(boolean isActive){
     shootingRequestActive = isActive;
   }
+
+  public boolean getShootingRequestActive(){
+    return shootingRequestActive;
+  }
+
+  public Rotation2d getShootingRequest(){
+    return shootingRequest;
+  }
   
   /**
    * Drive the robot given a chassis field oriented velocity.
@@ -328,8 +336,8 @@ public class SwerveSubsystem extends SubsystemBase {
    * @return {@link ChassisSpeeds} which can be sent to th Swerve Drive.
    */
   public ChassisSpeeds getTargetSpeeds(double xInput, double yInput, Rotation2d angle) {
-    double curvedXInput = Math.pow(xInput, 3);
-    double curvedYInput = Math.pow(yInput, 3);
+    double curvedXInput = Math.pow(xInput, 2);
+    double curvedYInput = Math.pow(yInput, 2);
     return swerveDrive.swerveController.getTargetSpeeds(curvedXInput,
         curvedYInput,
         angle.getRadians(),

@@ -30,6 +30,11 @@ public class Driveby extends Command{
         swerveSubsystem = SwerveSubsystem.getInstance();
     }
 
+    @Override
+    public void initialize() {
+        swerveSubsystem.setShootingRequestActive(true);
+    }
+
     public void updateTargets(){
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
@@ -62,5 +67,6 @@ public class Driveby extends Command{
         if (!inturupted){
             CommandScheduler.getInstance().schedule(new TheBigYeet());
         }
+        swerveSubsystem.setShootingRequestActive(false);
     }
 }
