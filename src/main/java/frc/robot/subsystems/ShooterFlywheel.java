@@ -1,8 +1,11 @@
 package frc.robot.subsystems;
 import com.revrobotics.CANSparkFlex;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ShooterSpeeds;
 
@@ -16,23 +19,54 @@ public class ShooterFlywheel extends SubsystemBase{
     }
     
     private CANSparkFlex motorOne;
+    private SparkPIDController motor1pid;
+
     private CANSparkFlex motorTwo;
+    private SparkPIDController motor2pid;
 
     private double lastSpeed;
+    private double circumference;
 
     public ShooterFlywheel(){
-        motorOne = new CANSparkFlex(0, MotorType.kBrushless);
-        motorTwo = new CANSparkFlex(0, MotorType.kBrushless);
+        motorOne = new CANSparkFlex(3, MotorType.kBrushless);
+        motorTwo = new CANSparkFlex(12, MotorType.kBrushless);
+        
+        motor1pid = motorOne.getPIDController();
+        motor1pid.setP(0);
+        motor1pid.setFF(0.000155);
+
+        motor2pid = motorTwo.getPIDController();
+        motor2pid.setP(0);
+        motor2pid.setFF(0.000155);
+
         motorTwo.follow(motorOne);
+
+        // FIXME
+        circumference = 1; 
+        // this needs to be made accurate later
+        // it is the circumference of a launcher flywheel
     }
 
     public void setFlywheelSpeed(double newSpeed){
         lastSpeed = newSpeed;
         motorOne.getPIDController().setReference(newSpeed, ControlType.kVelocity);
     }
+
+    public void increaseFlywheelSpeed(double increment) {
+        lastSpeed += increment;
+        motorOne.getPIDController().setReference(lastSpeed, ControlType.kVelocity);
+    }
     
     public void setFlywheelSpeed(ShooterSpeeds shooterSpeeds){
         setFlywheelSpeed(shooterSpeeds.flywheels);
+    }
+
+    public void setFlyWheelSpeedMeters(double speed) {
+        motorOne.getPIDController().setReference(lastSpeed/circumference, ControlType.kVelocity);
+    }
+
+    public double getFlywheelSpeedMeters() {
+        return getFlywheelSpeed()*circumference;
     }
 
     public double getLastTargetSpeed() {
@@ -45,5 +79,15 @@ public class ShooterFlywheel extends SubsystemBase{
 
     public double getAuxiluryFlywheelSpeed() {
         return motorTwo.getEncoder().getVelocity();
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("set speed", lastSpeed);
+        SmartDashboard.putNumber("current speed", getFlywheelSpeed());
+        SmartDashboard.putNumber("current speed 2", getAuxiluryFlywheelSpeed());
+
+        SmartDashboard.putNumber("P", motor1pid.getP());
+        SmartDashboard.putNumber("F", motor1pid.getFF());
     }
 }
