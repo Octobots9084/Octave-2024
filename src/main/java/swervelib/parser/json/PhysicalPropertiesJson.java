@@ -26,7 +26,7 @@ public class PhysicalPropertiesJson
   /**
    * The grip tape coefficient of friction on carpet. Used to calculate the practical maximum acceleration.
    */
-  public double            wheelGripCoefficientOfFriction = 1.19;
+  public double            wheelGripCoefficientOfFriction = 1;
   /**
    * The voltage to use for the smart motor voltage compensation, default is 12.
    */
