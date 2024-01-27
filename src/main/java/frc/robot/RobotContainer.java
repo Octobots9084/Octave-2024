@@ -40,7 +40,7 @@ public class RobotContainer {
 
     // CommandJoystick driverController = new
 
-    private final VisionEstimation visionEstimation = new VisionEstimation(SwerveSubsystem.getInstance());
+    private final VisionEstimation visionEstimation = new VisionEstimation();
 
     private final SendableChooser<Command> autoChooser;
 
@@ -96,7 +96,7 @@ public class RobotContainer {
                         OperatorConstants.LEFT_Y_DEADBAND),
                 () -> MathUtil.applyDeadband(driverController.getRawAxis(0),
                         OperatorConstants.LEFT_X_DEADBAND),
-                () -> -driverController.getRawAxis(4), () -> true);
+                () -> -driverController.getRawAxis(2), () -> true);
 
         SwerveSubsystem.getInstance().setDefaultCommand(
                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
@@ -145,10 +145,6 @@ public class RobotContainer {
 
     public void setMotorBrake(boolean brake) {
         SwerveSubsystem.getInstance().setMotorBrake(brake);
-    }
-
-    public void getRobotPose() {
-        SwerveSubsystem.getInstance().getPose();
     }
 
     public VisionEstimation getVisionEstimation() {

@@ -44,38 +44,35 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 public class VisionEstimation extends SubsystemBase {
     private final SwerveSubsystem swerveSubsystem;
 
-    private int number = 0;
-
     public Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.9,
             0.9,
             0.9);
 
-    private final Vision frontRightEstimator = new Vision(new PhotonCamera("Octocam_2"),
+    private final Vision frontRightEstimator = new Vision(new PhotonCamera("Inky"),
             VisionConstants.ROBOT_TO_FRONT_RIGHT_CAMERA);
-    // private final VisionRunnable frontLeftEstimator = new VisionRunnable(new PhotonCamera("Octocam_3"),
-    //         VisionConstants.ROBOT_TO_FRONT_LEFT_CAMERA);
-    // private final VisionRunnable backRightEstimator = new VisionRunnable(new PhotonCamera("backRightCamera"),
-    //         VisionConstants.ROBOT_TO_BACK_RIGHT_CAMERA);
-    // private final VisionRunnable backLeftEstimator = new VisionRunnable(new PhotonCamera("backLeftCamera"),
-    //         VisionConstants.ROBOT_TO_BACK_LEFT_CAMERA);
+    private final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
+            VisionConstants.ROBOT_TO_FRONT_LEFT_CAMERA);
+    private final Vision backRightEstimator = new Vision(new PhotonCamera("Pinky"),
+            VisionConstants.ROBOT_TO_BACK_RIGHT_CAMERA);
+    private final Vision backLeftEstimator = new Vision(new PhotonCamera("Clyde"),
+            VisionConstants.ROBOT_TO_BACK_LEFT_CAMERA);
 
     private final Notifier allNotifier = new Notifier(() -> {
         frontRightEstimator.run();
-        // frontLeftEstimator.run();
-        // backRightEstimator.run();
-        // backLeftEstimator.run();
+        frontLeftEstimator.run();
+        backRightEstimator.run();
+        backLeftEstimator.run();
     });
 
     private OriginPosition originPosition = kBlueAllianceWallRightSide;
 
-    public VisionEstimation(SwerveSubsystem swerve) {
-        this.swerveSubsystem = swerve;
+    public VisionEstimation() {
+        this.swerveSubsystem = SwerveSubsystem.getInstance();
 
         allNotifier.setName("runAll");
         allNotifier.startPeriodic(0.02);
 
         // prevTime.set(Timer.getFPGATimestamp());
-        SmartDashboard.putString("VPE", "Estimation Started");
         this.swerveSubsystem.getPose();
     }
 
@@ -83,16 +80,15 @@ public class VisionEstimation extends SubsystemBase {
     public void periodic() {
         if (VisionConstants.USE_VISION) {
             estimatorChecker(frontRightEstimator);
-            // estimatorChecker(frontLeftEstimator);
-            // estimatorChecker(backRightEstimator);
-            // estimatorChecker(backLeftEstimator);
+            estimatorChecker(frontLeftEstimator);
+            estimatorChecker(backRightEstimator);
+            estimatorChecker(backLeftEstimator);
         } else {
             allNotifier.close();
         }
 
         // Set the pose on the dashboard
         var dashboardPose = swerveSubsystem.getPose();
-        SmartDashboard.putNumber("VPE Number", number += 1);
         if (originPosition == kRedAllianceWallRightSide) {
             // Flip the pose when red, since the dashboard field photo cannot be rotated
             dashboardPose = flipAlliance(dashboardPose);
@@ -148,9 +144,7 @@ public class VisionEstimation extends SubsystemBase {
 
     public void estimatorChecker(Vision estimator) {
         var cameraPose = estimator.grabLatestEstimatedPose();
-        // System.out.println("hello");
         if (cameraPose != null) {
-            System.out.println("Bye");
             // New pose from vision
             var pose2d = cameraPose.estimatedPose.toPose2d();
             if (originPosition == kRedAllianceWallRightSide) {

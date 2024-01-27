@@ -27,6 +27,7 @@ public class Vision implements Runnable {
   public Vision(PhotonCamera cameraName, Transform3d robotToCamera) {
     this.photonCamera = cameraName;
     PhotonPoseEstimator photonPoseEstimator = null;
+
     try {
       var layout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
       layout.setOrigin(OriginPosition.kBlueAllianceWallRightSide); // Sets the Origin to the Blue AllianceWall and will be flipped in the robot thread
@@ -51,13 +52,15 @@ public class Vision implements Runnable {
     try {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult(); //Gets the latest camera results
+        SmartDashboard.putString(photonCamera.getName(),
+            photonCamera.getLatestResult().getMultiTagResult().estimatedPose.toString());
         if (photonResults.hasTargets() && (photonResults.targets.size() > 1
             || photonResults.targets.get(0).getPoseAmbiguity() < VisionConstants.APRILTAG_AMBIGUITY_THRESHOLD)) {
           //Updates the pose estimator
           photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
             var estimatedPose = estimatedRobotPose.estimatedPose;
-            SmartDashboard.putNumber("estimatedPoseX", estimatedPose.toPose2d().getX());
-            SmartDashboard.putNumber("estimatedPoseY", estimatedPose.toPose2d().getY());
+            // SmartDashboard.putNumber("estimatedPoseX", estimatedPose.toPose2d().getX());
+            // SmartDashboard.putNumber("estimatedPoseY", estimatedPose.toPose2d().getY());
             /** 
             * If present then makes sure the measurement is on the field and
             * sets the atomic estimated pose to the current estimated pose
@@ -66,8 +69,6 @@ public class Vision implements Runnable {
             if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.length
                 && estimatedPose.getY() > 0.0
                 && estimatedPose.getY() <= FieldConstants.width) {
-              // System.out.println("atomicEstimatedRobotPose");
-              SmartDashboard.putString("atomicEstimatedRobotPose", "atomicEstimatedRobotPose working");
               atomicEstimatedRobotPose.set(estimatedRobotPose);
             }
           });
