@@ -29,7 +29,7 @@ public class TestingPaths extends SequentialCommandGroup{
     }
 
     public Command piece3() {
-        return AutoBuilder.pathfindToPose(new Pose2d(8.3, 4.1, new Rotation2d(0)), new PathConstraints(1, 2, 1, 2));
+        return AutoBuilder.pathfindToPose(new Pose2d(8.3, 2.41, new Rotation2d(0)), new PathConstraints(1, 2, 1, 2));
     }
 
 }
