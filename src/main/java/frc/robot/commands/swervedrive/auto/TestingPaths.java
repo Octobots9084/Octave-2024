@@ -21,15 +21,15 @@ public class TestingPaths extends SequentialCommandGroup{
     }
 
     public Command piece1() {
-        return AutoBuilder.pathfindToPose(new Pose2d(2.7, 3.6, new Rotation2d(0)), new PathConstraints(1, 2, 1, 2),1);
+        return AutoBuilder.pathfindToPose(new Pose2d(2.63, 4.13, new Rotation2d(0)), new PathConstraints(1, 2, 1, 2),1);
     }
 
     public Command piece2() {
-        return AutoBuilder.pathfindToPose(new Pose2d(9.25, -.5, new Rotation2d(0)), new PathConstraints(1, 2, 1, 2), 1);
+        return AutoBuilder.pathfindToPose(new Pose2d(8.3, 0.7, new Rotation2d(0)), new PathConstraints(1, 2, 1, 2), 1);
     }
 
     public Command piece3() {
-        return AutoBuilder.pathfindToPose(new Pose2d(9.25, 1.5, new Rotation2d(0)), new PathConstraints(1, 2, 1, 2));
+        return AutoBuilder.pathfindToPose(new Pose2d(8.3, 4.1, new Rotation2d(0)), new PathConstraints(1, 2, 1, 2));
     }
 
 }
