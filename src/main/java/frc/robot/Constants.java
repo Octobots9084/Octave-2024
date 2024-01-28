@@ -67,6 +67,8 @@ public final class Constants {
         }
 
         public static final class VisionConstants {
+                private static double Y = (51.5 / 100) / 2;
+                private static double X = (53.5 / 100) / 2;
 
                 public static boolean USE_VISION = true;
 
@@ -75,10 +77,14 @@ public final class Constants {
                  * the
                  * robot.
                  */
+                // public static final Transform3d ROBOT_TO_FRONT_RIGHT_CAMERA = new Transform3d(
+                //                 new Translation3d(Units.inchesToMeters(10.531496), Units.inchesToMeters(10.137795),
+                //                                 Units.inchesToMeters(14.37)),
+                //                 new Rotation3d(0, Math.toRadians(50), Math.toRadians(0)));
                 public static final Transform3d ROBOT_TO_FRONT_RIGHT_CAMERA = new Transform3d(
-                                new Translation3d(Units.inchesToMeters(10.433), Units.inchesToMeters(10.433),
+                                new Translation3d(X, Y,
                                                 Units.inchesToMeters(14.37)),
-                                new Rotation3d(0, Math.toRadians(45), Math.toRadians(0)));
+                                new Rotation3d(0, Math.toRadians(50), Math.toRadians(0)));
 
                 /**
                  * Physical location of the front left camera on the robot, relative to the center of
@@ -86,7 +92,7 @@ public final class Constants {
                  * robot.
                  */
                 public static final Transform3d ROBOT_TO_FRONT_LEFT_CAMERA = new Transform3d(
-                                new Translation3d(Units.inchesToMeters(10.433), Units.inchesToMeters(-10.433),
+                                new Translation3d(X, -Y,
                                                 Units.inchesToMeters(14.37)),
                                 new Rotation3d(0, Math.toRadians(45), Math.toRadians(0)));
 
@@ -96,9 +102,9 @@ public final class Constants {
                  * robot.
                  */
                 public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
-                                new Translation3d(Units.inchesToMeters(-10.433), Units.inchesToMeters(10.433),
+                                new Translation3d(-X, Y,
                                                 Units.inchesToMeters(14.37)),
-                                new Rotation3d(0, Math.toRadians(-45), Math.toRadians(180)));
+                                new Rotation3d(0, Math.toRadians(-60), Math.toRadians(180)));
 
                 /**
                  * Physical location of the back left camera on the robot, relative to the center of
@@ -106,9 +112,9 @@ public final class Constants {
                  * robot.
                  */
                 public static final Transform3d ROBOT_TO_BACK_LEFT_CAMERA = new Transform3d(
-                                new Translation3d(Units.inchesToMeters(-10.433), Units.inchesToMeters(-10.433),
+                                new Translation3d(-X, -Y,
                                                 Units.inchesToMeters(14.37)),
-                                new Rotation3d(0, Math.toRadians(-45), Math.toRadians(180)));
+                                new Rotation3d(0, Math.toRadians(-55), Math.toRadians(180)));
 
                 /** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
                 public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
