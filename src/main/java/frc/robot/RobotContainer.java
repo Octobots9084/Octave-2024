@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.swervedrive.auto.TestingPaths;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
@@ -96,7 +97,7 @@ public class RobotContainer {
                         OperatorConstants.LEFT_Y_DEADBAND),
                 () -> MathUtil.applyDeadband(driverController.getRawAxis(0),
                         OperatorConstants.LEFT_X_DEADBAND),
-                () -> -driverController.getRawAxis(2), () -> true);
+                () -> -driverController.getRawAxis(4), () -> true);
 
         SwerveSubsystem.getInstance().setDefaultCommand(
                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
@@ -129,6 +130,7 @@ public class RobotContainer {
             gyro.reset();
 
         })));
+        driverController.button(3).onTrue(new TestingPaths());
 
         // new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
         // InstantCommand(SwerveSubsystem.getInstance()::lock,
