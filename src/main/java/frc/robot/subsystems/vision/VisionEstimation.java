@@ -98,7 +98,7 @@ public class VisionEstimation extends SubsystemBase {
     /**
     * Transforms a pose to the opposite alliance's coordinate system. (0,0) is
     * always on the right corner of your
-    * alliance wall, so for 2023, the field elements are at different coordinates
+    * alliance wall, the field elements are at different coordinates
     * for each alliance.
     * 
     * @param poseToFlip pose to transform to the other alliance
