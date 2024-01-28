@@ -84,7 +84,7 @@ public final class Constants {
                 public static final Transform3d ROBOT_TO_FRONT_RIGHT_CAMERA = new Transform3d(
                                 new Translation3d(X, -Y,
                                                 Units.inchesToMeters(14.37)),
-                                new Rotation3d(0, Math.toRadians(0), Math.toRadians(0)));
+                                new Rotation3d(0, Math.toRadians(30), Math.toRadians(0)));
 
                 /**
                  * Physical location of the front left camera on the robot, relative to the center of
@@ -92,7 +92,7 @@ public final class Constants {
                  * robot.
                  */
                 public static final Transform3d ROBOT_TO_FRONT_LEFT_CAMERA = new Transform3d(
-                                new Translation3d(X, Y,
+                                new Translation3d(-X, -Y,
                                                 Units.inchesToMeters(14.37)),
                                 new Rotation3d(0, Math.toRadians(45), Math.toRadians(0)));
 
@@ -102,7 +102,7 @@ public final class Constants {
                  * robot.
                  */
                 public static final Transform3d ROBOT_TO_BACK_RIGHT_CAMERA = new Transform3d(
-                                new Translation3d(-X, -Y,
+                                new Translation3d(X, Y,
                                                 Units.inchesToMeters(14.37)),
                                 new Rotation3d(0, Math.toRadians(-30), Math.toRadians(180)));
 
