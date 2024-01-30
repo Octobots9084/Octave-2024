@@ -93,7 +93,7 @@ public final class Constants {
          */
         public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
                 new Translation3d(X, Y, Z),
-                new Rotation3d(Math.toRadians(-68), 0, Math.toRadians(0)));
+                new Rotation3d(Math.toRadians(-160), 0, Math.toRadians(0)));
 
         /**
         * Physical location of the back left camera on the robot, relative to the center of
