@@ -49,13 +49,13 @@ public class VisionEstimation extends SubsystemBase {
             0.9);
 
     private final Vision frontRightEstimator = new Vision(new PhotonCamera("Inky"),
-            VisionConstants.ROBOT_TO_FRONT_RIGHT_CAMERA);
+            VisionConstants.ROBOT_TO_INKY);
     private final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
-            VisionConstants.ROBOT_TO_FRONT_LEFT_CAMERA);
+            VisionConstants.ROBOT_TO_BLINKY);
     private final Vision backRightEstimator = new Vision(new PhotonCamera("Pinky"),
-            VisionConstants.ROBOT_TO_BACK_RIGHT_CAMERA);
+            VisionConstants.ROBOT_TO_PINKY);
     private final Vision backLeftEstimator = new Vision(new PhotonCamera("Clyde"),
-            VisionConstants.ROBOT_TO_BACK_LEFT_CAMERA);
+            VisionConstants.ROBOT_TO_CLYDE);
 
     private final Notifier allNotifier = new Notifier(() -> {
         frontRightEstimator.run();
@@ -117,8 +117,9 @@ public class VisionEstimation extends SubsystemBase {
     private Matrix<N3, N1> confidenceCalculator(EstimatedRobotPose estimation) {
         double smallestDistance = Double.POSITIVE_INFINITY;
         for (var target : estimation.targetsUsed) {
-            var t3d = target.getBestCameraToTarget();
-            var distance = Math.sqrt(Math.pow(t3d.getX(), 2) + Math.pow(t3d.getY(), 2) + Math.pow(t3d.getZ(), 2));
+            var target3D = target.getBestCameraToTarget();
+            var distance = Math
+                    .sqrt(Math.pow(target3D.getX(), 2) + Math.pow(target3D.getY(), 2) + Math.pow(target3D.getZ(), 2));
             if (distance < smallestDistance)
                 smallestDistance = distance;
         }
