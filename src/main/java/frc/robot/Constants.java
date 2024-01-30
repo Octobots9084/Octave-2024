@@ -73,27 +73,27 @@ public final class Constants {
 
         public static boolean USE_VISION = true;
 
-        // Front Left is Positive-Positive
+        // Front Right is Positive-Positive
         // Axis X: Front to Back
         // Axis Y: Left to Right
 
         /**
-        * Physical location of the front left camera on the robot, relative to the center of
+        * Physical location of the front right camera on the robot, relative to the center of
         * the
         * robot.
         */
         public static final Transform3d ROBOT_TO_CLYDE = new Transform3d(
-                new Translation3d(X, -Y, Z),
-                new Rotation3d(Math.toRadians(-87), 0, Math.toRadians(0)));
+                new Translation3d(X, Y, Z),
+                new Rotation3d(Math.toRadians(-190), 0, Math.toRadians(0)));
 
         /**
-         * Physical location of the front right camera on the robot, relative to the center of
+         * Physical location of the front left camera on the robot, relative to the center of
          * the
          * robot.
          */
         public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
-                new Translation3d(X, Y, Z),
-                new Rotation3d(Math.toRadians(-160), 0, Math.toRadians(0)));
+                new Translation3d(X, -Y, Z),
+                new Rotation3d(Math.toRadians(-190), 0, Math.toRadians(0)));
 
         /**
         * Physical location of the back left camera on the robot, relative to the center of
