@@ -80,6 +80,7 @@ public final class Constants {
         * Positive roll is unknown because we didn't use it
         * Positive pitch is towards the front of the robot (CCW positive around the Y axis)
         * Positive yaw is unknown because we didn't use it
+        * Order of operations for rotations, first it rotates around the yaw, then it does pitch
          */
 
         public static final Transform3d ROBOT_TO_CLYDE = new Transform3d(
@@ -91,12 +92,12 @@ public final class Constants {
                 new Rotation3d(Math.toRadians(0), Math.toRadians(-30), Math.toRadians(180)));
 
         public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
-                new Translation3d(-X, -Y, Z),
-                new Rotation3d(0, Math.toRadians(-45), Math.toRadians(0)));
+                new Translation3d(X, Y, Z),
+                new Rotation3d(0, Math.toRadians(-33), Math.toRadians(0)));
 
         public static final Transform3d ROBOT_TO_INKY = new Transform3d(
-                new Translation3d(-X, Y, Z),
-                new Rotation3d(0, Math.toRadians(-30), Math.toRadians(0)));
+                new Translation3d(X, -Y, Z),
+                new Rotation3d(0, Math.toRadians(-33), Math.toRadians(0)));
 
         /** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
         public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
