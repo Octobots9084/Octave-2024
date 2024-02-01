@@ -73,42 +73,26 @@ public final class Constants {
 
         public static boolean USE_VISION = true;
 
-        // Front Right is Positive-Positive
-        // Axis X: Front to Back
-        // Axis Y: Left to Right
+        /*
+        * X positive is forward from the front of the robot
+        * Y positive is left from the front of the robot
+        * Z positive is upwards
+        * Positive roll is unknown because we didn't use it
+        * Positive pitch is towards the front of the robot (CCW positive around the Y axis)
+        * Positive yaw is unknown because we didn't use it
+         */
 
-        /**
-        * Physical location of the front right camera on the robot, relative to the center of
-        * the
-        * robot.
-        */
         public static final Transform3d ROBOT_TO_CLYDE = new Transform3d(
                 new Translation3d(-X, Y, Z),
                 new Rotation3d(Math.toRadians(0), Math.toRadians(-32), Math.toRadians(180)));
 
-        /**
-         * Physical location of the front left camera on the robot, relative to the center of
-         * the
-         * robot.
-         */
         public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
                 new Translation3d(-X, -Y, Z),
                 new Rotation3d(Math.toRadians(0), Math.toRadians(-30), Math.toRadians(180)));
 
-        /**
-        * Physical location of the back left camera on the robot, relative to the center of
-        * the
-        * robot.
-        */
         public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
                 new Translation3d(-X, -Y, Z),
                 new Rotation3d(0, Math.toRadians(-45), Math.toRadians(0)));
-
-        /**
-         * Physical location of the back right camera on the robot, relative to the center of
-         * the
-         * robot.
-         */
 
         public static final Transform3d ROBOT_TO_INKY = new Transform3d(
                 new Translation3d(-X, Y, Z),
