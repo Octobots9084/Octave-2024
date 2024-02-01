@@ -83,8 +83,8 @@ public final class Constants {
         * robot.
         */
         public static final Transform3d ROBOT_TO_CLYDE = new Transform3d(
-                new Translation3d(X, Y, Z),
-                new Rotation3d(Math.toRadians(-190), 0, Math.toRadians(0)));
+                new Translation3d(-X, Y, Z),
+                new Rotation3d(Math.toRadians(0), Math.toRadians(-32), Math.toRadians(180)));
 
         /**
          * Physical location of the front left camera on the robot, relative to the center of
@@ -92,8 +92,8 @@ public final class Constants {
          * robot.
          */
         public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
-                new Translation3d(X, -Y, Z),
-                new Rotation3d(Math.toRadians(-190), 0, Math.toRadians(0)));
+                new Translation3d(-X, -Y, Z),
+                new Rotation3d(Math.toRadians(0), Math.toRadians(-30), Math.toRadians(180)));
 
         /**
         * Physical location of the back left camera on the robot, relative to the center of
