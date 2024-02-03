@@ -4,13 +4,14 @@
 
 package frc.robot.commands.swervedrive.drivebase;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.util.MathUtil;
+
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
@@ -27,6 +28,7 @@ public class TeleopDrive extends Command {
   private final BooleanSupplier driveMode;
   private final SwerveController controller;
   private Rotation2d targetAngle;
+  private boolean targetAngleSet = false;
 
   /**
    * Creates a new ExampleCommand.
@@ -55,11 +57,27 @@ public class TeleopDrive extends Command {
   @Override
   public void execute() {
     double angVelocity = omega.getAsDouble() * 2 * Math.PI;
-    targetAngle = new Rotation2d(targetAngle.getRadians() + (angVelocity)*0.02);
-    ChassisSpeeds desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-        targetAngle);
-        SmartDashboard.putNumber("angVelocity", angVelocity);
+    ChassisSpeeds desiredSpeeds;
+    if (MathUtil.isWithinTolerance(angVelocity, 0, 0.1)) {
+      if (targetAngleSet == false) {
+        targetAngleSet = true;
+        targetAngle = swerve.getHeading();
+      }
+
+      desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
+          targetAngle);
+    } else {
+      targetAngleSet = false;
+      desiredSpeeds = new ChassisSpeeds(vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED,
+          vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED, angVelocity);
+    }
+
+    SmartDashboard.putNumber("angVelocity", angVelocity);
     SmartDashboard.putNumber("targetAngle", targetAngle.getDegrees());
+
+    if (desiredSpeeds.omegaRadiansPerSecond < 0.05 && desiredSpeeds.omegaRadiansPerSecond > -0.05) {
+      desiredSpeeds.omegaRadiansPerSecond = 0;
+    }
     swerve.drive(new Translation2d(desiredSpeeds.vxMetersPerSecond, desiredSpeeds.vyMetersPerSecond),
         desiredSpeeds.omegaRadiansPerSecond,
         driveMode.getAsBoolean());
