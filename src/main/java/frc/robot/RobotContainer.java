@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.hal.SimBoolean;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -14,6 +15,15 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.complex.Collect;
+import frc.robot.commands.complex.Driveby;
+import frc.robot.commands.complex.Dunk;
+import frc.robot.commands.complex.PrepAmp;
+import frc.robot.commands.complex.PrepClimb;
+import frc.robot.commands.complex.PrepSpeaker;
+import frc.robot.commands.complex.SimpleClimb;
+import frc.robot.commands.complex.TheBigYeet;
+import frc.robot.commands.complex.Undunk;
 import frc.robot.commands.swervedrive.auto.TestingPaths;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -37,9 +47,12 @@ public class RobotContainer {
 
     // The robot's subsystems and commands are defined here...
     // Replace with CommandPS4Controller or CommandJoystick if needed
-    CommandJoystick driverController = new CommandJoystick(Constants.OperatorConstants.JOYSTICK_PORT);
-
-    // CommandJoystick driverController = new
+    CommandJoystick driverLeft = new CommandJoystick(Constants.OperatorConstants.DRIVER_LEFT);
+    CommandJoystick driverRight = new CommandJoystick(Constants.OperatorConstants.DRIVER_RIGHT);
+    CommandJoystick driverButtons = new CommandJoystick(Constants.OperatorConstants.DRIVER_BUTTONS);
+    CommandJoystick coDriverLeft = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_LEFT);
+    CommandJoystick coDriverRight = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_RIGHT);
+    CommandJoystick coDriverButtons = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_BUTTONS);
 
     private final VisionEstimation visionEstimation = new VisionEstimation();
 
@@ -93,11 +106,11 @@ public class RobotContainer {
         // () -> driverXbox.getRawAxis(2), () -> true);
         TeleopDrive closedFieldRel = new TeleopDrive(
                 SwerveSubsystem.getInstance(),
-                () -> MathUtil.applyDeadband(driverController.getRawAxis(1),
+                () -> MathUtil.applyDeadband(driverRight.getRawAxis(1),
                         OperatorConstants.LEFT_Y_DEADBAND),
-                () -> MathUtil.applyDeadband(driverController.getRawAxis(0),
+                () -> MathUtil.applyDeadband(driverRight.getRawAxis(0),
                         OperatorConstants.LEFT_X_DEADBAND),
-                () -> -driverController.getRawAxis(4), () -> true);
+                () -> -driverRight.getRawAxis(4), () -> true);
 
         SwerveSubsystem.getInstance().setDefaultCommand(
                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
@@ -121,8 +134,8 @@ public class RobotContainer {
     private void configureBindings() {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-        driverController.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
-        driverController.button(2).onTrue((new InstantCommand(() -> {
+        driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
+        driverLeft.button(2).onTrue((new InstantCommand(() -> {
             SmartDashboard.putNumber("button press", 0);
             // Not safe type casting, could break but should be obvious
             NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
@@ -130,7 +143,23 @@ public class RobotContainer {
             gyro.reset();
 
         })));
-        driverController.button(3).onTrue(new TestingPaths());
+
+        driverRight.button(1).whileTrue(new Collect());
+        driverRight.button(2).onTrue(new TheBigYeet());
+
+        driverButtons.button(1).whileTrue(new Driveby());
+        driverButtons.button(2).onTrue(new TestingPaths());
+        //driverButtons.button(3).onTrue(new DontFire());
+
+        coDriverLeft.button(1).whileTrue(new Collect());
+
+        coDriverButtons.button(1).onTrue(new PrepAmp());
+        coDriverButtons.button(2).onTrue(new PrepSpeaker());
+        coDriverButtons.button(3).onTrue(new TheBigYeet());
+        coDriverButtons.button(4).onTrue(new PrepClimb());
+        coDriverButtons.button(5).onTrue(new SimpleClimb());
+        coDriverButtons.button(6).onTrue(new Dunk());
+        coDriverButtons.button(7).onTrue(new Undunk());
     }
 
     public void setDriveMode() {
