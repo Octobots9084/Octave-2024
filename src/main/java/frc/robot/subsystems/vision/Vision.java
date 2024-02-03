@@ -32,15 +32,13 @@ public class Vision implements Runnable {
       var layout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
       layout.setOrigin(OriginPosition.kBlueAllianceWallRightSide); // Sets the Origin to the Blue AllianceWall and will be flipped in the robot thread
 
-      // if (photonCamera != null) {
       photonPoseEstimator = photonCamera != null
           ? new PhotonPoseEstimator(layout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, photonCamera, robotToCamera)
           : null;
       photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
-      // }
     } catch (Exception e) {
       DriverStation.reportError("Failed to load AprilTagFieldLayout", e.getStackTrace());
-      // photonPoseEstimator = null;
+      photonPoseEstimator = null;
     }
 
     this.photonPoseEstimator = photonPoseEstimator;
@@ -52,30 +50,27 @@ public class Vision implements Runnable {
     try {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult(); //Gets the latest camera results
-        SmartDashboard.putString(photonCamera.getName(),
-            photonCamera.getLatestResult().getMultiTagResult().estimatedPose.toString());
+
         if (photonResults.hasTargets() && (photonResults.targets.size() > 1
             || photonResults.targets.get(0).getPoseAmbiguity() < VisionConstants.APRILTAG_AMBIGUITY_THRESHOLD)) {
           //Updates the pose estimator
           photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
             var estimatedPose = estimatedRobotPose.estimatedPose;
-            // SmartDashboard.putNumber("estimatedPoseX", estimatedPose.toPose2d().getX());
-            // SmartDashboard.putNumber("estimatedPoseY", estimatedPose.toPose2d().getY());
             /** 
             * If present then makes sure the measurement is on the field and
             * sets the atomic estimated pose to the current estimated pose
             * from PhotonPoseEstimator
             */
-            if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.length
+            if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.LENGTH
                 && estimatedPose.getY() > 0.0
-                && estimatedPose.getY() <= FieldConstants.width) {
+                && estimatedPose.getY() <= FieldConstants.WIDTH) {
               atomicEstimatedRobotPose.set(estimatedRobotPose);
             }
           });
         }
       }
     } catch (Exception e) {
-      // TODO: handle exception
+      DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
   }
 

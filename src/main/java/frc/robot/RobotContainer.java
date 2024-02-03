@@ -131,10 +131,6 @@ public class RobotContainer {
 
         })));
         driverController.button(3).onTrue(new TestingPaths());
-
-        // new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
-        // InstantCommand(SwerveSubsystem.getInstance()::lock,
-        // SwerveSubsystem.getInstance())));
     }
 
     public void setDriveMode() {

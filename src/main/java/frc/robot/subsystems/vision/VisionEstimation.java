@@ -71,9 +71,6 @@ public class VisionEstimation extends SubsystemBase {
 
         allNotifier.setName("runAll");
         allNotifier.startPeriodic(0.02);
-
-        // prevTime.set(Timer.getFPGATimestamp());
-        this.swerveSubsystem.getPose();
     }
 
     @Override
@@ -106,13 +103,9 @@ public class VisionEstimation extends SubsystemBase {
     */
     private Pose2d flipAlliance(Pose2d poseToFlip) {
         return poseToFlip.relativeTo(new Pose2d(
-                new Translation2d(FieldConstants.length, FieldConstants.width),
+                new Translation2d(FieldConstants.LENGTH, FieldConstants.WIDTH),
                 new Rotation2d(Math.PI)));
     }
-
-    // public void addTrajectory(PathPlannerTrajectory traj) {
-    //   field2d.getObject("Trajectory").setTrajectory(traj);
-    // }
 
     private Matrix<N3, N1> confidenceCalculator(EstimatedRobotPose estimation) {
         double smallestDistance = Double.POSITIVE_INFINITY;
@@ -123,13 +116,17 @@ public class VisionEstimation extends SubsystemBase {
             if (distance < smallestDistance)
                 smallestDistance = distance;
         }
+
+        var maxPoseAmbiguity = Math.max(
+                1,
+                (estimation.targetsUsed.get(0).getPoseAmbiguity()
+                        + VisionConstants.POSE_AMBIGUITY_SHIFTER)
+                        * VisionConstants.POSE_AMBIGUITY_MULTIPLIER);
+
         double poseAmbiguityFactor = estimation.targetsUsed.size() != 1
                 ? 1
-                : Math.max(
-                        1,
-                        (estimation.targetsUsed.get(0).getPoseAmbiguity()
-                                + VisionConstants.POSE_AMBIGUITY_SHIFTER)
-                                * VisionConstants.POSE_AMBIGUITY_MULTIPLIER);
+                : maxPoseAmbiguity;
+
         double confidenceMultiplier = Math.max(
                 1,
                 (Math.max(
