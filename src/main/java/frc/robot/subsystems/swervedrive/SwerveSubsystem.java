@@ -318,8 +318,8 @@ public class SwerveSubsystem extends SubsystemBase {
    * @return {@link ChassisSpeeds} which can be sent to th Swerve Drive.
    */
   public ChassisSpeeds getTargetSpeeds(double xInput, double yInput, Rotation2d angle) {
-    double curvedXInput = Math.signum(xInput) * Math.pow(xInput, 2);
-    double curvedYInput = Math.signum(yInput) * Math.pow(yInput, 2);
+    double curvedXInput = xInput;
+    double curvedYInput = yInput;
     return swerveDrive.swerveController.getTargetSpeeds(curvedXInput,
         curvedYInput,
         angle.getRadians(),

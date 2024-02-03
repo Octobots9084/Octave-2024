@@ -4,6 +4,7 @@
 
 package frc.robot.commands.swervedrive.drivebase;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -53,7 +54,7 @@ public class TeleopDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double angVelocity = Math.signum(omega.getAsDouble()) * Math.pow(omega.getAsDouble(), 2) * 2 * Math.PI;
+    double angVelocity = omega.getAsDouble() * 2 * Math.PI;
     targetAngle = new Rotation2d(targetAngle.getRadians() + (angVelocity)*0.02);
     ChassisSpeeds desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
         targetAngle);

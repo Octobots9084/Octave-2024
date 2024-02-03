@@ -95,7 +95,7 @@ public class RobotContainer {
                                                 OperatorConstants.LEFT_Y_DEADBAND),
                                 () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(0),
                                                 OperatorConstants.LEFT_X_DEADBAND),
-                                () -> -driverRight.getRawAxis(0), () -> true);
+                                () -> MathUtil.applyDeadband(-driverRight.getRawAxis(0), 0.05), () -> true);
 
                 SwerveSubsystem.getInstance().setDefaultCommand(
                                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
