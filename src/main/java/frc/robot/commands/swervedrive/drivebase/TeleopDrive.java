@@ -56,30 +56,10 @@ public class TeleopDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double angVelocity = omega.getAsDouble() * 2 * Math.PI;
-    ChassisSpeeds desiredSpeeds;
-    if (MathUtil.isWithinTolerance(angVelocity, 0, 0.1)) {
-      if (targetAngleSet == false) {
-        targetAngleSet = true;
-        targetAngle = swerve.getHeading();
-      }
-
-      desiredSpeeds = swerve.getTargetSpeeds(vX.getAsDouble(), vY.getAsDouble(),
-          targetAngle);
-    } else {
-      targetAngleSet = false;
-      desiredSpeeds = new ChassisSpeeds(vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED,
-          vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED, angVelocity);
-    }
-
-    SmartDashboard.putNumber("angVelocity", angVelocity);
-    SmartDashboard.putNumber("targetAngle", targetAngle.getDegrees());
-
-    if (desiredSpeeds.omegaRadiansPerSecond < 0.05 && desiredSpeeds.omegaRadiansPerSecond > -0.05) {
-      desiredSpeeds.omegaRadiansPerSecond = 0;
-    }
-    swerve.drive(new Translation2d(desiredSpeeds.vxMetersPerSecond, desiredSpeeds.vyMetersPerSecond),
-        desiredSpeeds.omegaRadiansPerSecond,
+    swerve.drive(
+        new Translation2d(vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED,
+            vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED),
+        omega.getAsDouble() * 6 * Math.PI,
         driveMode.getAsBoolean());
   }
 

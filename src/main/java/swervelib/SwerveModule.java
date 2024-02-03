@@ -208,7 +208,7 @@ public class SwerveModule {
        * If the error is close to 0.25 rotations, then we're 90 degrees, so movement
        * doesn't help us at all
        */
-      double cosineScalar = Math.cos(Units.degreesToRadians(steerMotorError));
+      double cosineScalar = 1;// Math.cos(Units.degreesToRadians(steerMotorError));
       /*
        * Make sure we don't invert our drive, even though we shouldn't ever target
        * over 90 degrees anyway
