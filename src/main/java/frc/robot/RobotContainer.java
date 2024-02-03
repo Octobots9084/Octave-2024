@@ -36,7 +36,8 @@ public class RobotContainer {
 
         // The robot's subsystems and commands are defined here...
         // Replace with CommandPS4Controller or CommandJoystick if needed
-        CommandJoystick driverController = new CommandJoystick(Constants.OperatorConstants.JOYSTICK_PORT);
+        CommandJoystick driverLeft = new CommandJoystick(Constants.OperatorConstants.DRIVER_LEFT);
+        CommandJoystick driverRight = new CommandJoystick(Constants.OperatorConstants.DRIVER_RIGHT);
 
         // CommandJoystick driverController = new
 
@@ -90,11 +91,11 @@ public class RobotContainer {
                 // () -> driverXbox.getRawAxis(2), () -> true);
                 TeleopDrive closedFieldRel = new TeleopDrive(
                                 SwerveSubsystem.getInstance(),
-                                () -> MathUtil.applyDeadband(driverController.getRawAxis(1),
+                                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(1),
                                                 OperatorConstants.LEFT_Y_DEADBAND),
-                                () -> MathUtil.applyDeadband(driverController.getRawAxis(0),
+                                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(0),
                                                 OperatorConstants.LEFT_X_DEADBAND),
-                                () -> -driverController.getRawAxis(2), () -> true);
+                                () -> -driverRight.getRawAxis(0), () -> true);
 
                 SwerveSubsystem.getInstance().setDefaultCommand(
                                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
@@ -118,8 +119,8 @@ public class RobotContainer {
         private void configureBindings() {
                 // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-                driverController.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
-                driverController.button(2).onTrue((new InstantCommand(() -> {
+                driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
+                driverLeft.button(2).onTrue((new InstantCommand(() -> {
                         SmartDashboard.putNumber("button press", 0);
                         // Not safe type casting, could break but should be obvious
                         NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
@@ -128,7 +129,7 @@ public class RobotContainer {
                       
                 })));
 
-                driverController.button(3).onTrue(
+                driverRight.button(1).onTrue(
                         PathfindingTest.getTest()
                         );
 
