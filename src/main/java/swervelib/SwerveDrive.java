@@ -1046,7 +1046,7 @@ public class SwerveDrive {
         robotPose.getRotation());
     odometryLock.unlock();
 
-    setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
+    //setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
     resetOdometry(newOdometry);
   }
 
