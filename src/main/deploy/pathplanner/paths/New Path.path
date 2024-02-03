@@ -3,36 +3,95 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5295283542266556,
-        "y": 1.380454138368027
+        "x": 2.0,
+        "y": 7.0
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3751569895805305,
-        "y": 2.1157684560449597
+        "x": 2.057924431757917,
+        "y": 7.0
+      },
+      "isLocked": true,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.0,
+        "y": 7.0
+      },
+      "prevControl": {
+        "x": 2.9583094926708142,
+        "y": 7.0
+      },
+      "nextControl": {
+        "x": 3.0416905073291858,
+        "y": 7.0
+      },
+      "isLocked": true,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.0,
+        "y": 6.0
+      },
+      "prevControl": {
+        "x": 2.9698983285216474,
+        "y": 6.0
+      },
+      "nextControl": {
+        "x": 3.0355864142216396,
+        "y": 6.0
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.0421536335022585,
-        "y": 4.229476509042464
+        "x": 2.0,
+        "y": 6.0
       },
       "prevControl": {
-        "x": 2.9649679511791955,
-        "y": 4.582447985557866
+        "x": 1.9591928072877993,
+        "y": 6.0
+      },
+      "nextControl": {
+        "x": 2.0664011989564024,
+        "y": 6.0
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.0,
+        "y": 7.0
+      },
+      "prevControl": {
+        "x": 1.9737826288924916,
+        "y": 7.0
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 180.0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 3,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 1.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
