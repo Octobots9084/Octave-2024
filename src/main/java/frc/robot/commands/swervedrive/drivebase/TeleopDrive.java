@@ -26,9 +26,6 @@ public class TeleopDrive extends Command {
   private final DoubleSupplier vY;
   private final DoubleSupplier omega;
   private final BooleanSupplier driveMode;
-  private final SwerveController controller;
-  private Rotation2d targetAngle;
-  private boolean targetAngleSet = false;
 
   /**
    * Creates a new ExampleCommand.
@@ -42,8 +39,6 @@ public class TeleopDrive extends Command {
     this.vY = vY;
     this.omega = omega;
     this.driveMode = driveMode;
-    this.targetAngle = swerve.getPose().getRotation();
-    this.controller = swerve.getSwerveController();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(swerve);
   }
@@ -56,11 +51,20 @@ public class TeleopDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    swerve.drive(
-        new Translation2d(vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED,
-            vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED),
-        omega.getAsDouble() * 6 * Math.PI,
-        driveMode.getAsBoolean());
+    if (swerve.targetAngleEnabled) {
+      swerve.drive(
+          new Translation2d(vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED,
+              vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED),
+          swerve.targetAngleController.calculate(swerve.getHeading().getRadians(), swerve.targetAngle.getRadians()),
+          driveMode.getAsBoolean());
+    } else {
+      swerve.drive(
+          new Translation2d(vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED,
+              vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED),
+          omega.getAsDouble() * 6 * Math.PI,
+          driveMode.getAsBoolean());
+    }
+
   }
 
 }
