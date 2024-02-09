@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -40,6 +41,7 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
+        public static PIDController targetAngleController = new PIDController(10, 0, 0);
 	}
 
 	public static class OperatorConstants {

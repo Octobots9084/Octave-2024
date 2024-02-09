@@ -45,7 +45,7 @@ public class SwerveSubsystem extends SubsystemBase {
    */
   public static double MAXIMUM_SPEED = 5;
   public Rotation2d targetAngle;
-  public boolean targetAngleEnabled = false;;
+  public boolean targetAngleEnabled = true;;
   public PIDController targetAngleController;
 
   /**
@@ -71,7 +71,7 @@ public class SwerveSubsystem extends SubsystemBase {
     setupPathPlanner();
 
     targetAngle = getHeading();
-    targetAngleController = new PIDController(5, 0, 0);
+    targetAngleController = Constants.Drivebase.targetAngleController;;
     targetAngleController.enableContinuousInput(-Math.PI, Math.PI);
   }
 
