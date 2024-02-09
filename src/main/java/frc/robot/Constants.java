@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -40,15 +41,17 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
+        public static PIDController targetAngleController = new PIDController(10, 0, 0);
 	}
 
 	public static class OperatorConstants {
 		// Joystick Deadband
-		public static final double LEFT_X_DEADBAND = 0.01;
-		public static final double LEFT_Y_DEADBAND = 0.01;
-		public static final double RIGHT_X_DEADBAND = 0.01;
+		public static final double LEFT_X_DEADBAND = 0.07;
+		public static final double LEFT_Y_DEADBAND = 0.07;
+		public static final double RIGHT_X_DEADBAND = 0.07;
 		public static final double TURN_CONSTANT = 6;
-		public static final int JOYSTICK_PORT = 1;
+		public static final int DRIVER_LEFT = 0;
+		public static final int DRIVER_RIGHT = 1;
 	}
 
 	public static class FieldConstants {
@@ -65,30 +68,32 @@ public final class Constants {
 		public static boolean USE_VISION = true;
 
 		/*
-		* X positive is forward from the front of the robot
-		* Y positive is left from the front of the robot
-		* Z positive is upwards
-		* Positive roll is unknown because we didn't use it
-		* Positive pitch is towards the front of the robot (CCW positive around the Y axis)
-		* Positive yaw is unknown because we didn't use it
-		* Order of operations for rotations, first it rotates around the yaw, then it does pitch
+		 * X positive is forward from the front of the robot
+		 * Y positive is left from the front of the robot
+		 * Z positive is upwards
+		 * Positive roll is unknown because we didn't use it
+		 * Positive pitch is towards the front of the robot (CCW positive around the Y
+		 * axis)
+		 * Positive yaw is unknown because we didn't use it
+		 * Order of operations for rotations, first it rotates around the yaw, then it
+		 * does pitch
 		 */
 
 		public static final Transform3d ROBOT_TO_CLYDE = new Transform3d(
 				new Translation3d(-ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(Math.toRadians(0), Math.toRadians(-32), Math.toRadians(180)));
+				new Rotation3d(Math.toRadians(0), Math.toRadians(-30), Math.toRadians(180)));
 
 		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
 				new Translation3d(-ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(Math.toRadians(0), Math.toRadians(-30), Math.toRadians(180)));
+				new Rotation3d(Math.toRadians(0), Math.toRadians(-25), Math.toRadians(180)));
 
 		public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
 				new Translation3d(ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-33), Math.toRadians(0)));
+				new Rotation3d(0, Math.toRadians(-34), Math.toRadians(0)));
 
 		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
 				new Translation3d(ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-33), Math.toRadians(0)));
+				new Rotation3d(0, Math.toRadians(-31), Math.toRadians(0)));
 
 		/** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
 		public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;

@@ -4,10 +4,14 @@
 
 package frc.robot.commands.swervedrive.drivebase;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.util.MathUtil;
+
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
@@ -22,7 +26,6 @@ public class TeleopDrive extends Command {
   private final DoubleSupplier vY;
   private final DoubleSupplier omega;
   private final BooleanSupplier driveMode;
-  private final SwerveController controller;
 
   /**
    * Creates a new ExampleCommand.
@@ -36,7 +39,6 @@ public class TeleopDrive extends Command {
     this.vY = vY;
     this.omega = omega;
     this.driveMode = driveMode;
-    this.controller = swerve.getSwerveController();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(swerve);
   }
@@ -49,17 +51,20 @@ public class TeleopDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double xVelocity = Math.signum(vX.getAsDouble()) * Math.pow(vX.getAsDouble(), 2);
-    double yVelocity = Math.signum(vY.getAsDouble()) * Math.pow(vY.getAsDouble(), 2);
-    double angVelocity = Math.signum(omega.getAsDouble()) * Math.pow(omega.getAsDouble(), 2);
-    SmartDashboard.putNumber("vX", xVelocity);
-    SmartDashboard.putNumber("vY", yVelocity);
-    SmartDashboard.putNumber("omega", angVelocity);
+    if (swerve.targetAngleEnabled) {
+      swerve.drive(
+          new Translation2d(vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED,
+              vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED),
+          swerve.targetAngleController.calculate(swerve.getHeading().getRadians(), swerve.targetAngle.getRadians()),
+          driveMode.getAsBoolean());
+    } else {
+      swerve.drive(
+          new Translation2d(vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED,
+              vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED),
+          omega.getAsDouble() * 6 * Math.PI,
+          driveMode.getAsBoolean());
+    }
 
-    // Drive using raw values.
-    swerve.drive(new Translation2d(xVelocity * swerve.MAXIMUM_SPEED, yVelocity * swerve.MAXIMUM_SPEED),
-        angVelocity * controller.config.maxAngularVelocity,
-        driveMode.getAsBoolean());
   }
 
 }
