@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.ReverseKinematics;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.MathUtil;
 
@@ -51,6 +52,16 @@ public class TeleopDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (swerve.getShootingRequestActive()) {
+      swerve.targetAngleEnabled = true;
+      swerve.targetAngle = new Rotation2d(ReverseKinematics.calcRobotAngle(
+        ReverseKinematics.convert2dCoords(swerve.getPose()), 
+          ReverseKinematics.convertSpeed(ReverseKinematics.convert2dCoords(swerve.getPose()), 
+          swerve.getRobotVelocity())));
+    } else {
+      swerve.targetAngleEnabled = false;
+    }
+
     if (swerve.targetAngleEnabled) {
       swerve.drive(
           new Translation2d(vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED,

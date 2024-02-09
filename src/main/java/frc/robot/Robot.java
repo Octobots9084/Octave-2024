@@ -14,9 +14,7 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 import frc.robot.commands.ButtonConfig;
 import frc.robot.commands.ControlMap;
-import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
-import frc.robot.constants.ShooterSpeeds;
-import frc.robot.subsystems.ShooterFlywheel;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -144,7 +142,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    ShooterFlywheel.getInstance().increaseFlywheelSpeed(MathUtil.applyDeadband(5*ControlMap.FLYWHEEL_JOYSTICK.getY(), 0.05));
+    //ShooterFlywheel.getInstance().increaseFlywheelSpeed(MathUtil.applyDeadband(5*ControlMap.FLYWHEEL_JOYSTICK.getY(), 0.05));
   }
 
   @Override

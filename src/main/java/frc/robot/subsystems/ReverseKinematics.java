@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // velocities are positive going towards the target and negative when moving away
 // all units should be in meters, m/s, rad, etc.
@@ -18,16 +19,17 @@ public class ReverseKinematics {
     private static double vf = 10;
 
     // X and Y positions of the subwoofer with regards to (0,0) on the robot's Pose2d
-    private static double subwooferYPos = 0;
-    private static double subwooferXPos = 5.5;
+    private static double subwooferXPos = 0;
+    private static double subwooferYPos = 5.5;
 
     // converts Pose2d coords into positions relative to the target
-    private static Pose2d convert2dCoords(Pose2d pos) {
-        return new Pose2d(subwooferXPos - pos.getX(), subwooferYPos - pos.getY(), new Rotation2d());
+    public static Pose2d convert2dCoords(Pose2d pos) {
+        SmartDashboard.putString("poseconvert", new Pose2d(pos.getX() - subwooferXPos, subwooferYPos - pos.getY(), new Rotation2d()).toString());
+        return new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d());
     }
 
     // converts ChassisSpeeds to absolute rather than relative to the robot rotation
-    private static ChassisSpeeds convertSpeed(Pose2d pos, ChassisSpeeds speed) {
+    public static ChassisSpeeds convertSpeed(Pose2d pos, ChassisSpeeds speed) {
         return new ChassisSpeeds(-(pos.getRotation().getCos()*speed.vxMetersPerSecond) - (pos.getRotation().getSin()*speed.vyMetersPerSecond), (pos.getRotation().getSin()*speed.vxMetersPerSecond) + (pos.getRotation().getCos()*speed.vyMetersPerSecond), 0);
     }
 
@@ -42,14 +44,14 @@ public class ReverseKinematics {
     // for internal use only
     private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed) {
         //System.out.println("launch x velocity: " + (xPos/(constTargetHeightDiff/calcLaunchVerticalVel()) - xVel));
-        return pos.getX()/(constTargetHeightDiff/calcLaunchVerticalVel()) - speed.vxMetersPerSecond;
+        return pos.getX()/(constTargetHeightDiff/calcLaunchVerticalVel()) + speed.vxMetersPerSecond;
     }
 
     // returns the "vertical" from above (perpendicular to the subwoofer opening) launch velocity of the note
     // for internal use only
     private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed) {
         //System.out.println("launch y velocity: " + (yPos/(constTargetHeightDiff/calcLaunchVerticalVel()) - yVel));
-        return pos.getY()/(constTargetHeightDiff/calcLaunchVerticalVel()) - speed.vyMetersPerSecond;
+        return pos.getY()/(constTargetHeightDiff/calcLaunchVerticalVel()) + speed.vyMetersPerSecond;
     }
 
     // returns total speed the note should be launched at, in m/s
@@ -60,7 +62,8 @@ public class ReverseKinematics {
     // returns the angle (wrt parralel to the target opening) to the target opening from the robot
     // a value of pi/2, for example, means directly north (from a bird's eye view) with the subwoofer north of the robot
     public static double calcRobotAngle(Pose2d pos, ChassisSpeeds speed) {
-        return pos.getX() >= 0 ? Math.atan(calcLaunchYVel(pos, speed)/calcLaunchXVel(pos, speed)) : (Math.PI / 2.0) - Math.atan(calcLaunchYVel(pos, speed)/calcLaunchXVel(pos, speed));
+        return Math.atan2(calcLaunchYVel(pos, speed), calcLaunchXVel(pos, speed));
+        //return pos.getX() >= 0 ? Math.atan(calcLaunchYVel(pos, speed)/calcLaunchXVel(pos, speed)) : (Math.PI / 2.0) - Math.atan(calcLaunchYVel(pos, speed)/calcLaunchXVel(pos, speed));
     }
 
     // returns the angle of the launcher required

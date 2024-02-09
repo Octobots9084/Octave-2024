@@ -133,22 +133,29 @@ public class RobotContainer {
 
         })));
 
-        driverRight.button(1).whileTrue(new Collect());
-        driverRight.button(2).onTrue(new TheBigYeet());
+        //driverRight.button(1).whileTrue(new Collect());]
+        driverRight.button(1).onTrue(new InstantCommand(()->{
+            SwerveSubsystem.getInstance().setShootingRequestActive(true);
+        }));
+        driverRight.button(1).onFalse(new InstantCommand(()->{
+            SwerveSubsystem.getInstance().setShootingRequestActive(false);
+        }));
 
-        driverButtons.button(1).whileTrue(new Driveby());
-        driverButtons.button(2).onTrue(new TestingPaths());
-        //driverButtons.button(3).onTrue(new DontFire());
+        // driverRight.button(2).onTrue(new TheBigYeet());
 
-        coDriverLeft.button(1).whileTrue(new Collect());
+        // driverButtons.button(1).whileTrue(new Driveby());
+        // driverButtons.button(2).onTrue(new TestingPaths());
+        // //driverButtons.button(3).onTrue(new DontFire());
 
-        coDriverButtons.button(1).onTrue(new PrepAmp());
-        coDriverButtons.button(2).onTrue(new PrepSpeaker());
-        coDriverButtons.button(3).onTrue(new TheBigYeet());
-        coDriverButtons.button(4).onTrue(new PrepClimb());
-        coDriverButtons.button(5).onTrue(new SimpleClimb());
-        coDriverButtons.button(6).onTrue(new Dunk());
-        coDriverButtons.button(7).onTrue(new Undunk());
+        // coDriverLeft.button(1).whileTrue(new Collect());
+
+        // coDriverButtons.button(1).onTrue(new PrepAmp());
+        // coDriverButtons.button(2).onTrue(new PrepSpeaker());
+        // coDriverButtons.button(3).onTrue(new TheBigYeet());
+        // coDriverButtons.button(4).onTrue(new PrepClimb());
+        // coDriverButtons.button(5).onTrue(new SimpleClimb());
+        // coDriverButtons.button(6).onTrue(new Dunk());
+        // coDriverButtons.button(7).onTrue(new Undunk());
     }
 
     public void setDriveMode() {
