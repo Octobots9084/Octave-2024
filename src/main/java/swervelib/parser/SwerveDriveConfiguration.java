@@ -8,29 +8,28 @@ import swervelib.imu.SwerveIMU;
 /**
  * Swerve drive configurations used during SwerveDrive construction.
  */
-public class SwerveDriveConfiguration
-{
+public class SwerveDriveConfiguration {
 
   /**
    * Swerve Module locations.
    */
-  public Translation2d[]                     moduleLocationsMeters;
+  public Translation2d[] moduleLocationsMeters;
   /**
    * Swerve IMU
    */
-  public SwerveIMU                           imu;
+  public SwerveIMU imu;
   /**
    * Invert the imu measurements.
    */
-  public boolean                             invertedIMU = false;
+  public boolean invertedIMU = false;
   /**
    * Number of modules on the robot.
    */
-  public int                                 moduleCount;
+  public int moduleCount;
   /**
    * Swerve Modules.
    */
-  public SwerveModule[]                      modules;
+  public SwerveModule[] modules;
   /**
    * Physical characteristics of the swerve drive from physicalproperties.json.
    */
@@ -50,15 +49,13 @@ public class SwerveDriveConfiguration
       SwerveIMU swerveIMU,
       boolean invertedIMU,
       SimpleMotorFeedforward driveFeedforward,
-      SwerveModulePhysicalCharacteristics physicalCharacteristics)
-  {
+      SwerveModulePhysicalCharacteristics physicalCharacteristics) {
     this.moduleCount = moduleConfigs.length;
     this.imu = swerveIMU;
     this.invertedIMU = invertedIMU;
     this.modules = createModules(moduleConfigs, driveFeedforward);
     this.moduleLocationsMeters = new Translation2d[moduleConfigs.length];
-    for (SwerveModule module : modules)
-    {
+    for (SwerveModule module : modules) {
       this.moduleLocationsMeters[module.moduleNumber] = module.configuration.moduleLocation;
     }
     this.physicalCharacteristics = physicalCharacteristics;
@@ -72,11 +69,9 @@ public class SwerveDriveConfiguration
    *                         {@link swervelib.math.SwerveMath#createDriveFeedforward(double, double, double)}.
    * @return Swerve Modules.
    */
-  public SwerveModule[] createModules(SwerveModuleConfiguration[] swerves, SimpleMotorFeedforward driveFeedforward)
-  {
+  public SwerveModule[] createModules(SwerveModuleConfiguration[] swerves, SimpleMotorFeedforward driveFeedforward) {
     SwerveModule[] modArr = new SwerveModule[swerves.length];
-    for (int i = 0; i < swerves.length; i++)
-    {
+    for (int i = 0; i < swerves.length; i++) {
       modArr[i] = new SwerveModule(i, swerves[i], driveFeedforward);
     }
     return modArr;
@@ -87,15 +82,14 @@ public class SwerveDriveConfiguration
    *
    * @return Drive base radius from center of robot to the farthest wheel in meters.
    */
-  public double getDriveBaseRadiusMeters()
-  {
+  public double getDriveBaseRadiusMeters() {
     Translation2d centerOfModules = moduleLocationsMeters[0];
 
     //Calculate the Center by adding all module offsets together.
-    for(int i=1; i<moduleLocationsMeters.length; i++){
+    for (int i = 1; i < moduleLocationsMeters.length; i++) {
       centerOfModules = centerOfModules.plus(moduleLocationsMeters[i]);
-    }  
-    
+    }
+
     //Return Largest Radius
     return centerOfModules.getDistance(moduleLocationsMeters[0]);
   }

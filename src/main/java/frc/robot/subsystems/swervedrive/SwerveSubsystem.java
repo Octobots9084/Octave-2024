@@ -4,11 +4,16 @@ package frc.robot.subsystems.swervedrive;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.ReplanningConfig;
+
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -41,6 +46,9 @@ public class SwerveSubsystem extends SubsystemBase {
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
   public static double MAXIMUM_SPEED = 5;
+  public Rotation2d targetAngle;
+  public boolean targetAngleEnabled = true;;
+  public PIDController targetAngleController;
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -63,6 +71,10 @@ public class SwerveSubsystem extends SubsystemBase {
                                              // angle.
 
     setupPathPlanner();
+
+    targetAngle = getHeading();
+    targetAngleController = Constants.Drivebase.targetAngleController;;
+    targetAngleController.enableContinuousInput(-Math.PI, Math.PI);
   }
 
   public static SwerveSubsystem getInstance() {
@@ -336,8 +348,8 @@ public class SwerveSubsystem extends SubsystemBase {
    * @return {@link ChassisSpeeds} which can be sent to th Swerve Drive.
    */
   public ChassisSpeeds getTargetSpeeds(double xInput, double yInput, Rotation2d angle) {
-    double curvedXInput = Math.pow(xInput, 2);
-    double curvedYInput = Math.pow(yInput, 2);
+    double curvedXInput = xInput;
+    double curvedYInput = yInput;
     return swerveDrive.swerveController.getTargetSpeeds(curvedXInput,
         curvedYInput,
         angle.getRadians(),
@@ -400,7 +412,8 @@ public class SwerveSubsystem extends SubsystemBase {
   /**
    * Add a fake vision reading for testing purposes.
    */
-  public void addFakeVisionReading() {
-    swerveDrive.addVisionMeasurement(new Pose2d(3, 3, Rotation2d.fromDegrees(65)), Timer.getFPGATimestamp());
+  public void addVisionReading(Pose2d robotPose, double timestamp,
+      Matrix<N3, N1> visionMeasurementStdDevs) {
+    swerveDrive.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
   }
 }

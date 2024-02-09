@@ -580,7 +580,7 @@ public class SwerveDrive {
     // Desaturates wheel speeds
     if (attainableMaxTranslationalSpeedMetersPerSecond != 0 || attainableMaxRotationalVelocityRadiansPerSecond != 0) {
       SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, getRobotVelocity(),
-          maxSpeedMPS,
+          maxSpeedMPS * 5,
           attainableMaxTranslationalSpeedMetersPerSecond,
           attainableMaxRotationalVelocityRadiansPerSecond);
     }
@@ -1046,7 +1046,7 @@ public class SwerveDrive {
         robotPose.getRotation());
     odometryLock.unlock();
 
-    setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
+    // setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
     resetOdometry(newOdometry);
   }
 

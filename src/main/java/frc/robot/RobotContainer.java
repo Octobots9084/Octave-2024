@@ -14,8 +14,11 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.swervedrive.PathfindingTest;
+import frc.robot.commands.swervedrive.auto.TestingPaths;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.vision.VisionEstimation;
 import swervelib.imu.NavXSwerve;
 
 import java.io.File;
@@ -33,114 +36,107 @@ import com.pathplanner.lib.auto.AutoBuilder;
  */
 public class RobotContainer {
 
-        // The robot's subsystems and commands are defined here...
-        // Replace with CommandPS4Controller or CommandJoystick if needed
-        CommandJoystick driverController = new CommandJoystick(Constants.OperatorConstants.JOYSTICK_PORT);
+    // The robot's subsystems and commands are defined here...
+    // Replace with CommandPS4Controller or CommandJoystick if needed
+    CommandJoystick driverLeft = new CommandJoystick(Constants.OperatorConstants.DRIVER_LEFT);
+    CommandJoystick driverRight = new CommandJoystick(Constants.OperatorConstants.DRIVER_RIGHT);
 
-        // CommandJoystick driverController = new
+    // CommandJoystick driverController = new
 
-        private final SendableChooser<Command> autoChooser;
+    private final VisionEstimation visionEstimation = new VisionEstimation();
 
-        /**
-         * The container for the robot. Contains subsystems, OI devices, and commands.
-         */
-        public RobotContainer() {
-                // Configure the trigger bindings
-                configureBindings();
-                // AbsoluteDrive closedAbsoluteDrive = new
-                // AbsoluteDrive(SwerveSubsystem.getInstance(),
-                // // Applies deadbands and inverts controls because joysticks
-                // // are back-right positive while robot
-                // // controls are front-left positive
-                // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-                // OperatorConstants.LEFT_Y_DEADBAND),
-                // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-                // OperatorConstants.LEFT_X_DEADBAND),
-                // () -> -driverXbox.getRightX(),
-                // () -> -driverXbox.getRightY());
+    private final SendableChooser<Command> autoChooser;
 
-                // AbsoluteFieldDrive closedFieldAbsoluteDrive = new
-                // AbsoluteFieldDrive(SwerveSubsystem.getInstance(),
-                // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-                // OperatorConstants.LEFT_Y_DEADBAND),
-                // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-                // OperatorConstants.LEFT_X_DEADBAND),
-                // () -> driverXbox.getRawAxis(2));
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
+    public RobotContainer() {
+        // Configure the trigger bindings
+        configureBindings();
+        // AbsoluteDrive closedAbsoluteDrive = new
+        // AbsoluteDrive(SwerveSubsystem.getInstance(),
+        // // Applies deadbands and inverts controls because joysticks
+        // // are back-right positive while robot
+        // // controls are front-left positive
+        // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
+        // OperatorConstants.LEFT_Y_DEADBAND),
+        // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
+        // OperatorConstants.LEFT_X_DEADBAND),
+        // () -> -driverXbox.getRightX(),
+        // () -> -driverXbox.getRightY());
 
-                // AbsoluteDriveAdv closedAbsoluteDriveAdv = new
-                // AbsoluteDriveAdv(SwerveSubsystem.getInstance(),
-                // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-                // OperatorConstants.LEFT_Y_DEADBAND),
-                // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-                // OperatorConstants.LEFT_X_DEADBAND),
-                // () -> MathUtil.applyDeadband(driverXbox.getRightX(),
-                // OperatorConstants.RIGHT_X_DEADBAND),
-                // driverXbox::getYButtonPressed,
-                // driverXbox::getAButtonPressed,
-                // driverXbox::getXButtonPressed,
-                // driverXbox::getBButtonPressed);
+        // AbsoluteFieldDrive closedFieldAbsoluteDrive = new
+        // AbsoluteFieldDrive(SwerveSubsystem.getInstance(),
+        // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
+        // OperatorConstants.LEFT_Y_DEADBAND),
+        // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
+        // OperatorConstants.LEFT_X_DEADBAND),
+        // () -> driverXbox.getRawAxis(2));
 
-                // TeleopDrive simClosedFieldRel = new
-                // TeleopDrive(SwerveSubsystem.getInstance(),
-                // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-                // OperatorConstants.LEFT_Y_DEADBAND),
-                // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-                // OperatorConstants.LEFT_X_DEADBAND),
-                // () -> driverXbox.getRawAxis(2), () -> true);
-                TeleopDrive closedFieldRel = new TeleopDrive(
-                                SwerveSubsystem.getInstance(),
-                                () -> MathUtil.applyDeadband(driverController.getRawAxis(1),
-                                                OperatorConstants.LEFT_Y_DEADBAND),
-                                () -> MathUtil.applyDeadband(driverController.getRawAxis(0),
-                                                OperatorConstants.LEFT_X_DEADBAND),
-                                () -> -driverController.getRawAxis(4), () -> true);
+        // TeleopDrive simClosedFieldRel = new
+        // TeleopDrive(SwerveSubsystem.getInstance(),
+        // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
+        // OperatorConstants.LEFT_Y_DEADBAND),
+        // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
+        // OperatorConstants.LEFT_X_DEADBAND),
+        // () -> driverXbox.getRawAxis(2), () -> true);
+        TeleopDrive closedFieldRel = new TeleopDrive(
+                SwerveSubsystem.getInstance(),
+                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(1),
+                        OperatorConstants.LEFT_Y_DEADBAND),
+                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(0),
+                        OperatorConstants.LEFT_X_DEADBAND),
+                () -> MathUtil.applyDeadband(-driverRight.getRawAxis(0), OperatorConstants.RIGHT_X_DEADBAND),
+                () -> true);
 
-                SwerveSubsystem.getInstance().setDefaultCommand(
-                                !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
-                autoChooser = AutoBuilder.buildAutoChooser();
-                SmartDashboard.putData("Auto Chooser", autoChooser);
-        }
+        SwerveSubsystem.getInstance().setDefaultCommand(
+                !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
+        autoChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Auto Chooser", autoChooser);
+    }
 
-        /**
-         * Use this method to define your trigger->command mappings. Triggers can be
-         * created via the
-         * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
-         * an arbitrary predicate, or via the
-         * named factories in
-         * {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses
-         * for
-         * {@link CommandXboxController
-         * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4}
-         * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick
-         * Flight joysticks}.
-         */
-        private void configureBindings() {
-                // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+    /**
+     * Use this method to define your trigger->command mappings. Triggers can be
+     * created via the
+     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+     * an arbitrary predicate, or via the
+     * named factories in
+     * {@link edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses
+     * for
+     * {@link CommandXboxController
+     * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller PS4}
+     * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick
+     * Flight joysticks}.
+     */
+    private void configureBindings() {
+        // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-                driverController.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
-                driverController.button(2).onTrue((new InstantCommand(() -> {
-                        SmartDashboard.putNumber("button press", 0);
-                        // Not safe type casting, could break but should be obvious
-                        NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
-                        AHRS gyro = (AHRS) navx.getIMU();
-                        gyro.reset();
+        driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
+        driverLeft.button(2).onTrue((new InstantCommand(() -> {
+            SmartDashboard.putNumber("button press", 0);
+            // Not safe type casting, could break but should be obvious
+            NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
+            AHRS gyro = (AHRS) navx.getIMU();
+            gyro.reset();
 
-                })));
+        })));
 
-                // new JoystickButton(driverXbox, 3).whileTrue(new RepeatCommand(new
-                // InstantCommand(SwerveSubsystem.getInstance()::lock,
-                // SwerveSubsystem.getInstance())));
-        }
+        driverRight.button(1).onTrue(PathfindingTest.getTest());
+    }
 
-        public void setDriveMode() {
-                // SwerveSubsystem.getInstance().setDefaultCommand();
-        }
+    public void setDriveMode() {
+        // SwerveSubsystem.getInstance().setDefaultCommand();
+    }
 
-        public Command getAutonomousCommand() {
-                return autoChooser.getSelected();
-        }
+    public Command getAutonomousCommand() {
+        return autoChooser.getSelected();
+    }
 
-        public void setMotorBrake(boolean brake) {
-                SwerveSubsystem.getInstance().setMotorBrake(brake);
-        }
+    public void setMotorBrake(boolean brake) {
+        SwerveSubsystem.getInstance().setMotorBrake(brake);
+    }
+
+    public VisionEstimation getVisionEstimation() {
+        return visionEstimation;
+    }
 }
