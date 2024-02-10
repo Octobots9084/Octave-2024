@@ -6,6 +6,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -43,7 +44,9 @@ public class SwerveSubsystem extends SubsystemBase {
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
   public static double MAXIMUM_SPEED = 5;
-  
+  public Rotation2d targetAngle;
+  public boolean targetAngleEnabled = true;;
+  public PIDController targetAngleController;
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -66,6 +69,10 @@ public class SwerveSubsystem extends SubsystemBase {
                                              // angle.
 
     setupPathPlanner();
+
+    targetAngle = getHeading();
+    targetAngleController = Constants.Drivebase.targetAngleController;;
+    targetAngleController.enableContinuousInput(-Math.PI, Math.PI);
   }
 
   public static SwerveSubsystem getInstance() {
