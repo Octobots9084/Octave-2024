@@ -51,7 +51,14 @@ public class Vision implements Runnable {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult(); //Gets the latest camera results
 
-        if (photonResults.hasTargets() && photonResults.targets.get(0).getPoseAmbiguity() < VisionConstants.APRILTAG_AMBIGUITY_THRESHOLD) {
+        if (photonResults.hasTargets() &&
+            (photonResults.targets.size() > 1
+                || photonResults.targets.get(0).getPoseAmbiguity() < VisionConstants.APRILTAG_AMBIGUITY_THRESHOLD)
+            && Math.sqrt((photonResults.getMultiTagResult().estimatedPose.best.getX()
+                * photonResults.getMultiTagResult().estimatedPose.best.getX())
+                + (photonResults.getMultiTagResult().estimatedPose.best.getY()
+                    * photonResults.getMultiTagResult().estimatedPose.best
+                        .getY())) < VisionConstants.MAXIMUM_TAG_DISTANCE) {
           //Updates the pose estimator
           photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
             var estimatedPose = estimatedRobotPose.estimatedPose;

@@ -102,6 +102,7 @@ public final class Constants {
 		public static final double NOISY_DISTANCE_METERS = 2.5;
 		public static final double DISTANCE_WEIGHT = 7;
 		public static final int TAG_PRESENCE_WEIGHT = 10;
+        public static final double MAXIMUM_TAG_DISTANCE = 4;
 
 	}
 }
