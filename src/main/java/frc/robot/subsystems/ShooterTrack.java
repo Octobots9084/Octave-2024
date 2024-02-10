@@ -1,68 +1,58 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkFlex;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ShooterSpeeds;
-import frc.robot.util.PIDConfig;
-import frc.robot.util.SparkMax.SparkMaxConfig;
-import frc.robot.util.SparkMax.SparkMaxEncoderType;
-import frc.robot.util.SparkMax.SparkMaxSetup;
-import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
-public class ShooterTrack extends SubsystemBase{
-    
+public class ShooterTrack extends SubsystemBase {
+
     public static ShooterTrack shootingRetainer;
-    private CANSparkMax motor1;
-    private SparkMaxConfig motor1Config;
-    private boolean retainingNote;
-    
-    /* Things this needs to do:
-    1. needs to be able to run motor when told
-    2. needs to be able to check if the belt has a Note
-    3. needs to be able to
+    private CANSparkFlex motor1;
+
+    /*
+     * Things this needs to do:
+     * 1. needs to be able to run motor when told
+     * 2. needs to be able to check if the belt has a Note
+     * 3. needs to be able to
      */
 
-    public static ShooterTrack getInstance(){
-        if (shootingRetainer == null){
+    public static ShooterTrack getInstance() {
+        if (shootingRetainer == null) {
             shootingRetainer = new ShooterTrack();
         }
         return shootingRetainer;
     }
 
-    public ShooterTrack(){
-        motor1 = new CANSparkMax(0, MotorType.kBrushless);
+    public ShooterTrack() {
+        motor1 = new CANSparkFlex(0, MotorType.kBrushless);
+        motor1.restoreFactoryDefaults();
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 500);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 20);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 500);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 500);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus6, 500);
 
-        motor1Config = new SparkMaxConfig(new SparkMaxStatusFrames(
-            500,
-            10,
-            10,
-            50,
-            500,
-            500,
-            500),
-            1000,
-            true,
-            SparkMaxEncoderType.Relative,
-            IdleMode.kBrake,
-            10,
-            30,
-            false,
-            false,
-            2048,
-            false,
-            new PIDConfig(5, 0, 0, 0));
-        SparkMaxSetup.setup(motor1, motor1Config);
+        motor1.setCANTimeout(1000);
+
+        motor1.getPIDController().setFeedbackDevice(motor1.getEncoder());
+        motor1.setIdleMode(IdleMode.kBrake);
+        motor1.setSmartCurrentLimit(10, 30);
+        motor1.setInverted(false);
+        motor1.getPIDController().setPositionPIDWrappingEnabled(false);
+        motor1.getPIDController().setP(0);
+        motor1.getPIDController().setI(0);
+        motor1.getPIDController().setD(0);
     }
 
-    public boolean checkRetainer(){
-        return retainingNote;
-    }
-    
-    public void setSpeed(double speed){
-        motor1.set(speed);
+    public void setSpeed(double speed) {
+        motor1.getPIDController().setReference(speed, ControlType.kVelocity);
     }
 
     public void setSpeed(ShooterSpeeds shooterSpeeds) {

@@ -13,9 +13,9 @@ import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-
-public class ShooterElevator extends SubsystemBase{
+public class ShooterElevator extends SubsystemBase {
     private static ShooterElevator shooterElevator;
+
     public static ShooterElevator getInstance() {
         if (shooterElevator == null) {
             shooterElevator = new ShooterElevator();
@@ -28,11 +28,14 @@ public class ShooterElevator extends SubsystemBase{
     private double gearing = 1;
     public double max = 10;
     public double min = 1;
-    private SparkMaxConfig elevateConfig = new SparkMaxConfig(new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300), 1, true, SparkMaxEncoderType.Relative, IdleMode.kBrake,
-    30, 30, false, false, 50);
-    private SparkMaxConfig followConfig = new SparkMaxConfig(new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300), 1, true, IdleMode.kBrake, 30, 30, false, motor1);
-    
-    public ShooterElevator () {
+    private SparkMaxConfig elevateConfig = new SparkMaxConfig(
+            new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300), 1, true, SparkMaxEncoderType.Relative,
+            IdleMode.kBrake,
+            30, 30, false, false, 50);
+    private SparkMaxConfig followConfig = new SparkMaxConfig(new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300),
+            1, true, IdleMode.kBrake, 30, 30, false, motor1);
+
+    public ShooterElevator() {
         motor1 = new CANSparkMax(0, MotorType.kBrushless);
         motor2 = new CANSparkMax(0, MotorType.kBrushless);
         SparkMaxSetup.setup(motor1, elevateConfig);
@@ -40,7 +43,7 @@ public class ShooterElevator extends SubsystemBase{
     }
 
     public double zero() {
-        while(!limSwitch) {
+        while (!limSwitch) {
             motor1.setVoltage(-0.1);
         }
         motor1.stopMotor();
@@ -67,4 +70,10 @@ public class ShooterElevator extends SubsystemBase{
     public void goToMin() {
         motor1.getPIDController().setReference(gearing * min, ControlType.kPosition);
     }
+
+    public void setOffset() {
+        motor1.getEncoder().setPosition(0);
+        setPosition(0);
+    }
+
 }

@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -14,56 +15,57 @@ import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
-public class IntakeTrack extends SubsystemBase{
+public class IntakeTrack extends SubsystemBase {
 
     public static IntakeTrack intakeRetainer;
     private CANSparkMax motor1;
     private SparkMaxConfig motor1Config;
     private boolean retainingNote;
-    
-    /* Things this needs to do:
-    1. needs to be able to run motor when told
-    2. needs to be able to check if the belt has a Note
-    3. needs to be able to
+
+    /*
+     * Things this needs to do:
+     * 1. needs to be able to run motor when told
+     * 2. needs to be able to check if the belt has a Note
+     * 3. needs to be able to
      */
 
-    public static IntakeTrack getInstance(){
-        if (intakeRetainer == null){
+    public static IntakeTrack getInstance() {
+        if (intakeRetainer == null) {
             intakeRetainer = new IntakeTrack();
         }
         return intakeRetainer;
     }
 
-    public IntakeTrack(){
+    public IntakeTrack() {
         motor1 = new CANSparkMax(0, MotorType.kBrushless);
         motor1Config = new SparkMaxConfig(new SparkMaxStatusFrames(
-            500,
-            10,
-            10,
-            50,
-            500,
-            500,
-            500),
-            1000,
-            true,
-            SparkMaxEncoderType.Relative,
-            IdleMode.kBrake,
-            10,
-            30,
-            false,
-            false,
-            2048,
-            false,
-            new PIDConfig(5, 0, 0, 0));
+                500,
+                20,
+                500,
+                20,
+                500,
+                500,
+                500),
+                1000,
+                true,
+                SparkMaxEncoderType.Relative,
+                IdleMode.kBrake,
+                10,
+                30,
+                false,
+                false,
+                2048,
+                false,
+                new PIDConfig(5, 0, 0, 0));
         SparkMaxSetup.setup(motor1, motor1Config);
     }
 
-    public boolean checkIntake(){
+    public boolean checkIntake() {
         return true;
     }
-    
-    public void setSpeed(double speed){
-        motor1.set(speed);
+
+    public void setSpeed(double speed) {
+        motor1.getPIDController().setReference(speed, ControlType.kVelocity);
     }
 
     public void setSpeed(IntakeSpeeds intakeSpeeds) {

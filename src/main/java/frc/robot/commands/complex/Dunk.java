@@ -9,15 +9,14 @@ import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 
-public class Dunk extends SequentialCommandGroup{
+public class Dunk extends SequentialCommandGroup {
     public Dunk() {
         addCommands(
-            new ShooterTrackSpeedInstant(ShooterSpeeds.TRAP),
-            new ShooterElevatorPosTolerance(ArmPositions.TRAP_SEGUEAY),
-            new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY),
-            new ShooterElevatorPosTolerance(ArmPositions.TRAP),
-            new ShooterPivotPosTolerance(ArmPositions.TRAP),
-            new ClimbPosTolerance(ClimbPositions.DOWN)
-        );
+                new ShooterElevatorPosTolerance(ArmPositions.TRAP_SEGUEAY),
+                new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY),
+                new ClimbPosTolerance(ClimbPositions.DOWN),
+                new ShooterElevatorPosTolerance(ArmPositions.TRAP),
+                new ShooterPivotPosTolerance(ArmPositions.TRAP),
+                new ShooterTrackSpeedInstant(ShooterSpeeds.TRAP));
     }
 }

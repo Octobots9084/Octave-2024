@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.SparkAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -13,31 +14,44 @@ import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
 
-public class ShooterPivot extends SubsystemBase{
+public class ShooterPivot extends SubsystemBase {
     public static ShooterPivot pivot;
-    public static ShooterPivot getInstance(){
-        if(pivot == null){
+
+    public static ShooterPivot getInstance() {
+        if (pivot == null) {
             pivot = new ShooterPivot();
         }
         return pivot;
     }
-    
-    private static double minLimit = 0, maxLimit = 0;
+
+    private static double minLimit = 0;
+    private static double maxLimit = 0;
     private CANSparkMax leadMotor, followMotor;
     private double position;
 
-
-    public ShooterPivot(){
+    public ShooterPivot() {
         leadMotor = new CANSparkMax(0, MotorType.kBrushless);
         followMotor = new CANSparkMax(0, MotorType.kBrushless);
-        SparkMaxConfig follow = new SparkMaxConfig(new SparkMaxStatusFrames(500, 20, 500, 500, 500, 20, 500), 1000, true, IdleMode.kBrake, 30, 30, false, leadMotor);
-        SparkMaxConfig lead = new SparkMaxConfig(new SparkMaxStatusFrames(500, 20, 500, 500, 500, 20, 500), 1000, true, SparkMaxEncoderType.Absolute, IdleMode.kBrake, 30, 30, false, false, 1);
+        SparkMaxConfig follow = new SparkMaxConfig(new SparkMaxStatusFrames(500,
+                20,
+                500,
+                500,
+                500,
+                20,
+                500), 1000, true, IdleMode.kBrake, 30, 30, false, leadMotor);
+        SparkMaxConfig lead = new SparkMaxConfig(new SparkMaxStatusFrames(500,
+                20,
+                500,
+                500,
+                500,
+                20,
+                500), 1000, true,
+                SparkMaxEncoderType.Absolute, IdleMode.kBrake, 30, 30, false, false, 1);
         SparkMaxSetup.setup(leadMotor, lead);
         SparkMaxSetup.setup(followMotor, follow);
-        followMotor.follow(leadMotor);
     }
-    
-    public void setPosition(double target){
+
+    public void setPosition(double target) {
         target = MathUtil.clamp(target, minLimit, maxLimit);
         leadMotor.getPIDController().setReference(target, ControlType.kPosition);
         position = target;
@@ -47,19 +61,16 @@ public class ShooterPivot extends SubsystemBase{
         setPosition(armPositions);
     }
 
-    public double getPosition(){
-        return leadMotor.getEncoder().getPosition();
+    public double getPosition() {
+        return leadMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition();
     }
 
-    public double getLastTargetPosition(){
+    public double getLastTargetPosition() {
         return position;
     }
 
-    public void setIdleMode(IdleMode idleMode){
+    public void setIdleMode(IdleMode idleMode) {
         leadMotor.setIdleMode(idleMode);
     }
 
-
 }
-
-

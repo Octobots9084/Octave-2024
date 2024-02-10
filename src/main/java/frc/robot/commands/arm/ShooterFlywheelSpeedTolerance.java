@@ -1,11 +1,12 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.util.MathUtil;
 
-public class ShooterFlywheelSpeedTolerance extends Command{
+public class ShooterFlywheelSpeedTolerance extends Command {
 
     ShooterSpeeds shooterSpeeds;
     ShooterFlywheel flywheel;
@@ -16,14 +17,15 @@ public class ShooterFlywheelSpeedTolerance extends Command{
         super.addRequirements(flywheel);
     }
 
-    @Override 
+    @Override
     public void initialize() {
         flywheel.setFlywheelSpeed(shooterSpeeds);
     }
 
-    @Override 
+    @Override
     public boolean isFinished() {
-        return MathUtil.isWithinTolerance(flywheel.getFlywheelSpeed(), shooterSpeeds.flywheels, 10);
+        return MathUtil.isWithinTolerance(flywheel.getFlywheelSpeed(), shooterSpeeds.flywheels,
+                Constants.Arm.ShooterFlywheelTolerance);
     }
 
 }

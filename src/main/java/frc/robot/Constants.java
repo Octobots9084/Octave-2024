@@ -31,6 +31,17 @@ public final class Constants {
 	public static final Matter CHASSIS = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
 	public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
 
+	public static final class Arm {
+		public static final double ShooterElevatorTolerance = 0;
+		public static final double ShooterFlywheelTolerance = 0;
+		public static final double ShooterPivotTolerance = 0;
+	}
+
+	public static final class Climb {
+		public static final double ClimbTolerance = 0;
+		public static final double ManualDeadband = 0;
+	}
+
 	public static final class Auton {
 		public static final PIDConstants TranslationPID = new PIDConstants(3, 0.0, 0.0);
 		public static final PIDConstants angleAutoPID = new PIDConstants(2, 0, 0);
@@ -41,7 +52,7 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
-        public static PIDController targetAngleController = new PIDController(7, 0, 0);
+		public static PIDController targetAngleController = new PIDController(7, 0, 0);
 	}
 
 	public static class OperatorConstants {

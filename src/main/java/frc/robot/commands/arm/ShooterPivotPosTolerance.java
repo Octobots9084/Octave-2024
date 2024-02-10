@@ -1,26 +1,28 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.constants.ArmPositions;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.util.MathUtil;
 
-public class ShooterPivotPosTolerance extends Command{
+public class ShooterPivotPosTolerance extends Command {
     ArmPositions armPositions;
     ShooterPivot pivot;
+
     public ShooterPivotPosTolerance(ArmPositions armPositions) {
         this.armPositions = armPositions;
         pivot = ShooterPivot.getInstance();
         super.addRequirements(pivot);
     }
 
-    @Override 
+    @Override
     public void initialize() {
         pivot.setPosition(armPositions);
     }
 
-    @Override 
+    @Override
     public boolean isFinished() {
-        return MathUtil.isWithinTolerance(pivot.getPosition(), armPositions.pivot, 0.1);
+        return MathUtil.isWithinTolerance(pivot.getPosition(), armPositions.pivot, Constants.Arm.ShooterPivotTolerance);
     }
 }
