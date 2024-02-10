@@ -45,7 +45,7 @@ public class SwerveSubsystem extends SubsystemBase {
    */
   public static double MAXIMUM_SPEED = 5;
   public Rotation2d targetAngle;
-  public boolean targetAngleEnabled = true;;
+  public boolean targetAngleEnabled = false;
   public PIDController targetAngleController;
 
   /**

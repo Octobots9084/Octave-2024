@@ -4,12 +4,12 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.util.PIDConstants;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
-import com.pathplanner.lib.util.PIDConstants;
-
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
 
@@ -81,22 +81,22 @@ public final class Constants {
 
 		public static final Transform3d ROBOT_TO_CLYDE = new Transform3d(
 				new Translation3d(-ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(Math.toRadians(0), Math.toRadians(-30), Math.toRadians(180)));
+				new Rotation3d(Math.toRadians(0), Math.toRadians(-12.2), Math.toRadians(180)));
 
 		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
 				new Translation3d(-ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(Math.toRadians(0), Math.toRadians(-25), Math.toRadians(180)));
+				new Rotation3d(Math.toRadians(0), Math.toRadians(-12.2), Math.toRadians(180)));
 
 		public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
 				new Translation3d(ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-34), Math.toRadians(0)));
+				new Rotation3d(0, Math.toRadians(-9.7), Math.toRadians(0)));
 
 		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
 				new Translation3d(ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-31), Math.toRadians(0)));
+				new Rotation3d(0, Math.toRadians(-10.1), Math.toRadians(0)));
 
 		/** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
-		public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
+		public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.1;
 		public static final double POSE_AMBIGUITY_SHIFTER = 0.2;
 		public static final double POSE_AMBIGUITY_MULTIPLIER = 4;
 		public static final double NOISY_DISTANCE_METERS = 2.5;
