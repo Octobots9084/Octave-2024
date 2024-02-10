@@ -2,7 +2,7 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4229570277322372,
+      "x": 1.42,
       "y": 5.550603828480384
     },
     "rotation": 0.0
@@ -14,43 +14,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "pathName": "Start Blue"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LeftClose"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "pathName": "Blue 1"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "MiddleClose"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "pathName": "Blue 4"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RightClose"
+            "pathName": "Blue 5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Blue 2"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Blue 3"
           }
         }
       ]
