@@ -25,7 +25,7 @@ public class IntakeRoller extends SubsystemBase {
     CANSparkMax motor1;
 
     public IntakeRoller() {
-        motor1 = new CANSparkMax(0, MotorType.kBrushless);
+        motor1 = new CANSparkMax(10, MotorType.kBrushless);
         SparkMaxConfig motorConfig = new SparkMaxConfig(new SparkMaxStatusFrames(500,
                 20,
                 500,

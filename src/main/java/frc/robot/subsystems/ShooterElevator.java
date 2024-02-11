@@ -37,10 +37,10 @@ public class ShooterElevator extends SubsystemBase {
             1, true, IdleMode.kBrake, 30, 30, false, motor1);
 
     public ShooterElevator() {
-        motor1 = new CANSparkMax(0, MotorType.kBrushless);
-        motor2 = new CANSparkMax(0, MotorType.kBrushless);
+        motor1 = new CANSparkMax(12, MotorType.kBrushless);
+        // motor2 = new CANSparkMax(0, MotorType.kBrushless);
         SparkMaxSetup.setup(motor1, elevateConfig);
-        SparkMaxSetup.setup(motor2, followConfig);
+        // SparkMaxSetup.setup(motor2, followConfig);
     }
 
     public double zero() {

@@ -29,7 +29,7 @@ public class ShooterTrack extends SubsystemBase {
     }
 
     public ShooterTrack() {
-        motor1 = new CANSparkFlex(0, MotorType.kBrushless);
+        motor1 = new CANSparkFlex(15, MotorType.kBrushless);
         motor1.restoreFactoryDefaults();
         motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 500);
         motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);

@@ -37,7 +37,7 @@ public class IntakeTrack extends SubsystemBase {
     }
 
     public IntakeTrack() {
-        motor1 = new CANSparkMax(0, MotorType.kBrushless);
+        motor1 = new CANSparkMax(11, MotorType.kBrushless);
         motor1Config = new SparkMaxConfig(new SparkMaxStatusFrames(
                 500,
                 20,

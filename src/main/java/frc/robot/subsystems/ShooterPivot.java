@@ -31,8 +31,8 @@ public class ShooterPivot extends SubsystemBase {
     private double position;
 
     public ShooterPivot() {
-        leadMotor = new CANSparkMax(0, MotorType.kBrushless);
-        followMotor = new CANSparkMax(0, MotorType.kBrushless);
+        leadMotor = new CANSparkMax(13, MotorType.kBrushless);
+        followMotor = new CANSparkMax(14, MotorType.kBrushless);
         SparkMaxConfig follow = new SparkMaxConfig(new SparkMaxStatusFrames(500,
                 20,
                 500,

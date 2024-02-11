@@ -32,7 +32,7 @@ public class ShooterFlywheel extends SubsystemBase {
     private double circumference;
 
     public ShooterFlywheel() {
-        motorOne = new CANSparkFlex(0, MotorType.kBrushless);
+        motorOne = new CANSparkFlex(16, MotorType.kBrushless);
         motorOne.restoreFactoryDefaults();
         motorOne.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 500);
         motorOne.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);
@@ -54,7 +54,7 @@ public class ShooterFlywheel extends SubsystemBase {
         motorOne.getPIDController().setD(0);
         motorOne.getPIDController().setFF(0);
 
-        motorTwo = new CANSparkFlex(0, MotorType.kBrushless);
+        motorTwo = new CANSparkFlex(17, MotorType.kBrushless);
         motorTwo.restoreFactoryDefaults();
         motorTwo.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 500);
         motorTwo.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);
