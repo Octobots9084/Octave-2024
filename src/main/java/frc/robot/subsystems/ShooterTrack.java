@@ -6,6 +6,8 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ShooterSpeeds;
 
@@ -13,6 +15,7 @@ public class ShooterTrack extends SubsystemBase {
 
     public static ShooterTrack shootingRetainer;
     private CANSparkFlex motor1;
+    private DigitalInput sensor;
 
     /*
      * Things this needs to do:
@@ -45,6 +48,8 @@ public class ShooterTrack extends SubsystemBase {
         motor1.setIdleMode(IdleMode.kBrake);
         motor1.setSmartCurrentLimit(10, 30);
         motor1.setInverted(false);
+
+        sensor = new DigitalInput(1);
     }
 
     public void setVoltage(double voltage) {
@@ -56,6 +61,6 @@ public class ShooterTrack extends SubsystemBase {
     }
 
     public boolean getSensor() {
-        return true;
+        return sensor.get();
     }
 }

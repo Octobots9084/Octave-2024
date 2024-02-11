@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
@@ -20,7 +21,7 @@ public class IntakeTrack extends SubsystemBase {
     public static IntakeTrack intakeRetainer;
     private CANSparkMax motor1;
     private SparkMaxConfig motor1Config;
-    private boolean retainingNote;
+    private DigitalInput sensor;
 
     /*
      * Things this needs to do:
@@ -56,6 +57,7 @@ public class IntakeTrack extends SubsystemBase {
                 false,
                 1);
         SparkMaxSetup.setup(motor1, motor1Config);
+        sensor = new DigitalInput(0);
     }
 
     public boolean checkIntake() {
@@ -70,11 +72,7 @@ public class IntakeTrack extends SubsystemBase {
         setVoltage(intakeSpeeds.track);
     }
 
-    public boolean isRetainingNote() {
-        return retainingNote;
-    }
-
     public boolean getSensor() {
-        return true;
+        return sensor.get();
     }
 }
