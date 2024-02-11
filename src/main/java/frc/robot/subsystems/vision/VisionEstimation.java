@@ -93,14 +93,14 @@ public class VisionEstimation extends SubsystemBase {
     }
 
     /**
-    * Transforms a pose to the opposite alliance's coordinate system. (0,0) is
-    * always on the right corner of your
-    * alliance wall, the field elements are at different coordinates
-    * for each alliance.
-    * 
-    * @param poseToFlip pose to transform to the other alliance
-    * @return pose relative to the other alliance's coordinate system
-    */
+     * Transforms a pose to the opposite alliance's coordinate system. (0,0) is
+     * always on the right corner of your
+     * alliance wall, the field elements are at different coordinates
+     * for each alliance.
+     * 
+     * @param poseToFlip pose to transform to the other alliance
+     * @return pose relative to the other alliance's coordinate system
+     */
     private Pose2d flipAlliance(Pose2d poseToFlip) {
         return poseToFlip.relativeTo(new Pose2d(
                 new Translation2d(FieldConstants.LENGTH, FieldConstants.WIDTH),
@@ -144,9 +144,27 @@ public class VisionEstimation extends SubsystemBase {
             SmartDashboard.putBoolean("toofar", true);
             confidenceMultiplier = 1000;
         } else {
+            confidenceMultiplier = 1;
             SmartDashboard.putBoolean("toofar", false);
         }
         return visionMeasurementStdDevs.times(confidenceMultiplier);
+    }
+
+    public boolean checkTargetDistance(EstimatedRobotPose estimation) {
+        double smallestDistance = Double.POSITIVE_INFINITY;
+        double largestDistance = 0;
+        for (var target : estimation.targetsUsed) {
+            var target3D = target.getBestCameraToTarget();
+            var distance = Math
+                    .sqrt(Math.pow(target3D.getX(), 2) + Math.pow(target3D.getY(), 2) + Math.pow(target3D.getZ(), 2));
+            if (distance < smallestDistance)
+                smallestDistance = distance;
+            if (distance > largestDistance)
+                largestDistance = distance;
+
+        }
+
+        return (largestDistance < VisionConstants.MAXIMUM_TAG_DISTANCE);
     }
 
     public void estimatorChecker(Vision estimator) {
@@ -159,8 +177,13 @@ public class VisionEstimation extends SubsystemBase {
             if (originPosition == kRedAllianceWallRightSide) {
                 pose2d = flipAlliance(pose2d);
             }
-            swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds,
-                    confidenceCalculator(cameraPose));
+
+            boolean tagDistance = checkTargetDistance(cameraPose);
+            if (tagDistance) {
+                swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds,
+                        confidenceCalculator(cameraPose));
+            }
+
         }
     }
 

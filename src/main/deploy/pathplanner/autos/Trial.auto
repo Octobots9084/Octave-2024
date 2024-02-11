@@ -50,12 +50,6 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Prep Piece 5"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "Prep Piece 1"
           }
         },
@@ -69,12 +63,6 @@
           "type": "path",
           "data": {
             "pathName": "Piece 2"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Prep Piece 2"
           }
         },
         {
