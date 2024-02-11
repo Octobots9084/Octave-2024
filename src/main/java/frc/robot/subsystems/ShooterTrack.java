@@ -45,18 +45,14 @@ public class ShooterTrack extends SubsystemBase {
         motor1.setIdleMode(IdleMode.kBrake);
         motor1.setSmartCurrentLimit(10, 30);
         motor1.setInverted(false);
-        motor1.getPIDController().setPositionPIDWrappingEnabled(false);
-        motor1.getPIDController().setP(0);
-        motor1.getPIDController().setI(0);
-        motor1.getPIDController().setD(0);
     }
 
-    public void setSpeed(double speed) {
-        motor1.getPIDController().setReference(speed, ControlType.kVelocity);
+    public void setVoltage(double voltage) {
+        motor1.setVoltage(voltage);
     }
 
-    public void setSpeed(ShooterSpeeds shooterSpeeds) {
-        setSpeed(shooterSpeeds.track);
+    public void setVoltage(ShooterSpeeds shooterSpeeds) {
+        setVoltage(shooterSpeeds.track);
     }
 
     public boolean getSensor() {

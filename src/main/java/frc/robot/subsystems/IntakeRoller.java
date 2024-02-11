@@ -34,16 +34,15 @@ public class IntakeRoller extends SubsystemBase {
                 500,
                 500),
                 1000,
-                true, SparkMaxEncoderType.Relative, IdleMode.kBrake, 30, 30, false, false, 1, false,
-                new PIDConfig(0, 0, 0, 0));
+                true, SparkMaxEncoderType.Relative, IdleMode.kBrake, 30, 30, false, false, 1);
         SparkMaxSetup.setup(motor1, motorConfig);
     }
 
-    public void setVelocity(double speed) {
-        motor1.getPIDController().setReference(speed, ControlType.kVelocity);
+    public void setVoltage(double voltage) {
+        motor1.setVoltage(voltage);
     }
 
-    public void setVelocity(IntakeSpeeds speeds) {
-        setVelocity(speeds.roller);
+    public void setVoltage(IntakeSpeeds speeds) {
+        setVoltage(speeds.roller);
     }
 }

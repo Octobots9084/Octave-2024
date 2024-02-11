@@ -54,9 +54,7 @@ public class IntakeTrack extends SubsystemBase {
                 30,
                 false,
                 false,
-                2048,
-                false,
-                new PIDConfig(5, 0, 0, 0));
+                1);
         SparkMaxSetup.setup(motor1, motor1Config);
     }
 
@@ -64,12 +62,12 @@ public class IntakeTrack extends SubsystemBase {
         return true;
     }
 
-    public void setSpeed(double speed) {
-        motor1.getPIDController().setReference(speed, ControlType.kVelocity);
+    public void setVoltage(double voltage) {
+        motor1.setVoltage(voltage);
     }
 
-    public void setSpeed(IntakeSpeeds intakeSpeeds) {
-        setSpeed(intakeSpeeds.track);
+    public void setVoltage(IntakeSpeeds intakeSpeeds) {
+        setVoltage(intakeSpeeds.track);
     }
 
     public boolean isRetainingNote() {

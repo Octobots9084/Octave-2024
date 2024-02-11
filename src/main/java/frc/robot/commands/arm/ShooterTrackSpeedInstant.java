@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.ShooterTrack;
 
-public class ShooterTrackSpeedInstant extends InstantCommand{
+public class ShooterTrackSpeedInstant extends InstantCommand {
 
     ShooterSpeeds shooterSpeeds;
     ShooterTrack track;
@@ -15,8 +15,8 @@ public class ShooterTrackSpeedInstant extends InstantCommand{
         super.addRequirements(track);
     }
 
-    @Override 
+    @Override
     public void initialize() {
-        track.setSpeed(shooterSpeeds);
+        track.setVoltage(shooterSpeeds);
     }
 }
