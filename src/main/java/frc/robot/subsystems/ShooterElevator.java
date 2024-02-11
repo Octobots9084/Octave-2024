@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import frc.robot.constants.ArmPositions;
+import frc.robot.util.PIDConfig;
 import frc.robot.util.SparkMax.SparkMaxConfig;
 import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
@@ -31,7 +32,7 @@ public class ShooterElevator extends SubsystemBase {
     private SparkMaxConfig elevateConfig = new SparkMaxConfig(
             new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300), 1, true, SparkMaxEncoderType.Relative,
             IdleMode.kBrake,
-            30, 30, false, false, 50);
+            30, 30, false, false, 1, false, new PIDConfig(0, 0, 0));
     private SparkMaxConfig followConfig = new SparkMaxConfig(new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300),
             1, true, IdleMode.kBrake, 30, 30, false, motor1);
 

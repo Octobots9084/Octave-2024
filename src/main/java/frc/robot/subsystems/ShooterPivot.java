@@ -9,6 +9,7 @@ import com.revrobotics.SparkAbsoluteEncoder.Type;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ArmPositions;
+import frc.robot.util.PIDConfig;
 import frc.robot.util.SparkMax.SparkMaxConfig;
 import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
@@ -46,7 +47,7 @@ public class ShooterPivot extends SubsystemBase {
                 500,
                 20,
                 500), 1000, true,
-                SparkMaxEncoderType.Absolute, IdleMode.kBrake, 30, 30, false, false, 1);
+                SparkMaxEncoderType.Absolute, IdleMode.kBrake, 30, 30, false, false, 1, true, new PIDConfig(0, 0, 0));
         SparkMaxSetup.setup(leadMotor, lead);
         SparkMaxSetup.setup(followMotor, follow);
     }
