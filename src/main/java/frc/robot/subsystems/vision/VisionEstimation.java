@@ -109,12 +109,15 @@ public class VisionEstimation extends SubsystemBase {
 
     private Matrix<N3, N1> confidenceCalculator(EstimatedRobotPose estimation) {
         double smallestDistance = Double.POSITIVE_INFINITY;
+        double largestDistance = 0;
         for (var target : estimation.targetsUsed) {
             var target3D = target.getBestCameraToTarget();
             var distance = Math
                     .sqrt(Math.pow(target3D.getX(), 2) + Math.pow(target3D.getY(), 2) + Math.pow(target3D.getZ(), 2));
             if (distance < smallestDistance)
                 smallestDistance = distance;
+            if (distance > largestDistance)
+                largestDistance = distance;
         }
 
         var maxPoseAmbiguity = Math.max(
@@ -137,12 +140,20 @@ public class VisionEstimation extends SubsystemBase {
                         / (1
                                 + ((estimation.targetsUsed.size() - 1) * VisionConstants.TAG_PRESENCE_WEIGHT)));
 
+        if (largestDistance > VisionConstants.MAXIMUM_TAG_DISTANCE) {
+            SmartDashboard.putBoolean("toofar", true);
+            confidenceMultiplier = 1000;
+        } else {
+            SmartDashboard.putBoolean("toofar", false);
+        }
         return visionMeasurementStdDevs.times(confidenceMultiplier);
     }
 
     public void estimatorChecker(Vision estimator) {
         var cameraPose = estimator.grabLatestEstimatedPose();
+
         if (cameraPose != null) {
+            SmartDashboard.putString("camerapose", cameraPose.estimatedPose.toString());
             // New pose from vision
             var pose2d = cameraPose.estimatedPose.toPose2d();
             if (originPosition == kRedAllianceWallRightSide) {

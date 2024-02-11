@@ -50,15 +50,14 @@ public class Vision implements Runnable {
     try {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult(); //Gets the latest camera results
-
+        SmartDashboard.putBoolean("usingvision", Math.sqrt((photonResults.getMultiTagResult().estimatedPose.best.getX()
+            * photonResults.getMultiTagResult().estimatedPose.best.getX())
+            + (photonResults.getMultiTagResult().estimatedPose.best.getY()
+                * photonResults.getMultiTagResult().estimatedPose.best
+                    .getY())) < VisionConstants.MAXIMUM_TAG_DISTANCE);
         if (photonResults.hasTargets() &&
             (photonResults.targets.size() > 1
-                || photonResults.targets.get(0).getPoseAmbiguity() < VisionConstants.APRILTAG_AMBIGUITY_THRESHOLD)
-            && Math.sqrt((photonResults.getMultiTagResult().estimatedPose.best.getX()
-                * photonResults.getMultiTagResult().estimatedPose.best.getX())
-                + (photonResults.getMultiTagResult().estimatedPose.best.getY()
-                    * photonResults.getMultiTagResult().estimatedPose.best
-                        .getY())) < VisionConstants.MAXIMUM_TAG_DISTANCE) {
+                || photonResults.targets.get(0).getPoseAmbiguity() < VisionConstants.APRILTAG_AMBIGUITY_THRESHOLD)) {
           //Updates the pose estimator
           photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
             var estimatedPose = estimatedRobotPose.estimatedPose;

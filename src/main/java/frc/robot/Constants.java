@@ -41,7 +41,7 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
-        public static PIDController targetAngleController = new PIDController(10, 0, 0);
+		public static PIDController targetAngleController = new PIDController(10, 0, 0);
 	}
 
 	public static class OperatorConstants {
@@ -102,7 +102,7 @@ public final class Constants {
 		public static final double NOISY_DISTANCE_METERS = 2.5;
 		public static final double DISTANCE_WEIGHT = 7;
 		public static final int TAG_PRESENCE_WEIGHT = 10;
-        public static final double MAXIMUM_TAG_DISTANCE = 4;
+		public static final double MAXIMUM_TAG_DISTANCE = 4;
 
 	}
 }
