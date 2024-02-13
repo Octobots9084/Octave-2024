@@ -140,13 +140,15 @@ public class VisionEstimation extends SubsystemBase {
                         / (1
                                 + ((estimation.targetsUsed.size() - 1) * VisionConstants.TAG_PRESENCE_WEIGHT)));
 
-        if (largestDistance > VisionConstants.MAXIMUM_TAG_DISTANCE) {
-            SmartDashboard.putBoolean("toofar", true);
-            confidenceMultiplier = 1000;
-        } else {
-            confidenceMultiplier = 1;
-            SmartDashboard.putBoolean("toofar", false);
-        }
+        // if (largestDistance > VisionConstants.MAXIMUM_TAG_DISTANCE) {
+        //     SmartDashboard.putBoolean("toofar", true);
+        //     confidenceMultiplier = 1000;
+        // } else {
+        //     confidenceMultiplier = 1;
+        //     SmartDashboard.putBoolean("toofar", false);
+        // }false
+                SmartDashboard.putNumber("Confidence", confidenceMultiplier);
+
         return visionMeasurementStdDevs.times(confidenceMultiplier);
     }
 
@@ -163,7 +165,6 @@ public class VisionEstimation extends SubsystemBase {
                 largestDistance = distance;
 
         }
-
         return (largestDistance < VisionConstants.MAXIMUM_TAG_DISTANCE);
     }
 
