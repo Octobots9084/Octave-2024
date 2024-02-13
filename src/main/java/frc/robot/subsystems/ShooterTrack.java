@@ -49,7 +49,7 @@ public class ShooterTrack extends SubsystemBase {
         motor1.setSmartCurrentLimit(10, 30);
         motor1.setInverted(false);
 
-        sensor = new DigitalInput(1);
+        sensor = new DigitalInput(0);
     }
 
     public void setVoltage(double voltage) {

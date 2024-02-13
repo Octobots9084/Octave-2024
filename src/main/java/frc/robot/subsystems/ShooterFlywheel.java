@@ -45,20 +45,18 @@ public class ShooterFlywheel extends SubsystemBase {
         motorOne.setCANTimeout(1000);
 
         motorOne.getPIDController().setFeedbackDevice(motorOne.getEncoder());
-        motorOne.setIdleMode(IdleMode.kBrake);
-        motorOne.setSmartCurrentLimit(10, 30);
+        motorOne.setIdleMode(IdleMode.kCoast);
+        motorOne.setSmartCurrentLimit(30, 30);
         motorOne.setInverted(false);
-        motorOne.getPIDController().setPositionPIDWrappingEnabled(false);
-        motorOne.getPIDController().setP(0);
+        motorOne.getPIDController().setP(0.001);
         motorOne.getPIDController().setI(0);
         motorOne.getPIDController().setD(0);
-        motorOne.getPIDController().setFF(0);
-
+        motorOne.getPIDController().setFF(0.0002);
         motorTwo = new CANSparkFlex(17, MotorType.kBrushless);
         motorTwo.restoreFactoryDefaults();
         motorTwo.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 500);
         motorTwo.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);
-        motorOne.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
+        motorTwo.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
         motorTwo.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 20);
         motorTwo.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 500);
         motorTwo.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 500);
@@ -66,26 +64,30 @@ public class ShooterFlywheel extends SubsystemBase {
 
         motorTwo.setCANTimeout(1000);
 
-        motorTwo.setIdleMode(IdleMode.kBrake);
-        motorTwo.setSmartCurrentLimit(10, 30);
+        motorTwo.getPIDController().setFeedbackDevice(motorTwo.getEncoder());
+        motorTwo.setIdleMode(IdleMode.kCoast);
+        motorTwo.setSmartCurrentLimit(30, 30);
         motorTwo.setInverted(false);
-        motorTwo.follow(motorOne);
-
-        motorTwo = new CANSparkFlex(12, MotorType.kBrushless);
+        motorTwo.getPIDController().setP(0.001);
+        motorTwo.getPIDController().setI(0);
+        motorTwo.getPIDController().setD(0);
+        motorTwo.getPIDController().setFF(0.0002);
 
         motorOnepid = motorOne.getPIDController();
 
         motor2pid = motorTwo.getPIDController();
 
         // FIXME
-        circumference = 1;
+        circumference = 2*Math.PI*0.05;
         // this needs to be made accurate later
         // it is the circumference of a launcher flywheel
     }
 
     public void setFlywheelSpeed(double newSpeed) {
         lastSpeed = newSpeed;
+        SmartDashboard.putNumber("newSpeed", newSpeed);
         motorOne.getPIDController().setReference(newSpeed, ControlType.kVelocity);
+        motorTwo.getPIDController().setReference(-newSpeed, ControlType.kVelocity);
     }
 
     public void increaseFlywheelSpeed(double increment) {
@@ -98,7 +100,7 @@ public class ShooterFlywheel extends SubsystemBase {
     }
 
     public void setFlyWheelSpeedMeters(double speed) {
-        motorOne.getPIDController().setReference(lastSpeed / circumference, ControlType.kVelocity);
+        motorOne.getPIDController().setReference(speed / circumference, ControlType.kVelocity);
     }
 
     public double getFlywheelSpeedMeters() {

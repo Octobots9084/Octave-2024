@@ -3,7 +3,7 @@ package frc.robot.constants;
 public enum ShooterSpeeds {
     IDLE(0,-0.5),
     PREPARE(0,1),
-    SPEAKER(1,1),
+    SPEAKER(1,-5000),
     STOP(0,0),
     PANIC(-1,-1),
     AMP(1,0.5),

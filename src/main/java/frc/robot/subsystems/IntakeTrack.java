@@ -1,26 +1,20 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.simulation.DIOSim;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import com.revrobotics.CANSparkMax;
-
-import frc.robot.constants.IntakeSpeeds;
-import frc.robot.util.PIDConfig;
-import frc.robot.util.SparkMax.SparkMaxConfig;
-import frc.robot.util.SparkMax.SparkMaxEncoderType;
-import frc.robot.util.SparkMax.SparkMaxSetup;
-import frc.robot.util.SparkMax.SparkMaxStatusFrames;
+import frc.robot.constants.ShooterSpeeds;
 
 public class IntakeTrack extends SubsystemBase {
 
-    public static IntakeTrack intakeRetainer;
-    private CANSparkMax motor1;
-    private SparkMaxConfig motor1Config;
+    public static IntakeTrack intakeTrack;
+    private CANSparkFlex motor1;
     private DigitalInput sensor;
 
     /*
@@ -31,45 +25,39 @@ public class IntakeTrack extends SubsystemBase {
      */
 
     public static IntakeTrack getInstance() {
-        if (intakeRetainer == null) {
-            intakeRetainer = new IntakeTrack();
+        if (intakeTrack == null) {
+            intakeTrack = new IntakeTrack();
         }
-        return intakeRetainer;
+        return intakeTrack;
     }
 
     public IntakeTrack() {
-        motor1 = new CANSparkMax(11, MotorType.kBrushless);
-        motor1Config = new SparkMaxConfig(new SparkMaxStatusFrames(
-                500,
-                20,
-                500,
-                20,
-                500,
-                500,
-                500),
-                1000,
-                true,
-                SparkMaxEncoderType.Relative,
-                IdleMode.kBrake,
-                10,
-                30,
-                false,
-                false,
-                1);
-        SparkMaxSetup.setup(motor1, motor1Config);
-        sensor = new DigitalInput(0);
-    }
+        motor1 = new CANSparkFlex(11, MotorType.kBrushless);
+        motor1.restoreFactoryDefaults();
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 500);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 20);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 500);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 500);
+        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus6, 500);
 
-    public boolean checkIntake() {
-        return true;
+        motor1.setCANTimeout(1000);
+
+        motor1.getPIDController().setFeedbackDevice(motor1.getEncoder());
+        motor1.setIdleMode(IdleMode.kBrake);
+        motor1.setSmartCurrentLimit(10, 30);
+        motor1.setInverted(false);
+
+        sensor = new DigitalInput(1);
     }
 
     public void setVoltage(double voltage) {
         motor1.setVoltage(voltage);
     }
 
-    public void setVoltage(IntakeSpeeds intakeSpeeds) {
-        setVoltage(intakeSpeeds.track);
+    public void setVoltage(ShooterSpeeds shooterSpeeds) {
+        setVoltage(shooterSpeeds.track);
     }
 
     public boolean getSensor() {

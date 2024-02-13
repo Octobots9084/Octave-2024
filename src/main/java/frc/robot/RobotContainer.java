@@ -15,6 +15,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.arm.ShooterElevatorPosInstant;
+import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
+import frc.robot.commands.arm.ShooterPivotPosInstant;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.Dunk;
@@ -27,6 +30,9 @@ import frc.robot.commands.complex.Undunk;
 import frc.robot.commands.swervedrive.PathfindingTest;
 import frc.robot.commands.swervedrive.auto.TestingPaths;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
+import frc.robot.constants.ArmPositions;
+import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
 import swervelib.imu.NavXSwerve;
@@ -55,9 +61,9 @@ public class RobotContainer {
     CommandJoystick coDriverRight = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_RIGHT);
     CommandJoystick coDriverButtons = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_BUTTONS);
 
-    private final VisionEstimation visionEstimation = new VisionEstimation();
+    //private final VisionEstimation visionEstimation = new VisionEstimation();
 
-    private final SendableChooser<Command> autoChooser;
+    // private final SendableChooser<Command> autoChooser;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -65,46 +71,20 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure the trigger bindings
         configureBindings();
-        // AbsoluteDrive closedAbsoluteDrive = new
-        // AbsoluteDrive(SwerveSubsystem.getInstance(),
-        // // Applies deadbands and inverts controls because joysticks
-        // // are back-right positive while robot
-        // // controls are front-left positive
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-        // OperatorConstants.LEFT_Y_DEADBAND),
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-        // OperatorConstants.LEFT_X_DEADBAND),
-        // () -> -driverXbox.getRightX(),
-        // () -> -driverXbox.getRightY());
 
-        // AbsoluteFieldDrive closedFieldAbsoluteDrive = new
-        // AbsoluteFieldDrive(SwerveSubsystem.getInstance(),
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-        // OperatorConstants.LEFT_Y_DEADBAND),
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-        // OperatorConstants.LEFT_X_DEADBAND),
-        // () -> driverXbox.getRawAxis(2));
+        // TeleopDrive closedFieldRel = new TeleopDrive(
+        //         SwerveSubsystem.getInstance(),
+        //         () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(1),
+        //                 OperatorConstants.LEFT_Y_DEADBAND),
+        //         () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(0),
+        //                 OperatorConstants.LEFT_X_DEADBAND),
+        //         () -> MathUtil.applyDeadband(-driverRight.getRawAxis(0), OperatorConstants.RIGHT_X_DEADBAND),
+        //         () -> true);
 
-        // TeleopDrive simClosedFieldRel = new
-        // TeleopDrive(SwerveSubsystem.getInstance(),
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-        // OperatorConstants.LEFT_Y_DEADBAND),
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-        // OperatorConstants.LEFT_X_DEADBAND),
-        // () -> driverXbox.getRawAxis(2), () -> true);
-        TeleopDrive closedFieldRel = new TeleopDrive(
-                SwerveSubsystem.getInstance(),
-                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(1),
-                        OperatorConstants.LEFT_Y_DEADBAND),
-                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(0),
-                        OperatorConstants.LEFT_X_DEADBAND),
-                () -> MathUtil.applyDeadband(-driverRight.getRawAxis(0), OperatorConstants.RIGHT_X_DEADBAND),
-                () -> true);
-
-        SwerveSubsystem.getInstance().setDefaultCommand(
-                !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
-        autoChooser = AutoBuilder.buildAutoChooser();
-        SmartDashboard.putData("Auto Chooser", autoChooser);
+        // SwerveSubsystem.getInstance().setDefaultCommand(
+        //         !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
+        //autoChooser = AutoBuilder.buildAutoChooser();
+        //SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
     /**
@@ -123,23 +103,23 @@ public class RobotContainer {
     private void configureBindings() {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-        driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
-        driverLeft.button(2).onTrue((new InstantCommand(() -> {
-            SmartDashboard.putNumber("button press", 0);
-            // Not safe type casting, could break but should be obvious
-            NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
-            AHRS gyro = (AHRS) navx.getIMU();
-            gyro.reset();
+        // driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
+        // driverLeft.button(2).onTrue((new InstantCommand(() -> {
+        //     SmartDashboard.putNumber("button press", 0);
+        //     // Not safe type casting, could break but should be obvious
+        //     NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
+        //     AHRS gyro = (AHRS) navx.getIMU();
+        //     gyro.reset();
 
-        })));
+        // })));
 
-        //driverRight.button(1).whileTrue(new Collect());]
-        driverRight.button(1).onTrue(new InstantCommand(()->{
-            SwerveSubsystem.getInstance().setShootingRequestActive(true);
-        }));
-        driverRight.button(1).onFalse(new InstantCommand(()->{
-            SwerveSubsystem.getInstance().setShootingRequestActive(false);
-        }));
+        // //driverRight.button(1).whileTrue(new Collect());]
+        // driverRight.button(1).onTrue(new InstantCommand(()->{
+        //     SwerveSubsystem.getInstance().setShootingRequestActive(true);
+        // }));
+        // driverRight.button(1).onFalse(new InstantCommand(()->{
+        //     SwerveSubsystem.getInstance().setShootingRequestActive(false);
+        // }));
 
         // driverRight.button(2).onTrue(new TheBigYeet());
 
@@ -147,7 +127,9 @@ public class RobotContainer {
         // driverButtons.button(2).onTrue(new TestingPaths());
         // //driverButtons.button(3).onTrue(new DontFire());
 
-        // coDriverLeft.button(1).whileTrue(new Collect());
+        driverLeft.button(1).whileTrue(new Collect());
+        driverLeft.button(2).onTrue(new ShooterPivotPosInstant(ArmPositions.AMP));
+        driverRight.button(1).onTrue(new ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
 
         // coDriverButtons.button(1).onTrue(new PrepAmp());
         // coDriverButtons.button(2).onTrue(new PrepSpeaker());
@@ -162,15 +144,15 @@ public class RobotContainer {
         // SwerveSubsystem.getInstance().setDefaultCommand();
     }
 
-    public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
-    }
+    // public Command getAutonomousCommand() {
+    //     return autoChooser.getSelected();
+    // }
 
     public void setMotorBrake(boolean brake) {
         SwerveSubsystem.getInstance().setMotorBrake(brake);
     }
 
-    public VisionEstimation getVisionEstimation() {
-        return visionEstimation;
-    }
+    // public VisionEstimation getVisionEstimation() {
+    //     return visionEstimation;
+    // }
 }
