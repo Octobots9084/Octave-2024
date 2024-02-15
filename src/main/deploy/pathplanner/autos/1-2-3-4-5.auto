@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3478960291253916,
-      "y": 5.547371094742189
+      "x": 0.6924444618120014,
+      "y": 4.361647649950041
     },
-    "rotation": 0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "6 Piece"
+            "pathName": "1-2-3-4-5"
           }
         }
       ]

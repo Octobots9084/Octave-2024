@@ -164,7 +164,6 @@ public class VisionEstimation extends SubsystemBase {
                 largestDistance = distance;
 
         }
-
         return (largestDistance < VisionConstants.MAXIMUM_TAG_DISTANCE);
     }
 
