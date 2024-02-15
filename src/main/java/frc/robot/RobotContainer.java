@@ -18,6 +18,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
 import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
 import frc.robot.commands.arm.ShooterPivotPosInstant;
+import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.Dunk;
@@ -27,11 +28,15 @@ import frc.robot.commands.complex.PrepSpeaker;
 import frc.robot.commands.complex.SimpleClimb;
 import frc.robot.commands.complex.TheBigYeet;
 import frc.robot.commands.complex.Undunk;
+import frc.robot.commands.intake.IntakeRollerSpeedInstant;
+import frc.robot.commands.intake.IntakeTrackSpeedInstant;
 import frc.robot.commands.swervedrive.PathfindingTest;
 import frc.robot.commands.swervedrive.auto.TestingPaths;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.constants.ArmPositions;
+import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.IntakeTrack;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
@@ -130,6 +135,7 @@ public class RobotContainer {
         driverLeft.button(1).whileTrue(new Collect());
         driverLeft.button(2).onTrue(new ShooterPivotPosInstant(ArmPositions.AMP));
         driverRight.button(1).onTrue(new ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
+        driverButtons.button(1).onTrue(new Collect());
 
         // coDriverButtons.button(1).onTrue(new PrepAmp());
         // coDriverButtons.button(2).onTrue(new PrepSpeaker());
@@ -148,9 +154,7 @@ public class RobotContainer {
     //     return autoChooser.getSelected();
     // }
 
-    public void setMotorBrake(boolean brake) {
-        SwerveSubsystem.getInstance().setMotorBrake(brake);
-    }
+   
 
     // public VisionEstimation getVisionEstimation() {
     //     return visionEstimation;

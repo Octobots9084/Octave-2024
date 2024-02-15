@@ -38,11 +38,11 @@ public class IntakeRoller extends SubsystemBase {
         SparkMaxSetup.setup(motor1, motorConfig);
     }
 
-    public void setVoltage(double voltage) {
-        motor1.setVoltage(voltage);
+    public void set(double percent) {
+        motor1.set(percent);
     }
 
-    public void setVoltage(IntakeSpeeds speeds) {
-        setVoltage(speeds.roller);
+    public void set(IntakeSpeeds speeds) {
+        set(speeds.roller);
     }
 }

@@ -46,18 +46,18 @@ public class IntakeTrack extends SubsystemBase {
 
         motor1.getPIDController().setFeedbackDevice(motor1.getEncoder());
         motor1.setIdleMode(IdleMode.kBrake);
-        motor1.setSmartCurrentLimit(10, 30);
+        motor1.setSmartCurrentLimit(30, 30);
         motor1.setInverted(false);
 
         sensor = new DigitalInput(1);
     }
 
-    public void setVoltage(double voltage) {
-        motor1.setVoltage(voltage);
+    public void set(double percent) {
+        motor1.set(percent);
     }
 
-    public void setVoltage(ShooterSpeeds shooterSpeeds) {
-        setVoltage(shooterSpeeds.track);
+    public void set(ShooterSpeeds shooterSpeeds) {
+        set(shooterSpeeds.track);
     }
 
     public boolean getSensor() {

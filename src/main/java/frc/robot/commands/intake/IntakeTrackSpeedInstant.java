@@ -1,10 +1,10 @@
 package frc.robot.commands.intake;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.subsystems.IntakeTrack;
 
-public class IntakeTrackSpeedInstant extends Command {
+public class IntakeTrackSpeedInstant extends InstantCommand {
     // created by Olorin
 
     IntakeSpeeds intakeSpeed;
@@ -18,6 +18,6 @@ public class IntakeTrackSpeedInstant extends Command {
 
     @Override
     public void initialize() {
-        track.setVoltage(intakeSpeed.track);
+        track.set(intakeSpeed.track);
     }
 }

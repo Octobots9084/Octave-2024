@@ -41,7 +41,7 @@ public class ShooterPivot extends SubsystemBase {
                 500,
                 20,
                 500), 1000, true,
-                SparkMaxEncoderType.Relative, IdleMode.kCoast, 30, 30, false, false, 1, false, new PIDConfig(3, 0, 0,0.05));
+                SparkMaxEncoderType.Relative, IdleMode.kCoast, 30, 30, false, false, 1, false, new PIDConfig(24, 0.000, 0,0.08));
         SparkMaxConfig lead = new SparkMaxConfig(new SparkMaxStatusFrames(500,
                 20,
                 500,
@@ -49,21 +49,25 @@ public class ShooterPivot extends SubsystemBase {
                 500,
                 20,
                 500), 1000, true,
-                SparkMaxEncoderType.Relative, IdleMode.kCoast, 30, 30, true, false, 1, false, new PIDConfig(3, 0, 0,0.05));
+                SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, true, false, 1, false, new PIDConfig(24, 0.000, 0,0.08));
         SparkMaxSetup.setup(leadMotor, lead);
         SparkMaxSetup.setup(followMotor, follow);
-        leadMotor.getEncoder().setPositionConversionFactor(1.0/125);
         followMotor.getEncoder().setPositionConversionFactor(1.0/125);
-        leadMotor.getEncoder().setPosition(leadMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition());
-        followMotor.getEncoder().setPosition(leadMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition());
+        
         
         
     }
+    public void configFollowEncoder() {
+        followMotor.getEncoder().setPosition(leadMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition());
+    }
 
     public void setPosition(double target) {
-        SmartDashboard.putNumber("targetPivot", target);
+        
         target = MathUtil.clamp(target, minLimit, maxLimit);
+        SmartDashboard.putNumber("targetPivot", target);
         leadMotor.getPIDController().setReference(target, ControlType.kPosition);
+
+        followMotor.getPIDController().setReference(target, ControlType.kPosition);
         position = target;
     }
 

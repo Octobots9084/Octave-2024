@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 import frc.robot.commands.ButtonConfig;
 import frc.robot.commands.ControlMap;
@@ -95,7 +94,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    m_robotContainer.setMotorBrake(true);
     disabledTimer.reset();
     disabledTimer.start();
   }
@@ -103,7 +101,6 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     if (disabledTimer.hasElapsed(Constants.Drivebase.WHEEL_LOCK_TIME)) {
-      m_robotContainer.setMotorBrake(false);
       disabledTimer.stop();
     }
   }
@@ -114,7 +111,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_robotContainer.setMotorBrake(true);
     //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -140,7 +136,6 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     m_robotContainer.setDriveMode();
-    m_robotContainer.setMotorBrake(true);
   }
 
   /**
@@ -148,7 +143,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("thng", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
+    SmartDashboard.putNumber("thng", ShooterPivot.getInstance().getPosition());
     SmartDashboard.putNumber("thng2", ShooterFlywheel.getInstance().getFlywheelSpeed());
     //ShooterFlywheel.getInstance().increaseFlywheelSpeed(MathUtil.applyDeadband(5*ControlMap.FLYWHEEL_JOYSTICK.getY(), 0.05));
   }

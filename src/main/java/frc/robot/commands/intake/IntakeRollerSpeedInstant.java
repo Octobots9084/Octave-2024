@@ -16,6 +16,6 @@ public class IntakeRollerSpeedInstant extends InstantCommand {
 
     @Override
     public void initialize() {
-        intakeroller.setVoltage(intakeSpeeds);
+        intakeroller.set(intakeSpeeds);
     }
 }

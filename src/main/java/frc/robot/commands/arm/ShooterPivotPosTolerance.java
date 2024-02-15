@@ -1,5 +1,6 @@
 package frc.robot.commands.arm;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.constants.ArmPositions;
@@ -18,11 +19,13 @@ public class ShooterPivotPosTolerance extends Command {
 
     @Override
     public void initialize() {
+        pivot.configFollowEncoder();
         pivot.setPosition(armPositions);
     }
 
     @Override
     public boolean isFinished() {
+        SmartDashboard.putNumber("pivot pos", pivot.getPosition());
         return MathUtil.isWithinTolerance(pivot.getPosition(), armPositions.pivot, Constants.Arm.ShooterPivotTolerance);
     }
 }

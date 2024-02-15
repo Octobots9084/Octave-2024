@@ -17,6 +17,6 @@ public class ShooterTrackSpeedInstant extends InstantCommand {
 
     @Override
     public void initialize() {
-        track.setVoltage(shooterSpeeds);
+        track.set(shooterSpeeds);
     }
 }

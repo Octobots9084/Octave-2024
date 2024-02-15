@@ -32,9 +32,9 @@ public final class Constants {
 	public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
 
 	public static final class Arm {
-		public static final double ShooterElevatorTolerance = 0;
-		public static final double ShooterFlywheelTolerance = 0;
-		public static final double ShooterPivotTolerance = 0;
+		public static final double ShooterElevatorTolerance = 0.05;
+		public static final double ShooterFlywheelTolerance = 10;
+		public static final double ShooterPivotTolerance = 0.05;
 	}
 
 	public static final class Climb {
