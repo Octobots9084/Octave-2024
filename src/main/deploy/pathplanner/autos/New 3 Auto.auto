@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.413628281802018,
+      "y": 5.559932574410603
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "New3Auto"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5th Piece"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4thPiece"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
