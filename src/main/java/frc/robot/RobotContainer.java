@@ -132,10 +132,9 @@ public class RobotContainer {
         // driverButtons.button(2).onTrue(new TestingPaths());
         // //driverButtons.button(3).onTrue(new DontFire());
 
-        driverLeft.button(1).whileTrue(new Collect());
-        driverLeft.button(2).onTrue(new ShooterPivotPosInstant(ArmPositions.AMP));
-        driverRight.button(1).onTrue(new ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
-        driverButtons.button(1).onTrue(new Collect());
+        driverLeft.button(1).onTrue(new Collect());
+        driverLeft.button(2).onTrue(new PrepAmp());
+        driverRight.button(1).onTrue(new TheBigYeet());
 
         // coDriverButtons.button(1).onTrue(new PrepAmp());
         // coDriverButtons.button(2).onTrue(new PrepSpeaker());

@@ -7,7 +7,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import frc.robot.commands.arm.ShooterElevatorPosInstant;
 import frc.robot.commands.arm.ShooterElevatorPosTolerance;
+import frc.robot.commands.arm.ShooterPivotPosInstant;
 import frc.robot.commands.arm.ShooterPivotPosTolerance;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.commands.intake.IntakeRollerSpeedInstant;
@@ -23,6 +25,8 @@ public class Collect extends SequentialCommandGroup {
         BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
         addCommands(
+            new ParallelCommandGroup(new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
+                        new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
             new InstantCommand(()->{SmartDashboard.putBoolean("reached Checkpoint", false);}),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                 new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),

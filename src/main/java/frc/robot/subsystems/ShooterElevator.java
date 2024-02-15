@@ -40,6 +40,7 @@ public class ShooterElevator extends SubsystemBase {
         motor1 = new CANSparkMax(12, MotorType.kBrushless);
         // motor2 = new CANSparkMax(0, MotorType.kBrushless);
         SparkMaxSetup.setup(motor1, elevateConfig);
+        motor1.enableVoltageCompensation(5);
         // SparkMaxSetup.setup(motor2, followConfig);
     }
 
