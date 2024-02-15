@@ -12,7 +12,7 @@ public class PrepSpeaker extends SequentialCommandGroup{
         addCommands(
             new ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER),
             new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT), 
-            new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)
+            new ShooterPivotPosInstant(ArmPositions.SPEAKER_SHOT)
             
         );
     }

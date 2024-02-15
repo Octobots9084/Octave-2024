@@ -133,7 +133,7 @@ public class RobotContainer {
         // //driverButtons.button(3).onTrue(new DontFire());
 
         driverLeft.button(1).onTrue(new Collect());
-        driverLeft.button(2).onTrue(new PrepAmp());
+        driverLeft.button(2).onTrue(new PrepSpeaker());
         driverRight.button(1).onTrue(new TheBigYeet());
 
         // coDriverButtons.button(1).onTrue(new PrepAmp());
