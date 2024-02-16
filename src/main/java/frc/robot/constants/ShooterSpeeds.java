@@ -7,6 +7,8 @@ public enum ShooterSpeeds {
     STOP(0,0),
     PANIC(-1,-1),
     AMP(1,-1000),
+    JIGGLE_FORWARD(1, 0),
+    JIGGLE_BACKWARD(-1, 0),
     TRAP(1,0.5);
 
     public double track;
