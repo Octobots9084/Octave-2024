@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import frc.robot.commands.arm.JiggleNote;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
 import frc.robot.commands.arm.ShooterElevatorPosTolerance;
 import frc.robot.commands.arm.ShooterPivotPosInstant;
@@ -41,6 +42,7 @@ public class Collect extends SequentialCommandGroup {
                 new InstantCommand(()->{SmartDashboard.putBoolean("reached Checkpoint", true);}),
                 new WaitUntilCommand(shooterSensorTrue),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
-                new IntakeTrackSpeedInstant(IntakeSpeeds.STOP));
+                new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
+                new JiggleNote().withTimeout(1));
     }
 }

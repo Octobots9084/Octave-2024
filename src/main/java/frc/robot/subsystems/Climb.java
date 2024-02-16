@@ -22,14 +22,15 @@ public class Climb extends SubsystemBase {
         return climb;
     }
 
-    CANSparkMax motor1, motor2;
+    CANSparkMax leftMotor, rightMotor;
     public boolean limSwitch;
-    private double gearing = 1;
+    private double gearing = 125;
+    private double extensionDistance = 0.52;
 
     public Climb() {
-        motor1 = new CANSparkMax(0, MotorType.kBrushless);
-        motor2 = new CANSparkMax(0, MotorType.kBrushless);
-        SparkMaxConfig leadConfig = new SparkMaxConfig(
+        leftMotor = new CANSparkMax(18, MotorType.kBrushless);
+        rightMotor = new CANSparkMax(19, MotorType.kBrushless);
+        SparkMaxConfig leftConfig = new SparkMaxConfig(
                 new SparkMaxStatusFrames(
                         20,
                         20,
@@ -47,7 +48,7 @@ public class Climb extends SubsystemBase {
                 false,
                 false,
                 1);
-        SparkMaxConfig followConfig = new SparkMaxConfig(
+        SparkMaxConfig rightConfig = new SparkMaxConfig(
                 new SparkMaxStatusFrames(
                         20,
                         20,
@@ -56,18 +57,23 @@ public class Climb extends SubsystemBase {
                         500,
                         500,
                         500),
-                0,
-                false,
+                1000,
+                true,
+                SparkMaxEncoderType.Relative,
                 IdleMode.kBrake,
                 30,
                 30,
-                false, motor1);
-        SparkMaxSetup.setup(motor1, leadConfig);
-        SparkMaxSetup.setup(motor2, followConfig);
+                true,
+                false,
+                1);
+        SparkMaxSetup.setup(leftMotor, leftConfig);
+        SparkMaxSetup.setup(rightMotor, rightConfig);
+        leftMotor.getEncoder().setPositionConversionFactor(1.0/gearing);
     }
 
     public void setPosition(double position) {
-        motor1.getPIDController().setReference(position, ControlType.kPosition);
+        leftMotor.getPIDController().setReference(position, ControlType.kPosition);
+        rightMotor.getPIDController().setReference(position, ControlType.kPosition);
     }
 
     public void setPosition(ClimbPositions climbPositions) {
@@ -75,20 +81,21 @@ public class Climb extends SubsystemBase {
     }
 
     public double getPosition() {
-        return motor1.getEncoder().getPosition();
+        return (leftMotor.getEncoder().getPosition()+rightMotor.getEncoder().getPosition())/2.0;
     }
 
-    public double zero() {
-        while (!limSwitch) {
-            motor1.setVoltage(-0.1);
-        }
-        motor1.stopMotor();
+    public void zero() {
+        // while (!limSwitch) {
+        //     leftMotor.setVoltage(-0.1);
+        // }
+        // leftMotor.stopMotor();
 
-        return motor1.getEncoder().getPosition() / gearing;
+        // return leftMotor.getEncoder().getPosition() / gearing;
     }
 
     public void setOffset() {
-        motor1.getEncoder().setPosition(0);
+        leftMotor.getEncoder().setPosition(0);
+        rightMotor.getEncoder().setPosition(0);
         setPosition(0);
     }
 }

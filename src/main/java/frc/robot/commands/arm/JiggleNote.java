@@ -1,12 +1,9 @@
-package frc.robot.commands.complex;
+package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.arm.ShooterElevatorPosTolerance;
-import frc.robot.commands.arm.ShooterPivotPosTolerance;
-import frc.robot.commands.arm.ShooterTrackSpeedInstant;
-import frc.robot.constants.ArmPositions;
+import edu.wpi.first.wpilibj2.command.Command;
+
 import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.ShooterTrack;
 
 public class JiggleNote extends Command {
     private ShooterTrack shooterTrack;
@@ -15,8 +12,8 @@ public class JiggleNote extends Command {
     }
     @Override
     public void execute(){
-        var sensor = !!!shooterTrack.getSensor();
-        if (senor){
+        var sensor = !shooterTrack.getSensor();
+        if (sensor){
             shooterTrack.set(ShooterSpeeds.JIGGLE_BACKWARD);
         }
         else {

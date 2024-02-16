@@ -68,7 +68,7 @@ public class RobotContainer {
 
     //private final VisionEstimation visionEstimation = new VisionEstimation();
 
-    // private final SendableChooser<Command> autoChooser;
+    private final SendableChooser<Command> autoChooser;
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -77,19 +77,19 @@ public class RobotContainer {
         // Configure the trigger bindings
         configureBindings();
 
-        // TeleopDrive closedFieldRel = new TeleopDrive(
-        //         SwerveSubsystem.getInstance(),
-        //         () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(1),
-        //                 OperatorConstants.LEFT_Y_DEADBAND),
-        //         () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(0),
-        //                 OperatorConstants.LEFT_X_DEADBAND),
-        //         () -> MathUtil.applyDeadband(-driverRight.getRawAxis(0), OperatorConstants.RIGHT_X_DEADBAND),
-        //         () -> true);
+        TeleopDrive closedFieldRel = new TeleopDrive(
+                SwerveSubsystem.getInstance(),
+                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(1),
+                        OperatorConstants.LEFT_Y_DEADBAND),
+                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(0),
+                        OperatorConstants.LEFT_X_DEADBAND),
+                () -> MathUtil.applyDeadband(-driverRight.getRawAxis(0), OperatorConstants.RIGHT_X_DEADBAND),
+                () -> true);
 
-        // SwerveSubsystem.getInstance().setDefaultCommand(
-        //         !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
-        //autoChooser = AutoBuilder.buildAutoChooser();
-        //SmartDashboard.putData("Auto Chooser", autoChooser);
+        SwerveSubsystem.getInstance().setDefaultCommand(
+                !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
+        autoChooser = AutoBuilder.buildAutoChooser();
+        SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
     /**
@@ -108,15 +108,15 @@ public class RobotContainer {
     private void configureBindings() {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-        // driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
-        // driverLeft.button(2).onTrue((new InstantCommand(() -> {
-        //     SmartDashboard.putNumber("button press", 0);
-        //     // Not safe type casting, could break but should be obvious
-        //     NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
-        //     AHRS gyro = (AHRS) navx.getIMU();
-        //     gyro.reset();
+        driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
+        driverLeft.button(2).onTrue((new InstantCommand(() -> {
+            SmartDashboard.putNumber("button press", 0);
+            // Not safe type casting, could break but should be obvious
+            NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
+            AHRS gyro = (AHRS) navx.getIMU();
+            gyro.reset();
 
-        // })));
+        })));
 
         // //driverRight.button(1).whileTrue(new Collect());]
         // driverRight.button(1).onTrue(new InstantCommand(()->{
