@@ -32,6 +32,7 @@ public class Collect extends SequentialCommandGroup {
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                 new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
                 new WaitUntilCommand(intakeSensorTrue),
+                new InstantCommand(()->{SmartDashboard.putBoolean("reached Checkpoint", true);}),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT),
                 new IntakeRollerSpeedInstant(IntakeSpeeds.REJECT),
                 new ParallelCommandGroup(new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
@@ -39,10 +40,10 @@ public class Collect extends SequentialCommandGroup {
                 
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.SPEAKER),
-                new InstantCommand(()->{SmartDashboard.putBoolean("reached Checkpoint", true);}),
+                
                 new WaitUntilCommand(shooterSensorTrue),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
-                new JiggleNote().withTimeout(1));
+                new JiggleNote().withTimeout(3));
     }
 }

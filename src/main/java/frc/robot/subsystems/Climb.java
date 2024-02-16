@@ -69,6 +69,7 @@ public class Climb extends SubsystemBase {
         SparkMaxSetup.setup(leftMotor, leftConfig);
         SparkMaxSetup.setup(rightMotor, rightConfig);
         leftMotor.getEncoder().setPositionConversionFactor(1.0/gearing);
+        rightMotor.getEncoder().setPositionConversionFactor(1.0/gearing);
     }
 
     public void setPosition(double position) {

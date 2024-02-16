@@ -108,15 +108,15 @@ public class RobotContainer {
     private void configureBindings() {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-        driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
-        driverLeft.button(2).onTrue((new InstantCommand(() -> {
-            SmartDashboard.putNumber("button press", 0);
-            // Not safe type casting, could break but should be obvious
-            NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
-            AHRS gyro = (AHRS) navx.getIMU();
-            gyro.reset();
+        // driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
+        // driverLeft.button(2).onTrue((new InstantCommand(() -> {
+        //     SmartDashboard.putNumber("button press", 0);
+        //     // Not safe type casting, could break but should be obvious
+        //     NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
+        //     AHRS gyro = (AHRS) navx.getIMU();
+        //     gyro.reset();
 
-        })));
+        // })));
 
         // //driverRight.button(1).whileTrue(new Collect());]
         // driverRight.button(1).onTrue(new InstantCommand(()->{
