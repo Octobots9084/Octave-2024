@@ -19,7 +19,6 @@ public class ShooterPivotPosTolerance extends Command {
 
     @Override
     public void initialize() {
-        pivot.configFollowEncoder();
         pivot.setPosition(armPositions);
     }
 
