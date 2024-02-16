@@ -40,6 +40,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.util.telemetry.CountPerPeriodTelemetry;
 
 public class VisionEstimation extends SubsystemBase {
     private final SwerveSubsystem swerveSubsystem;
@@ -66,20 +67,37 @@ public class VisionEstimation extends SubsystemBase {
 
     private OriginPosition originPosition = kBlueAllianceWallRightSide;
 
+    // Telemetry
+    private final CountPerPeriodTelemetry runCountTelemetry;
+    private final CountPerPeriodTelemetry getAtomicCountInkyTelemetry;
+    private final CountPerPeriodTelemetry getAtomicCountBlinkyTelemetry;
+    private final CountPerPeriodTelemetry getAtomicCountPinkyTelemetry;
+    private final CountPerPeriodTelemetry getAtomicCountClydeTelemetry;
+
     public VisionEstimation() {
         this.swerveSubsystem = SwerveSubsystem.getInstance();
 
         allNotifier.setName("runAll");
         allNotifier.startPeriodic(0.02);
+
+        // Initialize telemetry
+        runCountTelemetry = new CountPerPeriodTelemetry("VisionEstimation - runs/s", 1);
+        getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Inky - get atomic count/s", 1);
+        getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Blinky - get atomic count/s", 1);
+        getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Pinky - get atomic count/s", 1);
+        getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Clyde - get atomic count/s", 1);
     }
 
     @Override
     public void periodic() {
         if (VisionConstants.USE_VISION) {
-            estimatorChecker(frontRightEstimator);
-            estimatorChecker(frontLeftEstimator);
-            estimatorChecker(backRightEstimator);
-            estimatorChecker(backLeftEstimator);
+            // Update "run count" telemetry
+            runCountTelemetry.incCount(1);
+
+            estimatorChecker(frontRightEstimator, getAtomicCountInkyTelemetry);
+            estimatorChecker(frontLeftEstimator, getAtomicCountBlinkyTelemetry);
+            estimatorChecker(backRightEstimator, getAtomicCountPinkyTelemetry);
+            estimatorChecker(backLeftEstimator, getAtomicCountClydeTelemetry);
         } else {
             allNotifier.close();
         }
@@ -90,6 +108,13 @@ public class VisionEstimation extends SubsystemBase {
             // Flip the pose when red, since the dashboard field photo cannot be rotated
             dashboardPose = flipAlliance(dashboardPose);
         }
+
+        // Run telemetry
+        runCountTelemetry.periodic();
+        getAtomicCountInkyTelemetry.periodic();
+        getAtomicCountBlinkyTelemetry.periodic();
+        getAtomicCountPinkyTelemetry.periodic();
+        getAtomicCountClydeTelemetry.periodic();
     }
 
     /**
@@ -109,15 +134,12 @@ public class VisionEstimation extends SubsystemBase {
 
     private Matrix<N3, N1> confidenceCalculator(EstimatedRobotPose estimation) {
         double smallestDistance = Double.POSITIVE_INFINITY;
-        double largestDistance = 0;
         for (var target : estimation.targetsUsed) {
             var target3D = target.getBestCameraToTarget();
             var distance = Math
                     .sqrt(Math.pow(target3D.getX(), 2) + Math.pow(target3D.getY(), 2) + Math.pow(target3D.getZ(), 2));
             if (distance < smallestDistance)
                 smallestDistance = distance;
-            if (distance > largestDistance)
-                largestDistance = distance;
         }
 
         var maxPoseAmbiguity = Math.max(
@@ -140,34 +162,12 @@ public class VisionEstimation extends SubsystemBase {
                         / (1
                                 + ((estimation.targetsUsed.size() - 1) * VisionConstants.TAG_PRESENCE_WEIGHT)));
 
-        // if (largestDistance > VisionConstants.MAXIMUM_TAG_DISTANCE) {
-        //     SmartDashboard.putBoolean("toofar", true);
-        //     confidenceMultiplier = 1000;
-        // } else {
-        //     confidenceMultiplier = 1;
-        //     SmartDashboard.putBoolean("toofar", false);
-        // }
-        SmartDashboard.putNumber("Confidence", confidenceMultiplier);
+
+        // SmartDashboard.putNumber("Confidence", confidenceMultiplier); TODO - IGG - update to report per vision
         return visionMeasurementStdDevs.times(confidenceMultiplier);
     }
 
-    public boolean checkTargetDistance(EstimatedRobotPose estimation) {
-        double smallestDistance = Double.POSITIVE_INFINITY;
-        double largestDistance = 0;
-        for (var target : estimation.targetsUsed) {
-            var target3D = target.getBestCameraToTarget();
-            var distance = Math
-                    .sqrt(Math.pow(target3D.getX(), 2) + Math.pow(target3D.getY(), 2) + Math.pow(target3D.getZ(), 2));
-            if (distance < smallestDistance)
-                smallestDistance = distance;
-            if (distance > largestDistance)
-                largestDistance = distance;
-
-        }
-        return (largestDistance < VisionConstants.MAXIMUM_TAG_DISTANCE);
-    }
-
-    public void estimatorChecker(Vision estimator) {
+    public void estimatorChecker(Vision estimator, CountPerPeriodTelemetry getAtomicCountTelemetry) {
         var cameraPose = estimator.grabLatestEstimatedPose();
 
         if (cameraPose != null) {
@@ -178,12 +178,11 @@ public class VisionEstimation extends SubsystemBase {
                 pose2d = flipAlliance(pose2d);
             }
 
-            boolean tagDistance = checkTargetDistance(cameraPose);
-            if (tagDistance) {
-                swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds,
-                        confidenceCalculator(cameraPose));
-            }
+            swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds,
+                    confidenceCalculator(cameraPose));
 
+            // Update "get atomic count" telemetry
+            getAtomicCountTelemetry.incCount(1);
         }
     }
 

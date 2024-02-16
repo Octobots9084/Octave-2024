@@ -943,7 +943,7 @@ public class SwerveDrive {
     odometryLock.lock();
     try {
       // Update odometry
-      swerveDrivePoseEstimator.update(getYaw(), getModulePositions());
+      swerveDrivePoseEstimator.update(getYaw(), getModulePositions()); // TODO - IGG - can we test vision in isolation if we comment out this line?
 
       // Update angle accumulator if the robot is simulated
       if (SwerveDriveTelemetry.verbosity.ordinal() >= TelemetryVerbosity.HIGH.ordinal()) {

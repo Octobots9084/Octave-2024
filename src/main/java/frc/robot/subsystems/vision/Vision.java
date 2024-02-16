@@ -11,9 +11,9 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.VisionConstants;
-import frc.robot.Constants.FieldConstants;;
+import frc.robot.util.telemetry.CountPerPeriodTelemetry;
 
 /**
  * Runnable that gets AprilTag data from PhotonVision.
@@ -23,6 +23,10 @@ public class Vision implements Runnable {
   private final PhotonPoseEstimator photonPoseEstimator;
   private final PhotonCamera photonCamera;
   private final AtomicReference<EstimatedRobotPose> atomicEstimatedRobotPose = new AtomicReference<EstimatedRobotPose>();
+  
+  // Telemetry
+  private final CountPerPeriodTelemetry runCountTelemetry;
+  private final CountPerPeriodTelemetry setAtomicCountTelemetry;
 
   public Vision(PhotonCamera cameraName, Transform3d robotToCamera) {
     this.photonCamera = cameraName;
@@ -42,19 +46,21 @@ public class Vision implements Runnable {
     }
 
     this.photonPoseEstimator = photonPoseEstimator;
+
+    // Initialize telemetry
+    runCountTelemetry = new CountPerPeriodTelemetry("Vision - " + cameraName.getName() + " - runs/s", 1);
+    setAtomicCountTelemetry = new CountPerPeriodTelemetry("Vision - " + cameraName.getName() + " - set atomic count/s", 1);
   }
 
   @Override
   public void run() {
+    // Update "run count" telemetry
+    runCountTelemetry.incCount(1);
+
     // Get AprilTag data and updating the pose estimator
     try {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult(); //Gets the latest camera results
-        SmartDashboard.putBoolean("usingvision", Math.sqrt((photonResults.getMultiTagResult().estimatedPose.best.getX()
-            * photonResults.getMultiTagResult().estimatedPose.best.getX())
-            + (photonResults.getMultiTagResult().estimatedPose.best.getY()
-                * photonResults.getMultiTagResult().estimatedPose.best
-                    .getY())) < VisionConstants.MAXIMUM_TAG_DISTANCE);
         if (photonResults.hasTargets() &&
             (photonResults.targets.size() > 1
                 || photonResults.targets.get(0).getPoseAmbiguity() < VisionConstants.APRILTAG_AMBIGUITY_THRESHOLD)) {
@@ -70,6 +76,9 @@ public class Vision implements Runnable {
                 && estimatedPose.getY() > 0.0
                 && estimatedPose.getY() <= FieldConstants.WIDTH) {
               atomicEstimatedRobotPose.set(estimatedRobotPose);
+
+              // Update "set atomic count" telemetry
+              setAtomicCountTelemetry.incCount(1);
             }
           });
         }
@@ -77,6 +86,10 @@ public class Vision implements Runnable {
     } catch (Exception e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
+
+    // Run telemetry
+    runCountTelemetry.periodic();
+    setAtomicCountTelemetry.periodic();
   }
 
   /**
@@ -91,5 +104,4 @@ public class Vision implements Runnable {
   public EstimatedRobotPose grabLatestEstimatedPose() {
     return atomicEstimatedRobotPose.getAndSet(null);
   }
-
 }

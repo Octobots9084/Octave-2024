@@ -47,9 +47,11 @@ public class Gyro implements Sendable {
      */
     public double getContinuousAngleDegrees() {
         if (simulated) {
+            final double timestampNow = Timer.getFPGATimestamp();
+
             simulatedAngleDegrees.set(simulatedAngleDegrees.get() + simulatedRotationSpeed
-                    * (Timer.getFPGATimestamp() - lastTimeSimulatedRotationUpdated));
-            lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
+                    * (timestampNow - lastTimeSimulatedRotationUpdated));
+            lastTimeSimulatedRotationUpdated = timestampNow;
             return simulatedAngleDegrees.get() + simulatedAngleAdjustment;
         } else {
             return -this.navX.getAngle();
@@ -105,10 +107,11 @@ public class Gyro implements Sendable {
      * @param rotationSpeed The simulated rotation speed of the gyro (ccw positive)
      */
     public void setSimulatedRotationSpeed(double rotationSpeed) {
+        final double timestampNow = Timer.getFPGATimestamp();
 
         simulatedAngleDegrees.set(simulatedAngleDegrees.get()
-                + simulatedRotationSpeed * (Timer.getFPGATimestamp() - lastTimeSimulatedRotationUpdated));
-        lastTimeSimulatedRotationUpdated = Timer.getFPGATimestamp();
+                + simulatedRotationSpeed * (timestampNow - lastTimeSimulatedRotationUpdated));
+        lastTimeSimulatedRotationUpdated = timestampNow;
         this.simulatedRotationSpeed = rotationSpeed;
     }
 
