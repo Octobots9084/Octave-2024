@@ -21,6 +21,7 @@ public class ReverseKinematics {
     // X and Y positions of the subwoofer with regards to (0,0) on the robot's Pose2d
     private static double subwooferXPos = 0;
     private static double subwooferYPos = 5.5;
+    private static double encoderOffset = 0.602;
 
     // converts Pose2d coords into positions relative to the target
     public static Pose2d convert2dCoords(Pose2d pos) {
@@ -71,6 +72,6 @@ public class ReverseKinematics {
     public static double calcSubwooferLaunchAngle(Pose2d pos, ChassisSpeeds speed) {
         pos = convert2dCoords(pos);
         speed = convertSpeed(pos, speed);
-        return Math.atan(calcLaunchVerticalVel()/Math.sqrt(Math.pow(calcLaunchXVel(pos, speed), 2) + Math.pow(calcLaunchYVel(pos, speed), 2)));
+        return encoderOffset - Math.atan2(calcLaunchVerticalVel(),calcLaunchXVel(pos, speed))/(2*Math.PI);
     }
 }
