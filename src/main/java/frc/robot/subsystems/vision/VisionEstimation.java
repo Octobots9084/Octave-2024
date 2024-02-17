@@ -49,18 +49,18 @@ public class VisionEstimation extends SubsystemBase {
             0.9,
             0.9);
 
-    private final Vision frontRightEstimator = new Vision(new PhotonCamera("Inky"),
-            VisionConstants.ROBOT_TO_INKY);
-    private final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
-            VisionConstants.ROBOT_TO_BLINKY);
+    // private final Vision frontRightEstimator = new Vision(new PhotonCamera("Inky"),
+    //         VisionConstants.ROBOT_TO_INKY);
+    // private final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
+    //         VisionConstants.ROBOT_TO_BLINKY);
     private final Vision backRightEstimator = new Vision(new PhotonCamera("Pinky"),
             VisionConstants.ROBOT_TO_PINKY);
     private final Vision backLeftEstimator = new Vision(new PhotonCamera("Clyde"),
             VisionConstants.ROBOT_TO_CLYDE);
 
     private final Notifier allNotifier = new Notifier(() -> {
-        frontRightEstimator.run();
-        frontLeftEstimator.run();
+        // frontRightEstimator.run();
+        // frontLeftEstimator.run();
         backRightEstimator.run();
         backLeftEstimator.run();
     });
@@ -69,8 +69,8 @@ public class VisionEstimation extends SubsystemBase {
 
     // Telemetry
     private final CountPerPeriodTelemetry runCountTelemetry;
-    private final CountPerPeriodTelemetry getAtomicCountInkyTelemetry;
-    private final CountPerPeriodTelemetry getAtomicCountBlinkyTelemetry;
+    // private final CountPerPeriodTelemetry getAtomicCountInkyTelemetry;
+    // private final CountPerPeriodTelemetry getAtomicCountBlinkyTelemetry;
     private final CountPerPeriodTelemetry getAtomicCountPinkyTelemetry;
     private final CountPerPeriodTelemetry getAtomicCountClydeTelemetry;
 
@@ -81,11 +81,13 @@ public class VisionEstimation extends SubsystemBase {
         allNotifier.startPeriodic(0.02);
 
         // Initialize telemetry
-        runCountTelemetry = new CountPerPeriodTelemetry("VisionEstimation - runs/s", 1);
-        getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Inky - get atomic count/s", 1);
-        getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Blinky - get atomic count/s", 1);
-        getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Pinky - get atomic count/s", 1);
-        getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Clyde - get atomic count/s", 1);
+        runCountTelemetry = new CountPerPeriodTelemetry("VisionEstimation - runs per s", 1);
+        // getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Inky - get atomic count/s", 1);
+        // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Blinky - get atomic count/s", 1);
+        getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Pinky - get atomic count per s",
+                1);
+        getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Clyde - get atomic count per s",
+                1);
     }
 
     @Override
@@ -94,25 +96,18 @@ public class VisionEstimation extends SubsystemBase {
             // Update "run count" telemetry
             runCountTelemetry.incCount(1);
 
-            estimatorChecker(frontRightEstimator, getAtomicCountInkyTelemetry);
-            estimatorChecker(frontLeftEstimator, getAtomicCountBlinkyTelemetry);
+            // estimatorChecker(frontRightEstimator, getAtomicCountInkyTelemetry);
+            // estimatorChecker(frontLeftEstimator, getAtomicCountBlinkyTelemetry);
             estimatorChecker(backRightEstimator, getAtomicCountPinkyTelemetry);
             estimatorChecker(backLeftEstimator, getAtomicCountClydeTelemetry);
         } else {
             allNotifier.close();
         }
 
-        // Set the pose on the dashboard
-        var dashboardPose = swerveSubsystem.getPose();
-        if (originPosition == kRedAllianceWallRightSide) {
-            // Flip the pose when red, since the dashboard field photo cannot be rotated
-            dashboardPose = flipAlliance(dashboardPose);
-        }
-
         // Run telemetry
         runCountTelemetry.periodic();
-        getAtomicCountInkyTelemetry.periodic();
-        getAtomicCountBlinkyTelemetry.periodic();
+        // getAtomicCountInkyTelemetry.periodic();
+        // getAtomicCountBlinkyTelemetry.periodic();
         getAtomicCountPinkyTelemetry.periodic();
         getAtomicCountClydeTelemetry.periodic();
     }
@@ -162,8 +157,6 @@ public class VisionEstimation extends SubsystemBase {
                         / (1
                                 + ((estimation.targetsUsed.size() - 1) * VisionConstants.TAG_PRESENCE_WEIGHT)));
 
-
-        // SmartDashboard.putNumber("Confidence", confidenceMultiplier); TODO - IGG - update to report per vision
         return visionMeasurementStdDevs.times(confidenceMultiplier);
     }
 
