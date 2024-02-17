@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
 
 import frc.robot.commands.ButtonConfig;
 import frc.robot.commands.ControlMap;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -88,8 +88,8 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("thng", ShooterElevator.getInstance().getPosition());
-    SmartDashboard.putNumber("thng2", ShooterPivot.getInstance().getPosition());
+    SmartDashboard.putNumber("thng", Climb.getInstance().getLeftPosition());
+    SmartDashboard.putNumber("thng2", Climb.getInstance().getRightPosition());
   }
 
   /**
@@ -114,7 +114,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    // m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -146,9 +146,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    
-    
-    //ShooterFlywheel.getInstance().increaseFlywheelSpeed(MathUtil.applyDeadband(5*ControlMap.FLYWHEEL_JOYSTICK.getY(), 0.05));
+
+    // ShooterFlywheel.getInstance().increaseFlywheelSpeed(MathUtil.applyDeadband(5*ControlMap.FLYWHEEL_JOYSTICK.getY(),
+    // 0.05));
   }
 
   @Override

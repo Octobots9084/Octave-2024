@@ -24,13 +24,19 @@ public class ClimbManual extends Command {
         final var delta = -0.1 *
                 Math.signum(MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.ManualDeadband));
 
-        var newPos = climb.getPosition() + delta;
+        var newLeftPos = climb.getLeftPosition() + delta;
+        var newRightPos = climb.getRightPosition() + delta;
 
         // Make sure the climb position is within the allowed range.
-        newPos = edu.wpi.first.math.MathUtil.clamp(
-                newPos,
-                ClimbPositions.DOWN.position,
-                ClimbPositions.UP.position);
-        climb.setPosition(newPos);
+        newLeftPos = edu.wpi.first.math.MathUtil.clamp(
+                newLeftPos,
+                ClimbPositions.DOWN.leftPosition,
+                ClimbPositions.UP.leftPosition);
+
+        newRightPos = edu.wpi.first.math.MathUtil.clamp(
+                newRightPos,
+                ClimbPositions.DOWN.rightPosition,
+                ClimbPositions.UP.rightPosition);
+        climb.setPosition(newLeftPos, newRightPos);
     }
 }

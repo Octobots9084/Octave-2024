@@ -23,6 +23,9 @@ public class ClimbPosTolerance extends Command {
 
     @Override
     public boolean isFinished() {
-        return MathUtil.isWithinTolerance(climb.getPosition(), climbPositions.position, Constants.Climb.ClimbTolerance);
+        return MathUtil.isWithinTolerance(climb.getLeftPosition(), climbPositions.leftPosition,
+                Constants.Climb.ClimbTolerance)
+                && MathUtil.isWithinTolerance(climb.getRightPosition(), climbPositions.rightPosition,
+                        Constants.Climb.ClimbTolerance);
     }
 }

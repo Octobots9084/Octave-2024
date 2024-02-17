@@ -36,6 +36,7 @@ import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.IntakeTrack;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -66,7 +67,7 @@ public class RobotContainer {
     CommandJoystick coDriverRight = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_RIGHT);
     CommandJoystick coDriverButtons = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_BUTTONS);
 
-    //private final VisionEstimation visionEstimation = new VisionEstimation();
+    private final VisionEstimation visionEstimation = new VisionEstimation();
 
     private final SendableChooser<Command> autoChooser;
 
@@ -108,22 +109,24 @@ public class RobotContainer {
     private void configureBindings() {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-        // driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
+        // driverLeft.button(1).onTrue((new
+        // InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
         // driverLeft.button(2).onTrue((new InstantCommand(() -> {
-        //     SmartDashboard.putNumber("button press", 0);
-        //     // Not safe type casting, could break but should be obvious
-        //     NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
-        //     AHRS gyro = (AHRS) navx.getIMU();
-        //     gyro.reset();
+        // SmartDashboard.putNumber("button press", 0);
+        // // Not safe type casting, could break but should be obvious
+        // NavXSwerve navx = (NavXSwerve)
+        // SwerveSubsystem.getInstance().getSwerveDrive().imu;
+        // AHRS gyro = (AHRS) navx.getIMU();
+        // gyro.reset();
 
         // })));
 
         // //driverRight.button(1).whileTrue(new Collect());]
         // driverRight.button(1).onTrue(new InstantCommand(()->{
-        //     SwerveSubsystem.getInstance().setShootingRequestActive(true);
+        // SwerveSubsystem.getInstance().setShootingRequestActive(true);
         // }));
         // driverRight.button(1).onFalse(new InstantCommand(()->{
-        //     SwerveSubsystem.getInstance().setShootingRequestActive(false);
+        // SwerveSubsystem.getInstance().setShootingRequestActive(false);
         // }));
 
         // driverRight.button(2).onTrue(new TheBigYeet());
@@ -136,6 +139,11 @@ public class RobotContainer {
         driverLeft.button(2).onTrue(new PrepSpeaker());
         driverRight.button(1).onTrue(new TheBigYeet());
         driverRight.button(2).whileTrue(new Driveby());
+        driverButtons.button(1).onTrue(new PrepClimb());
+        driverButtons.button(2).onTrue(new SimpleClimb());
+        driverButtons.button(3).onTrue(new InstantCommand(() -> {
+            Climb.getInstance().setOffset();
+        }));
 
         // coDriverButtons.button(1).onTrue(new PrepAmp());
         // coDriverButtons.button(2).onTrue(new PrepSpeaker());
@@ -151,12 +159,10 @@ public class RobotContainer {
     }
 
     // public Command getAutonomousCommand() {
-    //     return autoChooser.getSelected();
+    // return autoChooser.getSelected();
     // }
 
-   
-
-    // public VisionEstimation getVisionEstimation() {
-    //     return visionEstimation;
-    // }
+    public VisionEstimation getVisionEstimation() {
+        return visionEstimation;
+    }
 }

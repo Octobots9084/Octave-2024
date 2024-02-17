@@ -1,15 +1,15 @@
 package frc.robot.constants;
 
 public enum ClimbPositions {
-    DOWN(0),
-    MID(0.5),
-    UP(30);
+    DOWN(0, 0),
+    MID(0.5, 0.5),
+    UP(3, 3);
 
-    public double position;
-    ClimbPositions(double position) {
-        this.position = position;
+    public double leftPosition;
+    public double rightPosition;
+
+    ClimbPositions(double leftPosition, double rightPosition) {
+        this.leftPosition = leftPosition;
+        this.rightPosition = rightPosition;
     }
 }
-
-
-
