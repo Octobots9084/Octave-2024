@@ -21,11 +21,13 @@ public class ClimbManual extends Command {
         // Moving the joystick up moves the claw down so that the robot goes up and vice
         // versa.
         // If we want to inverse the direction, change the sign below.
-        final var delta = -0.1 *
+        final var leftDelta = 0.05 *
+                Math.signum(MathUtil.fitDeadband(ControlMap.CO_DRIVER_LEFT.getY(), Constants.Climb.ManualDeadband));
+        final var rightDelta = 0.05 *
                 Math.signum(MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.ManualDeadband));
 
-        var newLeftPos = climb.getLeftPosition() + delta;
-        var newRightPos = climb.getRightPosition() + delta;
+        var newLeftPos = climb.getLeftPosition() + leftDelta;
+        var newRightPos = climb.getRightPosition() + rightDelta;
 
         // Make sure the climb position is within the allowed range.
         newLeftPos = edu.wpi.first.math.MathUtil.clamp(

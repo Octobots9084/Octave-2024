@@ -52,16 +52,18 @@ public class VisionEstimation extends SubsystemBase {
             VisionConstants.ROBOT_TO_INKY);
     private final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
             VisionConstants.ROBOT_TO_BLINKY);
-    private final Vision backRightEstimator = new Vision(new PhotonCamera("Pinky"),
-            VisionConstants.ROBOT_TO_PINKY);
-    private final Vision backLeftEstimator = new Vision(new PhotonCamera("Clyde"),
-            VisionConstants.ROBOT_TO_CLYDE);
+    // private final Vision backRightEstimator = new Vision(new
+    // PhotonCamera("Pinky"),
+    // VisionConstants.ROBOT_TO_PINKY);
+    // private final Vision backLeftEstimator = new Vision(new
+    // PhotonCamera("Clyde"),
+    // VisionConstants.ROBOT_TO_CLYDE);
 
     private final Notifier allNotifier = new Notifier(() -> {
         frontRightEstimator.run();
         frontLeftEstimator.run();
-        backRightEstimator.run();
-        backLeftEstimator.run();
+        // backRightEstimator.run();
+        // backLeftEstimator.run();
     });
 
     private OriginPosition originPosition = kBlueAllianceWallRightSide;
@@ -78,8 +80,8 @@ public class VisionEstimation extends SubsystemBase {
         if (VisionConstants.USE_VISION) {
             estimatorChecker(frontRightEstimator);
             estimatorChecker(frontLeftEstimator);
-            estimatorChecker(backRightEstimator);
-            estimatorChecker(backLeftEstimator);
+            // estimatorChecker(backRightEstimator);
+            // estimatorChecker(backLeftEstimator);
         } else {
             allNotifier.close();
         }
@@ -93,14 +95,14 @@ public class VisionEstimation extends SubsystemBase {
     }
 
     /**
-    * Transforms a pose to the opposite alliance's coordinate system. (0,0) is
-    * always on the right corner of your
-    * alliance wall, the field elements are at different coordinates
-    * for each alliance.
-    * 
-    * @param poseToFlip pose to transform to the other alliance
-    * @return pose relative to the other alliance's coordinate system
-    */
+     * Transforms a pose to the opposite alliance's coordinate system. (0,0) is
+     * always on the right corner of your
+     * alliance wall, the field elements are at different coordinates
+     * for each alliance.
+     * 
+     * @param poseToFlip pose to transform to the other alliance
+     * @return pose relative to the other alliance's coordinate system
+     */
     private Pose2d flipAlliance(Pose2d poseToFlip) {
         return poseToFlip.relativeTo(new Pose2d(
                 new Translation2d(FieldConstants.LENGTH, FieldConstants.WIDTH),

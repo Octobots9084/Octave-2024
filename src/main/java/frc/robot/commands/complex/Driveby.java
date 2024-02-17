@@ -11,13 +11,14 @@ import frc.robot.constants.ArmPositions;
 import frc.robot.subsystems.ReverseKinematics;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
-// import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.ShooterTrack;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.MathUtil;
 
 public class Driveby extends Command {
     ShooterPivot pivot;
     ShooterFlywheel flywheel;
-    // SwerveSubsystem swerveSubsystem;
+    SwerveSubsystem swerveSubsystem;
     ChassisSpeeds realSpeeds;
     Pose2d realPose2d;
     double realPivot;
@@ -29,47 +30,55 @@ public class Driveby extends Command {
     public Driveby() {
         pivot = ShooterPivot.getInstance();
         flywheel = ShooterFlywheel.getInstance();
-        // swerveSubsystem = SwerveSubsystem.getInstance();
+        swerveSubsystem = SwerveSubsystem.getInstance();
     }
 
     @Override
     public void initialize() {
-        // swerveSubsystem.setShootingRequestActive(true);
+        swerveSubsystem.setShootingRequestActive(true);
         CommandScheduler.getInstance().schedule(new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT));
-        SmartDashboard.putNumber("targetPoseX",3.0);
+        SmartDashboard.putNumber("targetPoseX", 3.0);
     }
 
     public void updateTargets() {
-        // realPose2d = SwerveSubsystem.getInstance().getPose();
-        // realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
-        
-        realPose2d = new Pose2d(SmartDashboard.getNumber("targetPoseX",3.0),5.6,new Rotation2d());
-        realSpeeds = new ChassisSpeeds();
+        realPose2d = SwerveSubsystem.getInstance().getPose();
+        realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
+
         targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds);
-        targetFlywheel = ReverseKinematics.calcTotalLaunchVelocity(realPose2d, realSpeeds);
+        targetFlywheel = -ReverseKinematics.calcTotalLaunchVelocity(realPose2d, realSpeeds);
         targetTurn = new Rotation2d(ReverseKinematics.calcRobotAngle(realPose2d, realSpeeds));
     }
 
     @Override
     public void execute() {
-        // realSpeeds = swerveSubsystem.getRobotVelocity();
-        // realPose2d = swerveSubsystem.getPose();
-        realFlywheel = flywheel.getFlywheelSpeed();
+        realSpeeds = swerveSubsystem.getRobotVelocity();
+        realPose2d = swerveSubsystem.getPose();
+        realFlywheel = flywheel.getFlywheelSpeedMeters();
         realPivot = pivot.getPosition();
         updateTargets();
-        // pivot.setPosition(targetPivot);
-        SmartDashboard.putNumber("pivotPositiondriveby", targetPivot);
-        SmartDashboard.putNumber("flywhellPositiondriveby", targetFlywheel);
+        pivot.setPosition(targetPivot);
+
         flywheel.setFlyWheelSpeedMeters(targetFlywheel);
-        // swerveSubsystem.setShootingRequest(targetTurn);
+        swerveSubsystem.setShootingRequest(targetTurn);
     }
 
     @Override
     public boolean isFinished() {
+        double realRotation = realPose2d.getRotation().getRadians();
+        SmartDashboard.putNumber("realFlywheel", realFlywheel);
+        SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
+        SmartDashboard.putNumber("targetPivot", targetPivot);
+        SmartDashboard.putNumber("realPivot", realPivot);
+        SmartDashboard.putNumber("realRotation", realPivot);
+        SmartDashboard.putNumber("targetRotation", targetTurn.getRadians());
+
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
         if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.01)
                 && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.01)
-                /*&& MathUtil.isWithinTolerance(realPose2d.getRotation().getRadians(), targetTurn.getRadians(), 0.1)*/) {
+
+                && MathUtil.isWithinTolerance(realRotation,
+                        targetTurn.getRadians(), 0.1)
+                && !ShooterTrack.getInstance().getSensor()) {
             return true;
         } else {
             return false;
@@ -81,6 +90,6 @@ public class Driveby extends Command {
         if (!inturupted) {
             CommandScheduler.getInstance().schedule(new TheBigYeet());
         }
-        // swerveSubsystem.setShootingRequestActive(false);
+        swerveSubsystem.setShootingRequestActive(false);
     }
 }

@@ -78,7 +78,7 @@ public class ShooterFlywheel extends SubsystemBase {
         motor2pid = motorTwo.getPIDController();
 
         // FIXME
-        circumference = 2*Math.PI*0.051;
+        circumference = 2 * Math.PI * 0.063;
         // this needs to be made accurate later
         // it is the circumference of a launcher flywheel
     }
@@ -100,11 +100,12 @@ public class ShooterFlywheel extends SubsystemBase {
     }
 
     public void setFlyWheelSpeedMeters(double speed) {
-        motorOne.getPIDController().setReference(speed / circumference, ControlType.kVelocity);
+        motorOne.getPIDController().setReference(60 * speed / circumference, ControlType.kVelocity);
+        motorTwo.getPIDController().setReference(-60 * speed / circumference, ControlType.kVelocity);
     }
 
     public double getFlywheelSpeedMeters() {
-        return getFlywheelSpeed() * circumference;
+        return (getFlywheelSpeed() * circumference) / 60;
     }
 
     public double getLastTargetSpeed() {

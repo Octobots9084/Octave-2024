@@ -42,6 +42,7 @@ public class ShooterElevator extends SubsystemBase {
         SparkMaxSetup.setup(motor1, elevateConfig);
         motor1.enableVoltageCompensation(5);
         // SparkMaxSetup.setup(motor2, followConfig);
+        setOffset();
     }
 
     public double zero() {

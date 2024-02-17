@@ -19,6 +19,7 @@ import frc.robot.commands.arm.ShooterElevatorPosInstant;
 import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
 import frc.robot.commands.arm.ShooterPivotPosInstant;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
+import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.Dunk;
@@ -109,8 +110,7 @@ public class RobotContainer {
     private void configureBindings() {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-        // driverLeft.button(1).onTrue((new
-        // InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
+        driverButtons.button(4).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
         // driverLeft.button(2).onTrue((new InstantCommand(() -> {
         // SmartDashboard.putNumber("button press", 0);
         // // Not safe type casting, could break but should be obvious
@@ -144,6 +144,9 @@ public class RobotContainer {
         driverButtons.button(3).onTrue(new InstantCommand(() -> {
             Climb.getInstance().setOffset();
         }));
+
+        driverButtons.button(5).onTrue(new ShooterElevatorPosInstant(ArmPositions.TRAP));
+        Climb.getInstance().setDefaultCommand(new ClimbManual());
 
         // coDriverButtons.button(1).onTrue(new PrepAmp());
         // coDriverButtons.button(2).onTrue(new PrepSpeaker());

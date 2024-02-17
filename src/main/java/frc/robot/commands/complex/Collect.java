@@ -26,24 +26,28 @@ public class Collect extends SequentialCommandGroup {
         BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
         addCommands(
-            new ParallelCommandGroup(new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
+                new ParallelCommandGroup(new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
-            new InstantCommand(()->{SmartDashboard.putBoolean("reached Checkpoint", false);}),
+                new InstantCommand(() -> {
+                    SmartDashboard.putBoolean("reached Checkpoint", false);
+                }),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                 new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
                 new WaitUntilCommand(intakeSensorTrue),
-                new InstantCommand(()->{SmartDashboard.putBoolean("reached Checkpoint", true);}),
+                new InstantCommand(() -> {
+                    SmartDashboard.putBoolean("reached Checkpoint", true);
+                }),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT),
                 new IntakeRollerSpeedInstant(IntakeSpeeds.REJECT),
                 new ParallelCommandGroup(new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
-                
+
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.SPEAKER),
-                
+
                 new WaitUntilCommand(shooterSensorTrue),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
-                new JiggleNote().withTimeout(3));
+                new JiggleNote().withTimeout(1.5));
     }
 }

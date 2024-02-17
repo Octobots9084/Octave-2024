@@ -39,7 +39,7 @@ public final class Constants {
 
 	public static final class Climb {
 		public static final double ClimbTolerance = 0.1;
-		public static final double ManualDeadband = 0;
+		public static final double ManualDeadband = 0.06;
 	}
 
 	public static final class Auton {
@@ -75,10 +75,10 @@ public final class Constants {
 	}
 
 	public static final class VisionConstants {
-		// All these robot to camera are converted to meters and divided in half
-		private static double ROBOT_TO_CAM_X = (53.0 / 100) / 2;
-		private static double ROBOT_TO_CAM_Y = (53.0 / 100) / 2;
-		private static double ROBOT_TO_CAM_Z = (36.0 / 100);
+		// All these robot to camera are converted to meters
+		private static double ROBOT_TO_CAM_X = 0.33;
+		private static double ROBOT_TO_CAM_Y = 0.3;
+		private static double ROBOT_TO_CAM_Z = 0.3937;
 
 		public static boolean USE_VISION = true;
 
@@ -103,12 +103,12 @@ public final class Constants {
 				new Rotation3d(Math.toRadians(0), Math.toRadians(-25), Math.toRadians(180)));
 
 		public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
-				new Translation3d(ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-34), Math.toRadians(0)));
+				new Translation3d(-.3175, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
+				new Rotation3d(0, Math.toRadians(-21.5), Math.toRadians(180)));
 
 		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
-				new Translation3d(ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-31), Math.toRadians(0)));
+				new Translation3d(-.33, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
+				new Rotation3d(0, Math.toRadians(-20), Math.toRadians(180)));
 
 		/** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
 		public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
