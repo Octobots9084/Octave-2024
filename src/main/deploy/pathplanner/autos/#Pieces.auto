@@ -14,19 +14,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "New3Auto"
+            "pathName": "3rdPiece"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "5th Piece"
+            "pathName": "Connection2"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "4thPiece"
+            "pathName": "2nd Piece"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Connection"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1stPiece"
           }
         }
       ]
