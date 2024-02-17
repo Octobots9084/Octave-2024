@@ -57,11 +57,13 @@ public class Driveby extends Command {
         realSpeeds = swerveSubsystem.getRobotVelocity();
         realPose2d = swerveSubsystem.getPose();
         realPose2d = new Pose2d(4.27, 5.5, swerveSubsystem.getHeading());
+
         realFlywheel = flywheel.getFlywheelSpeed();
         realPivot = pivot.getPosition();
         ReverseKinematics.configHeightDif(ReverseKinematics.getHeightDif()
                 + MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.ManualDeadband) * 0.05);
         updateTargets();
+        SmartDashboard.putString("realPose2d", realPose2d.toString());
         pivot.setPosition(targetPivot);
 
         flywheel.setFlywheelSpeed(targetFlywheel);
