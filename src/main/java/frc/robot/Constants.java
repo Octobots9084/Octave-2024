@@ -65,7 +65,7 @@ public final class Constants {
 		private static double ROBOT_TO_CAM_Y = (53.0 / 100) / 2;
 		private static double ROBOT_TO_CAM_Z = (36.0 / 100);
 
-		public static boolean USE_VISION = false;
+		public static boolean USE_VISION = true;
 
 		/*
 		 * X positive is forward from the front of the robot

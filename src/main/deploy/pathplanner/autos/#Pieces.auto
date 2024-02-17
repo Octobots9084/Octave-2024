@@ -14,13 +14,19 @@
         {
           "type": "path",
           "data": {
+            "pathName": "StarttoPiece3"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
             "pathName": "3rdPiece"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Connection2"
+            "pathName": "ThirdToSecond"
           }
         },
         {
@@ -32,13 +38,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Connection"
+            "pathName": "SecondToFirst"
           }
         },
         {
           "type": "path",
           "data": {
             "pathName": "1stPiece"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Connection"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4thPiece"
           }
         }
       ]
