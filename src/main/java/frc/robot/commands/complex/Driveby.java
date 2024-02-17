@@ -65,6 +65,7 @@ public class Driveby extends Command {
                 + MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.ManualDeadband) * 0.05);
         updateTargets();
         SmartDashboard.putString("realPose2d", realPose2d.toString());
+
         if (!pivot.notSoFastEggman) {
             pivot.setPosition(targetPivot);
         }

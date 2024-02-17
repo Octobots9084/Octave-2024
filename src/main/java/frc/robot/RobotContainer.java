@@ -23,6 +23,7 @@ import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.Dunk;
+import frc.robot.commands.complex.Panic;
 import frc.robot.commands.complex.PrepAmp;
 import frc.robot.commands.complex.PrepClimb;
 import frc.robot.commands.complex.PrepSpeaker;
@@ -146,6 +147,7 @@ public class RobotContainer {
         }));
 
         driverButtons.button(5).onTrue(new ShooterElevatorPosInstant(ArmPositions.TRAP));
+        driverButtons.button(6).onTrue(new Panic());
         // Climb.getInstance().setDefaultCommand(new ClimbManual());
 
         // coDriverButtons.button(1).onTrue(new PrepAmp());

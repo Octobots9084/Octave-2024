@@ -30,9 +30,11 @@ public class Collect extends SequentialCommandGroup {
         if (shooterSensorTrue.getAsBoolean()) {
             return;
         }
-        ShooterPivot.getInstance().notSoFastEggman = true;
         addCommands(
-                new ShooterFlywheelSpeedInstant(ShooterSpeeds.STOP),
+                new InstantCommand(() -> {
+                    ShooterPivot.getInstance().notSoFastEggman = true;
+                }),
+                new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),
                 new ParallelCommandGroup(new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
                 new InstantCommand(() -> {
@@ -50,13 +52,16 @@ public class Collect extends SequentialCommandGroup {
                         new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
 
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
-                new ShooterTrackSpeedInstant(ShooterSpeeds.SPEAKER),
+                new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
 
                 new WaitUntilCommand(shooterSensorTrue),
+                new InstantCommand(() -> {
+                    ShooterPivot.getInstance().notSoFastEggman = false;
+                }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
                 new JiggleNote().withTimeout(1.5));
-        ShooterPivot.getInstance().notSoFastEggman = false;
+
     }
 
 }

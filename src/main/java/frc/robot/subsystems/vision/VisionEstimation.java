@@ -40,6 +40,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.util.telemetry.CountPerPeriodTelemetry;
 
 public class VisionEstimation extends SubsystemBase {
     private final SwerveSubsystem swerveSubsystem;
@@ -50,46 +51,71 @@ public class VisionEstimation extends SubsystemBase {
 
     private final Vision frontRightEstimator = new Vision(new PhotonCamera("Inky"),
             VisionConstants.ROBOT_TO_INKY);
-    private final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
-            VisionConstants.ROBOT_TO_BLINKY);
-    private final Vision backRightEstimator = new Vision(new PhotonCamera("Pinky"),
-            VisionConstants.ROBOT_TO_PINKY);
-    private final Vision backLeftEstimator = new Vision(new PhotonCamera("Clyde"),
-            VisionConstants.ROBOT_TO_CLYDE);
+    // private final Vision frontLeftEstimator = new Vision(new
+    // PhotonCamera("Blinky"),
+    // VisionConstants.ROBOT_TO_BLINKY);
+    // private final Vision backRightEstimator = new Vision(new
+    // PhotonCamera("Pinky"),
+    // VisionConstants.ROBOT_TO_PINKY);
+    // private final Vision backLeftEstimator = new Vision(new
+    // PhotonCamera("Clyde"),
+    // VisionConstants.ROBOT_TO_CLYDE);
 
     private final Notifier allNotifier = new Notifier(() -> {
         frontRightEstimator.run();
-        frontLeftEstimator.run();
-        backRightEstimator.run();
-        backLeftEstimator.run();
+        // frontLeftEstimator.run();
+        // backRightEstimator.run();
+        // backLeftEstimator.run();
     });
 
     private OriginPosition originPosition = kBlueAllianceWallRightSide;
+
+    // Telemetry
+    private final CountPerPeriodTelemetry runCountTelemetry;
+    private final CountPerPeriodTelemetry getAtomicCountInkyTelemetry;
+    // private final CountPerPeriodTelemetry getAtomicCountBlinkyTelemetry;
+    // private final CountPerPeriodTelemetry getAtomicCountPinkyTelemetry;
+    // private final CountPerPeriodTelemetry getAtomicCountClydeTelemetry;
 
     public VisionEstimation() {
         this.swerveSubsystem = SwerveSubsystem.getInstance();
 
         allNotifier.setName("runAll");
         allNotifier.startPeriodic(0.02);
+
+        // Initialize telemetry
+        runCountTelemetry = new CountPerPeriodTelemetry("VisionEstimation - runs per s", 1);
+        getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Inky - get atomic count/s", 1);
+        // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation
+        // - Blinky - get atomic count/s", 1);
+        // getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation
+        // - Pinky - get atomic count per s",
+        // 1);
+        // getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry("VisionEstimation
+        // - Clyde - get atomic count per s",
+        // 1);
     }
 
     @Override
     public void periodic() {
         if (VisionConstants.USE_VISION) {
-            estimatorChecker(frontRightEstimator);
-            estimatorChecker(frontLeftEstimator);
-            estimatorChecker(backRightEstimator);
-            estimatorChecker(backLeftEstimator);
+            // Update "run count" telemetry
+            runCountTelemetry.incCount(1);
+
+            estimatorChecker(frontRightEstimator, getAtomicCountInkyTelemetry);
+            // estimatorChecker(frontLeftEstimator, getAtomicCountBlinkyTelemetry);
+            // estimatorChecker(backRightEstimator, getAtomicCountPinkyTelemetry);
+            // estimatorChecker(backLeftEstimator, getAtomicCountClydeTelemetry);
         } else {
             allNotifier.close();
         }
 
-        // Set the pose on the dashboard
-        var dashboardPose = swerveSubsystem.getPose();
-        if (originPosition == kRedAllianceWallRightSide) {
-            // Flip the pose when red, since the dashboard field photo cannot be rotated
-            dashboardPose = flipAlliance(dashboardPose);
-        }
+        // Run telemetry
+        runCountTelemetry.periodic();
+        getAtomicCountInkyTelemetry.periodic();
+        // getAtomicCountBlinkyTelemetry.periodic();
+        // getAtomicCountPinkyTelemetry.periodic();
+        // getAtomicCountClydeTelemetry.periodic();
     }
 
     /**
@@ -140,16 +166,22 @@ public class VisionEstimation extends SubsystemBase {
         return visionMeasurementStdDevs.times(confidenceMultiplier);
     }
 
-    public void estimatorChecker(Vision estimator) {
+    public void estimatorChecker(Vision estimator, CountPerPeriodTelemetry getAtomicCountTelemetry) {
         var cameraPose = estimator.grabLatestEstimatedPose();
+
         if (cameraPose != null) {
+            SmartDashboard.putString("camerapose", cameraPose.estimatedPose.toString());
             // New pose from vision
             var pose2d = cameraPose.estimatedPose.toPose2d();
             if (originPosition == kRedAllianceWallRightSide) {
                 pose2d = flipAlliance(pose2d);
             }
+
             swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds,
                     confidenceCalculator(cameraPose));
+
+            // Update "get atomic count" telemetry
+            getAtomicCountTelemetry.incCount(1);
         }
     }
 

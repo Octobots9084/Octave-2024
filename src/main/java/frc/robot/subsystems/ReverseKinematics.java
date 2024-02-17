@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ReverseKinematics {
         // distance between launcher opening and the subwoofer target
-        private static double constTargetHeightDiff = 1.46;
+        private static double constTargetHeightDiff = 1.4;
         // gravity
         private static double g = 9.8;
         // the final y velocity for the note to be moving at when it enters the target
@@ -22,11 +22,12 @@ public class ReverseKinematics {
         private static double subwooferXPos = 0;
         private static double subwooferYPos = 5.5;
         private static double encoderOffset = 0.597;
+        private static double movementMultiplier = 5;
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
                 SmartDashboard.putString("poseconvert",
-                                new Pose2d(pos.getX() - subwooferXPos, subwooferYPos - pos.getY(), new Rotation2d())
+                                new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d())
                                                 .toString());
                 return new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d());
         }
@@ -58,7 +59,7 @@ public class ReverseKinematics {
         // for internal use only
         private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
                         double timeInAir) {
-                double xVel = pos.getX() / timeInAir + speed.vxMetersPerSecond;
+                double xVel = pos.getX() / timeInAir + speed.vxMetersPerSecond * movementMultiplier;
                 SmartDashboard.putNumber("xVel", xVel);
                 return xVel;
         }
@@ -69,7 +70,7 @@ public class ReverseKinematics {
         private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
                         double timeInAir) {
                 double yVel = pos.getY() / timeInAir
-                                + speed.vyMetersPerSecond;
+                                - speed.vyMetersPerSecond * movementMultiplier;
                 SmartDashboard.putNumber("yVel", yVel);
                 return yVel;
         }
@@ -92,7 +93,7 @@ public class ReverseKinematics {
                 double timeInAir = Math.sqrt(constTargetHeightDiff * constTargetHeightDiff + pos.getX() * pos.getX())
                                 / flywheelSpeedMTS;
                 return Math.atan2(calcLaunchYVel(pos, speed, flywheelSpeedMTS, timeInAir),
-                                calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir));
+                                calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir)) - Math.PI;
 
         }
 

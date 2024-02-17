@@ -9,6 +9,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.ReverseKinematics;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.MathUtil;
@@ -54,6 +55,11 @@ public class TeleopDrive extends Command {
   public void execute() {
     if (swerve.getShootingRequestActive()) {
       swerve.targetAngleEnabled = true;
+      swerve.targetAngle = new Rotation2d(ReverseKinematics.calcRobotAngle(
+          ReverseKinematics.convert2dCoords(swerve.getPose()),
+          ReverseKinematics.convertSpeed(ReverseKinematics.convert2dCoords(swerve.getPose()),
+              swerve.getRobotVelocity()),
+          ShooterSpeeds.DRIVE_BY.flywheels));
     } else {
       swerve.targetAngleEnabled = false;
     }
