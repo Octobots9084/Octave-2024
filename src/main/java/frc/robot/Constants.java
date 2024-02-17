@@ -4,12 +4,12 @@
 
 package frc.robot;
 
+import com.pathplanner.lib.util.PIDConstants;
+
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
-import com.pathplanner.lib.util.PIDConstants;
-
 import edu.wpi.first.math.util.Units;
 import swervelib.math.Matter;
 
@@ -41,7 +41,7 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
-        public static PIDController targetAngleController = new PIDController(10, 0, 0);
+		public static PIDController targetAngleController = new PIDController(10, 0, 0);
 	}
 
 	public static class OperatorConstants {
@@ -81,27 +81,25 @@ public final class Constants {
 
 		public static final Transform3d ROBOT_TO_CLYDE = new Transform3d(
 				new Translation3d(-ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(Math.toRadians(0), Math.toRadians(-30), Math.toRadians(180)));
+				new Rotation3d(Math.toRadians(0), Math.toRadians(-11), Math.toRadians(180)));
 
 		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
 				new Translation3d(-ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(Math.toRadians(0), Math.toRadians(-25), Math.toRadians(180)));
+				new Rotation3d(Math.toRadians(0), Math.toRadians(-13), Math.toRadians(180)));
 
-		public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
-				new Translation3d(ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-34), Math.toRadians(0)));
+		// public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
+		// 		new Translation3d(ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
+		// 		new Rotation3d(0, Math.toRadians(-9.7), Math.toRadians(0)));
 
-		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
-				new Translation3d(ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-31), Math.toRadians(0)));
+		// public static final Transform3d ROBOT_TO_INKY = new Transform3d(
+		// 		new Translation3d(ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
+		// 		new Rotation3d(0, Math.toRadians(-10.1), Math.toRadians(0)));
 
 		/** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
-		public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
 		public static final double POSE_AMBIGUITY_SHIFTER = 0.2;
 		public static final double POSE_AMBIGUITY_MULTIPLIER = 4;
 		public static final double NOISY_DISTANCE_METERS = 2.5;
 		public static final double DISTANCE_WEIGHT = 7;
 		public static final int TAG_PRESENCE_WEIGHT = 10;
-
 	}
 }

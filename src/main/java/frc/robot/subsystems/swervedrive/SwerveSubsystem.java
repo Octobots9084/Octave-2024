@@ -9,6 +9,7 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -18,6 +19,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -45,7 +47,7 @@ public class SwerveSubsystem extends SubsystemBase {
    */
   public static double MAXIMUM_SPEED = 5;
   public Rotation2d targetAngle;
-  public boolean targetAngleEnabled = true;;
+  public boolean targetAngleEnabled = false;
   public PIDController targetAngleController;
 
   /**
@@ -238,6 +240,7 @@ public class SwerveSubsystem extends SubsystemBase {
    * @param initialHolonomicPose The pose to set the odometry to
    */
   public void resetOdometry(Pose2d initialHolonomicPose) {
+    swerveDrive.setGyro(new Rotation3d(0,0,initialHolonomicPose.getRotation().getRadians()));
     swerveDrive.resetOdometry(initialHolonomicPose);
   }
 

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.4229570277322372,
-      "y": 5.550603828480384
+      "x": 1.413628281802018,
+      "y": 5.559932574410603
     },
-    "rotation": 0.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,43 +14,49 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Start"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "pathName": "StarttoPiece3"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LeftClose"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "pathName": "3rdPiece"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "MiddleClose"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
+            "pathName": "ThirdToSecond"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "RightClose"
+            "pathName": "2nd Piece"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SecondToFirst"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1stPiece"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Connection"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4thPiece"
           }
         }
       ]
