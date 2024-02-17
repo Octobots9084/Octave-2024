@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ReverseKinematics {
         // distance between launcher opening and the subwoofer target
-        private static double constTargetHeightDiff = 1.6;
+        private static double constTargetHeightDiff = 1.38;
         // gravity
-        private static double g = -9.8;
+        private static double g = 9.8;
         // the final y velocity for the note to be moving at when it enters the target
 
         // X and Y positions of the subwoofer with regards to (0,0) on the robot's
@@ -46,8 +46,11 @@ public class ReverseKinematics {
         private static double calcLaunchVerticalVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
                         double timeInAir) {
                 double heightDelta = (g * Math.pow(timeInAir, 2)) / 2;
-                return ((constTargetHeightDiff + heightDelta)
+                double verticalVel = ((constTargetHeightDiff + heightDelta)
                                 / timeInAir);
+                SmartDashboard.putNumber("verticalVel", verticalVel);
+                SmartDashboard.putNumber("heightDelta", heightDelta);
+                return verticalVel;
         }
 
         // returns the horizontal (parallel to the subwoofer opening) launch velocity of
@@ -55,8 +58,9 @@ public class ReverseKinematics {
         // for internal use only
         private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
                         double timeInAir) {
-
-                return pos.getX() / timeInAir + speed.vxMetersPerSecond;
+                double xVel = pos.getX() / timeInAir + speed.vxMetersPerSecond;
+                SmartDashboard.putNumber("xVel", xVel);
+                return xVel;
         }
 
         // returns the "vertical" from above (perpendicular to the subwoofer opening)
@@ -64,8 +68,10 @@ public class ReverseKinematics {
         // for internal use only
         private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
                         double timeInAir) {
-                return pos.getY() / timeInAir
+                double yVel = pos.getY() / timeInAir
                                 + speed.vyMetersPerSecond;
+                SmartDashboard.putNumber("yVel", yVel);
+                return yVel;
         }
 
         // returns total speed the note should be launched at, in m/s
@@ -97,10 +103,16 @@ public class ReverseKinematics {
                                 / flywheelSpeedMTS;
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
+                SmartDashboard.putNumber("targetAngleShoote",
+                                (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, flywheelSpeedMTS, timeInAir),
+                                                calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir)))));
+                double angleDiffRadians = (Math.PI
+                                + (Math.atan2(calcLaunchVerticalVel(pos, speed, flywheelSpeedMTS, timeInAir),
+                                                calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir))));
+                double normalizedAngleDiff = angleDiffRadians
+                                / (2 * Math.PI);
                 return encoderOffset
-                                - (Math.atan2(calcLaunchVerticalVel(pos, speed, flywheelSpeedMTS, timeInAir),
-                                                calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir)))
-                                                / (2 * Math.PI);
+                                - normalizedAngleDiff;
         }
 
         public static void configHeightDif(double targetHeightDiff) {

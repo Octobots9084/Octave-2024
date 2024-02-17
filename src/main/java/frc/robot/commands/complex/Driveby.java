@@ -46,7 +46,7 @@ public class Driveby extends Command {
     public void updateTargets() {
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
-        realPose2d = new Pose2d(4.27, 5.5, swerveSubsystem.getHeading());
+        realPose2d = new Pose2d(2.79, 5.5, swerveSubsystem.getHeading());
         targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
                 ShooterSpeeds.DRIVE_BY.flywheels);
         targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels;
@@ -59,9 +59,9 @@ public class Driveby extends Command {
     public void execute() {
         realSpeeds = swerveSubsystem.getRobotVelocity();
         realPose2d = swerveSubsystem.getPose();
-        realPose2d = new Pose2d(4.27, 5.5, swerveSubsystem.getHeading());
+        realPose2d = new Pose2d(2.79, 5.5, swerveSubsystem.getHeading());
 
-        realFlywheel = flywheel.getFlywheelSpeed();
+        realFlywheel = flywheel.getFlywheelSpeedMeters();
         realPivot = pivot.getPosition();
         ReverseKinematics.configHeightDif(ReverseKinematics.getHeightDif()
                 + MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.ManualDeadband) * 0.05);
@@ -69,7 +69,7 @@ public class Driveby extends Command {
         SmartDashboard.putString("realPose2d", realPose2d.toString());
         pivot.setPosition(targetPivot);
 
-        flywheel.setFlywheelSpeed(targetFlywheel);
+        flywheel.setFlyWheelSpeedMeters(targetFlywheel);
         swerveSubsystem.setShootingRequest(targetTurn);
     }
 
