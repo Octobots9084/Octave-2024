@@ -1,18 +1,20 @@
 package frc.robot.constants;
 
 public enum ShooterSpeeds {
-    IDLE(0,-0.5),
-    PREPARE(0,1),
-    SPEAKER(0.7,-2500),
-    STOP(0,0),
-    PANIC(-1,-1),
-    AMP(1,-1000),
+    IDLE(0, -0.5),
+    PREPARE(0, 1),
+    SPEAKER(0.7, -2500),
+    STOP(0, 0),
+    PANIC(-1, -1),
+    AMP(1, -1000),
     JIGGLE_FORWARD(0.1, 0),
     JIGGLE_BACKWARD(-0.1, 0),
-    TRAP(1,0.5);
+    TRAP(1, 0.5),
+    DRIVE_BY(0, -4000);
 
     public double track;
-	public double flywheels;
+    public double flywheels;
+
     ShooterSpeeds(double track, double flywheels) {
         this.track = track;
         this.flywheels = flywheels;

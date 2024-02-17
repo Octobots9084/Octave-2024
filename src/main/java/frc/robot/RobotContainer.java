@@ -146,7 +146,7 @@ public class RobotContainer {
         }));
 
         driverButtons.button(5).onTrue(new ShooterElevatorPosInstant(ArmPositions.TRAP));
-        Climb.getInstance().setDefaultCommand(new ClimbManual());
+        // Climb.getInstance().setDefaultCommand(new ClimbManual());
 
         // coDriverButtons.button(1).onTrue(new PrepAmp());
         // coDriverButtons.button(2).onTrue(new PrepSpeaker());
