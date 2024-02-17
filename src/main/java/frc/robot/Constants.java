@@ -77,7 +77,7 @@ public final class Constants {
 	public static final class VisionConstants {
 		// All these robot to camera are converted to meters
 		private static double ROBOT_TO_CAM_X = 0.33;
-		private static double ROBOT_TO_CAM_Y = 0.3;
+		private static double ROBOT_TO_CAM_Y = 0.273;
 		private static double ROBOT_TO_CAM_Z = 0.3937;
 
 		public static boolean USE_VISION = true;
@@ -103,12 +103,12 @@ public final class Constants {
 				new Rotation3d(Math.toRadians(0), Math.toRadians(-25), Math.toRadians(180)));
 
 		public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
-				new Translation3d(-.3175, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
+				new Translation3d(-.3175, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
 				new Rotation3d(0, Math.toRadians(-21.5), Math.toRadians(180)));
 
 		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
-				new Translation3d(-.33, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-20), Math.toRadians(180)));
+				new Translation3d(-.32, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
+				new Rotation3d(0, Math.toRadians(-17), Math.toRadians(180)));
 
 		/** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
 		public static final double APRILTAG_AMBIGUITY_THRESHOLD = 0.2;
