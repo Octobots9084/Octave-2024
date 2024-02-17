@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.arm.JiggleNote;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
 import frc.robot.commands.arm.ShooterElevatorPosTolerance;
+import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
 import frc.robot.commands.arm.ShooterPivotPosInstant;
 import frc.robot.commands.arm.ShooterPivotPosTolerance;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
@@ -19,13 +20,19 @@ import frc.robot.constants.ArmPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.IntakeTrack;
+import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 
 public class Collect extends SequentialCommandGroup {
     public Collect() {
         BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
+        if (shooterSensorTrue.getAsBoolean()) {
+            return;
+        }
+        ShooterPivot.getInstance().notSoFastEggman = true;
         addCommands(
+                new ShooterFlywheelSpeedInstant(ShooterSpeeds.STOP),
                 new ParallelCommandGroup(new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
                 new InstantCommand(() -> {
@@ -49,5 +56,7 @@ public class Collect extends SequentialCommandGroup {
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
                 new JiggleNote().withTimeout(1.5));
+        ShooterPivot.getInstance().notSoFastEggman = false;
     }
+
 }
