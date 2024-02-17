@@ -1075,6 +1075,7 @@ public class SwerveDrive {
   public void addVisionMeasurement(Pose2d robotPose, double timestamp,
       Matrix<N3, N1> visionMeasurementStdDevs) {
     this.visionMeasurementStdDevs = visionMeasurementStdDevs;
+    swerveDrivePoseEstimator.setVisionMeasurementStdDevs(visionMeasurementStdDevs);
     addVisionMeasurement(robotPose, timestamp);
   }
 

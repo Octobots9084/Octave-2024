@@ -50,21 +50,18 @@ public class VisionEstimation extends SubsystemBase {
 
     private final Vision frontRightEstimator = new Vision(new PhotonCamera("Inky"),
             VisionConstants.ROBOT_TO_INKY);
-    // private final Vision frontLeftEstimator = new Vision(new
-    // PhotonCamera("Blinky"),
-    // VisionConstants.ROBOT_TO_BLINKY);
-    // private final Vision backRightEstimator = new Vision(new
-    // PhotonCamera("Pinky"),
-    // VisionConstants.ROBOT_TO_PINKY);
-    // private final Vision backLeftEstimator = new Vision(new
-    // PhotonCamera("Clyde"),
-    // VisionConstants.ROBOT_TO_CLYDE);
+    private final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
+            VisionConstants.ROBOT_TO_BLINKY);
+    private final Vision backRightEstimator = new Vision(new PhotonCamera("Pinky"),
+            VisionConstants.ROBOT_TO_PINKY);
+    private final Vision backLeftEstimator = new Vision(new PhotonCamera("Clyde"),
+            VisionConstants.ROBOT_TO_CLYDE);
 
     private final Notifier allNotifier = new Notifier(() -> {
         frontRightEstimator.run();
-        // frontLeftEstimator.run();
-        // backRightEstimator.run();
-        // backLeftEstimator.run();
+        frontLeftEstimator.run();
+        backRightEstimator.run();
+        backLeftEstimator.run();
     });
 
     private OriginPosition originPosition = kBlueAllianceWallRightSide;
@@ -80,9 +77,9 @@ public class VisionEstimation extends SubsystemBase {
     public void periodic() {
         if (VisionConstants.USE_VISION) {
             estimatorChecker(frontRightEstimator);
-            // estimatorChecker(frontLeftEstimator);
-            // estimatorChecker(backRightEstimator);
-            // estimatorChecker(backLeftEstimator);
+            estimatorChecker(frontLeftEstimator);
+            estimatorChecker(backRightEstimator);
+            estimatorChecker(backLeftEstimator);
         } else {
             allNotifier.close();
         }
