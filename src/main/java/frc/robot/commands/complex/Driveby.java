@@ -47,9 +47,12 @@ public class Driveby extends Command {
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
         realPose2d = new Pose2d(4.27, 5.5, swerveSubsystem.getHeading());
-        targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds);
+        targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
+                ShooterSpeeds.DRIVE_BY.flywheels);
         targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels;
-        targetTurn = new Rotation2d(ReverseKinematics.calcRobotAngle(realPose2d, realSpeeds));
+        targetTurn = new Rotation2d(
+                ReverseKinematics.calcRobotAngle(realPose2d, realSpeeds, ShooterSpeeds.DRIVE_BY.flywheels));
+        SmartDashboard.putString("realPose2dAhh", realPose2d.toString());
     }
 
     @Override

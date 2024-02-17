@@ -16,7 +16,6 @@ public class ReverseKinematics {
         // gravity
         private static double g = -9.8;
         // the final y velocity for the note to be moving at when it enters the target
-        private static double time = 0.05;
 
         // X and Y positions of the subwoofer with regards to (0,0) on the robot's
         // Pose2d
@@ -44,72 +43,63 @@ public class ReverseKinematics {
 
         // returns the vertical launch velocity of the note
         // for internal use only
-        private static double calcLaunchVerticalVel(Pose2d pos, ChassisSpeeds speed) {
-                SmartDashboard.putNumber("launch vertical velocity: ",
-                                constTargetHeightDiff / time);
-                // System.out.println("time: " + (constTargetHeightDiff/Math.sqrt(Math.abs(vf -
-                // 2*constTargetHeightDiff*g))));
-
-                return (constTargetHeightDiff / time);// - (0.5 * g * t * t)) / t;
-                // return Math.sqrt(Math.abs((vf * vf) - (2 * constTargetHeightDiff * g))); //
-                // Math.sqrt(constTargetHeightDiff * g
-                // * g);
+        private static double calcLaunchVerticalVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
+                        double timeInAir) {
+                double heightDelta = (g * Math.pow(timeInAir, 2)) / 2;
+                return ((constTargetHeightDiff + heightDelta)
+                                / timeInAir);
         }
 
         // returns the horizontal (parallel to the subwoofer opening) launch velocity of
         // the note
         // for internal use only
-        private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed) {
-                SmartDashboard.putNumber("launch x velocity: ",
-                                pos.getX() / time + speed.vxMetersPerSecond);
-                return pos.getX() / time + speed.vxMetersPerSecond;
+        private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
+                        double timeInAir) {
+
+                return pos.getX() / timeInAir + speed.vxMetersPerSecond;
         }
 
         // returns the "vertical" from above (perpendicular to the subwoofer opening)
         // launch velocity of the note
         // for internal use only
-        private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed) {
-                // System.out.println("launch y velocity: " +
-                // (yPos/(constTargetHeightDiff/calcLaunchVerticalVel()) - yVel));
-                SmartDashboard.putNumber("launch y velocity: ",
-                                pos.getY() / (constTargetHeightDiff / calcLaunchVerticalVel(pos, speed))
-                                                + speed.vyMetersPerSecond);
-                return pos.getY() / time
+        private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
+                        double timeInAir) {
+                return pos.getY() / timeInAir
                                 + speed.vyMetersPerSecond;
         }
 
         // returns total speed the note should be launched at, in m/s
-        public static double calcTotalLaunchVelocity(Pose2d pos, ChassisSpeeds speed) {
-                SmartDashboard.putNumber("launch total velocity: ",
-                                Math.sqrt(Math.pow(calcLaunchXVel(pos, speed), 2)
-                                                + Math.pow(calcLaunchYVel(pos, speed), 2)
-                                                + Math.pow(calcLaunchVerticalVel(pos, speed), 2)));
-                return Math.sqrt(Math.pow(calcLaunchXVel(pos, speed), 2)
+        public static double calcTotalLaunchVelocity(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS) {
+                double timeInAir = Math.sqrt(constTargetHeightDiff * constTargetHeightDiff + pos.getX() * pos.getX())
+                                / flywheelSpeedMTS;
+                return Math.sqrt(Math.pow(calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir), 2)
                                 /*
                                  * + Math.pow(calcLaunchYVel(pos, speed), 2)
-                                 */ + Math.pow(calcLaunchVerticalVel(pos, speed), 2));
+                                 */ + Math.pow(calcLaunchVerticalVel(pos, speed, flywheelSpeedMTS, timeInAir), 2));
         }
 
         // returns the angle (wrt parralel to the target opening) to the target opening
         // from the robot
         // a value of pi/2, for example, means directly north (from a bird's eye view)
         // with the subwoofer north of the robot
-        public static double calcRobotAngle(Pose2d pos, ChassisSpeeds speed) {
-                return Math.atan2(calcLaunchYVel(pos, speed), calcLaunchXVel(pos, speed));
-                // return pos.getX() >= 0 ? Math.atan(calcLaunchYVel(pos,
-                // speed)/calcLaunchXVel(pos, speed)) : (Math.PI / 2.0) -
-                // Math.atan(calcLaunchYVel(pos, speed)/calcLaunchXVel(pos, speed));
+        public static double calcRobotAngle(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS) {
+                double timeInAir = Math.sqrt(constTargetHeightDiff * constTargetHeightDiff + pos.getX() * pos.getX())
+                                / flywheelSpeedMTS;
+                return Math.atan2(calcLaunchYVel(pos, speed, flywheelSpeedMTS, timeInAir),
+                                calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir));
+
         }
 
         // returns the angle of the launcher required
         // 0 is parallel to the floor, pi/2 is vertically upwards
-        public static double calcSubwooferLaunchAngle(Pose2d pos, ChassisSpeeds speed) {
+        public static double calcSubwooferLaunchAngle(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS) {
+                double timeInAir = Math.sqrt(constTargetHeightDiff * constTargetHeightDiff + pos.getX() * pos.getX())
+                                / flywheelSpeedMTS;
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
-                SmartDashboard.putNumber("target angle rotation",
-                                Math.atan2(calcLaunchVerticalVel(pos, speed), calcLaunchXVel(pos, speed)));
                 return encoderOffset
-                                - (Math.atan2(calcLaunchVerticalVel(pos, speed), calcLaunchXVel(pos, speed)))
+                                - (Math.atan2(calcLaunchVerticalVel(pos, speed, flywheelSpeedMTS, timeInAir),
+                                                calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir)))
                                                 / (2 * Math.PI);
         }
 

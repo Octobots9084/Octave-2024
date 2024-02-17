@@ -54,10 +54,6 @@ public class TeleopDrive extends Command {
   public void execute() {
     if (swerve.getShootingRequestActive()) {
       swerve.targetAngleEnabled = true;
-      swerve.targetAngle = new Rotation2d(ReverseKinematics.calcRobotAngle(
-        ReverseKinematics.convert2dCoords(swerve.getPose()), 
-          ReverseKinematics.convertSpeed(ReverseKinematics.convert2dCoords(swerve.getPose()), 
-          swerve.getRobotVelocity())));
     } else {
       swerve.targetAngleEnabled = false;
     }
