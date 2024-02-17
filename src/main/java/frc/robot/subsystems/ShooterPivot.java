@@ -30,6 +30,7 @@ public class ShooterPivot extends SubsystemBase {
     private static double maxLimit = 0.92;
     public CANSparkMax leftMotor, rightMotor;
     private double position;
+    public boolean notSoFastEggman = false;
 
     public ShooterPivot() {
         //leadMotor and followMotor are outdated names, i'm changing it to left and right
