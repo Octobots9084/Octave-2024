@@ -49,6 +49,7 @@ import java.io.File;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -92,6 +93,9 @@ public class RobotContainer {
                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
+
+        NamedCommands.registerCommand("Collect", new Collect());
+        NamedCommands.registerCommand("Shoot", new Driveby());
     }
 
     /**
@@ -107,6 +111,10 @@ public class RobotContainer {
      * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick
      * Flight joysticks}.
      */
+
+    public Command getAutonomousCommand() {
+        return autoChooser.getSelected();
+    }
 
     public void setDriveMode() {
         // SwerveSubsystem.getInstance().setDefaultCommand();
