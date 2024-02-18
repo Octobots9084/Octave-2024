@@ -92,7 +92,7 @@ public class Driveby extends Command {
                 && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.02)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTu.getRadians(), 2 * Math.PI), 0.3)) {
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.3)) {
             return true;
         } else {
             return false;
