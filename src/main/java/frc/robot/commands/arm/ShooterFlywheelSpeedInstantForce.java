@@ -13,7 +13,6 @@ public class ShooterFlywheelSpeedInstantForce extends InstantCommand {
         this.shooterSpeeds = shooterSpeeds;
         flywheel = ShooterFlywheel.getInstance();
 
-        initialize();
     }
 
     @Override

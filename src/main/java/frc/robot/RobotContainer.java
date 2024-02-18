@@ -78,7 +78,6 @@ public class RobotContainer {
      */
     public RobotContainer() {
         // Configure the trigger bindings
-        configureBindings();
 
         TeleopDrive closedFieldRel = new TeleopDrive(
                 SwerveSubsystem.getInstance(),
@@ -108,56 +107,6 @@ public class RobotContainer {
      * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick
      * Flight joysticks}.
      */
-    private void configureBindings() {
-        // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-
-        driverButtons.button(4).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
-        // driverLeft.button(2).onTrue((new InstantCommand(() -> {
-        // SmartDashboard.putNumber("button press", 0);
-        // // Not safe type casting, could break but should be obvious
-        // NavXSwerve navx = (NavXSwerve)
-        // SwerveSubsystem.getInstance().getSwerveDrive().imu;
-        // AHRS gyro = (AHRS) navx.getIMU();
-        // gyro.reset();
-
-        // })));
-
-        // //driverRight.button(1).whileTrue(new Collect());]
-        // driverRight.button(1).onTrue(new InstantCommand(()->{
-        // SwerveSubsystem.getInstance().setShootingRequestActive(true);
-        // }));
-        // driverRight.button(1).onFalse(new InstantCommand(()->{
-        // SwerveSubsystem.getInstance().setShootingRequestActive(false);
-        // }));
-
-        // driverRight.button(2).onTrue(new TheBigYeet());
-
-        // driverButtons.button(1).whileTrue(new Driveby());
-        // driverButtons.button(2).onTrue(new TestingPaths());
-        // //driverButtons.button(3).onTrue(new DontFire());
-
-        driverLeft.button(1).onTrue(new Collect());
-        driverLeft.button(2).onTrue(new PrepSpeaker());
-        driverRight.button(1).onTrue(new TheBigYeet());
-        driverRight.button(2).whileTrue(new Driveby());
-        driverButtons.button(1).onTrue(new PrepClimb());
-        driverButtons.button(2).onTrue(new SimpleClimb());
-        driverButtons.button(3).onTrue(new InstantCommand(() -> {
-            Climb.getInstance().setOffset();
-        }));
-
-        driverButtons.button(5).onTrue(new ShooterElevatorPosInstant(ArmPositions.TRAP));
-        driverButtons.button(6).onTrue(new Panic());
-        // Climb.getInstance().setDefaultCommand(new ClimbManual());
-
-        // coDriverButtons.button(1).onTrue(new PrepAmp());
-        // coDriverButtons.button(2).onTrue(new PrepSpeaker());
-        // coDriverButtons.button(3).onTrue(new TheBigYeet());
-        // coDriverButtons.button(4).onTrue(new PrepClimb());
-        // coDriverButtons.button(5).onTrue(new SimpleClimb());
-        // coDriverButtons.button(6).onTrue(new Dunk());
-        // coDriverButtons.button(7).onTrue(new Undunk());
-    }
 
     public void setDriveMode() {
         // SwerveSubsystem.getInstance().setDefaultCommand();

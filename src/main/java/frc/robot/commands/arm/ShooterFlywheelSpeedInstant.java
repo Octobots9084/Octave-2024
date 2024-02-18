@@ -14,7 +14,6 @@ public class ShooterFlywheelSpeedInstant extends InstantCommand {
         flywheel = ShooterFlywheel.getInstance();
         super.addRequirements(flywheel);
 
-        initialize();
     }
 
     @Override

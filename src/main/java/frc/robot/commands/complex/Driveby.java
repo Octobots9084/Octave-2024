@@ -50,7 +50,11 @@ public class Driveby extends Command {
                 ShooterSpeeds.DRIVE_BY.flywheels);
         targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels;
         targetTurn = new Rotation2d(
-                ReverseKinematics.calcRobotAngle(realPose2d, realSpeeds, ShooterSpeeds.DRIVE_BY.flywheels));
+                ReverseKinematics.calcRobotAngle(
+                        ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
+                        ReverseKinematics.convertSpeed(ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
+                                swerveSubsystem.getRobotVelocity()),
+                        ShooterSpeeds.DRIVE_BY.flywheels));
         SmartDashboard.putString("realPose2dAhh", realPose2d.toString());
     }
 
@@ -75,21 +79,20 @@ public class Driveby extends Command {
 
     @Override
     public boolean isFinished() {
-        double realRotation = realPose2d.getRotation().getRadians();
+        double realRotation = swerveSubsystem.getHeading().getRadians();
         SmartDashboard.putNumber("realFlywheel", realFlywheel);
         SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
         SmartDashboard.putNumber("targetPivot", targetPivot);
         SmartDashboard.putNumber("realPivot", realPivot);
-        SmartDashboard.putNumber("realRotation", realPivot);
-        SmartDashboard.putNumber("targetRotation", targetTurn.getRadians());
+        SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
+        SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.01)
-                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.01)
+        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.5)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.02)
 
-                && MathUtil.isWithinTolerance(realRotation,
-                        targetTurn.getRadians(), 0.1)
-                && !ShooterTrack.getInstance().getSensor()) {
+                && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
+                        MathUtil.wrapToCircle(targetTu.getRadians(), 2 * Math.PI), 0.3)) {
             return true;
         } else {
             return false;
