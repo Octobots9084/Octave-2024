@@ -52,7 +52,7 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
-		public static PIDController targetAngleController = new PIDController(2, 0, 0);
+		public static PIDController targetAngleController = new PIDController(3.5, 0, 0);
 	}
 
 	public static class OperatorConstants {
