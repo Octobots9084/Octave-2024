@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -22,6 +23,7 @@ import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
+import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.Dunk;
 import frc.robot.commands.complex.Panic;
 import frc.robot.commands.complex.PrepAmp;
@@ -91,11 +93,11 @@ public class RobotContainer {
 
         SwerveSubsystem.getInstance().setDefaultCommand(
                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
+        NamedCommands.registerCommand("Collect", new InstantCommand(()->CommandScheduler.getInstance().schedule(new Collect())));
+        NamedCommands.registerCommand("Shoot", new DrivebyAuto());
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
-        NamedCommands.registerCommand("Collect", new Collect());
-        NamedCommands.registerCommand("Shoot", new Driveby());
     }
 
     /**

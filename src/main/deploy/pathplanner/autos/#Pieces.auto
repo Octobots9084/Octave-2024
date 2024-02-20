@@ -12,33 +12,15 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "StarttoPiece3"
+            "name": "Shoot"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3rdPiece"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ThirdToSecond"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "2nd Piece"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "SecondToFirst"
+            "pathName": "StarttoPiece3Blue"
           }
         },
         {
@@ -48,9 +30,15 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "1stPiece"
+            "pathName": "3rdPieceBlue"
           }
         },
         {
@@ -62,13 +50,55 @@
         {
           "type": "path",
           "data": {
-            "pathName": "FirstToFourth"
+            "pathName": "ThirdToSecondBlue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collect"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "4thPiece"
+            "pathName": "2ndPieceBlue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SecondToFirstBlue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Collect"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1stPieceBlue"
           }
         },
         {
