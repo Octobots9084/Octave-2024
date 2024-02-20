@@ -22,6 +22,7 @@ import frc.robot.commands.arm.ShooterPivotPosInstant;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.complex.Collect;
+import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.Dunk;
@@ -30,6 +31,7 @@ import frc.robot.commands.complex.PrepAmp;
 import frc.robot.commands.complex.PrepClimb;
 import frc.robot.commands.complex.PrepSpeaker;
 import frc.robot.commands.complex.SimpleClimb;
+import frc.robot.commands.complex.SpeakerAuto;
 import frc.robot.commands.complex.TheBigYeet;
 import frc.robot.commands.complex.Undunk;
 import frc.robot.commands.intake.IntakeRollerSpeedInstant;
@@ -93,8 +95,11 @@ public class RobotContainer {
 
         SwerveSubsystem.getInstance().setDefaultCommand(
                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
-        NamedCommands.registerCommand("Collect", new InstantCommand(()->CommandScheduler.getInstance().schedule(new Collect())));
+        NamedCommands.registerCommand("SpeakerAuto", new SpeakerAuto());
+        NamedCommands.registerCommand("Collect",
+                new CollectAuto());
         NamedCommands.registerCommand("Shoot", new DrivebyAuto());
+
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
