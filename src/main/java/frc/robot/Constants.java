@@ -98,11 +98,11 @@ public final class Constants {
 				new Translation3d(-ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
 				new Rotation3d(Math.toRadians(0), Math.toRadians(-11), Math.toRadians(180)));
 
-		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
+		public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
 				new Translation3d(-ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
 				new Rotation3d(Math.toRadians(0), Math.toRadians(-13), Math.toRadians(180)));
 
-		public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
+		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
 				new Translation3d(-.3175, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
 				new Rotation3d(0, Math.toRadians(-21.5), Math.toRadians(180)));
 
