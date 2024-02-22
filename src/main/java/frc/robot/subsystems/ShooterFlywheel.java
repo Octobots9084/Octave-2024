@@ -96,7 +96,7 @@ public class ShooterFlywheel extends SubsystemBase {
     }
 
     public void setFlywheelActive(boolean setFlywheelActive) {
-        if (setFlywheelActive) {
+        if (!setFlywheelActive) {
             motorOne.getPIDController().setReference(0, ControlType.kVoltage);
         }
     }
