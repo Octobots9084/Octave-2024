@@ -45,7 +45,7 @@ public class ShooterTrack extends SubsystemBase {
         motor1.setCANTimeout(1000);
 
         motor1.getPIDController().setFeedbackDevice(motor1.getEncoder());
-        motor1.setIdleMode(IdleMode.kCoast);
+        motor1.setIdleMode(IdleMode.kBrake);
         motor1.setSmartCurrentLimit(30, 30);
         motor1.setInverted(false);
 
