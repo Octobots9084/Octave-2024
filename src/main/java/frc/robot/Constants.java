@@ -31,6 +31,17 @@ public final class Constants {
 	public static final Matter CHASSIS = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
 	public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
 
+	public static final class Arm {
+		public static final double ShooterElevatorTolerance = 0.05;
+		public static final double ShooterFlywheelTolerance = 10;
+		public static final double ShooterPivotTolerance = 0.05;
+	}
+
+	public static final class Climb {
+		public static final double ClimbTolerance = 0.1;
+		public static final double ManualDeadband = 0.06;
+	}
+
 	public static final class Auton {
 		public static final PIDConstants TranslationPID = new PIDConstants(3, 0.0, 0.0);
 		public static final PIDConstants angleAutoPID = new PIDConstants(2, 0, 0);
@@ -41,7 +52,7 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
-		public static PIDController targetAngleController = new PIDController(10, 0, 0);
+		public static PIDController targetAngleController = new PIDController(3.5, 0, 0);
 	}
 
 	public static class OperatorConstants {
@@ -52,6 +63,10 @@ public final class Constants {
 		public static final double TURN_CONSTANT = 6;
 		public static final int DRIVER_LEFT = 0;
 		public static final int DRIVER_RIGHT = 1;
+		public static final int DRIVER_BUTTONS = 2;
+		public static final int CO_DRIVER_LEFT = 3;
+		public static final int CO_DRIVER_RIGHT = 4;
+		public static final int CO_DRIVER_BUTTONS = 5;
 	}
 
 	public static class FieldConstants {
@@ -60,10 +75,10 @@ public final class Constants {
 	}
 
 	public static final class VisionConstants {
-		// All these robot to camera are converted to meters and divided in half
-		private static double ROBOT_TO_CAM_X = (53.0 / 100) / 2;
-		private static double ROBOT_TO_CAM_Y = (53.0 / 100) / 2;
-		private static double ROBOT_TO_CAM_Z = (36.0 / 100);
+		// All these robot to camera are converted to meters
+		private static double ROBOT_TO_CAM_X = 0.33;
+		private static double ROBOT_TO_CAM_Y = 0.273;
+		private static double ROBOT_TO_CAM_Z = 0.3937;
 
 		public static boolean USE_VISION = true;
 
@@ -83,17 +98,17 @@ public final class Constants {
 				new Translation3d(-ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
 				new Rotation3d(Math.toRadians(0), Math.toRadians(-11), Math.toRadians(180)));
 
-		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
+		public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
 				new Translation3d(-ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
 				new Rotation3d(Math.toRadians(0), Math.toRadians(-13), Math.toRadians(180)));
 
-		// public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
-		// 		new Translation3d(ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-		// 		new Rotation3d(0, Math.toRadians(-9.7), Math.toRadians(0)));
+		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
+				new Translation3d(-.3175, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
+				new Rotation3d(0, Math.toRadians(-21.5), Math.toRadians(180)));
 
-		// public static final Transform3d ROBOT_TO_INKY = new Transform3d(
-		// 		new Translation3d(ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-		// 		new Rotation3d(0, Math.toRadians(-10.1), Math.toRadians(0)));
+		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
+				new Translation3d(-.32, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
+				new Rotation3d(0, Math.toRadians(-17), Math.toRadians(180)));
 
 		/** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
 		public static final double POSE_AMBIGUITY_SHIFTER = 0.2;

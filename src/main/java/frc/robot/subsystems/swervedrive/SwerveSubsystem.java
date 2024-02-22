@@ -37,6 +37,8 @@ import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 
 public class SwerveSubsystem extends SubsystemBase {
 
+  private Rotation2d shootingRequest = new Rotation2d();
+  private boolean shootingRequestActive = false;
   /**
    * Swerve drive object.
    */
@@ -46,7 +48,7 @@ public class SwerveSubsystem extends SubsystemBase {
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
   public static double MAXIMUM_SPEED = 5;
-  public Rotation2d targetAngle;
+  public Rotation2d targetAngle = new Rotation2d();
   public boolean targetAngleEnabled = false;
   public PIDController targetAngleController;
 
@@ -72,8 +74,8 @@ public class SwerveSubsystem extends SubsystemBase {
 
     setupPathPlanner();
 
-    targetAngle = getHeading();
-    targetAngleController = Constants.Drivebase.targetAngleController;;
+    targetAngleController = Constants.Drivebase.targetAngleController;
+    ;
     targetAngleController.enableContinuousInput(-Math.PI, Math.PI);
   }
 
@@ -203,6 +205,22 @@ public class SwerveSubsystem extends SubsystemBase {
         false); // Open loop is disabled since it shouldn't be used most of the time.
   }
 
+  public void setShootingRequest(Rotation2d target) {
+    shootingRequest = target;
+  }
+
+  public void setShootingRequestActive(boolean isActive) {
+    shootingRequestActive = isActive;
+  }
+
+  public boolean getShootingRequestActive() {
+    return shootingRequestActive;
+  }
+
+  public Rotation2d getShootingRequest() {
+    return shootingRequest;
+  }
+
   /**
    * Drive the robot given a chassis field oriented velocity.
    *
@@ -240,7 +258,7 @@ public class SwerveSubsystem extends SubsystemBase {
    * @param initialHolonomicPose The pose to set the odometry to
    */
   public void resetOdometry(Pose2d initialHolonomicPose) {
-    swerveDrive.setGyro(new Rotation3d(0,0,initialHolonomicPose.getRotation().getRadians()));
+    swerveDrive.setGyro(new Rotation3d(0, 0, initialHolonomicPose.getRotation().getRadians()));
     swerveDrive.resetOdometry(initialHolonomicPose);
   }
 
@@ -260,7 +278,9 @@ public class SwerveSubsystem extends SubsystemBase {
    * @param chassisSpeeds Chassis Speeds to set.
    */
   public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) {
+
     swerveDrive.setChassisSpeeds(chassisSpeeds);
+    
   }
 
   /**

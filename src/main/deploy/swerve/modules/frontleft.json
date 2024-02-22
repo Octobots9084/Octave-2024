@@ -2,7 +2,7 @@
   "drive": {
     "type": "talonfx",
     "id": 5,
-    "canbus": null
+    "canbus": "KrakensBus"
   },
   "angle": {
     "type": "sparkmax",
@@ -16,11 +16,11 @@
   },
   "absoluteEncoderInverted": true,
   "inverted": {
-    "drive": true,
+    "drive": false,
     "angle": true
   },
   "location": {
-    "front": 9.875,
-    "left": 9.875
+    "front": 10.75,
+    "left": 10.75
   }
 }

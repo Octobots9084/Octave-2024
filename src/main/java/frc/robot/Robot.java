@@ -4,15 +4,27 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.IntakeTrack;
+import frc.robot.subsystems.ShooterElevator;
+import frc.robot.subsystems.ShooterFlywheel;
+import frc.robot.subsystems.ShooterPivot;
+
+import frc.robot.commands.ButtonConfig;
+import frc.robot.commands.ControlMap;
 
 import java.io.File;
 import java.io.IOException;
+
+import com.revrobotics.SparkAbsoluteEncoder.Type;
+
 import swervelib.parser.SwerveParser;
 
 /**
@@ -50,6 +62,7 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
 
+    new ButtonConfig().initTeleop();
     // Create a timer to disable motor brake a few seconds after disable. This will
     // let the robot stop
     // immediately when disabled, but then also let it be pushed more
@@ -76,6 +89,8 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("thng", ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
+    SmartDashboard.putNumber("thng2", ShooterFlywheel.getInstance().getRightFlywheelSpeed());
   }
 
   /**
@@ -83,7 +98,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    m_robotContainer.setMotorBrake(true);
     disabledTimer.reset();
     disabledTimer.start();
   }
@@ -91,7 +105,6 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     if (disabledTimer.hasElapsed(Constants.Drivebase.WHEEL_LOCK_TIME)) {
-      m_robotContainer.setMotorBrake(false);
       disabledTimer.stop();
     }
   }
@@ -102,7 +115,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_robotContainer.setMotorBrake(true);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -128,7 +140,6 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     m_robotContainer.setDriveMode();
-    m_robotContainer.setMotorBrake(true);
   }
 
   /**
@@ -136,6 +147,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+
+    // ShooterFlywheel.getInstance().increaseFlywheelSpeed(MathUtil.applyDeadband(5*ControlMap.FLYWHEEL_JOYSTICK.getY(),
+    // 0.05));
+  }
+
+  @Override
+  public void teleopExit() {
   }
 
   @Override

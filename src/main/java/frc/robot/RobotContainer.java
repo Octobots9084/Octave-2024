@@ -4,19 +4,47 @@
 
 package frc.robot;
 
+import edu.wpi.first.hal.SimBoolean;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.arm.ShooterElevatorPosInstant;
+import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
+import frc.robot.commands.arm.ShooterPivotPosInstant;
+import frc.robot.commands.arm.ShooterTrackSpeedInstant;
+import frc.robot.commands.climb.ClimbManual;
+import frc.robot.commands.complex.Collect;
+import frc.robot.commands.complex.CollectAuto;
+import frc.robot.commands.complex.Driveby;
+import frc.robot.commands.complex.DrivebyAuto;
+import frc.robot.commands.complex.Dunk;
+import frc.robot.commands.complex.Panic;
+import frc.robot.commands.complex.PrepAmp;
+import frc.robot.commands.complex.PrepClimb;
+import frc.robot.commands.complex.PrepSpeaker;
+import frc.robot.commands.complex.SimpleClimb;
+import frc.robot.commands.complex.SpeakerAuto;
+import frc.robot.commands.complex.TheBigYeet;
+import frc.robot.commands.complex.Undunk;
+import frc.robot.commands.intake.IntakeRollerSpeedInstant;
+import frc.robot.commands.intake.IntakeTrackSpeedInstant;
 import frc.robot.commands.swervedrive.PathfindingTest;
 import frc.robot.commands.swervedrive.auto.TestingPaths;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
+import frc.robot.constants.ArmPositions;
+import frc.robot.constants.IntakeSpeeds;
+import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.IntakeTrack;
+import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
 import swervelib.imu.NavXSwerve;
@@ -25,6 +53,7 @@ import java.io.File;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -40,8 +69,10 @@ public class RobotContainer {
     // Replace with CommandPS4Controller or CommandJoystick if needed
     CommandJoystick driverLeft = new CommandJoystick(Constants.OperatorConstants.DRIVER_LEFT);
     CommandJoystick driverRight = new CommandJoystick(Constants.OperatorConstants.DRIVER_RIGHT);
-
-    // CommandJoystick driverController = new
+    CommandJoystick driverButtons = new CommandJoystick(Constants.OperatorConstants.DRIVER_BUTTONS);
+    CommandJoystick coDriverLeft = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_LEFT);
+    CommandJoystick coDriverRight = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_RIGHT);
+    CommandJoystick coDriverButtons = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_BUTTONS);
 
     private final VisionEstimation visionEstimation = new VisionEstimation();
 
@@ -52,34 +83,7 @@ public class RobotContainer {
      */
     public RobotContainer() {
         // Configure the trigger bindings
-        configureBindings();
-        // AbsoluteDrive closedAbsoluteDrive = new
-        // AbsoluteDrive(SwerveSubsystem.getInstance(),
-        // // Applies deadbands and inverts controls because joysticks
-        // // are back-right positive while robot
-        // // controls are front-left positive
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-        // OperatorConstants.LEFT_Y_DEADBAND),
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-        // OperatorConstants.LEFT_X_DEADBAND),
-        // () -> -driverXbox.getRightX(),
-        // () -> -driverXbox.getRightY());
 
-        // AbsoluteFieldDrive closedFieldAbsoluteDrive = new
-        // AbsoluteFieldDrive(SwerveSubsystem.getInstance(),
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-        // OperatorConstants.LEFT_Y_DEADBAND),
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-        // OperatorConstants.LEFT_X_DEADBAND),
-        // () -> driverXbox.getRawAxis(2));
-
-        // TeleopDrive simClosedFieldRel = new
-        // TeleopDrive(SwerveSubsystem.getInstance(),
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftY(),
-        // OperatorConstants.LEFT_Y_DEADBAND),
-        // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
-        // OperatorConstants.LEFT_X_DEADBAND),
-        // () -> driverXbox.getRawAxis(2), () -> true);
         TeleopDrive closedFieldRel = new TeleopDrive(
                 SwerveSubsystem.getInstance(),
                 () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(1),
@@ -91,8 +95,14 @@ public class RobotContainer {
 
         SwerveSubsystem.getInstance().setDefaultCommand(
                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
+        NamedCommands.registerCommand("SpeakerAuto", new SpeakerAuto());
+        NamedCommands.registerCommand("Collect",
+                new CollectAuto());
+        NamedCommands.registerCommand("Shoot", new DrivebyAuto());
+
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
+
     }
 
     /**
@@ -108,33 +118,18 @@ public class RobotContainer {
      * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick
      * Flight joysticks}.
      */
-    private void configureBindings() {
-        // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-        driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
-        driverLeft.button(2).onTrue((new InstantCommand(() -> {
-            SmartDashboard.putNumber("button press", 0);
-            // Not safe type casting, could break but should be obvious
-            NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
-            AHRS gyro = (AHRS) navx.getIMU();
-            gyro.reset();
-
-        })));
-
-        driverRight.button(1).onTrue(PathfindingTest.getTest());
+    public Command getAutonomousCommand() {
+        return autoChooser.getSelected();
     }
 
     public void setDriveMode() {
         // SwerveSubsystem.getInstance().setDefaultCommand();
     }
 
-    public Command getAutonomousCommand() {
-        return autoChooser.getSelected();
-    }
-
-    public void setMotorBrake(boolean brake) {
-        SwerveSubsystem.getInstance().setMotorBrake(brake);
-    }
+    // public Command getAutonomousCommand() {
+    // return autoChooser.getSelected();
+    // }
 
     public VisionEstimation getVisionEstimation() {
         return visionEstimation;
