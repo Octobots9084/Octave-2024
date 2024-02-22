@@ -22,7 +22,8 @@ public class ReverseKinematics {
         private static double subwooferXPos = 0;
         private static double subwooferYPos = 5.5;
         private static double encoderOffset = 0.597;
-        private static double movementMultiplier = 5;
+        private static double movementMultiplierX = 5;
+        private static double movementMultiplierY = 5;
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
@@ -59,7 +60,7 @@ public class ReverseKinematics {
         // for internal use only
         private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
                         double timeInAir) {
-                double xVel = pos.getX() / timeInAir + speed.vxMetersPerSecond * movementMultiplier;
+                double xVel = pos.getX() / timeInAir - speed.vxMetersPerSecond * movementMultiplierX;
                 SmartDashboard.putNumber("xVel", xVel);
                 return xVel;
         }
@@ -70,7 +71,7 @@ public class ReverseKinematics {
         private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
                         double timeInAir) {
                 double yVel = pos.getY() / timeInAir
-                                - speed.vyMetersPerSecond * movementMultiplier;
+                                - speed.vyMetersPerSecond * movementMultiplierY;
                 SmartDashboard.putNumber("yVel", yVel);
                 return yVel;
         }

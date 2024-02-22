@@ -52,7 +52,7 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
-		public static PIDController targetAngleController = new PIDController(20, 0, 0);
+		public static PIDController targetAngleController = new PIDController(3.5, 0, 0);
 	}
 
 	public static class OperatorConstants {
@@ -98,11 +98,11 @@ public final class Constants {
 				new Translation3d(-ROBOT_TO_CAM_X, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
 				new Rotation3d(Math.toRadians(0), Math.toRadians(-11), Math.toRadians(180)));
 
-		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
+		public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
 				new Translation3d(-ROBOT_TO_CAM_X, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
 				new Rotation3d(Math.toRadians(0), Math.toRadians(-13), Math.toRadians(180)));
 
-		public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
+		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
 				new Translation3d(-.3175, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
 				new Rotation3d(0, Math.toRadians(-21.5), Math.toRadians(180)));
 

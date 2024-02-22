@@ -43,146 +43,148 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.telemetry.CountPerPeriodTelemetry;
 
 public class VisionEstimation extends SubsystemBase {
-    private final SwerveSubsystem swerveSubsystem;
+        private final SwerveSubsystem swerveSubsystem;
 
-    public Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.9,
-            0.9,
-            0.9);
+        public Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.9,
+                        0.9,
+                        0.9);
 
-    private final Vision frontRightEstimator = new Vision(new PhotonCamera("Inky"),
-            VisionConstants.ROBOT_TO_INKY);
-    // private final Vision frontLeftEstimator = new Vision(new
-    // PhotonCamera("Blinky"),
-    // VisionConstants.ROBOT_TO_BLINKY);
-    // private final Vision backRightEstimator = new Vision(new
-    // PhotonCamera("Pinky"),
-    // VisionConstants.ROBOT_TO_PINKY);
-    // private final Vision backLeftEstimator = new Vision(new
-    // PhotonCamera("Clyde"),
-    // VisionConstants.ROBOT_TO_CLYDE);
+        private final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"),
+                        VisionConstants.ROBOT_TO_INKY);
+        // private final Vision frontLeftEstimator = new Vision(new
+        // PhotonCamera("Blinky"),
+        // VisionConstants.ROBOT_TO_BLINKY);
+        private final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"),
+                        VisionConstants.ROBOT_TO_PINKY);
+        // private final Vision backLeftEstimator = new Vision(new
+        // PhotonCamera("Clyde"),
+        // VisionConstants.ROBOT_TO_CLYDE);
 
-    private final Notifier allNotifier = new Notifier(() -> {
-        frontRightEstimator.run();
-        // frontLeftEstimator.run();
-        // backRightEstimator.run();
-        // backLeftEstimator.run();
-    });
+        private final Notifier allNotifier = new Notifier(() -> {
+                backRightEstimator.run();
+                // frontLeftEstimator.run();
+                // backRightEstimator.run();
+                backLeftEstimator.run();
+        });
 
-    private OriginPosition originPosition = kBlueAllianceWallRightSide;
+        private OriginPosition originPosition = kBlueAllianceWallRightSide;
 
-    // Telemetry
-    private final CountPerPeriodTelemetry runCountTelemetry;
-    private final CountPerPeriodTelemetry getAtomicCountInkyTelemetry;
-    // private final CountPerPeriodTelemetry getAtomicCountBlinkyTelemetry;
-    // private final CountPerPeriodTelemetry getAtomicCountPinkyTelemetry;
-    // private final CountPerPeriodTelemetry getAtomicCountClydeTelemetry;
+        // Telemetry
+        private final CountPerPeriodTelemetry runCountTelemetry;
+        private final CountPerPeriodTelemetry getAtomicCountInkyTelemetry;
+        // private final CountPerPeriodTelemetry getAtomicCountBlinkyTelemetry;
+        private final CountPerPeriodTelemetry getAtomicCountPinkyTelemetry;
+        // private final CountPerPeriodTelemetry getAtomicCountClydeTelemetry;
 
-    public VisionEstimation() {
-        this.swerveSubsystem = SwerveSubsystem.getInstance();
+        public VisionEstimation() {
+                this.swerveSubsystem = SwerveSubsystem.getInstance();
 
-        allNotifier.setName("runAll");
-        allNotifier.startPeriodic(0.02);
+                allNotifier.setName("runAll");
+                allNotifier.startPeriodic(0.02);
 
-        // Initialize telemetry
-        runCountTelemetry = new CountPerPeriodTelemetry("VisionEstimation - runs per s", 1);
-        getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation - Inky - get atomic count/s", 1);
-        // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation
-        // - Blinky - get atomic count/s", 1);
-        // getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation
-        // - Pinky - get atomic count per s",
-        // 1);
-        // getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry("VisionEstimation
-        // - Clyde - get atomic count per s",
-        // 1);
-    }
-
-    @Override
-    public void periodic() {
-        if (VisionConstants.USE_VISION) {
-            // Update "run count" telemetry
-            runCountTelemetry.incCount(1);
-
-            estimatorChecker(frontRightEstimator, getAtomicCountInkyTelemetry);
-            // estimatorChecker(frontLeftEstimator, getAtomicCountBlinkyTelemetry);
-            // estimatorChecker(backRightEstimator, getAtomicCountPinkyTelemetry);
-            // estimatorChecker(backLeftEstimator, getAtomicCountClydeTelemetry);
-        } else {
-            allNotifier.close();
+                // Initialize telemetry
+                runCountTelemetry = new CountPerPeriodTelemetry("VisionEstimation - runs per s", 1);
+                getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry(
+                                "VisionEstimation - Inky - get atomic count/s", 1);
+                // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation
+                // - Blinky - get atomic count/s", 1);
+                getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry(
+                                "VisionEstimation - Pinky - get atomic count per s",
+                                1);
+                // getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry("VisionEstimation
+                // - Clyde - get atomic count per s",
+                // 1);
         }
 
-        // Run telemetry
-        runCountTelemetry.periodic();
-        getAtomicCountInkyTelemetry.periodic();
-        // getAtomicCountBlinkyTelemetry.periodic();
-        // getAtomicCountPinkyTelemetry.periodic();
-        // getAtomicCountClydeTelemetry.periodic();
-    }
+        @Override
+        public void periodic() {
+                if (VisionConstants.USE_VISION) {
+                        // Update "run count" telemetry
+                        runCountTelemetry.incCount(1);
 
-    /**
-     * Transforms a pose to the opposite alliance's coordinate system. (0,0) is
-     * always on the right corner of your
-     * alliance wall, the field elements are at different coordinates
-     * for each alliance.
-     * 
-     * @param poseToFlip pose to transform to the other alliance
-     * @return pose relative to the other alliance's coordinate system
-     */
-    private Pose2d flipAlliance(Pose2d poseToFlip) {
-        return poseToFlip.relativeTo(new Pose2d(
-                new Translation2d(FieldConstants.LENGTH, FieldConstants.WIDTH),
-                new Rotation2d(Math.PI)));
-    }
+                        estimatorChecker(backRightEstimator, getAtomicCountInkyTelemetry);
+                        // estimatorChecker(frontLeftEstimator, getAtomicCountBlinkyTelemetry);
+                        // estimatorChecker(backRightEstimator, getAtomicCountPinkyTelemetry);
+                        estimatorChecker(backLeftEstimator, getAtomicCountPinkyTelemetry);
+                } else {
+                        allNotifier.close();
+                }
 
-    private Matrix<N3, N1> confidenceCalculator(EstimatedRobotPose estimation) {
-        double smallestDistance = Double.POSITIVE_INFINITY;
-        for (var target : estimation.targetsUsed) {
-            var target3D = target.getBestCameraToTarget();
-            var distance = Math
-                    .sqrt(Math.pow(target3D.getX(), 2) + Math.pow(target3D.getY(), 2) + Math.pow(target3D.getZ(), 2));
-            if (distance < smallestDistance)
-                smallestDistance = distance;
+                // Run telemetry
+                runCountTelemetry.periodic();
+                getAtomicCountInkyTelemetry.periodic();
+                // getAtomicCountBlinkyTelemetry.periodic();
+                getAtomicCountPinkyTelemetry.periodic();
+                // getAtomicCountClydeTelemetry.periodic();
         }
 
-        var maxPoseAmbiguity = Math.max(
-                1,
-                (estimation.targetsUsed.get(0).getPoseAmbiguity()
-                        + VisionConstants.POSE_AMBIGUITY_SHIFTER)
-                        * VisionConstants.POSE_AMBIGUITY_MULTIPLIER);
-
-        double poseAmbiguityFactor = estimation.targetsUsed.size() != 1
-                ? 1
-                : maxPoseAmbiguity;
-
-        double confidenceMultiplier = Math.max(
-                1,
-                (Math.max(
-                        1,
-                        Math.max(0, smallestDistance - VisionConstants.NOISY_DISTANCE_METERS)
-                                * VisionConstants.DISTANCE_WEIGHT)
-                        * poseAmbiguityFactor)
-                        / (1
-                                + ((estimation.targetsUsed.size() - 1) * VisionConstants.TAG_PRESENCE_WEIGHT)));
-
-        return visionMeasurementStdDevs.times(confidenceMultiplier);
-    }
-
-    public void estimatorChecker(Vision estimator, CountPerPeriodTelemetry getAtomicCountTelemetry) {
-        var cameraPose = estimator.grabLatestEstimatedPose();
-
-        if (cameraPose != null) {
-            SmartDashboard.putString("camerapose", cameraPose.estimatedPose.toString());
-            // New pose from vision
-            var pose2d = cameraPose.estimatedPose.toPose2d();
-            if (originPosition == kRedAllianceWallRightSide) {
-                pose2d = flipAlliance(pose2d);
-            }
-
-            swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds,
-                    confidenceCalculator(cameraPose));
-
-            // Update "get atomic count" telemetry
-            getAtomicCountTelemetry.incCount(1);
+        /**
+         * Transforms a pose to the opposite alliance's coordinate system. (0,0) is
+         * always on the right corner of your
+         * alliance wall, the field elements are at different coordinates
+         * for each alliance.
+         * 
+         * @param poseToFlip pose to transform to the other alliance
+         * @return pose relative to the other alliance's coordinate system
+         */
+        private Pose2d flipAlliance(Pose2d poseToFlip) {
+                return poseToFlip.relativeTo(new Pose2d(
+                                new Translation2d(FieldConstants.LENGTH, FieldConstants.WIDTH),
+                                new Rotation2d(Math.PI)));
         }
-    }
+
+        private Matrix<N3, N1> confidenceCalculator(EstimatedRobotPose estimation) {
+                double smallestDistance = Double.POSITIVE_INFINITY;
+                for (var target : estimation.targetsUsed) {
+                        var target3D = target.getBestCameraToTarget();
+                        var distance = Math
+                                        .sqrt(Math.pow(target3D.getX(), 2) + Math.pow(target3D.getY(), 2)
+                                                        + Math.pow(target3D.getZ(), 2));
+                        if (distance < smallestDistance)
+                                smallestDistance = distance;
+                }
+
+                var maxPoseAmbiguity = Math.max(
+                                1,
+                                (estimation.targetsUsed.get(0).getPoseAmbiguity()
+                                                + VisionConstants.POSE_AMBIGUITY_SHIFTER)
+                                                * VisionConstants.POSE_AMBIGUITY_MULTIPLIER);
+
+                double poseAmbiguityFactor = estimation.targetsUsed.size() != 1
+                                ? 1
+                                : maxPoseAmbiguity;
+
+                double confidenceMultiplier = Math.max(
+                                1,
+                                (Math.max(
+                                                1,
+                                                Math.max(0, smallestDistance - VisionConstants.NOISY_DISTANCE_METERS)
+                                                                * VisionConstants.DISTANCE_WEIGHT)
+                                                * poseAmbiguityFactor)
+                                                / (1
+                                                                + ((estimation.targetsUsed.size() - 1)
+                                                                                * VisionConstants.TAG_PRESENCE_WEIGHT)));
+
+                return visionMeasurementStdDevs.times(confidenceMultiplier);
+        }
+
+        public void estimatorChecker(Vision estimator, CountPerPeriodTelemetry getAtomicCountTelemetry) {
+                var cameraPose = estimator.grabLatestEstimatedPose();
+
+                if (cameraPose != null) {
+                        SmartDashboard.putString("camerapose", cameraPose.estimatedPose.toString());
+                        // New pose from vision
+                        var pose2d = cameraPose.estimatedPose.toPose2d();
+                        if (originPosition == kRedAllianceWallRightSide) {
+                                pose2d = flipAlliance(pose2d);
+                        }
+
+                        swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds,
+                                        confidenceCalculator(cameraPose));
+
+                        // Update "get atomic count" telemetry
+                        getAtomicCountTelemetry.incCount(1);
+                }
+        }
 
 }

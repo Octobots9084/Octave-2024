@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -21,13 +22,16 @@ import frc.robot.commands.arm.ShooterPivotPosInstant;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.complex.Collect;
+import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.Driveby;
+import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.Dunk;
 import frc.robot.commands.complex.Panic;
 import frc.robot.commands.complex.PrepAmp;
 import frc.robot.commands.complex.PrepClimb;
 import frc.robot.commands.complex.PrepSpeaker;
 import frc.robot.commands.complex.SimpleClimb;
+import frc.robot.commands.complex.SpeakerAuto;
 import frc.robot.commands.complex.TheBigYeet;
 import frc.robot.commands.complex.Undunk;
 import frc.robot.commands.intake.IntakeRollerSpeedInstant;
@@ -49,6 +53,7 @@ import java.io.File;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -90,8 +95,14 @@ public class RobotContainer {
 
         SwerveSubsystem.getInstance().setDefaultCommand(
                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
+        NamedCommands.registerCommand("SpeakerAuto", new SpeakerAuto());
+        NamedCommands.registerCommand("Collect",
+                new CollectAuto());
+        NamedCommands.registerCommand("Shoot", new DrivebyAuto());
+
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
+
     }
 
     /**
@@ -107,6 +118,10 @@ public class RobotContainer {
      * controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick
      * Flight joysticks}.
      */
+
+    public Command getAutonomousCommand() {
+        return autoChooser.getSelected();
+    }
 
     public void setDriveMode() {
         // SwerveSubsystem.getInstance().setDefaultCommand();

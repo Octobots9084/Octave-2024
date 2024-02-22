@@ -23,17 +23,12 @@ import frc.robot.subsystems.IntakeTrack;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 
-public class Collect extends SequentialCommandGroup {
-    public Collect() {
+public class CollectAuto extends SequentialCommandGroup {
+    public CollectAuto() {
         BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
-        if (shooterSensorTrue.getAsBoolean()) {
-            return;
-        }
+
         addCommands(
-                new InstantCommand(() -> {
-                    ShooterPivot.getInstance().notSoFastEggman = true;
-                }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),
                 new ParallelCommandGroup(new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
@@ -55,9 +50,6 @@ public class Collect extends SequentialCommandGroup {
                 new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
 
                 new WaitUntilCommand(shooterSensorTrue),
-                new InstantCommand(() -> {
-                    ShooterPivot.getInstance().notSoFastEggman = false;
-                }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
                 new JiggleNote(2.5));

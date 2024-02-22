@@ -2,6 +2,7 @@ package frc.robot.commands.complex;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -18,7 +19,7 @@ import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.MathUtil;
 
-public class Driveby extends Command {
+public class DrivebyAuto extends Command {
     ShooterPivot pivot;
     ShooterFlywheel flywheel;
     SwerveSubsystem swerveSubsystem;
@@ -30,7 +31,7 @@ public class Driveby extends Command {
     double targetFlywheel;
     Rotation2d targetTurn;
 
-    public Driveby() {
+    public DrivebyAuto() {
         pivot = ShooterPivot.getInstance();
         flywheel = ShooterFlywheel.getInstance();
         swerveSubsystem = SwerveSubsystem.getInstance();
@@ -70,11 +71,9 @@ public class Driveby extends Command {
         updateTargets();
         SmartDashboard.putString("realPose2d", realPose2d.toString());
 
-        if (!pivot.notSoFastEggman) {
-            pivot.setPosition(targetPivot);
-        }
+        pivot.setPosition(targetPivot);
         flywheel.setFlyWheelSpeedMeters(targetFlywheel);
-        swerveSubsystem.setShootingRequest(targetTurn);
+        swerveSubsystem.drive(new Translation2d(), swerveSubsystem.targetAngleController.calculate(swerveSubsystem.getHeading().getRadians(), targetTurn.getRadians()), true);
     }
 
     @Override
@@ -92,7 +91,7 @@ public class Driveby extends Command {
                 && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.02)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.02)) {
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.01)) {
             return true;
         } else {
             return false;
