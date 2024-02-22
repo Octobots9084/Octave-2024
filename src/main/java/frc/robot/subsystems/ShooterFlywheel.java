@@ -95,6 +95,12 @@ public class ShooterFlywheel extends SubsystemBase {
         motorOne.getPIDController().setReference(lastSpeed, ControlType.kVelocity);
     }
 
+    public void setFlywheelActive(boolean setFlywheelActive) {
+        if (setFlywheelActive) {
+            motorOne.getPIDController().setReference(0, ControlType.kVoltage);
+        }
+    }
+
     public void setFlywheelSpeed(ShooterSpeeds shooterSpeeds) {
         setFlywheelSpeed(shooterSpeeds.flywheels);
     }
