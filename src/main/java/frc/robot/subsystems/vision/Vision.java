@@ -23,13 +23,15 @@ public class Vision implements Runnable {
   private final PhotonPoseEstimator photonPoseEstimator;
   private final PhotonCamera photonCamera;
   private final AtomicReference<EstimatedRobotPose> atomicEstimatedRobotPose = new AtomicReference<EstimatedRobotPose>();
+  public final String cameraName;
 
   // Telemetry
   private final CountPerPeriodTelemetry runCountTelemetry;
   private final CountPerPeriodTelemetry setAtomicCountTelemetry;
 
-  public Vision(PhotonCamera cameraName, Transform3d robotToCamera) {
-    this.photonCamera = cameraName;
+  public Vision(PhotonCamera photonCamera, Transform3d robotToCamera) {
+    this.photonCamera = photonCamera;
+    cameraName = photonCamera.getName();
     PhotonPoseEstimator photonPoseEstimator = null;
 
     try {
@@ -48,10 +50,8 @@ public class Vision implements Runnable {
     this.photonPoseEstimator = photonPoseEstimator;
 
     // Initialize telemetry
-    runCountTelemetry = new CountPerPeriodTelemetry("Vision/" + cameraName.getName() + " - runs per s", 1);
-    setAtomicCountTelemetry = new CountPerPeriodTelemetry(
-        "Vision/" + cameraName.getName() + " - meas per s push",
-        1);
+    runCountTelemetry = new CountPerPeriodTelemetry("Vision/" + cameraName + " - runs per s", 1);
+    setAtomicCountTelemetry = new CountPerPeriodTelemetry("Vision/" + cameraName + " - meas per s push", 1);
   }
 
   @Override
@@ -64,7 +64,7 @@ public class Vision implements Runnable {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult(); //Gets the latest camera results
 
-        SwerveSubsystem.getInstance().getSwerveDrive().field.getObject("vision/" + photonCamera.getName()).setPose(
+        SwerveSubsystem.getInstance().getSwerveDrive().field.getObject("vision/" + cameraName).setPose(
             photonResults.getBestTarget().getBestCameraToTarget().getX(),
             photonResults.getBestTarget().getBestCameraToTarget().getY(),
             photonResults.getBestTarget().getBestCameraToTarget().getRotation().toRotation2d());

@@ -185,7 +185,6 @@ public class VisionEstimation extends SubsystemBase {
                 var cameraPose = estimator.grabLatestEstimatedPose();
 
                 if (cameraPose != null) {
-                        SmartDashboard.putString("camerapose", cameraPose.estimatedPose.toString());
                         // New pose from vision
                         var pose2d = cameraPose.estimatedPose.toPose2d();
                         if (originPosition == kRedAllianceWallRightSide) {
@@ -198,5 +197,8 @@ public class VisionEstimation extends SubsystemBase {
                         // Update "get atomic count" telemetry
                         getAtomicCountTelemetry.incCount(1);
                 }
+
+                final String smartDashboardCamPoseKey = "Vision/" + estimator.cameraName + " - last pose";
+                SmartDashboard.putString(smartDashboardCamPoseKey, cameraPose != null ? cameraPose.estimatedPose.toString() : "no pose");
         }
 }
