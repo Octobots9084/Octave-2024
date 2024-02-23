@@ -32,7 +32,7 @@ public final class Constants {
 	public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
 
 	public static final class Arm {
-		public static final double ShooterElevatorTolerance = 0.05;
+		public static final double ShooterElevatorTolerance = 0.1;
 		public static final double ShooterFlywheelTolerance = 10;
 		public static final double ShooterPivotTolerance = 0.05;
 	}
@@ -80,7 +80,7 @@ public final class Constants {
 		private static double ROBOT_TO_CAM_Y = 0.273;
 		private static double ROBOT_TO_CAM_Z = 0.3937;
 
-		public static boolean USE_VISION = true;
+		public static boolean USE_VISION = false;
 
 		/*
 		 * X positive is forward from the front of the robot

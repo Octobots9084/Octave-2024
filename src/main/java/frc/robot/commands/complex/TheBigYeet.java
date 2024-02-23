@@ -15,12 +15,10 @@ public class TheBigYeet extends SequentialCommandGroup {
     public TheBigYeet() {
         addCommands(
                 new ShooterTrackSpeedInstant(ShooterSpeeds.AMP),
-                new WaitCommand(1),
-                new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
-                new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
-                new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
+                new WaitCommand(0.5),
                 new InstantCommand(() -> {
                     SwerveSubsystem.getInstance().targetAngleEnabled = false;
-                }));
+                }),
+                new Collect());
     }
 }

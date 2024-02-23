@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants;
@@ -39,10 +40,10 @@ public class ButtonConfig {
 
     public void initTeleop() {
         driverLeft.button(1).onTrue(new SequentialCommandGroup(new PrepAmp(), new ToggleTurnToAmp()));
-        driverLeft.button(2).onTrue(new PrepSpeaker());
+        driverLeft.button(2).onTrue(new Driveby());
 
-        driverRight.button(1).whileTrue(new TheBigYeet());
-        driverRight.button(2).onTrue(new Driveby());
+        driverRight.button(1).onTrue(new TheBigYeet());
+        driverRight.button(2).onTrue(new PrepSpeaker());
 
         driverButtons.button(1).onTrue(new ToggleTurnToSpeaker());
         driverButtons.button(2).onTrue(new ToggleTurnTo180());
