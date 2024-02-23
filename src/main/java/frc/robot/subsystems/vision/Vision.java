@@ -1,7 +1,5 @@
 package frc.robot.subsystems.vision;
 
-// import static ROBOT_TO_BLINKY
-
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.photonvision.EstimatedRobotPose;
@@ -66,17 +64,12 @@ public class Vision implements Runnable {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult(); //Gets the latest camera results
 
-        // var test = VisionConstants.class.getDeclaredField("ROBOT_TO_" + photonCamera.getName().toUpperCase());
-        // test.setAccessible(true);
-        // Transform3d test2 = (Transform3d) test.get(VisionConstants.class.getClass());
-        //SmartDashboard.putString("Test", test2.toString());
         SwerveSubsystem.getInstance().getSwerveDrive().field.getObject("vision/" + photonCamera.getName()).setPose(
             photonResults.getBestTarget().getBestCameraToTarget().getX(),
             photonResults.getBestTarget().getBestCameraToTarget().getY(),
             photonResults.getBestTarget().getBestCameraToTarget().getRotation().toRotation2d());
 
-        if (photonResults
-            .hasTargets()) {
+        if (photonResults.hasTargets()) {
           //Updates the pose estimator
           photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
             var estimatedPose = estimatedRobotPose.estimatedPose;

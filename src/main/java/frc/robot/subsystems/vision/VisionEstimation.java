@@ -41,6 +41,7 @@ import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.telemetry.CountPerPeriodTelemetry;
+import frc.robot.util.telemetry.MeanPerPeriodTelemetry;
 
 public class VisionEstimation extends SubsystemBase {
         private final SwerveSubsystem swerveSubsystem;
@@ -71,10 +72,16 @@ public class VisionEstimation extends SubsystemBase {
 
         // Telemetry
         private final CountPerPeriodTelemetry runCountTelemetry;
+
         private final CountPerPeriodTelemetry getAtomicCountInkyTelemetry;
         // private final CountPerPeriodTelemetry getAtomicCountBlinkyTelemetry;
         private final CountPerPeriodTelemetry getAtomicCountPinkyTelemetry;
         // private final CountPerPeriodTelemetry getAtomicCountClydeTelemetry;
+
+        private final MeanPerPeriodTelemetry confidenceInkyTelemetry;
+        // private final MeanPerPeriodTelemetry confidenceBlinkyTelemetry;
+        private final MeanPerPeriodTelemetry confidencePinkyTelemetry;
+        //private final MeanPerPeriodTelemetry confidenceClydeTelemetry;
 
         public VisionEstimation() {
                 this.swerveSubsystem = SwerveSubsystem.getInstance();
@@ -84,10 +91,17 @@ public class VisionEstimation extends SubsystemBase {
 
                 // Initialize telemetry
                 runCountTelemetry = new CountPerPeriodTelemetry("Vision/Estimation - runs per s", 1);
+
                 getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry("Vision/Inky - meas per s pull", 1);
                 // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry("Vision/Blinky - meas per s pull", 1);
                 getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry("Vision/Pinky - meas per s pull", 1);
                 // getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry("Vision/Clyde - meas per s pull", 1);
+
+
+                confidenceInkyTelemetry = new MeanPerPeriodTelemetry("Vision/Inky - confidence mult", 0.5, -999.99);
+                // confidenceBlinkyTelemetry = new MeanPerPeriodTelemetry("Vision/Blinky - confidence mult", 0.5, -999.99);
+                confidencePinkyTelemetry = new MeanPerPeriodTelemetry("Vision/Pinky - confidence mult", 0.5, -999.99);
+                // confidenceClydeTelemetry = new MeanPerPeriodTelemetry("Vision/Clyde - confidence mult", 0.5, -999.99);
         }
 
         @Override
@@ -96,10 +110,10 @@ public class VisionEstimation extends SubsystemBase {
                         // Update "run count" telemetry
                         runCountTelemetry.incCount(1);
 
-                        estimatorChecker(backRightEstimator, getAtomicCountInkyTelemetry);
-                        // estimatorChecker(frontLeftEstimator, getAtomicCountBlinkyTelemetry);
-                        // estimatorChecker(backRightEstimator, getAtomicCountPinkyTelemetry);
-                        estimatorChecker(backLeftEstimator, getAtomicCountPinkyTelemetry);
+                        estimatorChecker(backRightEstimator, getAtomicCountInkyTelemetry, confidenceInkyTelemetry);
+                        // estimatorChecker(frontLeftEstimator, getAtomicCountBlinkyTelemetry, confidenceBlinkyTelemetry);
+                        estimatorChecker(backRightEstimator, getAtomicCountPinkyTelemetry, confidencePinkyTelemetry);
+                        // estimatorChecker(backLeftEstimator, getAtomicCountPinkyTelemetry, confidenceClydeTelemetry);
                 } else {
                         allNotifier.close();
                 }
@@ -110,6 +124,10 @@ public class VisionEstimation extends SubsystemBase {
                 // getAtomicCountBlinkyTelemetry.periodic();
                 getAtomicCountPinkyTelemetry.periodic();
                 // getAtomicCountClydeTelemetry.periodic();
+                 confidenceInkyTelemetry.periodic();
+                // confidenceBlinkyTelemetry.periodic();
+                confidencePinkyTelemetry.periodic();
+                // confidenceClydeTelemetry.periodic();
         }
 
         /**
@@ -127,7 +145,7 @@ public class VisionEstimation extends SubsystemBase {
                                 new Rotation2d(Math.PI)));
         }
 
-        private Matrix<N3, N1> confidenceCalculator(EstimatedRobotPose estimation) {
+        private Matrix<N3, N1> confidenceCalculator(EstimatedRobotPose estimation, MeanPerPeriodTelemetry confidenceTelemetry) {
                 double smallestDistance = Double.POSITIVE_INFINITY;
                 for (var target : estimation.targetsUsed) {
                         var target3D = target.getBestCameraToTarget();
@@ -159,10 +177,11 @@ public class VisionEstimation extends SubsystemBase {
                                                                 + ((estimation.targetsUsed.size() - 1)
                                                                                 * VisionConstants.TAG_PRESENCE_WEIGHT)));
 
+                confidenceTelemetry.addNumber(confidenceMultiplier);
                 return visionMeasurementStdDevs.times(confidenceMultiplier);
         }
 
-        public void estimatorChecker(Vision estimator, CountPerPeriodTelemetry getAtomicCountTelemetry) {
+        public void estimatorChecker(Vision estimator, CountPerPeriodTelemetry getAtomicCountTelemetry, MeanPerPeriodTelemetry confidenceTelemetry) {
                 var cameraPose = estimator.grabLatestEstimatedPose();
 
                 if (cameraPose != null) {
@@ -173,12 +192,11 @@ public class VisionEstimation extends SubsystemBase {
                                 pose2d = flipAlliance(pose2d);
                         }
 
-                        swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds,
-                                        confidenceCalculator(cameraPose));
+                        final var confidence = confidenceCalculator(cameraPose, confidenceTelemetry);
+                        swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds, confidence);
 
                         // Update "get atomic count" telemetry
                         getAtomicCountTelemetry.incCount(1);
                 }
         }
-
 }
