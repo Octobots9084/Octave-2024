@@ -83,17 +83,11 @@ public class VisionEstimation extends SubsystemBase {
                 allNotifier.startPeriodic(0.02);
 
                 // Initialize telemetry
-                runCountTelemetry = new CountPerPeriodTelemetry("VisionEstimation - runs per s", 1);
-                getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry(
-                                "VisionEstimation - Inky - get atomic count/s", 1);
-                // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation
-                // - Blinky - get atomic count/s", 1);
-                getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry(
-                                "VisionEstimation - Pinky - get atomic count per s",
-                                1);
-                // getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry("VisionEstimation
-                // - Clyde - get atomic count per s",
-                // 1);
+                runCountTelemetry = new CountPerPeriodTelemetry("Vision/Estimation - runs per s", 1);
+                getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry("Vision/Inky - meas per s pull", 1);
+                // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry("Vision/Blinky - meas per s pull", 1);
+                getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry("Vision/Pinky - meas per s pull", 1);
+                // getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry("Vision/Clyde - meas per s pull", 1);
         }
 
         @Override

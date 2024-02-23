@@ -50,9 +50,9 @@ public class Vision implements Runnable {
     this.photonPoseEstimator = photonPoseEstimator;
 
     // Initialize telemetry
-    runCountTelemetry = new CountPerPeriodTelemetry("Vision - " + cameraName.getName() + " - runs per s", 1);
+    runCountTelemetry = new CountPerPeriodTelemetry("Vision/" + cameraName.getName() + " - runs per s", 1);
     setAtomicCountTelemetry = new CountPerPeriodTelemetry(
-        "Vision - " + cameraName.getName() + " - set atomic count per s",
+        "Vision/" + cameraName.getName() + " - meas per s push",
         1);
   }
 
