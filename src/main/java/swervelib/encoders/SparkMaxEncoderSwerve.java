@@ -7,7 +7,6 @@ import com.revrobotics.SparkAbsoluteEncoder.Type;
 import java.util.function.Supplier;
 import swervelib.motors.SwerveMotor;
 import swervelib.telemetry.Alert;
-import swervelib.telemetry.Alert.AlertType;
 
 /**
  * SparkMax absolute encoder, attached through the data port.

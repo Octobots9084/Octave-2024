@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.arm.JiggleNote;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
 import frc.robot.commands.arm.ShooterElevatorPosTolerance;
-import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
 import frc.robot.commands.arm.ShooterPivotPosInstant;
 import frc.robot.commands.arm.ShooterPivotPosTolerance;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
@@ -20,7 +19,6 @@ import frc.robot.constants.ArmPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.IntakeTrack;
-import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 
 public class CollectAuto extends SequentialCommandGroup {
