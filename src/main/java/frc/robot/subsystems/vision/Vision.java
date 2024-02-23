@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.telemetry.CountPerPeriodTelemetry;
+import frc.robot.util.telemetry.TelemUtils;
 
 /**
  * Runnable that gets AprilTag data from PhotonVision.
@@ -50,8 +51,8 @@ public class Vision implements Runnable {
     this.photonPoseEstimator = photonPoseEstimator;
 
     // Initialize telemetry
-    runCountTelemetry = new CountPerPeriodTelemetry("Vision/" + cameraName + " - runs per s", 1);
-    setAtomicCountTelemetry = new CountPerPeriodTelemetry("Vision/" + cameraName + " - meas per s push", 1);
+    runCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "runs per s"), 1);
+    setAtomicCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "meas per s push"), 1);
   }
 
   @Override

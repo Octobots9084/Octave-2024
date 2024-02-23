@@ -42,6 +42,7 @@ import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.telemetry.CountPerPeriodTelemetry;
 import frc.robot.util.telemetry.MeanPerPeriodTelemetry;
+import frc.robot.util.telemetry.TelemUtils;
 
 public class VisionEstimation extends SubsystemBase {
         private final SwerveSubsystem swerveSubsystem;
@@ -50,16 +51,10 @@ public class VisionEstimation extends SubsystemBase {
                         0.9,
                         0.9);
 
-        private final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"),
-                        VisionConstants.ROBOT_TO_INKY);
-        // private final Vision frontLeftEstimator = new Vision(new
-        // PhotonCamera("Blinky"),
-        // VisionConstants.ROBOT_TO_BLINKY);
-        private final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"),
-                        VisionConstants.ROBOT_TO_PINKY);
-        // private final Vision backLeftEstimator = new Vision(new
-        // PhotonCamera("Clyde"),
-        // VisionConstants.ROBOT_TO_CLYDE);
+        private final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"), VisionConstants.ROBOT_TO_INKY);
+        // private final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"), VisionConstants.ROBOT_TO_BLINKY);
+        private final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"), VisionConstants.ROBOT_TO_PINKY);
+        // private final Vision backLeftEstimator = new Vision(new PhotonCamera("Clyde"), VisionConstants.ROBOT_TO_CLYDE);
 
         private final Notifier allNotifier = new Notifier(() -> {
                 backRightEstimator.run();
@@ -90,18 +85,18 @@ public class VisionEstimation extends SubsystemBase {
                 allNotifier.startPeriodic(0.02);
 
                 // Initialize telemetry
-                runCountTelemetry = new CountPerPeriodTelemetry("Vision/Estimation - runs per s", 1);
+                runCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Estimation", "runs per s"), 1);
 
-                getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry("Vision/Inky - meas per s pull", 1);
-                // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry("Vision/Blinky - meas per s pull", 1);
-                getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry("Vision/Pinky - meas per s pull", 1);
-                // getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry("Vision/Clyde - meas per s pull", 1);
+                getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Inky", "meas per s pull"), 1);
+                // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Blinky", "meas per s pull"), 1);
+                getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Pinky", "meas per s pull"), 1);
+                // getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Clyde", "meas per s pull"), 1);
 
 
-                confidenceInkyTelemetry = new MeanPerPeriodTelemetry("Vision/Inky - confidence mult", 0.5, -999.99);
-                // confidenceBlinkyTelemetry = new MeanPerPeriodTelemetry("Vision/Blinky - confidence mult", 0.5, -999.99);
-                confidencePinkyTelemetry = new MeanPerPeriodTelemetry("Vision/Pinky - confidence mult", 0.5, -999.99);
-                // confidenceClydeTelemetry = new MeanPerPeriodTelemetry("Vision/Clyde - confidence mult", 0.5, -999.99);
+                confidenceInkyTelemetry = new MeanPerPeriodTelemetry(TelemUtils.getCamSDKey("Inky", "confidence mult"), 0.5, -999.99);
+                // confidenceBlinkyTelemetry = new MeanPerPeriodTelemetry(TelemUtils.getCamSDKey("Blinky", "confidence mult"), 0.5, -999.99);
+                confidencePinkyTelemetry = new MeanPerPeriodTelemetry(TelemUtils.getCamSDKey("Pinky", "confidence mult"), 0.5, -999.99);
+                // confidenceClydeTelemetry = new MeanPerPeriodTelemetry(TelemUtils.getCamSDKey("Clyde", "confidence mult"), 0.5, -999.99);
         }
 
         @Override
@@ -198,7 +193,7 @@ public class VisionEstimation extends SubsystemBase {
                         getAtomicCountTelemetry.incCount(1);
                 }
 
-                final String smartDashboardCamPoseKey = "Vision/" + estimator.cameraName + " - last pose";
+                final String smartDashboardCamPoseKey = TelemUtils.getCamSDKey(estimator.cameraName, "last pose");
                 SmartDashboard.putString(smartDashboardCamPoseKey, cameraPose != null ? cameraPose.estimatedPose.toString() : "no pose");
         }
 }
