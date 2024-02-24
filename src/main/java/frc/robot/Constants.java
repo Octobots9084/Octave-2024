@@ -34,7 +34,7 @@ public final class Constants {
 	public static final class Arm {
 		public static final double SHOOTER_ELEVATOR_TOLERANCE = 0.1;
 		public static final double SHOOTER_FLYWHEEL_TOLERANCE = 10;
-		public static final double SHOOTER_PIVOT_TOLERANCE = 0.05;
+		public static final double SHOOTER_PIVOT_TOLERANCE = 0.005;
 	}
 
 	public static final class Climb {
@@ -52,7 +52,7 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
-		public static final PIDController TAREGET_ANGLE_CONTROLLER = new PIDController(3.5, 0, 0);
+		public static final PIDController TAREGET_ANGLE_CONTROLLER = new PIDController(10, 0, 0);
 	}
 
 	public static class OperatorConstants {
@@ -76,11 +76,14 @@ public final class Constants {
 
 	public static final class VisionConstants {
 		// All these robot to camera are converted to meters
-		private final static double ROBOT_TO_CAM_X = 0.33;
-		private final static double ROBOT_TO_CAM_Y = 0.273;
-		private final static double ROBOT_TO_CAM_Z = 0.3937;
+		private static double ROBOT_TO_CAM_X = 0.33;
+		private static double ROBOT_TO_CAM_Y = 0.28575;
+		private static double ROBOT_TO_CAM_Z = 0.43;
 
-		public final static boolean USE_VISION = false;
+		private static double CAMERA_UP_ANGLE_DEGS = 15.0;
+		private static double CAMERA_OUT_ANGLE_DEGS = 13.54;
+
+		public static boolean USE_VISION = true;
 
 		/*
 		 * X positive is forward from the front of the robot
@@ -103,18 +106,18 @@ public final class Constants {
 				new Rotation3d(Math.toRadians(0), Math.toRadians(-13), Math.toRadians(180)));
 
 		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
-				new Translation3d(-.3175, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-21.5), Math.toRadians(180)));
+				new Translation3d(-0.33, 0.28, 0.3),
+				new Rotation3d(0, Math.toRadians(-CAMERA_UP_ANGLE_DEGS), Math.toRadians(180 - CAMERA_OUT_ANGLE_DEGS)));
 
 		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
-				new Translation3d(-.32, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-17), Math.toRadians(180)));
+				new Translation3d(-0.33, -0.28, 0.3),
+				new Rotation3d(0, Math.toRadians(-CAMERA_UP_ANGLE_DEGS), Math.toRadians(180 + CAMERA_OUT_ANGLE_DEGS)));
 
 		/** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
 		public static final double POSE_AMBIGUITY_SHIFTER = 0.2;
 		public static final double POSE_AMBIGUITY_MULTIPLIER = 4;
-		public static final double NOISY_DISTANCE_METERS = 2.5;
-		public static final double DISTANCE_WEIGHT = 7;
-		public static final int TAG_PRESENCE_WEIGHT = 10;
+		public static final double NOISY_DISTANCE_METERS = 4;
+		public static final double DISTANCE_WEIGHT = 30;
+		public static final int TAG_PRESENCE_WEIGHT = 1;
 	}
 }

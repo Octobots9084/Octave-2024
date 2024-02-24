@@ -33,7 +33,7 @@ public class ButtonConfig {
 
     public void initTeleop() {
         driverLeft.button(1).onTrue(new SequentialCommandGroup(new PrepAmp(), new ToggleTurnToAmp()));
-        driverLeft.button(2).onTrue(new Driveby());
+        driverLeft.button(2).whileTrue(new Driveby());
 
         driverRight.button(1).onTrue(new TheBigYeet());
         driverRight.button(2).onTrue(new PrepSpeaker());

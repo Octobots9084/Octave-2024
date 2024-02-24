@@ -41,7 +41,7 @@ public class RobotContainer {
     CommandJoystick coDriverRight = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_RIGHT);
     CommandJoystick coDriverButtons = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_BUTTONS);
 
-    private final VisionEstimation visionEstimation = new VisionEstimation();
+    private final VisionEstimation visionEstimation = VisionEstimation.getInstance();
 
     private final SendableChooser<Command> autoChooser;
 
