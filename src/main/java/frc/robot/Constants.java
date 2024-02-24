@@ -76,11 +76,11 @@ public final class Constants {
 
 	public static final class VisionConstants {
 		// All these robot to camera are converted to meters
-		private final static double ROBOT_TO_CAM_X = 0.33;
-		private final static double ROBOT_TO_CAM_Y = 0.273;
-		private final static double ROBOT_TO_CAM_Z = 0.3937;
+		private static double ROBOT_TO_CAM_X = 0.33;
+		private static double ROBOT_TO_CAM_Y = 0.28575;
+		private static double ROBOT_TO_CAM_Z = 0.43;
 
-		public final static boolean USE_VISION = false;
+		public static boolean USE_VISION = true;
 
 		/*
 		 * X positive is forward from the front of the robot
@@ -103,12 +103,12 @@ public final class Constants {
 				new Rotation3d(Math.toRadians(0), Math.toRadians(-13), Math.toRadians(180)));
 
 		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
-				new Translation3d(-.3175, ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-21.5), Math.toRadians(180)));
+				new Translation3d(-0.32, 0.285, 0.3),
+				new Rotation3d(0, Math.toRadians(-13), Math.toRadians(195)));
 
 		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
-				new Translation3d(-.32, -ROBOT_TO_CAM_Y, ROBOT_TO_CAM_Z),
-				new Rotation3d(0, Math.toRadians(-17), Math.toRadians(180)));
+				new Translation3d(-0.32, -0.285, 0.3),
+				new Rotation3d(0, Math.toRadians(-13), Math.toRadians(165)));
 
 		/** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
 		public static final double POSE_AMBIGUITY_SHIFTER = 0.2;

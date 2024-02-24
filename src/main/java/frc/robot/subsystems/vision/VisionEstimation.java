@@ -107,8 +107,8 @@ public class VisionEstimation extends SubsystemBase {
 
                         estimatorChecker(backRightEstimator, getAtomicCountInkyTelemetry, confidenceInkyTelemetry);
                         // estimatorChecker(frontLeftEstimator, getAtomicCountBlinkyTelemetry, confidenceBlinkyTelemetry);
-                        estimatorChecker(backRightEstimator, getAtomicCountPinkyTelemetry, confidencePinkyTelemetry);
-                        // estimatorChecker(backLeftEstimator, getAtomicCountPinkyTelemetry, confidenceClydeTelemetry);
+                        // estimatorChecker(backRightEstimator, getAtomicCountPinkyTelemetry, confidencePinkyTelemetry);
+                        estimatorChecker(backLeftEstimator, getAtomicCountPinkyTelemetry, confidencePinkyTelemetry);
                 } else {
                         allNotifier.close();
                 }
@@ -194,6 +194,9 @@ public class VisionEstimation extends SubsystemBase {
                 }
 
                 final String smartDashboardCamPoseKey = TelemUtils.getCamSDKey(estimator.cameraName, "last pose");
-                SmartDashboard.putString(smartDashboardCamPoseKey, cameraPose != null ? cameraPose.estimatedPose.toString() : "no pose");
+                if (cameraPose != null) {
+                         SmartDashboard.putString(smartDashboardCamPoseKey, cameraPose.estimatedPose.toString());
+                }
+               
         }
 }
