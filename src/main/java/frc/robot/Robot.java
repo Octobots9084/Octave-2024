@@ -10,8 +10,11 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.commands.ButtonConfig;
+import frc.robot.commands.climb.ClimbManual;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -57,6 +60,7 @@ public class Robot extends TimedRobot {
     // let the robot stop
     // immediately when disabled, but then also let it be pushed more
     disabledTimer = new Timer();
+    // CommandScheduler.getInstance().setDefaultCommand(Climb.getInstance(), new ClimbManual());
   }
 
   /**
