@@ -1,7 +1,5 @@
 package frc.robot.subsystems.vision;
 
-// import static ROBOT_TO_BLINKY
-
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.photonvision.EstimatedRobotPose;
@@ -11,14 +9,12 @@ import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.FieldConstants;
-import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.telemetry.CountPerPeriodTelemetry;
+import frc.robot.util.telemetry.TelemUtils;
 
 /**
  * Runnable that gets AprilTag data from PhotonVision.
@@ -28,13 +24,15 @@ public class Vision implements Runnable {
   private final PhotonPoseEstimator photonPoseEstimator;
   private final PhotonCamera photonCamera;
   private final AtomicReference<EstimatedRobotPose> atomicEstimatedRobotPose = new AtomicReference<EstimatedRobotPose>();
+  public final String cameraName;
 
   // Telemetry
   private final CountPerPeriodTelemetry runCountTelemetry;
   private final CountPerPeriodTelemetry setAtomicCountTelemetry;
 
-  public Vision(PhotonCamera cameraName, Transform3d robotToCamera) {
-    this.photonCamera = cameraName;
+  public Vision(PhotonCamera photonCamera, Transform3d robotToCamera) {
+    this.photonCamera = photonCamera;
+    cameraName = photonCamera.getName();
     PhotonPoseEstimator photonPoseEstimator = null;
 
     try {
@@ -53,10 +51,8 @@ public class Vision implements Runnable {
     this.photonPoseEstimator = photonPoseEstimator;
 
     // Initialize telemetry
-    runCountTelemetry = new CountPerPeriodTelemetry("Vision - " + cameraName.getName() + " - runs per s", 1);
-    setAtomicCountTelemetry = new CountPerPeriodTelemetry(
-        "Vision - " + cameraName.getName() + " - set atomic count per s",
-        1);
+    runCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "runs per s"), 1);
+    setAtomicCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "meas per s push"), 1);
   }
 
   @Override
@@ -69,17 +65,12 @@ public class Vision implements Runnable {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult(); //Gets the latest camera results
 
-        // var test = VisionConstants.class.getDeclaredField("ROBOT_TO_" + photonCamera.getName().toUpperCase());
-        // test.setAccessible(true);
-        // Transform3d test2 = (Transform3d) test.get(VisionConstants.class.getClass());
-        //SmartDashboard.putString("Test", test2.toString());
-        SwerveSubsystem.getInstance().getSwerveDrive().field.getObject("vision/" + photonCamera.getName()).setPose(
+        SwerveSubsystem.getInstance().getSwerveDrive().field.getObject("vision/" + cameraName).setPose(
             photonResults.getBestTarget().getBestCameraToTarget().getX(),
             photonResults.getBestTarget().getBestCameraToTarget().getY(),
             photonResults.getBestTarget().getBestCameraToTarget().getRotation().toRotation2d());
 
-        if (photonResults
-            .hasTargets()) {
+        if (photonResults.hasTargets()) {
           //Updates the pose estimator
           photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
             var estimatedPose = estimatedRobotPose.estimatedPose;

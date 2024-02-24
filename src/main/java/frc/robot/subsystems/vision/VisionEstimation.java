@@ -41,6 +41,8 @@ import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.telemetry.CountPerPeriodTelemetry;
+import frc.robot.util.telemetry.MeanPerPeriodTelemetry;
+import frc.robot.util.telemetry.TelemUtils;
 
 public class VisionEstimation extends SubsystemBase {
         private final SwerveSubsystem swerveSubsystem;
@@ -49,16 +51,10 @@ public class VisionEstimation extends SubsystemBase {
                         0.9,
                         0.9);
 
-        private final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"),
-                        VisionConstants.ROBOT_TO_INKY);
-        // private final Vision frontLeftEstimator = new Vision(new
-        // PhotonCamera("Blinky"),
-        // VisionConstants.ROBOT_TO_BLINKY);
-        private final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"),
-                        VisionConstants.ROBOT_TO_PINKY);
-        // private final Vision backLeftEstimator = new Vision(new
-        // PhotonCamera("Clyde"),
-        // VisionConstants.ROBOT_TO_CLYDE);
+        private final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"), VisionConstants.ROBOT_TO_INKY);
+        // private final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"), VisionConstants.ROBOT_TO_BLINKY);
+        private final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"), VisionConstants.ROBOT_TO_PINKY);
+        // private final Vision backLeftEstimator = new Vision(new PhotonCamera("Clyde"), VisionConstants.ROBOT_TO_CLYDE);
 
         private final Notifier allNotifier = new Notifier(() -> {
                 backRightEstimator.run();
@@ -71,10 +67,16 @@ public class VisionEstimation extends SubsystemBase {
 
         // Telemetry
         private final CountPerPeriodTelemetry runCountTelemetry;
+
         private final CountPerPeriodTelemetry getAtomicCountInkyTelemetry;
         // private final CountPerPeriodTelemetry getAtomicCountBlinkyTelemetry;
         private final CountPerPeriodTelemetry getAtomicCountPinkyTelemetry;
         // private final CountPerPeriodTelemetry getAtomicCountClydeTelemetry;
+
+        private final MeanPerPeriodTelemetry confidenceInkyTelemetry;
+        // private final MeanPerPeriodTelemetry confidenceBlinkyTelemetry;
+        private final MeanPerPeriodTelemetry confidencePinkyTelemetry;
+        //private final MeanPerPeriodTelemetry confidenceClydeTelemetry;
 
         public VisionEstimation() {
                 this.swerveSubsystem = SwerveSubsystem.getInstance();
@@ -83,17 +85,18 @@ public class VisionEstimation extends SubsystemBase {
                 allNotifier.startPeriodic(0.02);
 
                 // Initialize telemetry
-                runCountTelemetry = new CountPerPeriodTelemetry("VisionEstimation - runs per s", 1);
-                getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry(
-                                "VisionEstimation - Inky - get atomic count/s", 1);
-                // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry("VisionEstimation
-                // - Blinky - get atomic count/s", 1);
-                getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry(
-                                "VisionEstimation - Pinky - get atomic count per s",
-                                1);
-                // getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry("VisionEstimation
-                // - Clyde - get atomic count per s",
-                // 1);
+                runCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Estimation", "runs per s"), 1);
+
+                getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Inky", "meas per s pull"), 1);
+                // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Blinky", "meas per s pull"), 1);
+                getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Pinky", "meas per s pull"), 1);
+                // getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Clyde", "meas per s pull"), 1);
+
+
+                confidenceInkyTelemetry = new MeanPerPeriodTelemetry(TelemUtils.getCamSDKey("Inky", "confidence mult"), 0.5, -999.99);
+                // confidenceBlinkyTelemetry = new MeanPerPeriodTelemetry(TelemUtils.getCamSDKey("Blinky", "confidence mult"), 0.5, -999.99);
+                confidencePinkyTelemetry = new MeanPerPeriodTelemetry(TelemUtils.getCamSDKey("Pinky", "confidence mult"), 0.5, -999.99);
+                // confidenceClydeTelemetry = new MeanPerPeriodTelemetry(TelemUtils.getCamSDKey("Clyde", "confidence mult"), 0.5, -999.99);
         }
 
         @Override
@@ -102,10 +105,10 @@ public class VisionEstimation extends SubsystemBase {
                         // Update "run count" telemetry
                         runCountTelemetry.incCount(1);
 
-                        estimatorChecker(backRightEstimator, getAtomicCountInkyTelemetry);
-                        // estimatorChecker(frontLeftEstimator, getAtomicCountBlinkyTelemetry);
-                        // estimatorChecker(backRightEstimator, getAtomicCountPinkyTelemetry);
-                        estimatorChecker(backLeftEstimator, getAtomicCountPinkyTelemetry);
+                        estimatorChecker(backRightEstimator, getAtomicCountInkyTelemetry, confidenceInkyTelemetry);
+                        // estimatorChecker(frontLeftEstimator, getAtomicCountBlinkyTelemetry, confidenceBlinkyTelemetry);
+                        estimatorChecker(backRightEstimator, getAtomicCountPinkyTelemetry, confidencePinkyTelemetry);
+                        // estimatorChecker(backLeftEstimator, getAtomicCountPinkyTelemetry, confidenceClydeTelemetry);
                 } else {
                         allNotifier.close();
                 }
@@ -116,6 +119,10 @@ public class VisionEstimation extends SubsystemBase {
                 // getAtomicCountBlinkyTelemetry.periodic();
                 getAtomicCountPinkyTelemetry.periodic();
                 // getAtomicCountClydeTelemetry.periodic();
+                 confidenceInkyTelemetry.periodic();
+                // confidenceBlinkyTelemetry.periodic();
+                confidencePinkyTelemetry.periodic();
+                // confidenceClydeTelemetry.periodic();
         }
 
         /**
@@ -133,7 +140,7 @@ public class VisionEstimation extends SubsystemBase {
                                 new Rotation2d(Math.PI)));
         }
 
-        private Matrix<N3, N1> confidenceCalculator(EstimatedRobotPose estimation) {
+        private Matrix<N3, N1> confidenceCalculator(EstimatedRobotPose estimation, MeanPerPeriodTelemetry confidenceTelemetry) {
                 double smallestDistance = Double.POSITIVE_INFINITY;
                 for (var target : estimation.targetsUsed) {
                         var target3D = target.getBestCameraToTarget();
@@ -165,26 +172,28 @@ public class VisionEstimation extends SubsystemBase {
                                                                 + ((estimation.targetsUsed.size() - 1)
                                                                                 * VisionConstants.TAG_PRESENCE_WEIGHT)));
 
+                confidenceTelemetry.addNumber(confidenceMultiplier);
                 return visionMeasurementStdDevs.times(confidenceMultiplier);
         }
 
-        public void estimatorChecker(Vision estimator, CountPerPeriodTelemetry getAtomicCountTelemetry) {
+        public void estimatorChecker(Vision estimator, CountPerPeriodTelemetry getAtomicCountTelemetry, MeanPerPeriodTelemetry confidenceTelemetry) {
                 var cameraPose = estimator.grabLatestEstimatedPose();
 
                 if (cameraPose != null) {
-                        SmartDashboard.putString("camerapose", cameraPose.estimatedPose.toString());
                         // New pose from vision
                         var pose2d = cameraPose.estimatedPose.toPose2d();
                         if (originPosition == kRedAllianceWallRightSide) {
                                 pose2d = flipAlliance(pose2d);
                         }
 
-                        swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds,
-                                        confidenceCalculator(cameraPose));
+                        final var confidence = confidenceCalculator(cameraPose, confidenceTelemetry);
+                        swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds, confidence);
 
                         // Update "get atomic count" telemetry
                         getAtomicCountTelemetry.incCount(1);
                 }
-        }
 
+                final String smartDashboardCamPoseKey = TelemUtils.getCamSDKey(estimator.cameraName, "last pose");
+                SmartDashboard.putString(smartDashboardCamPoseKey, cameraPose != null ? cameraPose.estimatedPose.toString() : "no pose");
+        }
 }
