@@ -21,7 +21,6 @@ import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 
 public class PrepAmp extends InstantCommand {
-    
     private ShooterPivot shooterPivot;
     private ShooterElevator shooterElevator;
     private ShooterFlywheel shooterFlywheel;
