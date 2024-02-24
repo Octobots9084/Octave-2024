@@ -26,7 +26,7 @@ public class Climb extends SubsystemBase {
 
     CANSparkMax leftMotor, rightMotor;
     public boolean limSwitch;
-    private double gearing = 5;
+    private double gearing = 25;
     private double extensionDistance = 0.52;
 
     public Climb() {
@@ -44,7 +44,7 @@ public class Climb extends SubsystemBase {
                 1000,
                 true,
                 SparkMaxEncoderType.Relative,
-                IdleMode.kCoast,
+                IdleMode.kBrake,
                 30,
                 30,
                 false,
@@ -62,7 +62,7 @@ public class Climb extends SubsystemBase {
                 1000,
                 true,
                 SparkMaxEncoderType.Relative,
-                IdleMode.kCoast,
+                IdleMode.kBrake,
                 30,
                 30,
                 true,
