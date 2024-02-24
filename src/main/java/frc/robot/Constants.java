@@ -34,7 +34,7 @@ public final class Constants {
 	public static final class Arm {
 		public static final double SHOOTER_ELEVATOR_TOLERANCE = 0.1;
 		public static final double SHOOTER_FLYWHEEL_TOLERANCE = 10;
-		public static final double SHOOTER_PIVOT_TOLERANCE = 0.05;
+		public static final double SHOOTER_PIVOT_TOLERANCE = 0.005;
 	}
 
 	public static final class Climb {
@@ -52,7 +52,7 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
-		public static final PIDController TAREGET_ANGLE_CONTROLLER = new PIDController(7, 0, 0);
+		public static final PIDController TAREGET_ANGLE_CONTROLLER = new PIDController(10, 0, 0);
 	}
 
 	public static class OperatorConstants {

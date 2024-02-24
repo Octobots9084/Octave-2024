@@ -80,7 +80,8 @@ public class Driveby extends Command {
     public boolean isFinished() {
         double realRotation = swerveSubsystem.getHeading().getRadians();
         SmartDashboard.putNumber("realFlywheel", realFlywheel);
-        SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
+        SmartDashboard.putNumber("targetFlywheelTop", flywheel.getFlywheelSpeedMeters());
+        SmartDashboard.putNumber("targetFlywheelBottom", flywheel.getAuxiluryFlywheelSpeedMeters());
         SmartDashboard.putNumber("targetPivot", targetPivot);
         SmartDashboard.putNumber("realPivot", realPivot);
         SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
@@ -91,11 +92,12 @@ public class Driveby extends Command {
                 && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.02)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.02)) {
-            return true;
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.003)) {
+            //return true;
         } else {
             return false;
         }
+        return false;
     }
 
     @Override
