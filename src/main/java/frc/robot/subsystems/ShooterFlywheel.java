@@ -47,11 +47,11 @@ public class ShooterFlywheel extends SubsystemBase {
         motorOne.setIdleMode(IdleMode.kCoast);
         motorOne.setSmartCurrentLimit(40, 40);
         motorOne.setInverted(false);
-        motorOne.getPIDController().setP(0.001);
-        motorOne.getPIDController().setI(0);
+        motorOne.getPIDController().setP(0.002);
+        motorOne.getPIDController().setI(0.001);
         motorOne.getPIDController().setD(0);
         motorOne.getPIDController().setFF(0.000157);
-        motorOne.getPIDController().setIZone(0.008);
+        motorOne.getPIDController().setIZone(1);
 
         motorTwo = new CANSparkFlex(17, MotorType.kBrushless);
         motorTwo.restoreFactoryDefaults();
@@ -69,11 +69,11 @@ public class ShooterFlywheel extends SubsystemBase {
         motorTwo.setIdleMode(IdleMode.kCoast);
         motorTwo.setSmartCurrentLimit(40, 40);
         motorTwo.setInverted(false);
-        motorTwo.getPIDController().setP(0.001);
-        motorTwo.getPIDController().setI(0);
+        motorTwo.getPIDController().setP(0.002);
+        motorTwo.getPIDController().setI(0.001);
         motorTwo.getPIDController().setD(0);
         motorTwo.getPIDController().setFF(0.000152);
-        motorTwo.getPIDController().setIZone(0.008);
+        motorTwo.getPIDController().setIZone(1);
 
         motorOnepid = motorOne.getPIDController();
 
