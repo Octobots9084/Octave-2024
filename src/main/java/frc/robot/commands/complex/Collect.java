@@ -59,7 +59,7 @@ public class Collect extends SequentialCommandGroup {
                 }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
-                new JiggleNote(2.5).withTimeout(2.5));
+                new JiggleNote(2.5));
 
     }
 
