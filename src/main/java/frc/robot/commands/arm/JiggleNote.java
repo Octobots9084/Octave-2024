@@ -23,21 +23,22 @@ public class JiggleNote extends Command {
 
     @Override
     public void execute() {
-        var sensor = !shooterTrack.getSensor();
-        if (sensor) {
-            shooterTrack.set(ShooterSpeeds.JIGGLE_BACKWARD);
-        } else {
-            shooterTrack.set(ShooterSpeeds.JIGGLE_FORWARD);
-        }
+
     }
 
     @Override
     public boolean isFinished() {
-        return (!shooterTrack.getSensor() && Timer.getFPGATimestamp() - startTime > length);
+        var sensor = !shooterTrack.getSensor();
+        if (!shooterTrack.getSensor() && Timer.getFPGATimestamp() - startTime > length) {
+            shooterTrack.set(ShooterSpeeds.STOP);
+            return true;
+        } else if (sensor) {
+            shooterTrack.set(ShooterSpeeds.JIGGLE_BACKWARD);
+        } else {
+            shooterTrack.set(ShooterSpeeds.JIGGLE_FORWARD);
+        }
+
+        return false;
     }
 
-    @Override
-    public void end(boolean interrupted) {
-        shooterTrack.set(ShooterSpeeds.STOP);
-    }
 }
