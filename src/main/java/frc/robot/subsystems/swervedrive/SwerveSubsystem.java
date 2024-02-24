@@ -58,7 +58,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private SwerveSubsystem(File directory) {
 
     // objects being created.
-    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.MACHINE;
     try {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(MAXIMUM_SPEED, 360,
 
@@ -278,7 +278,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) {
 
     swerveDrive.setChassisSpeeds(chassisSpeeds);
-    
+
   }
 
   /**

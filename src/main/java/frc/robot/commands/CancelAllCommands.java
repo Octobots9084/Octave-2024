@@ -11,6 +11,7 @@ public class CancelAllCommands extends InstantCommand {
     @Override
     public void initialize() {
         CommandScheduler.getInstance().cancelAll();
+        CommandScheduler.getInstance().clearComposedCommands();
         ShooterPivot.getInstance().notSoFastEggman = false;
     }
 }

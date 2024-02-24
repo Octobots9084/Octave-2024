@@ -2,7 +2,6 @@ package frc.robot.commands.complex;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -72,25 +71,26 @@ public class DrivebyAuto extends Command {
 
         pivot.setPosition(targetPivot);
         flywheel.setFlyWheelSpeedMeters(targetFlywheel);
-        swerveSubsystem.drive(new Translation2d(), swerveSubsystem.targetAngleController.calculate(swerveSubsystem.getHeading().getRadians(), targetTurn.getRadians()), true);
+        swerveSubsystem.setShootingRequest(targetTurn);
     }
 
     @Override
     public boolean isFinished() {
         double realRotation = swerveSubsystem.getHeading().getRadians();
-        SmartDashboard.putNumber("realFlywheel", realFlywheel);
         SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
+        SmartDashboard.putNumber("realFlywheelTop", flywheel.getFlywheelSpeedMeters());
+        SmartDashboard.putNumber("realFlywheelBottom", flywheel.getAuxiluryFlywheelSpeedMeters());
         SmartDashboard.putNumber("targetPivot", targetPivot);
         SmartDashboard.putNumber("realPivot", realPivot);
         SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
         SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.5)
-                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.02)
+        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.08)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.01)) {
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05)) {
             return true;
         } else {
             return false;
