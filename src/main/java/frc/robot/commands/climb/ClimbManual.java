@@ -22,9 +22,9 @@ public class ClimbManual extends Command {
         // versa.
         // If we want to inverse the direction, change the sign below.
         final var leftDelta = 0.05 *
-                Math.signum(MathUtil.fitDeadband(ControlMap.CO_DRIVER_LEFT.getY(), Constants.Climb.ManualDeadband));
+                Math.signum(MathUtil.fitDeadband(ControlMap.CO_DRIVER_LEFT.getY(), Constants.Climb.MANUAL_DEADBAND));
         final var rightDelta = 0.05 *
-                Math.signum(MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.ManualDeadband));
+                Math.signum(MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.MANUAL_DEADBAND));
 
         var newLeftPos = climb.getLeftPosition() + leftDelta;
         var newRightPos = climb.getRightPosition() + rightDelta;

@@ -32,19 +32,19 @@ public final class Constants {
 	public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
 
 	public static final class Arm {
-		public static final double ShooterElevatorTolerance = 0.1;
-		public static final double ShooterFlywheelTolerance = 10;
-		public static final double ShooterPivotTolerance = 0.05;
+		public static final double SHOOTER_ELEVATOR_TOLERANCE = 0.1;
+		public static final double SHOOTER_FLYWHEEL_TOLERANCE = 10;
+		public static final double SHOOTER_PIVOT_TOLERANCE = 0.05;
 	}
 
 	public static final class Climb {
-		public static final double ClimbTolerance = 0.1;
-		public static final double ManualDeadband = 0.06;
+		public static final double CLIMB_TOLERANCE = 0.1;
+		public static final double MANUAL_DEADBAND = 0.06;
 	}
 
 	public static final class Auton {
-		public static final PIDConstants TranslationPID = new PIDConstants(3, 0.0, 0.0);
-		public static final PIDConstants angleAutoPID = new PIDConstants(2, 0, 0);
+		public static final PIDConstants TRANSLATION_PID = new PIDConstants(3, 0.0, 0.0);
+		public static final PIDConstants ANGLE_AUTO_PID = new PIDConstants(2, 0, 0);
 
 		public static final double MAX_ACCELERATION = 2;
 	}
@@ -52,7 +52,7 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
-		public static PIDController targetAngleController = new PIDController(3.5, 0, 0);
+		public static final PIDController TAREGET_ANGLE_CONTROLLER = new PIDController(3.5, 0, 0);
 	}
 
 	public static class OperatorConstants {
@@ -76,11 +76,11 @@ public final class Constants {
 
 	public static final class VisionConstants {
 		// All these robot to camera are converted to meters
-		private static double ROBOT_TO_CAM_X = 0.33;
-		private static double ROBOT_TO_CAM_Y = 0.273;
-		private static double ROBOT_TO_CAM_Z = 0.3937;
+		private final static double ROBOT_TO_CAM_X = 0.33;
+		private final static double ROBOT_TO_CAM_Y = 0.273;
+		private final static double ROBOT_TO_CAM_Z = 0.3937;
 
-		public static boolean USE_VISION = false;
+		public final static boolean USE_VISION = false;
 
 		/*
 		 * X positive is forward from the front of the robot

@@ -24,6 +24,6 @@ public class ShooterElevatorPosTolerance extends Command {
     @Override
     public boolean isFinished() {
         return MathUtil.isWithinTolerance(shooterElevator.getPosition(), armPositions.elevator,
-                Constants.Arm.ShooterElevatorTolerance);
+                Constants.Arm.SHOOTER_ELEVATOR_TOLERANCE);
     }
 }
