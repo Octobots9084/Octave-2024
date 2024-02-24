@@ -72,7 +72,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     setupPathPlanner();
 
-    targetAngleController = Constants.Drivebase.targetAngleController;
+    targetAngleController = Constants.Drivebase.TAREGET_ANGLE_CONTROLLER;
     ;
     targetAngleController.enableContinuousInput(-Math.PI, Math.PI);
   }
@@ -100,9 +100,9 @@ public class SwerveSubsystem extends SubsystemBase {
         this::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-            Constants.Auton.TranslationPID,
+            Constants.Auton.TRANSLATION_PID,
             // Translation PID constants
-            Constants.Auton.angleAutoPID,
+            Constants.Auton.ANGLE_AUTO_PID,
             // Rotation PID constants
             10,
             // Max module speed, in m/s

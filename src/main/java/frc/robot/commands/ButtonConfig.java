@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.Constants;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
@@ -32,9 +33,9 @@ public class ButtonConfig {
 
     public void initTeleop() {
         driverLeft.button(1).onTrue(new SequentialCommandGroup(new PrepAmp(), new ToggleTurnToAmp()));
-        driverLeft.button(2).onTrue(new TheBigYeet());
+        driverLeft.button(2).onTrue(new Driveby());
 
-        driverRight.button(1).whileTrue(new Driveby());
+        driverRight.button(1).onTrue(new TheBigYeet());
         driverRight.button(2).onTrue(new PrepSpeaker());
 
         driverButtons.button(1).onTrue(new ToggleTurnToSpeaker());

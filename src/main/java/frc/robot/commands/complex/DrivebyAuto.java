@@ -66,7 +66,7 @@ public class DrivebyAuto extends Command {
         realFlywheel = flywheel.getFlywheelSpeedMeters();
         realPivot = pivot.getPosition();
         ReverseKinematics.configHeightDif(ReverseKinematics.getHeightDif()
-                + MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.ManualDeadband) * 0.05);
+                + MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.MANUAL_DEADBAND) * 0.05);
         updateTargets();
         SmartDashboard.putString("realPose2d", realPose2d.toString());
 

@@ -25,6 +25,6 @@ public class ShooterPivotPosTolerance extends Command {
     @Override
     public boolean isFinished() {
         SmartDashboard.putNumber("pivot pos", pivot.getPosition());
-        return MathUtil.isWithinTolerance(pivot.getPosition(), armPositions.pivot, Constants.Arm.ShooterPivotTolerance);
+        return MathUtil.isWithinTolerance(pivot.getPosition(), armPositions.pivot, Constants.Arm.SHOOTER_PIVOT_TOLERANCE);
     }
 }
