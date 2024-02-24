@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ReverseKinematics {
         // distance between launcher opening and the subwoofer target
-        private static double constTargetHeightDiff = 1.35;
+        private static double constTargetHeightDiff = 1.4;
         // gravity
         private static double g = 9.8;
         // the final y velocity for the note to be moving at when it enters the target
@@ -24,6 +24,7 @@ public class ReverseKinematics {
         private static double encoderOffset = 0.597;
         private static double movementMultiplierX = 5;
         private static double movementMultiplierY = 5;
+        private static double flywheelSpeedMultiplier = 0.9;
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
@@ -45,7 +46,7 @@ public class ReverseKinematics {
 
         // returns the vertical launch velocity of the note
         // for internal use only
-        private static double calcLaunchVerticalVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
+        private static double calcLaunchVerticalVel(Pose2d pos, ChassisSpeeds speed,
                         double timeInAir) {
                 double heightDelta = (g * Math.pow(timeInAir, 2)) / 2;
                 double verticalVel = ((constTargetHeightDiff + heightDelta)
@@ -58,7 +59,7 @@ public class ReverseKinematics {
         // returns the horizontal (parallel to the subwoofer opening) launch velocity of
         // the note
         // for internal use only
-        private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
+        private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed,
                         double timeInAir) {
                 double xVel = pos.getX() / timeInAir - speed.vxMetersPerSecond * movementMultiplierX;
                 SmartDashboard.putNumber("xVel", xVel);
@@ -68,7 +69,7 @@ public class ReverseKinematics {
         // returns the "vertical" from above (perpendicular to the subwoofer opening)
         // launch velocity of the note
         // for internal use only
-        private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS,
+        private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed,
                         double timeInAir) {
                 double yVel = pos.getY() / timeInAir
                                 - speed.vyMetersPerSecond * movementMultiplierY;
@@ -79,11 +80,11 @@ public class ReverseKinematics {
         // returns total speed the note should be launched at, in m/s
         public static double calcTotalLaunchVelocity(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS) {
                 double timeInAir = Math.sqrt(constTargetHeightDiff * constTargetHeightDiff + pos.getX() * pos.getX())
-                                / flywheelSpeedMTS;
-                return Math.sqrt(Math.pow(calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir), 2)
+                                / (flywheelSpeedMTS*flywheelSpeedMultiplier);
+                return Math.sqrt(Math.pow(calcLaunchXVel(pos, speed, timeInAir), 2)
                                 /*
                                  * + Math.pow(calcLaunchYVel(pos, speed), 2)
-                                 */ + Math.pow(calcLaunchVerticalVel(pos, speed, flywheelSpeedMTS, timeInAir), 2));
+                                 */ + Math.pow(calcLaunchVerticalVel(pos, speed, timeInAir), 2));
         }
 
         // returns the angle (wrt parralel to the target opening) to the target opening
@@ -92,9 +93,9 @@ public class ReverseKinematics {
         // with the subwoofer north of the robot
         public static double calcRobotAngle(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS) {
                 double timeInAir = Math.sqrt(constTargetHeightDiff * constTargetHeightDiff + pos.getX() * pos.getX())
-                                / flywheelSpeedMTS;
-                return Math.atan2(calcLaunchYVel(pos, speed, flywheelSpeedMTS, timeInAir),
-                                calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir)) - Math.PI;
+                                / (flywheelSpeedMTS*flywheelSpeedMultiplier);
+                return Math.atan2(calcLaunchYVel(pos, speed, timeInAir),
+                                calcLaunchXVel(pos, speed, timeInAir)) - Math.PI;
 
         }
 
@@ -106,11 +107,11 @@ public class ReverseKinematics {
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
                 SmartDashboard.putNumber("targetAngleShoote",
-                                (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, flywheelSpeedMTS, timeInAir),
-                                                calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir)))));
+                                (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
+                                                calcLaunchXVel(pos, speed, timeInAir)))));
                 double angleDiffRadians = (Math.PI
-                                + (Math.atan2(calcLaunchVerticalVel(pos, speed, flywheelSpeedMTS, timeInAir),
-                                                calcLaunchXVel(pos, speed, flywheelSpeedMTS, timeInAir))));
+                                + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
+                                                calcLaunchXVel(pos, speed, timeInAir))));
                 double normalizedAngleDiff = angleDiffRadians
                                 / (2 * Math.PI);
                 return encoderOffset

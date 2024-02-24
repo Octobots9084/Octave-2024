@@ -88,16 +88,15 @@ public class Driveby extends Command {
         SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.5)
-                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.02)
+        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.03)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.003)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.003)) {
-            //return true;
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.01)) {
+            return true;
         } else {
             return false;
         }
-        return false;
     }
 
     @Override
