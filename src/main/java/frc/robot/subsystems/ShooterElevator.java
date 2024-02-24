@@ -11,7 +11,6 @@ import frc.robot.util.SparkMax.SparkMaxConfig;
 import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterElevator extends SubsystemBase {

@@ -4,54 +4,21 @@
 
 package frc.robot;
 
-import edu.wpi.first.hal.SimBoolean;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.arm.ShooterElevatorPosInstant;
-import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
-import frc.robot.commands.arm.ShooterPivotPosInstant;
-import frc.robot.commands.arm.ShooterTrackSpeedInstant;
-import frc.robot.commands.climb.ClimbManual;
-import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.CollectAuto;
-import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.DrivebyAuto;
-import frc.robot.commands.complex.Dunk;
-import frc.robot.commands.complex.Panic;
-import frc.robot.commands.complex.PrepAmp;
-import frc.robot.commands.complex.PrepClimb;
-import frc.robot.commands.complex.PrepSpeaker;
-import frc.robot.commands.complex.SimpleClimb;
 import frc.robot.commands.complex.SpeakerAuto;
-import frc.robot.commands.complex.TheBigYeet;
-import frc.robot.commands.complex.Undunk;
-import frc.robot.commands.intake.IntakeRollerSpeedInstant;
-import frc.robot.commands.intake.IntakeTrackSpeedInstant;
-import frc.robot.commands.swervedrive.PathfindingTest;
-import frc.robot.commands.swervedrive.auto.TestingPaths;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
-import frc.robot.constants.ArmPositions;
-import frc.robot.constants.IntakeSpeeds;
-import frc.robot.constants.ShooterSpeeds;
-import frc.robot.subsystems.Climb;
-import frc.robot.subsystems.IntakeTrack;
-import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
-import swervelib.imu.NavXSwerve;
-
-import java.io.File;
-
-import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 

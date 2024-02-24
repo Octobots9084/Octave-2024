@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.arm.JiggleNote;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
 import frc.robot.commands.arm.ShooterElevatorPosTolerance;
-import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
 import frc.robot.commands.arm.ShooterPivotPosInstant;
 import frc.robot.commands.arm.ShooterPivotPosTolerance;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
