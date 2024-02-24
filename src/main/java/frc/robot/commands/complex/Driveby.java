@@ -14,6 +14,8 @@ import frc.robot.robot.ControlMap;
 import frc.robot.subsystems.ReverseKinematics;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
+import frc.robot.subsystems.lights.Animations;
+import frc.robot.subsystems.lights.Light;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.MathUtil;
 
@@ -40,6 +42,7 @@ public class Driveby extends Command {
         swerveSubsystem.setShootingRequestActive(true);
         CommandScheduler.getInstance().schedule(new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT));
         SmartDashboard.putNumber("targetPoseX", 3.0);
+        Light.getInstance().setAnimation(Animations.AIMING);
     }
 
     public void updateTargets() {
@@ -93,6 +96,7 @@ public class Driveby extends Command {
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
                         MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.01)) {
+            Light.getInstance().setAnimation(Animations.SHOT_READY);
             return true;
         } else {
             return false;
