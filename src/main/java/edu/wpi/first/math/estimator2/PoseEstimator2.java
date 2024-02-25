@@ -18,6 +18,8 @@ import edu.wpi.first.math.kinematics.Odometry;
 import edu.wpi.first.math.kinematics.WheelPositions;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import frc.robot.Constants;
+
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -49,7 +51,7 @@ public class PoseEstimator2<T extends WheelPositions<T>> {
   private final Matrix<N3, N1> m_q = new Matrix<>(Nat.N3(), Nat.N1());
   private final Matrix<N3, N3> m_visionK = new Matrix<>(Nat.N3(), Nat.N3());
 
-  private static final double kBufferDuration = 1.5;
+  private static final double kBufferDuration = Constants.PoseEstimator.BUFFER_DURATION_SECS;
   private final TimeInterpolatableBuffer<InterpolationRecord> m_poseBuffer =
       TimeInterpolatableBuffer.createBuffer(kBufferDuration);
 
