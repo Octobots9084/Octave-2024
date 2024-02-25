@@ -3,7 +3,7 @@ package swervelib;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
+import edu.wpi.first.math.estimator2.SwerveDrivePoseEstimator2;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -57,7 +57,7 @@ public class SwerveDrive {
   /**
    * Swerve odometry.
    */
-  public final SwerveDrivePoseEstimator swerveDrivePoseEstimator;
+  public final SwerveDrivePoseEstimator2 swerveDrivePoseEstimator;
   /**
    * Swerve modules.
    */
@@ -205,7 +205,7 @@ public class SwerveDrive {
 
     // odometry = new SwerveDriveOdometry(kinematics, getYaw(),
     // getModulePositions());
-    swerveDrivePoseEstimator = new SwerveDrivePoseEstimator(
+    swerveDrivePoseEstimator = new SwerveDrivePoseEstimator2(
         kinematics,
         getYaw(),
         getModulePositions(),
