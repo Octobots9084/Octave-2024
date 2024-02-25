@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.36086297850199,
-      "y": 5.562647359246215
+      "x": 1.3959954881393342,
+      "y": 6.358984244359359
     },
     "rotation": 0
   },
@@ -12,15 +12,9 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "SpeakerAuto"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Part 1"
+            "pathName": "4-5-1 (4)"
           }
         },
         {
@@ -44,7 +38,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Part 2"
+            "pathName": "4-5-1 (5)"
           }
         },
         {
@@ -68,7 +62,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Part 3"
+            "pathName": "4-5-1 (1)"
           }
         },
         {
