@@ -79,6 +79,10 @@ public final class Constants {
 		public static final double WIDTH = Units.feetToMeters(27);
 	}
 
+	public static class PoseEstimator {
+		public static final double BUFFER_DURATION_SECS = 1.5;
+	}
+
 	public static final class VisionConstants {
 		// All these robot to camera are converted to meters
 		private static double ROBOT_TO_CAM_X = 0.33;
