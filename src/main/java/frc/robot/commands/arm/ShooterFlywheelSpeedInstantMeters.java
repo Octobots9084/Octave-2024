@@ -4,19 +4,18 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.ShooterFlywheel;
 
-public class ShooterFlywheelSpeedInstant extends InstantCommand {
+public class ShooterFlywheelSpeedInstantMeters extends InstantCommand {
 
     ShooterSpeeds shooterSpeeds;
     ShooterFlywheel flywheel;
 
-    public ShooterFlywheelSpeedInstant(ShooterSpeeds shooterSpeeds) {
+    public ShooterFlywheelSpeedInstantMeters(ShooterSpeeds shooterSpeeds) {
         this.shooterSpeeds = shooterSpeeds;
         flywheel = ShooterFlywheel.getInstance();
-
     }
 
     @Override
     public void initialize() {
-        flywheel.setFlywheelSpeed(shooterSpeeds);
+        flywheel.setFlyWheelSpeedMeters(shooterSpeeds.flywheels);
     }
 }

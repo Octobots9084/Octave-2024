@@ -31,6 +31,9 @@ public class Collect extends SequentialCommandGroup {
         }
         addCommands(
                 new InstantCommand(() -> {
+                    SmartDashboard.putBoolean("CollectRunning", true);
+                }),
+                new InstantCommand(() -> {
                     ShooterPivot.getInstance().notSoFastEggman = true;
                 }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),

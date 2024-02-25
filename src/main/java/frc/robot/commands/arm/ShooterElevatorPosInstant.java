@@ -12,8 +12,7 @@ public class ShooterElevatorPosInstant extends InstantCommand {
     public ShooterElevatorPosInstant(ArmPositions armPositions) {
         this.armPositions = armPositions;
         shooterElevator = ShooterElevator.getInstance();
-        
-        super.addRequirements(shooterElevator);
+
     }
 
     @Override
