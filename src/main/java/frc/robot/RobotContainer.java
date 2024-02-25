@@ -20,6 +20,8 @@ import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.SpeakerAuto;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
+import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -71,6 +73,9 @@ public class RobotContainer {
         NamedCommands.registerCommand("Collect",
                 new CollectAuto());
         NamedCommands.registerCommand("Shoot", new DrivebyAuto());
+        NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
+            ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
+        }));
         AutoBuilder.configureHolonomic(
                 SwerveSubsystem.getInstance()::getPose, // Robot pose supplier
                 SwerveSubsystem.getInstance()::resetOdometry, // Method to reset odometry (will be called if your auto
