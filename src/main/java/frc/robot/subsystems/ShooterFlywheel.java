@@ -140,4 +140,10 @@ public class ShooterFlywheel extends SubsystemBase {
     public double getAuxiluryFlywheelSpeedMeters() {
         return (getAuxiluryFlywheelSpeed() * circumference) / 60;
     }
+
+    public void setFlywheelPercent(double percent) {
+        motorOne.set(-percent);
+        motorTwo.set(percent);
+
+    }
 }
