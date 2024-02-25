@@ -21,17 +21,16 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.MathUtil;
 
 public class DrivebyAuto extends Command {
-    ShooterPivot pivot;
-    ShooterFlywheel flywheel;
-    SwerveSubsystem swerveSubsystem;
-    ChassisSpeeds realSpeeds;
-    Pose2d realPose2d;
-    double realPivot;
-    double targetPivot;
-    double realFlywheel;
-    double targetFlywheel;
-    Rotation2d targetTurn;
-    double endStartTime;
+    private ShooterPivot pivot;
+    private ShooterFlywheel flywheel;
+    private SwerveSubsystem swerveSubsystem;
+    private ChassisSpeeds realSpeeds;
+    private Pose2d realPose2d;
+    private double realPivot;
+    private double targetPivot;
+    private double realFlywheel;
+    private double targetFlywheel;
+    private Rotation2d targetTurn;
 
     public DrivebyAuto() {
         pivot = ShooterPivot.getInstance();
@@ -94,11 +93,12 @@ public class DrivebyAuto extends Command {
         SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.08)
-                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005)
+        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, Constants.Auton.FLYWHEEL_TOLERANCE)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, Constants.Auton.PIVOT_TOLERANCE)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05)) {
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI),
+                        Constants.Auton.ROTATION_TOLERANCE)) {
             return true;
         } else {
             return false;
@@ -106,8 +106,8 @@ public class DrivebyAuto extends Command {
     }
 
     @Override
-    public void end(boolean inturupted) {
-        if (!inturupted) {
+    public void end(boolean interrupted) {
+        if (!interrupted) {
             ShooterTrack.getInstance().set(ShooterSpeeds.AMP);
             SmartDashboard.putBoolean("DrivebyRunning", false);
         }

@@ -24,7 +24,7 @@ public class ShooterFlywheelSpeedTolerance extends Command {
     @Override
     public boolean isFinished() {
         return MathUtil.isWithinTolerance(flywheel.getFlywheelSpeed(), shooterSpeeds.flywheels,
-                Constants.Arm.SHOOTER_FLYWHEEL_TOLERANCE);
+                Constants.Arm.SHOOTER_FLYWHEEL_TOLERANCE_RPM);
     }
 
 }

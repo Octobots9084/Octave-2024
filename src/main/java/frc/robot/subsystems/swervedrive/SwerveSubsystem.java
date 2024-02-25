@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.DrivebyAuto;
-import frc.robot.commands.complex.SpeakerAuto;
+import frc.robot.commands.complex.InitalSpeakerAuto;
 
 import java.io.File;
 import java.util.function.DoubleSupplier;
@@ -49,7 +49,7 @@ public class SwerveSubsystem extends SubsystemBase {
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public static double MAXIMUM_SPEED = 5;
+  public static final double MAXIMUM_SPEED = 5;
   public Rotation2d targetAngle = new Rotation2d();
   public boolean targetAngleEnabled = false;
   public PIDController targetAngleController;
@@ -75,8 +75,6 @@ public class SwerveSubsystem extends SubsystemBase {
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via
                                              // angle.
 
-    setupPathPlanner();
-
     targetAngleController = Constants.Drivebase.TAREGET_ANGLE_CONTROLLER;
     ;
     targetAngleController.enableContinuousInput(-Math.PI, Math.PI);
@@ -93,13 +91,6 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public SwerveDrive getSwerveDrive() {
     return this.swerveDrive;
-  }
-
-  /**
-   * Setup AutoBuilder for PathPlanner.
-   */
-  public void setupPathPlanner() {
-
   }
 
   /**

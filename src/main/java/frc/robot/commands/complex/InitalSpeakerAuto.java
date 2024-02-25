@@ -9,8 +9,8 @@ import frc.robot.commands.arm.ShooterPivotPosTolerance;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 
-public class SpeakerAuto extends SequentialCommandGroup {
-    public SpeakerAuto() {
+public class InitalSpeakerAuto extends SequentialCommandGroup {
+    public InitalSpeakerAuto() {
         addCommands(
                 new ShooterPivotPosTolerance(ArmPositions.SPEAKER_SHOT),
                 new ShooterFlywheelSpeedToleranceMeters(ShooterSpeeds.SPEAKER),

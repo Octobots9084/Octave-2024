@@ -33,7 +33,7 @@ public final class Constants {
 
 	public static final class Arm {
 		public static final double SHOOTER_ELEVATOR_TOLERANCE = 0.1;
-		public static final double SHOOTER_FLYWHEEL_TOLERANCE = 10;
+		public static final double SHOOTER_FLYWHEEL_TOLERANCE_RPM = 10;
 		public static final double SHOOTER_FLYWHEEL_TOLERANCE_METERS = 0.4;
 		public static final double SHOOTER_PIVOT_TOLERANCE = 0.005;
 	}
@@ -48,6 +48,10 @@ public final class Constants {
 		public static final PIDConstants ANGLE_AUTO_PID = new PIDConstants(2, 0, 0);
 
 		public static final double MAX_ACCELERATION = 2;
+		public static final double MAX_MODULE_SPEED = 10;
+		public static final double FLYWHEEL_TOLERANCE = 0.08;
+		public static final double PIVOT_TOLERANCE = 0.005;
+		public static final double ROTATION_TOLERANCE = 0.05;
 	}
 
 	public static final class Drivebase {

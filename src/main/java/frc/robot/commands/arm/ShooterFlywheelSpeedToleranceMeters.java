@@ -7,7 +7,6 @@ import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.util.MathUtil;
 
 public class ShooterFlywheelSpeedToleranceMeters extends Command {
-
     ShooterSpeeds shooterSpeeds;
     ShooterFlywheel flywheel;
 
@@ -26,5 +25,4 @@ public class ShooterFlywheelSpeedToleranceMeters extends Command {
         return MathUtil.isWithinTolerance(flywheel.getFlywheelSpeedMeters(), shooterSpeeds.flywheels,
                 Constants.Arm.SHOOTER_FLYWHEEL_TOLERANCE_METERS);
     }
-
 }
