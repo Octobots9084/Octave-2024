@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +24,8 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -66,13 +69,42 @@ public class RobotContainer {
                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
         NamedCommands.registerCommand("SpeakerAuto", new SpeakerAuto());
         NamedCommands.registerCommand("Collect",
-                new InstantCommand(() -> {
-                    CommandScheduler.getInstance().schedule(new CollectAuto());
-                }));
+                new CollectAuto());
         NamedCommands.registerCommand("Shoot", new DrivebyAuto());
-
+        AutoBuilder.configureHolonomic(
+                SwerveSubsystem.getInstance()::getPose, // Robot pose supplier
+                SwerveSubsystem.getInstance()::resetOdometry, // Method to reset odometry (will be called if your auto
+                                                              // has a starting pose)
+                SwerveSubsystem.getInstance()::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
+                SwerveSubsystem.getInstance()::setChassisSpeeds, // Method that will drive the robot given ROBOT
+                                                                 // RELATIVE ChassisSpeeds
+                new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your
+                                                 // Constants class
+                        Constants.Auton.TRANSLATION_PID,
+                        // Translation PID constants
+                        Constants.Auton.ANGLE_AUTO_PID,
+                        // Rotation PID constants
+                        10,
+                        // Max module speed, in m/s
+                        SwerveSubsystem.getInstance().getSwerveDrive().swerveDriveConfiguration
+                                .getDriveBaseRadiusMeters(),
+                        // Drive base radius in meters. Distance from robot center to furthest module.
+                        new ReplanningConfig()
+                // Default path replanning config. See the API for the options here
+                ),
+                () -> {
+                    // Boolean supplier that controls when the path will be mirrored for the red
+                    // alliance
+                    // This will flip the path being followed to the red side of the field.
+                    // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+                    var alliance = DriverStation.getAlliance();
+                    return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+                },
+                SwerveSubsystem.getInstance() // Reference to this subsystem to set requirements
+        );
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("Auto Chooser", autoChooser);
+        SwerveSubsystem.getInstance();
 
     }
 

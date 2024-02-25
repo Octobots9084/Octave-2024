@@ -34,6 +34,7 @@ public final class Constants {
 	public static final class Arm {
 		public static final double SHOOTER_ELEVATOR_TOLERANCE = 0.1;
 		public static final double SHOOTER_FLYWHEEL_TOLERANCE = 10;
+		public static final double SHOOTER_FLYWHEEL_TOLERANCE_METERS = 0.4;
 		public static final double SHOOTER_PIVOT_TOLERANCE = 0.005;
 	}
 

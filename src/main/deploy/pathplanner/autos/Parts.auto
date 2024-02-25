@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.413628281802018,
-      "y": 5.559932574410603
+      "x": 1.36086297850199,
+      "y": 5.562647359246215
     },
     "rotation": 0
   },
@@ -20,19 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StarttoPiece3Blue"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "3rdPieceBlue"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 4.0
+            "pathName": "Part 1"
           }
         },
         {
@@ -42,21 +30,15 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "ThirdToSecondBlue"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "2ndPieceBlue"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 4.0
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Part 2"
           }
         },
         {
@@ -66,27 +48,27 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "SecondToFirstBlue"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "1stPieceBlue"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 4.0
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Part 3"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         }
       ]

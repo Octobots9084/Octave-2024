@@ -21,17 +21,16 @@ import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.IntakeTrack;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class CollectAuto extends SequentialCommandGroup {
     public CollectAuto() {
         BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
-        if (shooterSensorTrue.getAsBoolean()) {
-            return;
-        }
         addCommands(
                 new InstantCommand(() -> {
                     SmartDashboard.putBoolean("CollectRunning", true);
+                    SwerveSubsystem.getInstance().collectAutoRunning = true;
                 }),
                 new InstantCommand(() -> {
                     ShooterPivot.getInstance().notSoFastEggman = true;
@@ -63,7 +62,10 @@ public class CollectAuto extends SequentialCommandGroup {
                 }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
-                new JiggleNote(1));
+                new JiggleNote(1), new InstantCommand(() -> {
+                    SmartDashboard.putBoolean("CollectRunning", false);
+                    SwerveSubsystem.getInstance().collectAutoRunning = false;
+                }));
 
     }
 
