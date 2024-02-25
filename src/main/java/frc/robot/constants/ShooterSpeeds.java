@@ -9,7 +9,7 @@ public enum ShooterSpeeds {
     AMP(0.7, -2500),
     JIGGLE_FORWARD(0.1, 0),
     JIGGLE_BACKWARD(-0.1, 0),
-    TRAP(1, 0.5),
+    TRAP(1, -2500),
     DRIVE_BY(0, -30);
 
     public double track;

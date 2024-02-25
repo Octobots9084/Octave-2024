@@ -9,6 +9,7 @@ import frc.robot.commands.arm.ShooterElevatorPosInstant;
 import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
+import frc.robot.commands.complex.Dunk;
 import frc.robot.commands.complex.Panic;
 import frc.robot.commands.complex.PrepAmp;
 import frc.robot.commands.complex.PrepClimb;
@@ -50,7 +51,7 @@ public class ButtonConfig {
         coDriverButtons.button(1).onTrue(new Collect());
         coDriverButtons.button(7).onTrue(new PrepClimb());
         coDriverButtons.button(8).onTrue(new SimpleClimb());
-        coDriverButtons.button(9).onTrue(new ShooterElevatorPosInstant(ArmPositions.TRAP));
+        coDriverButtons.button(9).onTrue(new Dunk());
         // coDriverButtons.button(11).onTrue(new Dunk());
         // coDriverButtons.button(12).onTrue(new Undunk());
 
