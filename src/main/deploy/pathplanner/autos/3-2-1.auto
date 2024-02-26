@@ -18,6 +18,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "StopShooterTrack"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "3-2-1 (3)"

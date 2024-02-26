@@ -8,36 +8,52 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7746168825670987,
-        "y": 4.971636609939886
+        "x": 1.4020828041656084,
+        "y": 5.100330200660401
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.451951570569808,
-        "y": 4.118194903056472
+        "x": 1.3817627635255272,
+        "y": 4.091101515536365
       },
       "prevControl": {
-        "x": 2.0578381079906354,
-        "y": 4.172126218988359
+        "x": 1.3390192367882494,
+        "y": 4.093951083985517
       },
       "nextControl": {
-        "x": 3.095419524172382,
-        "y": 4.030141393616121
+        "x": 1.5849631699263398,
+        "y": 4.07755482177631
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.1742443484886973,
-        "y": 4.958089916179833
+        "x": 2.5535517737702147,
+        "y": 4.091101515536365
       },
       "prevControl": {
-        "x": 2.424858183049702,
-        "y": 4.8564897129794256
+        "x": 1.8965371264075863,
+        "y": 4.084328168656337
+      },
+      "nextControl": {
+        "x": 2.560324760739144,
+        "y": 4.0911713401442915
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.0,
+        "y": 5.0
+      },
+      "prevControl": {
+        "x": 2.149013631360596,
+        "y": 4.769706206079078
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,8 +64,8 @@
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 1.0,
-      "maxWaypointRelativePos": 2.0,
+      "minWaypointRelativePos": 2.0,
+      "maxWaypointRelativePos": 3.0,
       "constraints": {
         "maxVelocity": 2.0,
         "maxAcceleration": 2.0,
@@ -61,7 +77,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0.05,
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "parallel",
         "data": {

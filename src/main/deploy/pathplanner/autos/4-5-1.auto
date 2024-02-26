@@ -2,15 +2,21 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3959954881393342,
-      "y": 6.358984244359359
+      "x": 0.7044280755228177,
+      "y": 6.71238675810685
     },
-    "rotation": 0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "SpeakerAuto"
+          }
+        },
         {
           "type": "path",
           "data": {
