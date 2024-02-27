@@ -21,6 +21,8 @@ import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.IntakeTrack;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
+import frc.robot.subsystems.lights.Animations;
+import frc.robot.subsystems.lights.Light;
 
 public class Collect extends SequentialCommandGroup {
     public Collect() {
@@ -36,35 +38,34 @@ public class Collect extends SequentialCommandGroup {
                 new InstantCommand(() -> {
                     ShooterPivot.getInstance().notSoFastEggman = true;
                 }),
+                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.COLLECTING);}),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),
-                new ParallelCommandGroup(new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
+                new ParallelCommandGroup(
+                        new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
-                new InstantCommand(() -> {
-                    SmartDashboard.putBoolean("reached Checkpoint", false);
-                }),
+                new InstantCommand(() -> {SmartDashboard.putBoolean("reached Checkpoint", false);}),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                 new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
                 new WaitUntilCommand(intakeSensorTrue),
                 new InstantCommand(() -> {
                     SmartDashboard.putBoolean("reached Checkpoint", true);
                 }),
-
+                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);}),
                 new IntakeRollerSpeedInstant(IntakeSpeeds.STOP),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
                 new ParallelCommandGroup(new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
-
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
-
                 new WaitUntilCommand(shooterSensorTrue),
+                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);}),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT),
-                new InstantCommand(() -> {
-                    ShooterPivot.getInstance().notSoFastEggman = false;
-                }),
+                new InstantCommand(() -> {ShooterPivot.getInstance().notSoFastEggman = false;}),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
-                new JiggleNote(1));
+                new JiggleNote(1),
+                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.SHOT_READY);}));
+
 
     }
 
