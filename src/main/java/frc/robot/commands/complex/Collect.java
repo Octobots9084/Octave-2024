@@ -31,6 +31,9 @@ public class Collect extends SequentialCommandGroup {
         }
         addCommands(
                 new InstantCommand(() -> {
+                    SmartDashboard.putBoolean("CollectRunning", true);
+                }),
+                new InstantCommand(() -> {
                     ShooterPivot.getInstance().notSoFastEggman = true;
                 }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),
@@ -46,7 +49,7 @@ public class Collect extends SequentialCommandGroup {
                     SmartDashboard.putBoolean("reached Checkpoint", true);
                 }),
 
-                new IntakeRollerSpeedInstant(IntakeSpeeds.REJECT),
+                new IntakeRollerSpeedInstant(IntakeSpeeds.STOP),
                 new ParallelCommandGroup(new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
 

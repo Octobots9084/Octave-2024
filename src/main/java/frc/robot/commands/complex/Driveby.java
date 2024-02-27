@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
+import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.robot.ControlMap;
@@ -39,6 +40,7 @@ public class Driveby extends Command {
     public void initialize() {
         swerveSubsystem.setShootingRequestActive(true);
         CommandScheduler.getInstance().schedule(new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT));
+        CommandScheduler.getInstance().schedule(new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE));
         SmartDashboard.putNumber("targetPoseX", 3.0);
     }
 
@@ -79,9 +81,9 @@ public class Driveby extends Command {
     @Override
     public boolean isFinished() {
         double realRotation = swerveSubsystem.getHeading().getRadians();
-        SmartDashboard.putNumber("realFlywheel", realFlywheel);
-        SmartDashboard.putNumber("targetFlywheelTop", flywheel.getFlywheelSpeedMeters());
-        SmartDashboard.putNumber("targetFlywheelBottom", flywheel.getAuxiluryFlywheelSpeedMeters());
+        SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
+        SmartDashboard.putNumber("realFlywheelTop", flywheel.getFlywheelSpeedMeters());
+        SmartDashboard.putNumber("realFlywheelBottom", flywheel.getAuxiluryFlywheelSpeedMeters());
         SmartDashboard.putNumber("targetPivot", targetPivot);
         SmartDashboard.putNumber("realPivot", realPivot);
         SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));

@@ -12,7 +12,6 @@ public class ShooterTrackSpeedInstant extends InstantCommand {
     public ShooterTrackSpeedInstant(ShooterSpeeds shooterSpeeds) {
         this.shooterSpeeds = shooterSpeeds;
         track = ShooterTrack.getInstance();
-        super.addRequirements(track);
     }
 
     @Override
