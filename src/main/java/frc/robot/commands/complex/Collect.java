@@ -51,7 +51,7 @@ public class Collect extends SequentialCommandGroup {
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
                 new WaitUntilCommand(shooterSensorTrue),
-                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);}),
+                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);}),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT),
                 new InstantCommand(() -> {ShooterPivot.getInstance().notSoFastEggman = false;}),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
