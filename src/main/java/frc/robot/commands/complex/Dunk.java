@@ -17,8 +17,8 @@ public class Dunk extends SequentialCommandGroup {
                 new ShooterElevatorPosTolerance(ArmPositions.TRAP_SEGUEAY),
                 new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY),
                 new ClimbPosTolerance(ClimbPositions.DOWN),
-                new ShooterElevatorPosTolerance(ArmPositions.TRAP),
                 new ShooterPivotPosTolerance(ArmPositions.TRAP),
+                new ShooterElevatorPosTolerance(ArmPositions.TRAP),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.TRAP));
     }
 }
