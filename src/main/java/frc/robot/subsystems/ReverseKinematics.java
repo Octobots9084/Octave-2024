@@ -22,8 +22,8 @@ public class ReverseKinematics {
         private static double subwooferXPos = 0;
         private static double subwooferYPos = 5.5;
         private static double encoderOffset = 0.597;
-        private static double movementMultiplierX = 0;
-        private static double movementMultiplierY = 0;
+        private static double movementMultiplierX = 1.2;
+        private static double movementMultiplierY = 1.2;
         private static double flywheelSpeedMultiplier = 0.9;
 
         // converts Pose2d coords into positions relative to the target
