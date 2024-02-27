@@ -14,8 +14,8 @@ public class Dunk extends SequentialCommandGroup {
     public Dunk() {
         addCommands(
                 new ShooterFlywheelSpeedInstant(ShooterSpeeds.TRAP),
-                new ShooterElevatorPosTolerance(ArmPositions.TRAP_SEGUEAY),
                 new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY),
+                new ShooterElevatorPosTolerance(ArmPositions.TRAP_SEGUEAY),
                 new ClimbPosTolerance(ClimbPositions.DOWN),
                 new ShooterPivotPosTolerance(ArmPositions.TRAP),
                 new ShooterElevatorPosTolerance(ArmPositions.TRAP),
