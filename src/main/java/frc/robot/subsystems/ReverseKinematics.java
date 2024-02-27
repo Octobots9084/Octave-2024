@@ -48,11 +48,11 @@ public class ReverseKinematics {
         // for internal use only
         private static double calcLaunchVerticalVel(Pose2d pos, ChassisSpeeds speed,
                         double timeInAir) {
-                double heightDelta = (g * Math.pow(timeInAir, 2)) / 2;
-                double verticalVel = ((constTargetHeightDiff + heightDelta)
+                //double heightDelta = (g * Math.pow(timeInAir, 2)) / 2;
+                double verticalVel = ((constTargetHeightDiff)// + heightDelta)
                                 / timeInAir);
                 SmartDashboard.putNumber("verticalVel", verticalVel);
-                SmartDashboard.putNumber("heightDelta", heightDelta);
+                //SmartDashboard.putNumber("heightDelta", heightDelta);
                 return verticalVel;
         }
 
