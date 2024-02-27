@@ -17,7 +17,7 @@ public class PrepSpeaker extends SequentialCommandGroup {
         addCommands(
                 new ShooterFlywheelSpeedInstantMeters(ShooterSpeeds.SPEAKER),
                 new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
-                new ShooterPivotPosInstantTolerance() -> {Light.getInstance().setAnimation(Animations.SHOT_SPECIAL);})
+                new ShooterPivotPosTolerance(ArmPositions.SPEAKER_SHOT), new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.SHOT_SPECIAL);})
 
         );
     }
