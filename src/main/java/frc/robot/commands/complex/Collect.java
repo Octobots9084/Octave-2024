@@ -50,6 +50,7 @@ public class Collect extends SequentialCommandGroup {
                 }),
 
                 new IntakeRollerSpeedInstant(IntakeSpeeds.STOP),
+                new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
                 new ParallelCommandGroup(new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
 
