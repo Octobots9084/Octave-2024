@@ -48,8 +48,6 @@ public class TeleopDrive extends Command {
     if (swerve.getShootingRequestActive()) {
       swerve.targetAngleEnabled = true;
       swerve.targetAngle = swerve.getShootingRequest();
-    } else {
-      swerve.targetAngleEnabled = false;
     }
 
     if (swerve.targetAngleEnabled) {
