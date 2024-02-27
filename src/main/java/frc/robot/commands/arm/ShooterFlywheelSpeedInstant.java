@@ -12,7 +12,6 @@ public class ShooterFlywheelSpeedInstant extends InstantCommand {
     public ShooterFlywheelSpeedInstant(ShooterSpeeds shooterSpeeds) {
         this.shooterSpeeds = shooterSpeeds;
         flywheel = ShooterFlywheel.getInstance();
-        super.addRequirements(flywheel);
 
     }
 

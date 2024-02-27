@@ -14,7 +14,6 @@ public class ShooterFlywheelSpeedTolerance extends Command {
     public ShooterFlywheelSpeedTolerance(ShooterSpeeds shooterSpeeds) {
         this.shooterSpeeds = shooterSpeeds;
         flywheel = ShooterFlywheel.getInstance();
-        super.addRequirements(flywheel);
     }
 
     @Override
@@ -25,7 +24,7 @@ public class ShooterFlywheelSpeedTolerance extends Command {
     @Override
     public boolean isFinished() {
         return MathUtil.isWithinTolerance(flywheel.getFlywheelSpeed(), shooterSpeeds.flywheels,
-                Constants.Arm.SHOOTER_FLYWHEEL_TOLERANCE);
+                Constants.Arm.SHOOTER_FLYWHEEL_TOLERANCE_RPM);
     }
 
 }

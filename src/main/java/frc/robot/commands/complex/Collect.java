@@ -32,8 +32,12 @@ public class Collect extends SequentialCommandGroup {
             return;
         }
         addCommands(
-                new InstantCommand(() -> {ShooterPivot.getInstance().notSoFastEggman = true;}),
-                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.COLLECTING);}),
+                new InstantCommand(() -> {
+                    SmartDashboard.putBoolean("CollectRunning", true);
+                }),
+                new InstantCommand(() -> {
+                    ShooterPivot.getInstance().notSoFastEggman = true;
+                }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),
                 new ParallelCommandGroup(
                         new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
@@ -42,11 +46,12 @@ public class Collect extends SequentialCommandGroup {
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                 new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
                 new WaitUntilCommand(intakeSensorTrue),
-                new InstantCommand(() -> {SmartDashboard.putBoolean("reached Checkpoint", true);}),
-                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);}),
-                new IntakeRollerSpeedInstant(IntakeSpeeds.REJECT),
-                new ParallelCommandGroup(
-                        new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
+                new InstantCommand(() -> {
+                    SmartDashboard.putBoolean("reached Checkpoint", true);
+                }),
+
+                new IntakeRollerSpeedInstant(IntakeSpeeds.STOP),
+                new ParallelCommandGroup(new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
