@@ -9,6 +9,8 @@ import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.ShooterFlywheel;
+import frc.robot.subsystems.lights.Animations;
+import frc.robot.subsystems.lights.Light;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class TheBigYeet extends SequentialCommandGroup {
@@ -18,6 +20,7 @@ public class TheBigYeet extends SequentialCommandGroup {
                 new WaitCommand(0.2),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
-                new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT));
+                new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
+                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.DEFAULT);}));
     }
 }

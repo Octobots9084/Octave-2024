@@ -19,6 +19,8 @@ import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
+import frc.robot.subsystems.lights.Animations;
+import frc.robot.subsystems.lights.Light;
 
 public class PrepAmp extends InstantCommand {
     private ShooterPivot shooterPivot;
@@ -39,5 +41,6 @@ public class PrepAmp extends InstantCommand {
         shooterElevator.setPosition(ArmPositions.AMP);
         shooterPivot.setPosition(ArmPositions.AMP);
         shooterFlywheel.setFlywheelSpeed(ShooterSpeeds.AMP);
+        Light.getInstance().setAnimation(Animations.SHOT_SPECIAL);
     }
 }
