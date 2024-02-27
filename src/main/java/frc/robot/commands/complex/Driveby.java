@@ -111,5 +111,6 @@ public class Driveby extends Command {
             CommandScheduler.getInstance().schedule(new TheBigYeet());
         }
         swerveSubsystem.setShootingRequestActive(false);
+        swerveSubsystem.targetAngleEnabled = false;
     }
 }

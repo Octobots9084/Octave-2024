@@ -58,7 +58,9 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
-		public static final PIDController TAREGET_ANGLE_CONTROLLER = new PIDController(10, 0, 0);
+		public static final PIDController TAREGET_ANGLE_CONTROLLER = new PIDController(8, 0, 0.8);
+        public static final double TURN_TO_ANGLE_TOLERANCE = 0.2;
+		public static final double TURN_TO_ANGLE_TIME_TOLERANCE = 0.2;
 	}
 
 	public static class OperatorConstants {
