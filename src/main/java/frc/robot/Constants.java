@@ -8,13 +8,18 @@ import java.util.Optional;
 
 import com.pathplanner.lib.util.PIDConstants;
 
+import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.numbers.N1;
+import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import swervelib.SwerveDrive;
 import swervelib.math.Matter;
 
 /**
@@ -90,6 +95,23 @@ public final class Constants {
 
 	public static class PoseEstimator {
 		public static final double BUFFER_DURATION_SECS = 1.5;
+
+		/**
+		 * Standard deviations of the pose estimate (x position in meters, y position in
+		 * meters, and heading in radians). Increase these numbers to trust your state
+		 * estimate less.
+		 */
+		public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
+
+		/**
+		 * The base standard deviation of the vision measurement, for best accuracy
+		 * calculate the standard deviation at 2 or more points and fit a line to it and
+		 * modify this using {@link SwerveDrive#addVisionMeasurement(Pose2d, double, Matrix)}
+		 * with the calculated optimal standard deviation. (Units should be meters per
+		 * pixel). By optimizing this you can get vision accurate to inches instead of feet.
+		 * Increase these numbers to trust your vision estimate less.
+		 */
+		public static final Matrix<N3, N1> baseVisionMeasurementStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
 	}
 
 	public static final class VisionConstants {

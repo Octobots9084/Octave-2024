@@ -37,6 +37,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -47,10 +48,6 @@ import frc.robot.util.telemetry.TelemUtils;
 public class VisionEstimation extends SubsystemBase {
         private final SwerveSubsystem swerveSubsystem;
         public static VisionEstimation INSTANCE;
-
-        public Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.1,
-                        0.1,
-                        0.1);
 
         public final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"), VisionConstants.ROBOT_TO_INKY);
         // public final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"), VisionConstants.ROBOT_TO_BLINKY);
@@ -187,7 +184,7 @@ public class VisionEstimation extends SubsystemBase {
                                                                                 * VisionConstants.TAG_PRESENCE_WEIGHT)));
 
                 confidenceTelemetry.addNumber(confidenceMultiplier);
-                return visionMeasurementStdDevs.times(confidenceMultiplier);
+                return Constants.PoseEstimator.baseVisionMeasurementStdDevs.times(confidenceMultiplier);
         }
 
         public void estimatorChecker(Vision estimator, CountPerPeriodTelemetry getAtomicCountTelemetry,

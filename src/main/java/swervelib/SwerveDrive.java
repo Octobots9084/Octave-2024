@@ -1,7 +1,6 @@
 package swervelib;
 
 import edu.wpi.first.math.Matrix;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.estimator2.SwerveDrivePoseEstimator2;
 import edu.wpi.first.math.filter.SlewRateLimiter;
@@ -23,6 +22,8 @@ import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -82,26 +83,6 @@ public class SwerveDrive {
    * Swerve controller for controlling heading of the robot.
    */
   public SwerveController swerveController;
-  /**
-   * Standard deviation of encoders and gyroscopes, usually should not change.
-   * (meters of position and degrees of
-   * rotation)
-   */
-  public Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1,
-      0.1,
-      0.1);
-  /**
-   * The standard deviation of the vision measurement, for best accuracy calculate
-   * the standard deviation at 2 or more
-   * points and fit a line to it and modify this using
-   * {@link SwerveDrive#addVisionMeasurement(Pose2d, double, Matrix)}
-   * with the calculated optimal standard deviation. (Units should be meters per
-   * pixel). By optimizing this you can get
-   * vision accurate to inches instead of feet.
-   */
-  public Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.9,
-      0.9,
-      0.9);
   /**
    * Invert odometry readings of drive motor positions, used as a patch for
    * debugging currently.
@@ -210,8 +191,8 @@ public class SwerveDrive {
         getYaw(),
         getModulePositions(),
         new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
-        stateStdDevs,
-        visionMeasurementStdDevs); // x,y,heading in radians; Vision measurement std dev, higher=less weight
+        Constants.PoseEstimator.stateStdDevs,
+        Constants.PoseEstimator.baseVisionMeasurementStdDevs);
 
     zeroGyro();
 
@@ -1042,12 +1023,7 @@ public class SwerveDrive {
   public void addVisionMeasurement(Pose2d robotPose, double timestamp) {
     odometryLock.lock();
     swerveDrivePoseEstimator.addVisionMeasurement(new Pose2d(robotPose.getX(), robotPose.getY(), getYaw()), timestamp);
-    // Pose2d newOdometry = new Pose2d(swerveDrivePoseEstimator.getEstimatedPosition().getTranslation(),
-    //     robotPose.getRotation());
     odometryLock.unlock();
-
-    // setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
-    // resetOdometry(newOdometry);
   }
 
   /**
@@ -1074,7 +1050,6 @@ public class SwerveDrive {
    */
   public void addVisionMeasurement(Pose2d robotPose, double timestamp,
       Matrix<N3, N1> visionMeasurementStdDevs) {
-    this.visionMeasurementStdDevs = visionMeasurementStdDevs;
     swerveDrivePoseEstimator.setVisionMeasurementStdDevs(visionMeasurementStdDevs);
     addVisionMeasurement(robotPose, timestamp);
   }
