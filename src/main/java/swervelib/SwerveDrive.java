@@ -1041,13 +1041,13 @@ public class SwerveDrive {
    */
   public void addVisionMeasurement(Pose2d robotPose, double timestamp) {
     odometryLock.lock();
-    swerveDrivePoseEstimator.addVisionMeasurement(robotPose, timestamp);
-    Pose2d newOdometry = new Pose2d(swerveDrivePoseEstimator.getEstimatedPosition().getTranslation(),
-        robotPose.getRotation());
+    swerveDrivePoseEstimator.addVisionMeasurement(new Pose2d(robotPose.getX(), robotPose.getY(), getYaw()), timestamp);
+    // Pose2d newOdometry = new Pose2d(swerveDrivePoseEstimator.getEstimatedPosition().getTranslation(),
+    //     robotPose.getRotation());
     odometryLock.unlock();
 
     // setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
-    resetOdometry(newOdometry);
+    // resetOdometry(newOdometry);
   }
 
   /**
