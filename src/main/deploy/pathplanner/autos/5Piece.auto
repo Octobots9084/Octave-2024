@@ -1,0 +1,85 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.413628281802018,
+      "y": 5.559932574410603
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "SpeakerAuto"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3rdPieceBlue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopShooterTrack"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "2ndPieceBlue"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "StopShooterTrack"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1stPieceBlue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "FirstToFourthBlue"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4thPieceBlue"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
