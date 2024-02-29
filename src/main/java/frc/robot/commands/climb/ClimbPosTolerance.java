@@ -13,7 +13,6 @@ public class ClimbPosTolerance extends Command {
     public ClimbPosTolerance(ClimbPositions climbPositions) {
         this.climbPositions = climbPositions;
         climb = Climb.getInstance();
-        super.addRequirements(climb);
     }
 
     @Override

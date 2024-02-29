@@ -14,6 +14,8 @@ public class ShooterTrack extends SubsystemBase {
     public static ShooterTrack shootingRetainer;
     private CANSparkFlex motor1;
     private DigitalInput sensor;
+    public boolean pieceGood = false;
+    public boolean currentlyShooting = false;
 
     /*
      * Things this needs to do:
