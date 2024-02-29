@@ -12,6 +12,7 @@ import frc.robot.commands.complex.Panic;
 import frc.robot.commands.complex.PrepAmp;
 import frc.robot.commands.complex.PrepClimb;
 import frc.robot.commands.complex.PrepSpeaker;
+import frc.robot.commands.complex.SimpleClimb;
 import frc.robot.commands.complex.TheBigYeet;
 import frc.robot.commands.intake.IntakeRollerSpeedInstant;
 import frc.robot.commands.intake.IntakeTrackSpeedInstant;
@@ -52,7 +53,7 @@ public class ButtonConfig {
         coDriverButtons.button(3).onTrue(new SequentialCommandGroup(new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT), new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT)));
         coDriverButtons.button(7).onTrue(new PrepClimb());
         coDriverButtons.button(8).onTrue(new Dunk());
-        coDriverButtons.button(9).onTrue(new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT));
+        coDriverButtons.button(9).onTrue(new SimpleClimb());
         coDriverButtons.button(10).onTrue(new TheBigYeet());
         coDriverButtons.button(11).onTrue(new Panic());
         coDriverButtons.button(12).onTrue(new CancelAllCommands());
