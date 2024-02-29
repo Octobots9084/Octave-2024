@@ -52,6 +52,7 @@ public class Collect extends SequentialCommandGroup {
                 }),
                 new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);}),
                 new IntakeRollerSpeedInstant(IntakeSpeeds.STOP),
+                new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
                 new ParallelCommandGroup(new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),

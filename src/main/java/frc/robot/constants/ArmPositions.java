@@ -5,7 +5,7 @@ public enum ArmPositions {
     AMP(20, 0.69),
     TRAP_SEGUEAY(0, 0),
     TRAP(44, 0),
-    SPEAKER_SHOT(0, 0.4414);
+    SPEAKER_SHOT(0, 0.46);
 
     public double elevator, pivot;
 
