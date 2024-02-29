@@ -54,6 +54,12 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
+    if (DriverStation.getAlliance().equals(DriverStation.Alliance.Blue)) {
+      Constants.isBlueAlliance = true ;
+        
+    } else {
+      Constants.isBlueAlliance = false;
+    }
     m_robotContainer = new RobotContainer();
 
     new ButtonConfig().initTeleop();
@@ -62,12 +68,7 @@ public class Robot extends TimedRobot {
     // immediately when disabled, but then also let it be pushed more
     disabledTimer = new Timer();
     Light.getInstance().setAnimation(Animations.DEFAULT);
-    if (DriverStation.getAlliance().equals(DriverStation.Alliance.Blue)) {
-      Constants.isBlueAlliance = true ;
-        
-    } else {
-      Constants.isBlueAlliance = false;
-    }
+    
 
   }
 
