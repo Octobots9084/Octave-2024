@@ -2,7 +2,7 @@ package frc.robot.constants;
 
 public enum IntakeSpeeds {
 
-    COLLECT(-0.8, 0.8),
+    COLLECT(-0.8, 1),
     STOP(0, 0),
     FEED(1, 1),
     REJECT(0.2, 0),

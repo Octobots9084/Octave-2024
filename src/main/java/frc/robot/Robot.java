@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.ShooterFlywheel;
+import frc.robot.subsystems.lights.Animations;
+import frc.robot.subsystems.lights.Light;
 import frc.robot.commands.ButtonConfig;
 import java.io.File;
 import java.io.IOException;
@@ -57,6 +59,7 @@ public class Robot extends TimedRobot {
     // let the robot stop
     // immediately when disabled, but then also let it be pushed more
     disabledTimer = new Timer();
+    Light.getInstance().setAnimation(Animations.DEFAULT);
   }
 
   /**

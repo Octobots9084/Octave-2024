@@ -14,6 +14,7 @@ public class IntakeTrack extends SubsystemBase {
     public static IntakeTrack intakeTrack;
     private CANSparkFlex motor1;
     private DigitalInput sensor;
+    
 
     /*
      * Things this needs to do:

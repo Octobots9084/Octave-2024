@@ -13,7 +13,6 @@ public class ClimbManual extends Command {
 
     public ClimbManual() {
         climb = Climb.getInstance();
-        addRequirements(climb);
     }
 
     @Override
