@@ -17,6 +17,7 @@ public class ToggleTurnToAmp extends Command {
     @Override
     public void initialize() {
         if (!SwerveSubsystem.getInstance().targetAngleEnabled) {
+            
             SwerveSubsystem.getInstance().targetAngle = new Rotation2d(-Math.PI/2);
         }
 

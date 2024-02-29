@@ -17,7 +17,11 @@ public class ToggleTurnToSource extends Command {
     @Override
     public void initialize() {
         if (!SwerveSubsystem.getInstance().targetAngleEnabled) {
-            SwerveSubsystem.getInstance().targetAngle = new Rotation2d(Math.toRadians(60));
+            double target = 60;
+            if (!Constants.isBlueAlliance) {
+                target = 30;
+            }
+            SwerveSubsystem.getInstance().targetAngle = new Rotation2d(Math.toRadians(target));
         }
 
         SwerveSubsystem.getInstance().targetAngleEnabled = !SwerveSubsystem.getInstance().targetAngleEnabled;

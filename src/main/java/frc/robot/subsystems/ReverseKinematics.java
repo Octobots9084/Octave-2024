@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 
 // velocities are positive going towards the target and negative when moving away
 // all units should be in meters, m/s, rad, etc.
@@ -28,6 +29,12 @@ public class ReverseKinematics {
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
+                if (Constants.isBlueAlliance) {
+                        subwooferXPos = 0;
+                        subwooferYPos = 5.5;
+                } else {
+                        subwooferXPos
+                }
                 SmartDashboard.putString("poseconvert",
                                 new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d())
                                                 .toString());
