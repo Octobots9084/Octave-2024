@@ -11,7 +11,6 @@ public class IntakeRollerSpeedInstant extends InstantCommand {
     public IntakeRollerSpeedInstant(IntakeSpeeds intakeSpeeds) {
         this.intakeSpeeds = intakeSpeeds;
         intakeroller = IntakeRoller.getInstance();
-        super.addRequirements(intakeroller);
     }
 
     @Override

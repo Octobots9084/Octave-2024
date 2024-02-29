@@ -10,7 +10,6 @@ public class ElevatorZero extends Command {
 
     public ElevatorZero() {
         elevator = ShooterElevator.getInstance();
-        super.addRequirements(elevator);
     }
 
     @Override
