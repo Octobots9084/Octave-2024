@@ -76,9 +76,9 @@ public class Driveby extends Command {
 
         if (!pivot.notSoFastEggman) {
             pivot.setPosition(targetPivot);
+            flywheel.setFlyWheelSpeedMeters(targetFlywheel);
+            swerveSubsystem.setShootingRequest(targetTurn);
         }
-        flywheel.setFlyWheelSpeedMeters(targetFlywheel);
-        swerveSubsystem.setShootingRequest(targetTurn);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class Driveby extends Command {
                 && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.003)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.01)) {
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05)) {
             Light.getInstance().setAnimation(Animations.SHOT_READY);
             return true;
         } else {

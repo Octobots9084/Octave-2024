@@ -46,8 +46,7 @@ public class ReverseKinematics {
 
         // returns the vertical launch velocity of the note
         // for internal use only
-        private static double calcLaunchVerticalVel(Pose2d pos, ChassisSpeeds speed,
-                        double timeInAir) {
+        private static double calcLaunchVerticalVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
                 //double heightDelta = (g * Math.pow(timeInAir, 2)) / 2;
                 //double verticalVel = ((constTargetHeightDiff)// + heightDelta)
                 //                / timeInAir);

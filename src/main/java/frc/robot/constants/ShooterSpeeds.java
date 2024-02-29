@@ -6,12 +6,12 @@ public enum ShooterSpeeds {
     SPEAKER(0.7, -25),
     STOP(0, 0),
     PANIC(1, -500),
-    AMP(1, -20),
+    AMP(1, -25),
     JIGGLE_FORWARD(0.1, 0),
     JIGGLE_BACKWARD(-0.1, 0),
     TRAP(1, 0.5),
     SPECIAL_IDLE(0.1,0),
-    DRIVE_BY(0, -20);
+    DRIVE_BY(0, -25);
 
     public double track;
     public double flywheels;
