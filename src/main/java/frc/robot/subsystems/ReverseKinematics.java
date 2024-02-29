@@ -49,8 +49,10 @@ public class ReverseKinematics {
         private static double calcLaunchVerticalVel(Pose2d pos, ChassisSpeeds speed,
                         double timeInAir) {
                 //double heightDelta = (g * Math.pow(timeInAir, 2)) / 2;
-                double verticalVel = ((constTargetHeightDiff)// + heightDelta)
-                                / timeInAir);
+                //double verticalVel = ((constTargetHeightDiff)// + heightDelta)
+                //                / timeInAir);
+                double verticalVel = ((constTargetHeightDiff/timeInAir) + (0.5*g*timeInAir)) //(pos.getY() / timeInAir)
+                - (speed.vyMetersPerSecond * movementMultiplierY);
                 SmartDashboard.putNumber("verticalVel", verticalVel);
                 //SmartDashboard.putNumber("heightDelta", heightDelta);
                 return verticalVel;
@@ -59,8 +61,7 @@ public class ReverseKinematics {
         // returns the horizontal (parallel to the subwoofer opening) launch velocity of
         // the note
         // for internal use only
-        private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed,
-                        double timeInAir) {
+        private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
                 double xVel = (pos.getX() / timeInAir) - (speed.vxMetersPerSecond * movementMultiplierX);
                 SmartDashboard.putNumber("xVel", xVel);
                 return xVel;
@@ -69,9 +70,9 @@ public class ReverseKinematics {
         // returns the "vertical" from above (perpendicular to the subwoofer opening)
         // launch velocity of the note
         // for internal use only
-        private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed,
-                        double timeInAir) {
-                double yVel = ((constTargetHeightDiff/timeInAir) + (0.5*g*timeInAir)) //(pos.getY() / timeInAir)
+        private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
+                //((constTargetHeightDiff/timeInAir) + (0.5*g*timeInAir)) //
+                double yVel = (pos.getY() / timeInAir)
                                 - (speed.vyMetersPerSecond * movementMultiplierY);
                 SmartDashboard.putNumber("yVel", yVel);
                 return yVel;
