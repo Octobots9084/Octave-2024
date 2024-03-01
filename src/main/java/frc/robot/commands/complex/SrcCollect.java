@@ -28,12 +28,20 @@ import frc.robot.subsystems.lights.Light;
 public class SrcCollect extends SequentialCommandGroup {
     public SrcCollect() {
         BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
+        BooleanSupplier shooterSensorFalse = () -> ShooterTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
         if (shooterSensorTrue.getAsBoolean()) {
             return;
         }
         addCommands(
-                new ShooterFlywheelSpeedInstant(ShooterSpeeds.SRCCOLLECT));
+                new ShooterFlywheelSpeedInstant(ShooterSpeeds.SRC_COLLECT),
+                new ShooterPivotPosInstant(ArmPositions.SOURCE_COLLECT),
+                new WaitUntilCommand(shooterSensorTrue),
+                new WaitUntilCommand(shooterSensorFalse),
+                new WaitUntilCommand(shooterSensorTrue),
+                new ShooterFlywheelSpeedInstant(ShooterSpeeds.STOP),
+                new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)
+                );
     }
 
 }
