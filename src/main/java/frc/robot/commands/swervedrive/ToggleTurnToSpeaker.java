@@ -17,7 +17,11 @@ public class ToggleTurnToSpeaker extends Command {
     @Override
     public void initialize() {
         if (!SwerveSubsystem.getInstance().targetAngleEnabled) {
-            SwerveSubsystem.getInstance().targetAngle = new Rotation2d(0);
+            double target = 0;
+            if (!Constants.isBlueAlliance) {
+                target = 180;
+            }
+            SwerveSubsystem.getInstance().targetAngle = new Rotation2d(target);
         }
 
         SwerveSubsystem.getInstance().targetAngleEnabled = !SwerveSubsystem.getInstance().targetAngleEnabled;

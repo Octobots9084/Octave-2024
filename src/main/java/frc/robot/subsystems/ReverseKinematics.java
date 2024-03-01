@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 
 // velocities are positive going towards the target and negative when moving away
 // all units should be in meters, m/s, rad, etc.
@@ -20,7 +21,7 @@ public class ReverseKinematics {
         // X and Y positions of the subwoofer with regards to (0,0) on the robot's
         // Pose2d
         private static double subwooferXPos = 0;
-        private static double subwooferYPos = 5.5;
+        private static double subwooferYPos = 5.55;
         private static double encoderOffset = 0.597;
         private static double movementMultiplierX = 0;
         private static double movementMultiplierY = 0;
@@ -28,6 +29,13 @@ public class ReverseKinematics {
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
+                if (Constants.isBlueAlliance) {
+                        subwooferXPos = 0;
+                        subwooferYPos = 5.5;
+                } else {
+                        subwooferXPos = 16.548;
+                        subwooferYPos = 5.55;
+                }
                 SmartDashboard.putString("poseconvert",
                                 new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d())
                                                 .toString());
@@ -107,15 +115,15 @@ public class ReverseKinematics {
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
                 SmartDashboard.putNumber("targetAngleShoote",
-                                (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
-                                                calcLaunchXVel(pos, speed, timeInAir)))));
+                (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
+                calcLaunchXVel(pos, speed, timeInAir)))));
                 double angleDiffRadians = (Math.PI
                                 + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
-                                                calcLaunchXVel(pos, speed, timeInAir))));
+                                                -Math.abs(calcLaunchXVel(pos, speed, timeInAir)))));
                 double normalizedAngleDiff = angleDiffRadians
                                 / (2 * Math.PI);
                 return encoderOffset
-                                - normalizedAngleDiff;
+                - normalizedAngleDiff;
         }
 
         public static void configHeightDif(double targetHeightDiff) {

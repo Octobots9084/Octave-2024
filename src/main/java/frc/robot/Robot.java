@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -16,6 +17,7 @@ import frc.robot.subsystems.lights.Light;
 import frc.robot.commands.ButtonConfig;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Driver;
 
 import swervelib.parser.SwerveParser;
 
@@ -52,6 +54,12 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
+    if (DriverStation.getAlliance().equals(DriverStation.Alliance.Blue)) {
+      Constants.isBlueAlliance = true ;
+        
+    } else {
+      Constants.isBlueAlliance = false;
+    }
     m_robotContainer = new RobotContainer();
 
     new ButtonConfig().initTeleop();
@@ -60,6 +68,8 @@ public class Robot extends TimedRobot {
     // immediately when disabled, but then also let it be pushed more
     disabledTimer = new Timer();
     Light.getInstance().setAnimation(Animations.DEFAULT);
+    
+
   }
 
   /**
@@ -99,6 +109,13 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     if (disabledTimer.hasElapsed(Constants.Drivebase.WHEEL_LOCK_TIME)) {
       disabledTimer.stop();
+    }
+
+    if (DriverStation.getAlliance().equals(DriverStation.Alliance.Blue)) {
+      Constants.isBlueAlliance = true ;
+        
+    } else {
+      Constants.isBlueAlliance = false;
     }
   }
 

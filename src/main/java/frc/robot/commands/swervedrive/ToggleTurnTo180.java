@@ -17,7 +17,12 @@ public class ToggleTurnTo180 extends Command {
     @Override
     public void initialize() {
         if (!SwerveSubsystem.getInstance().targetAngleEnabled) {
-            SwerveSubsystem.getInstance().targetAngle = new Rotation2d(Math.PI);
+            double target = Math.PI;
+            if (!Constants.isBlueAlliance) {
+                target = 0;
+            }
+            
+            SwerveSubsystem.getInstance().targetAngle = new Rotation2d(target);
         }
 
         SwerveSubsystem.getInstance().targetAngleEnabled = !SwerveSubsystem.getInstance().targetAngleEnabled;
