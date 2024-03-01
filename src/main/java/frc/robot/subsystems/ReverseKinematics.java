@@ -23,7 +23,7 @@ public class ReverseKinematics {
         private static double subwooferYPos = 5.5;
         private static double encoderOffset = 0.597;
         private static double movementMultiplierX = 1.5;
-        private static double movementMultiplierY = 1;
+        private static double movementMultiplierY = 1.5;
         private static double flywheelSpeedMultiplier = 0.8;
 
         // converts Pose2d coords into positions relative to the target
@@ -50,8 +50,8 @@ public class ReverseKinematics {
                 //double heightDelta = (g * Math.pow(timeInAir, 2)) / 2;
                 //double verticalVel = ((constTargetHeightDiff)// + heightDelta)
                 //                / timeInAir);
-                double verticalVel = ((constTargetHeightDiff/timeInAir) + (0.5*g*timeInAir)) //(pos.getY() / timeInAir)
-                - (speed.vyMetersPerSecond * movementMultiplierY);
+                double verticalVel = ((constTargetHeightDiff/timeInAir) + (0.5*g*timeInAir)); //(pos.getY() / timeInAir)
+  
                 SmartDashboard.putNumber("verticalVel", verticalVel);
                 //SmartDashboard.putNumber("heightDelta", heightDelta);
                 return verticalVel;
@@ -75,15 +75,6 @@ public class ReverseKinematics {
                                 - (speed.vyMetersPerSecond * movementMultiplierY);
                 SmartDashboard.putNumber("yVel", yVel);
                 return yVel;
-        }
-
-        // returns total speed the note should be launched at, in m/s
-        public static double calcTotalLaunchVelocity(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS) {
-                double timeInAir = calcTimeInAir(pos, speed, flywheelSpeedMTS);
-                return Math.sqrt(Math.pow(calcLaunchXVel(pos, speed, timeInAir), 2)
-                                /*
-                                 * + Math.pow(calcLaunchYVel(pos, speed), 2)
-                                 */ + Math.pow(calcLaunchVerticalVel(pos, speed, timeInAir), 2));
         }
 
         // returns the angle (wrt parralel to the target opening) to the target opening
