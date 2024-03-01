@@ -42,7 +42,6 @@ public class Driveby extends Command {
     public void initialize() {
         swerveSubsystem.setShootingRequestActive(true);
         CommandScheduler.getInstance().schedule(new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT));
-        CommandScheduler.getInstance().schedule(new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE));
         SmartDashboard.putNumber("targetPoseX", 3.0);
         Light.getInstance().setAnimation(Animations.AIMING);
     }
@@ -73,12 +72,11 @@ public class Driveby extends Command {
                 + MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.MANUAL_DEADBAND) * 0.05);
         updateTargets();
         SmartDashboard.putString("realPose2d", realPose2d.toString());
-
+        swerveSubsystem.setShootingRequest(targetTurn);
+        flywheel.setFlyWheelSpeedMeters(targetFlywheel);
         if (!pivot.notSoFastEggman) {
             pivot.setPosition(targetPivot);
         }
-        flywheel.setFlyWheelSpeedMeters(targetFlywheel);
-        swerveSubsystem.setShootingRequest(targetTurn);
     }
 
     @Override
@@ -97,7 +95,7 @@ public class Driveby extends Command {
                 && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.003)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.01)) {
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05)) {
             Light.getInstance().setAnimation(Animations.SHOT_READY);
             return true;
         } else {
