@@ -17,7 +17,7 @@ public class ToggleTurnToSource extends Command {
     @Override
     public void initialize() {
         if (!SwerveSubsystem.getInstance().targetAngleEnabled) {
-            double target = 60;
+            double target = 150;
             if (!Constants.isBlueAlliance) {
                 target = 30;
             }
