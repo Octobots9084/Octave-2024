@@ -66,6 +66,7 @@ public final class Constants {
 		public static final PIDController TAREGET_ANGLE_CONTROLLER = new PIDController(8, 0, 0.8);
         public static final double TURN_TO_ANGLE_TOLERANCE = 0.2;
 		public static final double TURN_TO_ANGLE_TIME_TOLERANCE = 0.2;
+        public static final PIDController DRIVER_TAREGET_ANGLE_CONTROLLER = new PIDController(6, 0, 1);
 	}
 
 	public static class OperatorConstants {

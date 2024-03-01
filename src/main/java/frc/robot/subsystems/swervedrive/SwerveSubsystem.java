@@ -53,6 +53,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public Rotation2d targetAngle = new Rotation2d();
   public boolean targetAngleEnabled = false;
   public PIDController targetAngleController;
+  public PIDController driverTargetAngleController;
   public boolean collectAutoRunning = false;
 
   /**
@@ -78,6 +79,10 @@ public class SwerveSubsystem extends SubsystemBase {
     targetAngleController = Constants.Drivebase.TAREGET_ANGLE_CONTROLLER;
     ;
     targetAngleController.enableContinuousInput(-Math.PI, Math.PI);
+
+    driverTargetAngleController = Constants.Drivebase.DRIVER_TAREGET_ANGLE_CONTROLLER;
+    ;
+    driverTargetAngleController.enableContinuousInput(-Math.PI, Math.PI);
   }
 
   public static SwerveSubsystem getInstance() {
