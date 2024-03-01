@@ -10,7 +10,8 @@ public enum ShooterSpeeds {
     JIGGLE_FORWARD(0.1, 0),
     JIGGLE_BACKWARD(-0.1, 0),
     TRAP(1, -2500),
-    DRIVE_BY(0, -20);
+    DRIVE_BY(0, -20),
+    SRCCOLLECT(-.3, -1);
 
     public double track;
     public double flywheels;
