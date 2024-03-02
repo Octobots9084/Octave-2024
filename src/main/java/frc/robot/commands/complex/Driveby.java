@@ -83,8 +83,7 @@ public class Driveby extends Command {
     public boolean isFinished() {
         double realRotation = swerveSubsystem.getHeading().getRadians();
         SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
-        SmartDashboard.putNumber("realFlywheelTop", flywheel.getFlywheelSpeedMeters());
-        SmartDashboard.putNumber("realFlywheelBottom", flywheel.getAuxiluryFlywheelSpeedMeters());
+        
         SmartDashboard.putNumber("targetPivot", targetPivot);
         SmartDashboard.putNumber("realPivot", realPivot);
         SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));

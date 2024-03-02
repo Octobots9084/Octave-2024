@@ -45,7 +45,7 @@ public class ButtonConfig {
         driverButtons.button(5).onTrue(new ToggleTurnToAmp());
         driverButtons.button(6).onTrue(new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro));
         driverButtons.button(11).onTrue(new Panic());
-        driverButtons.button(12).onTrue(new CancelAllCommands());
+        driverButtons.button(9).onTrue(new CancelAllCommands());
 
         coDriverButtons.button(1).onTrue(new Collect());
         coDriverButtons.button(7).onTrue(new PrepClimb());

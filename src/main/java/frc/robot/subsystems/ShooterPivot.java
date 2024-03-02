@@ -75,7 +75,7 @@ public class ShooterPivot extends SubsystemBase {
     }
 
     public double getPosition() {
-        return rightMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition();
+        return leftMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition();
     }
 
     public double getLastTargetPosition() {
