@@ -13,7 +13,6 @@ public class IntakeTrackSpeedInstant extends InstantCommand {
     public IntakeTrackSpeedInstant(IntakeSpeeds intakeSpeed) {
         this.intakeSpeed = intakeSpeed;
         track = IntakeTrack.getInstance();
-        super.addRequirements(track);
     }
 
     @Override

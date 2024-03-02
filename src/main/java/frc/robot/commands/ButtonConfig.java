@@ -33,7 +33,7 @@ public class ButtonConfig {
     CommandJoystick coDriverButtons = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_BUTTONS);
 
     public void initTeleop() {
-        driverLeft.button(1).onTrue(new SequentialCommandGroup(new PrepAmp(), new ToggleTurnToAmp()));
+        driverButtons.button(10).onTrue(new SequentialCommandGroup(new PrepAmp(), new ToggleTurnToAmp()));
         driverLeft.button(2).whileTrue(new Driveby());
 
         driverRight.button(1).onTrue(new TheBigYeet());
@@ -46,7 +46,7 @@ public class ButtonConfig {
         driverButtons.button(5).onTrue(new ToggleTurnToAmp());
         driverButtons.button(6).onTrue(new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro));
         driverButtons.button(11).onTrue(new Panic());
-        driverButtons.button(12).onTrue(new CancelAllCommands());
+        driverButtons.button(9).onTrue(new CancelAllCommands());
 
         coDriverButtons.button(1).onTrue(new ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
         coDriverButtons.button(2).onTrue(new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT));

@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -13,11 +15,15 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
+import frc.robot.subsystems.lights.Animations;
+import frc.robot.subsystems.lights.Light;
 import frc.robot.commands.ButtonConfig;
 import frc.robot.commands.climb.ClimbManual;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Driver;
+import java.util.Optional;
 
 import swervelib.parser.SwerveParser;
 
@@ -54,6 +60,15 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
+    Optional<Alliance> ally = DriverStation.getAlliance();
+    if (ally.isPresent()) {
+      if (ally.get() == Alliance.Red) {
+          Constants.isBlueAlliance = false;
+      }
+      if (ally.get() == Alliance.Blue) {
+          Constants.isBlueAlliance = true;
+      }
+    }
     m_robotContainer = new RobotContainer();
 
     new ButtonConfig().initTeleop();
@@ -62,6 +77,9 @@ public class Robot extends TimedRobot {
     // immediately when disabled, but then also let it be pushed more
     disabledTimer = new Timer();
     CommandScheduler.getInstance().setDefaultCommand(Climb.getInstance(), new ClimbManual());
+    Light.getInstance().setAnimation(Animations.DEFAULT);
+    
+
   }
 
   /**
@@ -86,6 +104,8 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("thng", ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
     SmartDashboard.putNumber("thng2", ShooterFlywheel.getInstance().getRightFlywheelSpeed());
+    SmartDashboard.putNumber("realFlywheelTop", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
+        SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
     SmartDashboard.putNumber("climbele", ShooterElevator.getInstance().getPosition()*ShooterElevator.getInstance().gearing);
 
   }
@@ -103,6 +123,16 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     if (disabledTimer.hasElapsed(Constants.Drivebase.WHEEL_LOCK_TIME)) {
       disabledTimer.stop();
+    }
+
+    Optional<Alliance> ally = DriverStation.getAlliance();
+    if (ally.isPresent()) {
+      if (ally.get() == Alliance.Red) {
+          Constants.isBlueAlliance = false;
+      }
+      if (ally.get() == Alliance.Blue) {
+          Constants.isBlueAlliance = true;
+      }
     }
   }
 
