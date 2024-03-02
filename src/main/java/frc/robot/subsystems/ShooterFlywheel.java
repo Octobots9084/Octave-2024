@@ -45,12 +45,15 @@ public class ShooterFlywheel extends SubsystemBase {
 
         motorOne.getPIDController().setFeedbackDevice(motorOne.getEncoder());
         motorOne.setIdleMode(IdleMode.kCoast);
-        motorOne.setSmartCurrentLimit(30, 30);
+        motorOne.setSmartCurrentLimit(40, 40);
         motorOne.setInverted(false);
-        motorOne.getPIDController().setP(0.0004);
-        motorOne.getPIDController().setI(0.0);
+        motorOne.getPIDController().setP(0.001);
+        motorOne.getPIDController().setI(0);
         motorOne.getPIDController().setD(0);
-        motorOne.getPIDController().setFF(0.000160);
+        motorOne.getPIDController().setFF(0.00018);
+        motorOne.enableVoltageCompensation(10);
+        // motorOne.getPIDController().setIZone(1);
+
         motorTwo = new CANSparkFlex(17, MotorType.kBrushless);
         motorTwo.restoreFactoryDefaults();
         motorTwo.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 500);
@@ -65,12 +68,14 @@ public class ShooterFlywheel extends SubsystemBase {
 
         motorTwo.getPIDController().setFeedbackDevice(motorTwo.getEncoder());
         motorTwo.setIdleMode(IdleMode.kCoast);
-        motorTwo.setSmartCurrentLimit(30, 30);
+        motorTwo.setSmartCurrentLimit(40, 40);
         motorTwo.setInverted(false);
-        motorTwo.getPIDController().setP(0.0004);
+        motorTwo.getPIDController().setP(0.001);
         motorTwo.getPIDController().setI(0.0);
         motorTwo.getPIDController().setD(0);
-        motorTwo.getPIDController().setFF(0.000156);
+        motorTwo.getPIDController().setFF(0.000185);
+        motorTwo.enableVoltageCompensation(10);
+        // motorTwo.getPIDController().setIZone(1);
 
         motorOnepid = motorOne.getPIDController();
 
@@ -97,6 +102,7 @@ public class ShooterFlywheel extends SubsystemBase {
     public void setFlywheelActive(boolean setFlywheelActive) {
         if (!setFlywheelActive) {
             motorOne.getPIDController().setReference(0, ControlType.kVoltage);
+            motorTwo.getPIDController().setReference(0, ControlType.kVoltage);
         }
     }
 
@@ -131,5 +137,15 @@ public class ShooterFlywheel extends SubsystemBase {
 
     public double getAuxiluryFlywheelSpeed() {
         return motorTwo.getEncoder().getVelocity();
+    }
+
+    public double getAuxiluryFlywheelSpeedMeters() {
+        return (getAuxiluryFlywheelSpeed() * circumference) / 60;
+    }
+
+    public void setFlywheelPercent(double percent) {
+        motorOne.set(-percent);
+        motorTwo.set(percent);
+
     }
 }

@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "SpeakerAuto"
           }
         },
         {
@@ -24,21 +24,15 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Collect"
+            "pathName": "3rdPieceBlue"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "3rdPieceBlue"
+            "waitTime": 4.0
           }
         },
         {
@@ -54,21 +48,15 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Collect"
+            "pathName": "2ndPieceBlue"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "2ndPieceBlue"
+            "waitTime": 4.0
           }
         },
         {
@@ -84,21 +72,15 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Collect"
+            "pathName": "1stPieceBlue"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "1stPieceBlue"
+            "waitTime": 4.0
           }
         },
         {

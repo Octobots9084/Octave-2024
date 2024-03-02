@@ -6,6 +6,7 @@ import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
+import org.photonvision.targeting.PhotonPipelineResult;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
@@ -65,10 +66,10 @@ public class Vision implements Runnable {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult(); //Gets the latest camera results
 
-        SwerveSubsystem.getInstance().getSwerveDrive().field.getObject("vision/" + cameraName).setPose(
-            photonResults.getBestTarget().getBestCameraToTarget().getX(),
-            photonResults.getBestTarget().getBestCameraToTarget().getY(),
-            photonResults.getBestTarget().getBestCameraToTarget().getRotation().toRotation2d());
+        // SwerveSubsystem.getInstance().getSwerveDrive().field.getObject("vision/" + cameraName).setPose(
+        //     photonResults.getBestTarget().getBestCameraToTarget().getX(),
+        //     photonResults.getBestTarget().getBestCameraToTarget().getY(),
+        //     photonResults.getBestTarget().getBestCameraToTarget().getRotation().toRotation2d());
 
         if (photonResults.hasTargets()) {
           //Updates the pose estimator
@@ -97,6 +98,14 @@ public class Vision implements Runnable {
     // Run telemetry
     runCountTelemetry.periodic();
     setAtomicCountTelemetry.periodic();
+  }
+
+  public boolean hasTargets() {
+    return photonCamera.getLatestResult().hasTargets();
+  }
+
+  public PhotonPipelineResult getLatestResults() {
+    return photonCamera.getLatestResult();
   }
 
   /**

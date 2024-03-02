@@ -46,10 +46,11 @@ import frc.robot.util.telemetry.TelemUtils;
 
 public class VisionEstimation extends SubsystemBase {
         private final SwerveSubsystem swerveSubsystem;
+        public static VisionEstimation INSTANCE;
 
-        public Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.9,
-                        0.9,
-                        0.9);
+        public Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.1,
+                        0.1,
+                        0.1);
 
         private final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"), VisionConstants.ROBOT_TO_INKY);
 
@@ -107,6 +108,15 @@ public class VisionEstimation extends SubsystemBase {
                                 TelemUtils.getCamSDKey("Pinky", "confidence mult"), 0.5, -999.99);
                 confidenceClydeTelemetry = new MeanPerPeriodTelemetry(
                                 TelemUtils.getCamSDKey("Clyde", "confidence mult"), 0.5, -999.99);
+        }
+
+        public static VisionEstimation getInstance() {
+                if (INSTANCE == null) {
+                        INSTANCE = new VisionEstimation();
+                        SmartDashboard.putBoolean("Vision Instance Created", true);
+                }
+
+                return INSTANCE;
         }
 
         @Override

@@ -13,7 +13,6 @@ public class ShooterElevatorPosTolerance extends Command {
     public ShooterElevatorPosTolerance(ArmPositions armPositions) {
         this.armPositions = armPositions;
         shooterElevator = ShooterElevator.getInstance();
-        super.addRequirements(shooterElevator);
     }
 
     @Override

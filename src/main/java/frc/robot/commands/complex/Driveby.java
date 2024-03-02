@@ -8,12 +8,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
+import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.robot.ControlMap;
 import frc.robot.subsystems.ReverseKinematics;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
+import frc.robot.subsystems.lights.Animations;
+import frc.robot.subsystems.lights.Light;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.MathUtil;
 
@@ -40,6 +43,7 @@ public class Driveby extends Command {
         swerveSubsystem.setShootingRequestActive(true);
         CommandScheduler.getInstance().schedule(new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT));
         SmartDashboard.putNumber("targetPoseX", 3.0);
+        Light.getInstance().setAnimation(Animations.AIMING);
     }
 
     public void updateTargets() {
@@ -68,30 +72,30 @@ public class Driveby extends Command {
                 + MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.MANUAL_DEADBAND) * 0.05);
         updateTargets();
         SmartDashboard.putString("realPose2d", realPose2d.toString());
-
+        swerveSubsystem.setShootingRequest(targetTurn);
+        flywheel.setFlyWheelSpeedMeters(targetFlywheel);
         if (!pivot.notSoFastEggman) {
             pivot.setPosition(targetPivot);
         }
-        flywheel.setFlyWheelSpeedMeters(targetFlywheel);
-        swerveSubsystem.setShootingRequest(targetTurn);
     }
 
     @Override
     public boolean isFinished() {
         double realRotation = swerveSubsystem.getHeading().getRadians();
-        SmartDashboard.putNumber("realFlywheel", realFlywheel);
         SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
+        
         SmartDashboard.putNumber("targetPivot", targetPivot);
         SmartDashboard.putNumber("realPivot", realPivot);
         SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
         SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.5)
-                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.02)
+        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.03)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.003)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.02)) {
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05)) {
+            Light.getInstance().setAnimation(Animations.SHOT_READY);
             return true;
         } else {
             return false;
@@ -104,5 +108,6 @@ public class Driveby extends Command {
             CommandScheduler.getInstance().schedule(new TheBigYeet());
         }
         swerveSubsystem.setShootingRequestActive(false);
+        swerveSubsystem.targetAngleEnabled = false;
     }
 }

@@ -6,9 +6,14 @@ package frc.robot.commands.swervedrive.drivebase;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.util.MathUtil;
+
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
+
+import javax.xml.xpath.XPath;
 
 /**
  * An example command that uses an example subsystem.
@@ -48,24 +53,33 @@ public class TeleopDrive extends Command {
     if (swerve.getShootingRequestActive()) {
       swerve.targetAngleEnabled = true;
       swerve.targetAngle = swerve.getShootingRequest();
-    } else {
-      swerve.targetAngleEnabled = false;
     }
-
+    double xSpeed = vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED;
+    double ySpeed = vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED;
+    if (!Constants.isBlueAlliance) {
+      xSpeed = -xSpeed;
+      ySpeed = -ySpeed;
+    }
     if (swerve.targetAngleEnabled) {
+      double angleSpeed = swerve.targetAngleController.calculate(swerve.getHeading().getRadians(), swerve.targetAngle.getRadians());
+      if (!swerve.getShootingRequestActive()) {
+        angleSpeed = swerve.driverTargetAngleController.calculate(swerve.getHeading().getRadians(), swerve.targetAngle.getRadians());
+      }
       swerve.drive(
-          new Translation2d(vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED,
-              vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED),
-          swerve.targetAngleController.calculate(swerve.getHeading().getRadians(), swerve.targetAngle.getRadians()),
+          new Translation2d(xSpeed,
+              ySpeed),angleSpeed
+          ,
           driveMode.getAsBoolean());
     } else {
       swerve.drive(
-          new Translation2d(vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED,
-              vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED),
+          new Translation2d(xSpeed,
+              ySpeed),
           omega.getAsDouble() * 6 * Math.PI,
           driveMode.getAsBoolean());
     }
 
   }
+
+  
 
 }
