@@ -23,6 +23,9 @@ public class JiggleNote extends Command {
 
     @Override
     public boolean isFinished() {
+        if (shooterTrack.currentlyShooting) {
+            return true;
+        }
         boolean sensor = !shooterTrack.getSensor();
         if (sensor && Timer.getFPGATimestamp() - startTime > length) {
             shooterTrack.set(ShooterSpeeds.STOP);

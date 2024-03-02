@@ -3,41 +3,57 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.025230717128101,
-        "y": 6.482092964185928
+        "x": 1.3817627635255272,
+        "y": 5.562647359246215
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.072644145288291,
-        "y": 7.0036406739480155
+        "x": 1.4020828041656084,
+        "y": 5.100330200660401
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.871899077131488,
-        "y": 6.983320633307932
+        "x": 1.3817627635255272,
+        "y": 4.091101515536365
       },
       "prevControl": {
-        "x": 2.8998020912708493,
-        "y": 6.9503005672678
+        "x": 1.3390192367882494,
+        "y": 4.093951083985517
       },
       "nextControl": {
-        "x": 2.8439960629921264,
-        "y": 7.016340699348064
+        "x": 1.5849631699263398,
+        "y": 4.07755482177631
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.871899077131488,
-        "y": 5.960545254423842
+        "x": 2.5535517737702147,
+        "y": 4.091101515536365
       },
       "prevControl": {
-        "x": 3.1834730336127337,
-        "y": 6.421132842265685
+        "x": 1.8965371264075863,
+        "y": 4.084328168656337
+      },
+      "nextControl": {
+        "x": 2.560324760739144,
+        "y": 4.0911713401442915
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.0,
+        "y": 5.0
+      },
+      "prevControl": {
+        "x": 2.149013631360596,
+        "y": 4.769706206079078
       },
       "nextControl": null,
       "isLocked": false,
@@ -48,8 +64,8 @@
   "constraintZones": [
     {
       "name": "New Constraints Zone",
-      "minWaypointRelativePos": 1.0,
-      "maxWaypointRelativePos": 2.0,
+      "minWaypointRelativePos": 2.0,
+      "maxWaypointRelativePos": 3.0,
       "constraints": {
         "maxVelocity": 2.0,
         "maxAcceleration": 2.0,
@@ -61,7 +77,7 @@
   "eventMarkers": [
     {
       "name": "New Event Marker",
-      "waypointRelativePos": 0,
+      "waypointRelativePos": 0.1,
       "command": {
         "type": "parallel",
         "data": {

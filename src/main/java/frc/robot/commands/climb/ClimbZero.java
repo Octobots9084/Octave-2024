@@ -8,7 +8,6 @@ public class ClimbZero extends Command {
 
     public ClimbZero() {
         climb = Climb.getInstance();
-        super.addRequirements(climb);
     }
 
     @Override
