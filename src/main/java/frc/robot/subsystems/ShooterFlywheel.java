@@ -50,7 +50,7 @@ public class ShooterFlywheel extends SubsystemBase {
         motorOne.getPIDController().setP(0.001);
         motorOne.getPIDController().setI(0);
         motorOne.getPIDController().setD(0);
-        motorOne.getPIDController().setFF(0.000185);
+        motorOne.getPIDController().setFF(0.00018);
         motorOne.enableVoltageCompensation(10);
         // motorOne.getPIDController().setIZone(1);
 
