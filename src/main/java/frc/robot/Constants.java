@@ -115,26 +115,26 @@ public final class Constants {
 		 */
 
 		public static final Transform3d ROBOT_TO_CLYDE = new Transform3d(
-				new Translation3d(0.14, ROBOT_TO_CAM_Y, 0.37),
-				new Rotation3d(Math.toRadians(0), Math.toRadians(-13), Math.toRadians(15)));
+				new Translation3d(0.15, 0.29, 0.37),
+				new Rotation3d(Math.toRadians(0), Math.toRadians(-14.5), Math.toRadians(15)));
 
 		public static final Transform3d ROBOT_TO_BLINKY = new Transform3d(
-				new Translation3d(0.14, -ROBOT_TO_CAM_Y, 0.37),
-				new Rotation3d(Math.toRadians(0), Math.toRadians(-13), Math.toRadians(345)));
+				new Translation3d(0.15, -0.29, 0.37),
+				new Rotation3d(Math.toRadians(0), Math.toRadians(-13.5), Math.toRadians(345)));
 
 		public static final Transform3d ROBOT_TO_PINKY = new Transform3d(
-				new Translation3d(-.32, ROBOT_TO_CAM_Y, 0.35),
+				new Translation3d(-.32, 0.28, 0.35),
 				new Rotation3d(0, Math.toRadians(-13), Math.toRadians(165)));
 
 		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
-				new Translation3d(-.32, -ROBOT_TO_CAM_Y, 0.35),
+				new Translation3d(-.32, -0.28, 0.35),
 				new Rotation3d(0, Math.toRadians(-13), Math.toRadians(195)));
 
 		/** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
 		public static final double POSE_AMBIGUITY_SHIFTER = 0.2;
 		public static final double POSE_AMBIGUITY_MULTIPLIER = 4;
 		public static final double NOISY_DISTANCE_METERS = 2.5;
-		public static final double DISTANCE_WEIGHT = 7;
+		public static final double DISTANCE_WEIGHT = 30;
 		public static final int TAG_PRESENCE_WEIGHT = 10;
 	}
 }
