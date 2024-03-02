@@ -18,6 +18,43 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "StarttoPiece3Blue"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Collect"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "3rdPieceBlue"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ThirdToSecondBlue"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
