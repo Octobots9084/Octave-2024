@@ -21,6 +21,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.InitalSpeakerAuto;
+import frc.robot.commands.complex.InitalSpeakerAutoFast;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.ShooterTrack;
@@ -72,7 +73,7 @@ public class RobotContainer {
 
                 SwerveSubsystem.getInstance().setDefaultCommand(
                                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
-                NamedCommands.registerCommand("SpeakerAuto", new InitalSpeakerAuto());
+                NamedCommands.registerCommand("SpeakerAuto", new InitalSpeakerAutoFast());
                 NamedCommands.registerCommand("Collect", new CollectAuto());
 
                 NamedCommands.registerCommand("Shoot", new DrivebyAuto());
