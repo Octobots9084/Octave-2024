@@ -41,7 +41,7 @@ public final class Constants {
 		public static final double SHOOTER_ELEVATOR_TOLERANCE = 0.1;
 		public static final double SHOOTER_FLYWHEEL_TOLERANCE_RPM = 10;
 		public static final double SHOOTER_FLYWHEEL_TOLERANCE_METERS = 0.4;
-		public static final double SHOOTER_PIVOT_TOLERANCE = 0.005;
+		public static final double SHOOTER_PIVOT_TOLERANCE = 0.01;
 	}
 
 	public static final class Climb {
