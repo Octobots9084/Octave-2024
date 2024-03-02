@@ -2,27 +2,15 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.413628281802018,
-      "y": 5.559932574410603
+      "x": 0.7886023044773361,
+      "y": 6.89394324243194
     },
-    "rotation": 0
+    "rotation": 57.771242564901414
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "path",
-          "data": {
-            "pathName": "1stPieceBlue"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "FirstToFourthBlue"
-          }
-        },
         {
           "type": "path",
           "data": {

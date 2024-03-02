@@ -71,8 +71,7 @@ public class RobotContainer {
                 SwerveSubsystem.getInstance().setDefaultCommand(
                                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
                 NamedCommands.registerCommand("SpeakerAuto", new InitalSpeakerAuto());
-                NamedCommands.registerCommand("Collect",
-                                new CollectAuto());
+                NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(4));
                 NamedCommands.registerCommand("Shoot", new DrivebyAuto());
                 NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
                         ShooterTrack.getInstance().set(ShooterSpeeds.STOP);

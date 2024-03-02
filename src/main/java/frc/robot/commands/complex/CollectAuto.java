@@ -21,19 +21,17 @@ import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.IntakeTrack;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
-import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class CollectAuto extends SequentialCommandGroup {
     public CollectAuto() {
         BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
+        if (shooterSensorTrue.getAsBoolean()) {
+            return;
+        }
         addCommands(
                 new InstantCommand(() -> {
                     SmartDashboard.putBoolean("CollectRunning", true);
-                    SwerveSubsystem.getInstance().collectAutoRunning = true;
-                }),
-                new InstantCommand(() -> {
-                    ShooterPivot.getInstance().notSoFastEggman = true;
                 }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),
                 new ParallelCommandGroup(new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
@@ -57,15 +55,9 @@ public class CollectAuto extends SequentialCommandGroup {
 
                 new WaitUntilCommand(shooterSensorTrue),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT),
-                new InstantCommand(() -> {
-                    ShooterPivot.getInstance().notSoFastEggman = false;
-                }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
-                new JiggleNote(1), new InstantCommand(() -> {
-                    SmartDashboard.putBoolean("CollectRunning", false);
-                    SwerveSubsystem.getInstance().collectAutoRunning = false;
-                }));
+                new JiggleNote(1));
 
     }
 
