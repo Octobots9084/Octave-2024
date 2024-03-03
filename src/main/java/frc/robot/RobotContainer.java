@@ -22,6 +22,7 @@ import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
+import frc.robot.commands.swervedrive.auto.ParallelAutoHandling;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.ShooterFlywheel;
@@ -76,6 +77,7 @@ public class RobotContainer {
                                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
                 NamedCommands.registerCommand("SpeakerAuto", new InitalSpeakerAutoFast());
                 NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(5));
+                NamedCommands.registerCommand("Multithread", new ParallelAutoHandling());
 
                 NamedCommands.registerCommand("Shoot", new DrivebyAuto());
                 NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
@@ -84,18 +86,6 @@ public class RobotContainer {
 
                 NamedCommands.registerCommand("SpinUpFlywheels", new InstantCommand(() -> {
                         ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-20);
-                }));
-
-                NamedCommands.registerCommand("SpinUpFlywheelsFast", new InstantCommand(() -> {
-                        ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-500);
-                }));
-
-                NamedCommands.registerCommand("FlywheelsCurrentFast", new InstantCommand(() -> {
-                        ShooterFlywheel.getInstance().setFlywheelsCurrentFast();
-                }));
-
-                NamedCommands.registerCommand("FlywheelsCurrentNormal", new InstantCommand(() -> {
-                        ShooterFlywheel.getInstance().setFlywheelsCurrentNormal();
                 }));
                 AutoBuilder.configureHolonomic(
                                 SwerveSubsystem.getInstance()::getPose, // Robot pose supplier
