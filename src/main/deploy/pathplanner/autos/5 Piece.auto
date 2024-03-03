@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3023087957730821,
-      "y": 5.58606903233778
+      "x": 0.7952442380734501,
+      "y": 6.9022706918401315
     },
     "rotation": 0
   },
@@ -14,19 +14,81 @@
         {
           "type": "named",
           "data": {
-            "name": "SpinUpFlywheels"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "StartToFire"
+            "name": "FlywheelsCurrentFast"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "SpinUpFlywheelsFast"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.6
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpeakerAuto"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "FlywheelsCurrentNormal"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "5 Piece - 1"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "SpinUpFlywheels"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.3
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Collect"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "StopShooterTrack"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpeakerAuto"
           }
         },
         {
@@ -40,7 +102,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.2
+                        "waitTime": 0.3
                       }
                     },
                     {
@@ -48,27 +110,20 @@
                       "data": {
                         "name": "Collect"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "StopShooterTrack"
+                      }
                     }
                   ]
                 }
               },
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "StarttoPiece3Blue"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "3rdPieceBlue"
-                      }
-                    }
-                  ]
+                  "pathName": "5 Piece - 2"
                 }
               }
             ]
@@ -77,13 +132,7 @@
         {
           "type": "named",
           "data": {
-            "name": "StopShooterTrack"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
+            "name": "SpeakerAuto"
           }
         },
         {
@@ -97,7 +146,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.2
+                        "waitTime": 0.3
                       }
                     },
                     {
@@ -105,27 +154,20 @@
                       "data": {
                         "name": "Collect"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "StopShooterTrack"
+                      }
                     }
                   ]
                 }
               },
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "ThirdToSecondBlue"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "2ndPieceBlue"
-                      }
-                    }
-                  ]
+                  "pathName": "5 Piece - 3"
                 }
               }
             ]
@@ -134,13 +176,7 @@
         {
           "type": "named",
           "data": {
-            "name": "StopShooterTrack"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
+            "name": "SpeakerAuto"
           }
         },
         {
@@ -154,7 +190,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.2
+                        "waitTime": 0.3
                       }
                     },
                     {
@@ -162,87 +198,23 @@
                       "data": {
                         "name": "Collect"
                       }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "SecondToFirstBlue"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "1stPieceBlue"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StopShooterTrack"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.2
-                      }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "Collect"
+                        "name": "StopShooterTrack"
                       }
                     }
                   ]
                 }
               },
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "FirstToFourthBlue"
-                      }
-                    }
-                  ]
+                  "pathName": "5 Piece - 4"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "StopShooterTrack"
           }
         },
         {
