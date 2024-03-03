@@ -8,6 +8,7 @@ import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.Dunk;
+import frc.robot.commands.complex.Layup;
 import frc.robot.commands.complex.Panic;
 import frc.robot.commands.complex.PrepAmp;
 import frc.robot.commands.complex.PrepClimb;
@@ -54,7 +55,7 @@ public class ButtonConfig {
         coDriverButtons.button(7).onTrue(new PrepClimb());
         coDriverButtons.button(8).onTrue(new Dunk());
         coDriverButtons.button(9).onTrue(new SimpleClimb());
-        coDriverButtons.button(10).onTrue(new TheBigYeet());
+        coDriverButtons.button(10).onTrue(new Layup());
         coDriverButtons.button(11).onTrue(new Panic());
         coDriverButtons.button(12).onTrue(new CancelAllCommands());
 
