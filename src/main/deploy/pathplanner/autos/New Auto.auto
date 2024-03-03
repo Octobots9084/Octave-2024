@@ -18,9 +18,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "StarttoPiece3Blue"
+            "waitTime": 0.1
           }
         },
         {
@@ -34,9 +34,22 @@
                 }
               },
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "3rdPieceBlue"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "StarttoPiece3Blue"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "3rdPieceBlue"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -49,9 +62,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "ThirdToSecondBlue"
+            "waitTime": 0.1
           }
         },
         {
@@ -65,9 +78,22 @@
                 }
               },
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "2ndPieceBlue"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "ThirdToSecondBlue"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "2ndPieceBlue"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -80,9 +106,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "SecondToFirstBlue"
+            "waitTime": 0.1
           }
         },
         {
@@ -96,9 +122,22 @@
                 }
               },
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "1stPieceBlue"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "SecondToFirstBlue"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "1stPieceBlue"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -111,9 +150,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "FirstToFourthBlue"
+            "waitTime": 0.1
           }
         },
         {
@@ -127,9 +166,22 @@
                 }
               },
               {
-                "type": "path",
+                "type": "sequential",
                 "data": {
-                  "pathName": "4thPieceBlue"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "FirstToFourthBlue"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "4thPieceBlue"
+                      }
+                    }
+                  ]
                 }
               }
             ]
