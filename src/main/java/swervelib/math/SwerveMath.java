@@ -90,12 +90,11 @@ public class SwerveMath {
    */
   public static SimpleMotorFeedforward createDriveFeedforward(double optimalVoltage, double maxSpeed,
       double wheelGripCoefficientOfFriction) {
-        double kv = optimalVoltage / maxSpeed;
-        /// ^ Volt-seconds per meter (max voltage divided by max speed)
-        double ka =
-            optimalVoltage
-            / calculateMaxAcceleration(wheelGripCoefficientOfFriction);
-        /// ^ Volt-seconds^2 per meter (max voltage divided by max accel)
+    double kv = 0.1 * (optimalVoltage / maxSpeed);
+    /// ^ Volt-seconds per meter (max voltage divided by max speed)
+    double ka = 0.7 * (optimalVoltage
+        / calculateMaxAcceleration(wheelGripCoefficientOfFriction));
+    /// ^ Volt-seconds^2 per meter (max voltage divided by max accel)
     return new SimpleMotorFeedforward(0, kv, ka);
   }
 
