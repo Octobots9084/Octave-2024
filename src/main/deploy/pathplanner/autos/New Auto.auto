@@ -14,7 +14,19 @@
         {
           "type": "named",
           "data": {
-            "name": "SpeakerAuto"
+            "name": "SpinUpFlywheels"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "StartToFire"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
           }
         },
         {
@@ -28,7 +40,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.3
+                        "waitTime": 0.2
                       }
                     },
                     {
@@ -85,7 +97,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.3
+                        "waitTime": 0.2
                       }
                     },
                     {
@@ -142,7 +154,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.3
+                        "waitTime": 0.2
                       }
                     },
                     {
@@ -199,7 +211,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.3
+                        "waitTime": 0.2
                       }
                     },
                     {
@@ -219,12 +231,6 @@
                       "type": "path",
                       "data": {
                         "pathName": "FirstToFourthBlue"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "4thPieceBlue"
                       }
                     }
                   ]

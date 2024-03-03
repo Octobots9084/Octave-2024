@@ -24,6 +24,7 @@ import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
@@ -79,6 +80,10 @@ public class RobotContainer {
                 NamedCommands.registerCommand("Shoot", new DrivebyAuto());
                 NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
                         ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
+                }));
+
+                NamedCommands.registerCommand("SpinUpFlywheels", new InstantCommand(() -> {
+                        ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-20);
                 }));
                 AutoBuilder.configureHolonomic(
                                 SwerveSubsystem.getInstance()::getPose, // Robot pose supplier
