@@ -59,7 +59,7 @@ public class CollectAuto extends SequentialCommandGroup {
                                 new InstantCommand(() -> {
                                     Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
                                 }),
-                                new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT), new JiggleNote(1)),
+                                new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT)),
                         new InstantCommand(), shooterSensorNotTrue));
     }
 
