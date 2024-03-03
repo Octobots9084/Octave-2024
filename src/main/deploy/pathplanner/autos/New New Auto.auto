@@ -14,7 +14,25 @@
         {
           "type": "named",
           "data": {
-            "name": "SpinUpFlywheels"
+            "name": "FlywheelsCurrentFast"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpinUpFlywheelsFast"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpeakerAuto"
           }
         },
         {
@@ -25,6 +43,18 @@
                 "type": "sequential",
                 "data": {
                   "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "FlywheelsCurrentNormal"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "SpinUpFlywheels"
+                      }
+                    },
                     {
                       "type": "wait",
                       "data": {

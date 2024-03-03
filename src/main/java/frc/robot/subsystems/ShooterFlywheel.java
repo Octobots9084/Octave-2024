@@ -148,4 +148,17 @@ public class ShooterFlywheel extends SubsystemBase {
         motorTwo.set(percent);
 
     }
+
+    public void setFlywheelVoltage(double voltage) {
+        motorOne.setVoltage(-voltage);
+        motorTwo.setVoltage(voltage);
+    }
+
+    public void setFlywheelsCurrentFast() {
+        motorOne.setSmartCurrentLimit(100, 100);
+    }
+
+    public void setFlywheelsCurrentNormal() {
+        motorOne.setSmartCurrentLimit(40, 40);
+    }
 }

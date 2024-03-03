@@ -85,6 +85,18 @@ public class RobotContainer {
                 NamedCommands.registerCommand("SpinUpFlywheels", new InstantCommand(() -> {
                         ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-20);
                 }));
+
+                NamedCommands.registerCommand("SpinUpFlywheelsFast", new InstantCommand(() -> {
+                        ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-500);
+                }));
+
+                NamedCommands.registerCommand("FlywheelsCurrentFast", new InstantCommand(() -> {
+                        ShooterFlywheel.getInstance().setFlywheelsCurrentFast();
+                }));
+
+                NamedCommands.registerCommand("FlywheelsCurrentNormal", new InstantCommand(() -> {
+                        ShooterFlywheel.getInstance().setFlywheelsCurrentNormal();
+                }));
                 AutoBuilder.configureHolonomic(
                                 SwerveSubsystem.getInstance()::getPose, // Robot pose supplier
                                 SwerveSubsystem.getInstance()::resetOdometry, // Method to reset odometry (will be
