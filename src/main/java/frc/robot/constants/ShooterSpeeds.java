@@ -9,7 +9,7 @@ public enum ShooterSpeeds {
     AMP(1, -20),
     JIGGLE_FORWARD(0.15, 0),
     JIGGLE_BACKWARD(-0.15, 0),
-    TRAP(1, -2500),
+    TRAP(1, -20),
     SPECIAL_IDLE(0.15,0),
     DRIVE_BY(0, -20),
     SRC_COLLECT(-.3, -1);
