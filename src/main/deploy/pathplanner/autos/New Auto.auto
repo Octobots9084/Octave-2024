@@ -18,12 +18,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "StopShooterTrack"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
