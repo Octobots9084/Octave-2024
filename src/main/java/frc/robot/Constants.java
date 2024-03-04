@@ -40,8 +40,8 @@ public final class Constants {
 	public static final class Arm {
 		public static final double SHOOTER_ELEVATOR_TOLERANCE = 0.1;
 		public static final double SHOOTER_FLYWHEEL_TOLERANCE_RPM = 10;
-		public static final double SHOOTER_FLYWHEEL_TOLERANCE_METERS = 0.4;
-		public static final double SHOOTER_PIVOT_TOLERANCE = 0.005;
+		public static final double SHOOTER_FLYWHEEL_TOLERANCE_METERS = 0.2;
+		public static final double SHOOTER_PIVOT_TOLERANCE = 0.01;
 	}
 
 	public static final class Climb {
@@ -51,7 +51,7 @@ public final class Constants {
 
 	public static final class Auton {
 		public static final PIDConstants TRANSLATION_PID = new PIDConstants(3, 0.0, 0.0);
-		public static final PIDConstants ANGLE_AUTO_PID = new PIDConstants(8, 0, 0);
+		public static final PIDConstants ANGLE_AUTO_PID = new PIDConstants(5, 0, 0);
 
 		public static final double MAX_ACCELERATION = 2;
 		public static final double MAX_MODULE_SPEED = 10;

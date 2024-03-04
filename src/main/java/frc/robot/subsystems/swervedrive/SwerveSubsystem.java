@@ -66,7 +66,7 @@ public class SwerveSubsystem extends SubsystemBase {
     // objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.MACHINE;
     try {
-      swerveDrive = new SwerveParser(directory).createSwerveDrive(MAXIMUM_SPEED, 360,
+      swerveDrive = new SwerveParser(directory).createSwerveDrive(5, 360,
 
           SwerveMath.calculateMetersPerRotation(0.076, 40.0 / 11.0));
 
