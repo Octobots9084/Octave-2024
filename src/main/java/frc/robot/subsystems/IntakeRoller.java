@@ -32,7 +32,7 @@ public class IntakeRoller extends SubsystemBase {
                 500,
                 500),
                 1000,
-                true, SparkMaxEncoderType.Relative, IdleMode.kCoast, 30, 30, false, false, 1);
+                true, SparkMaxEncoderType.Relative, IdleMode.kBrake, 30, 30, false, false, 1);
         SparkMaxSetup.setup(motor1, motorConfig);
     }
 
