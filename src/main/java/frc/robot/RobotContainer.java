@@ -76,6 +76,8 @@ public class RobotContainer {
                 SwerveSubsystem.getInstance().setDefaultCommand(
                                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
                 NamedCommands.registerCommand("SpeakerAuto", new InitalSpeakerAutoFast());
+                NamedCommands.registerCommand("SpeakerAutoSlow", new InitalSpeakerAuto());
+
                 NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(5));
                 NamedCommands.registerCommand("Multithread", new ParallelAutoHandling());
 
