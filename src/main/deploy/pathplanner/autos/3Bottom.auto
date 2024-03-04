@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.413628281802018,
-      "y": 5.559932574410603
+      "x": 0.7511871911042578,
+      "y": 4.3029049206577845
     },
-    "rotation": 0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -20,19 +20,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StarttoPiece3Blue"
+            "pathName": "StartTo8"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "3rdPieceBlue"
+            "pathName": "8thPieceBlue"
           }
         },
         {
-          "type": "wait",
+          "type": "named",
           "data": {
-            "waitTime": 4.0
+            "name": "StopShooterTrack"
           }
         },
         {
@@ -42,45 +42,21 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "ThirdToSecondBlue"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "2ndPieceBlue"
-          }
-        },
-        {
           "type": "wait",
           "data": {
-            "waitTime": 4.0
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "7thPieceBottomBlue"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "SecondToFirstBlue"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "1stPieceBlue"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 4.0
+            "name": "StopShooterTrack"
           }
         },
         {

@@ -13,7 +13,9 @@ public enum ShooterSpeeds {
     LAYUP(-1, -5),
     SPECIAL_IDLE(0.15,0),
     DRIVE_BY(0, -20),
-    SRC_COLLECT(-.3, -1);
+    SRC_COLLECT(-.3, -1),
+    AUTO_SPEAKER(0, -20);
+
 
     public double track;
     public double flywheels;
