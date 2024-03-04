@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.Constants;
 import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
+import frc.robot.commands.climb.ClimbPosTolerance;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.Dunk;
@@ -15,12 +16,14 @@ import frc.robot.commands.complex.PrepClimb;
 import frc.robot.commands.complex.PrepSpeaker;
 import frc.robot.commands.complex.SimpleClimb;
 import frc.robot.commands.complex.TheBigYeet;
+import frc.robot.commands.complex.Undunk;
 import frc.robot.commands.intake.IntakeRollerSpeedInstant;
 import frc.robot.commands.intake.IntakeTrackSpeedInstant;
 import frc.robot.commands.swervedrive.ToggleTurnTo180;
 import frc.robot.commands.swervedrive.ToggleTurnToAmp;
 import frc.robot.commands.swervedrive.ToggleTurnToSource;
 import frc.robot.commands.swervedrive.ToggleTurnToSpeaker;
+import frc.robot.constants.ClimbPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -56,8 +59,8 @@ public class ButtonConfig {
         coDriverButtons.button(8).onTrue(new Dunk());
         coDriverButtons.button(9).onTrue(new SimpleClimb());
         coDriverButtons.button(10).onTrue(new Layup());
-        coDriverButtons.button(11).onTrue(new Panic());
-        coDriverButtons.button(12).onTrue(new CancelAllCommands());
+        coDriverButtons.button(11).onTrue(new Undunk());
+        coDriverButtons.button(12).onTrue(new ClimbPosTolerance(ClimbPositions.MID));
 
         // coDriverButtons.button(12).onTrue(new ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
 

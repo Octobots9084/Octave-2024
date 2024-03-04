@@ -2,11 +2,11 @@ package frc.robot.constants;
 
 public enum IntakeSpeeds {
 
-    COLLECT(-1, 1),
+    COLLECT(-1, -1),
     STOP(0, 0),
-    FEED(1, 1),
+    FEED(1, -1),
     REJECT(0.2, 0),
-    PANIC(1, -1);
+    PANIC(1, 1);
 
     public double roller;
     public double track;
