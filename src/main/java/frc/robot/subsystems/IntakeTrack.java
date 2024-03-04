@@ -14,7 +14,6 @@ public class IntakeTrack extends SubsystemBase {
     public static IntakeTrack intakeTrack;
     private CANSparkFlex motor1;
     private DigitalInput sensor;
-    
 
     /*
      * Things this needs to do:
@@ -44,7 +43,7 @@ public class IntakeTrack extends SubsystemBase {
         motor1.setCANTimeout(1000);
 
         motor1.getPIDController().setFeedbackDevice(motor1.getEncoder());
-        motor1.setIdleMode(IdleMode.kBrake);
+        motor1.setIdleMode(IdleMode.kCoast);
         motor1.setSmartCurrentLimit(30, 30);
         motor1.setInverted(false);
 

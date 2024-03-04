@@ -162,9 +162,4 @@ public class ShooterFlywheel extends SubsystemBase {
         motorOne.setSmartCurrentLimit(40, 40);
     }
 
-    public void setFlywheelPercent(double percent) {
-        motorOne.set(-percent);
-        motorTwo.set(percent);
-
-    }
 }
