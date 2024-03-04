@@ -59,10 +59,10 @@ public class Robot extends TimedRobot {
     Optional<Alliance> ally = DriverStation.getAlliance();
     if (ally.isPresent()) {
       if (ally.get() == Alliance.Red) {
-          Constants.isBlueAlliance = false;
+        Constants.isBlueAlliance = false;
       }
       if (ally.get() == Alliance.Blue) {
-          Constants.isBlueAlliance = true;
+        Constants.isBlueAlliance = true;
       }
     }
     m_robotContainer = new RobotContainer();
@@ -73,7 +73,6 @@ public class Robot extends TimedRobot {
     // immediately when disabled, but then also let it be pushed more
     disabledTimer = new Timer();
     Light.getInstance().setAnimation(Animations.DEFAULT);
-    
 
   }
 
@@ -100,7 +99,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("thng", ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
     SmartDashboard.putNumber("thng2", ShooterFlywheel.getInstance().getRightFlywheelSpeed());
     SmartDashboard.putNumber("realFlywheelTop", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
-        SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
+    SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
   }
 
   /**
@@ -121,10 +120,10 @@ public class Robot extends TimedRobot {
     Optional<Alliance> ally = DriverStation.getAlliance();
     if (ally.isPresent()) {
       if (ally.get() == Alliance.Red) {
-          Constants.isBlueAlliance = false;
+        Constants.isBlueAlliance = false;
       }
       if (ally.get() == Alliance.Blue) {
-          Constants.isBlueAlliance = true;
+        Constants.isBlueAlliance = true;
       }
     }
   }
@@ -160,6 +159,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     m_robotContainer.setDriveMode();
+    ShooterFlywheel.getInstance().setFlywheelsCurrentNormal();
   }
 
   /**

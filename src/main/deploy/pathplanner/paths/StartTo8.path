@@ -3,50 +3,56 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 13.97,
-        "y": 6.74
+        "x": 0.75,
+        "y": 4.3
       },
       "prevControl": null,
       "nextControl": {
-        "x": 12.97,
-        "y": 6.74
+        "x": 0.7218158264581296,
+        "y": 4.317590602980848
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.75,
-        "y": 7.42
+        "x": 7.9,
+        "y": 0.79
       },
       "prevControl": {
-        "x": 9.75,
-        "y": 7.42
+        "x": 5.817747592561375,
+        "y": 0.822398210091591
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.55,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Red Alliance",
+  "folder": null,
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": -60.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
