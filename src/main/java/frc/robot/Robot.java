@@ -12,10 +12,14 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
 import frc.robot.commands.ButtonConfig;
+import frc.robot.commands.climb.ClimbManual;
+
 import java.io.File;
 import java.io.IOException;
 import java.sql.Driver;
@@ -72,6 +76,7 @@ public class Robot extends TimedRobot {
     // let the robot stop
     // immediately when disabled, but then also let it be pushed more
     disabledTimer = new Timer();
+    // CommandScheduler.getInstance().setDefaultCommand(Climb.getInstance(), new ClimbManual());
     Light.getInstance().setAnimation(Animations.DEFAULT);
 
   }
@@ -99,6 +104,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("thng", ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
     SmartDashboard.putNumber("thng2", ShooterFlywheel.getInstance().getRightFlywheelSpeed());
     SmartDashboard.putNumber("realFlywheelTop", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
+    SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
+    SmartDashboard.putNumber("climbele", ShooterElevator.getInstance().getPosition()*ShooterElevator.getInstance().gearing);
+
     SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
   }
 

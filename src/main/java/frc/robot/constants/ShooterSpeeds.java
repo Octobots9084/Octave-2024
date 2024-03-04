@@ -9,9 +9,13 @@ public enum ShooterSpeeds {
     AMP(1, -20),
     JIGGLE_FORWARD(0.15, 0),
     JIGGLE_BACKWARD(-0.15, 0),
-    TRAP(1, 0.5),
-    SPECIAL_IDLE(0.15, 0),
-    DRIVE_BY(0, -20), AUTO_SPEAKER(0, -20);
+    TRAP(1, -20),
+    LAYUP(-1, -5),
+    SPECIAL_IDLE(0.15,0),
+    DRIVE_BY(0, -20),
+    SRC_COLLECT(-.3, -1),
+    AUTO_SPEAKER(0, -20);
+
 
     public double track;
     public double flywheels;
