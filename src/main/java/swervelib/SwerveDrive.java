@@ -56,9 +56,16 @@ public class SwerveDrive {
    */
   public final SwerveDriveConfiguration swerveDriveConfiguration;
   /**
-   * Swerve odometry.
+   * Swerve+vision pose estimator.
    */
   public final SwerveDrivePoseEstimator2 swerveDrivePoseEstimator;
+  /**
+   * Swerve-only pose estimator, without adding vision measurements to it. Used to calculate the
+   * effects of vision measurements, by comparing the poses estimated with and without vision. Don't
+   * use for anything else other than this. The name starts with underscrore to reduce the chance of
+   * listing this in the auto-completion suggestions.
+   */
+  private final SwerveDrivePoseEstimator2 _swerveDrivePoseEstimator_NoVision_;
   /**
    * Swerve modules.
    */
@@ -184,13 +191,21 @@ public class SwerveDrive {
 
     this.swerveModules = config.modules;
 
-    // odometry = new SwerveDriveOdometry(kinematics, getYaw(),
-    // getModulePositions());
+    final Rotation2d yaw = getYaw();
+    final SwerveModulePosition[] modulePositions = getModulePositions();
+    final Pose2d initialPoseMeters = new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0));
     swerveDrivePoseEstimator = new SwerveDrivePoseEstimator2(
         kinematics,
-        getYaw(),
-        getModulePositions(),
-        new Pose2d(new Translation2d(0, 0), Rotation2d.fromDegrees(0)),
+        yaw,
+        modulePositions,
+        initialPoseMeters,
+        Constants.PoseEstimator.stateStdDevs,
+        Constants.PoseEstimator.baseVisionMeasurementStdDevs);
+    _swerveDrivePoseEstimator_NoVision_ = new SwerveDrivePoseEstimator2(
+        kinematics,
+        yaw,
+        modulePositions,
+        initialPoseMeters,
         Constants.PoseEstimator.stateStdDevs,
         Constants.PoseEstimator.baseVisionMeasurementStdDevs);
 
@@ -656,7 +671,9 @@ public class SwerveDrive {
    */
   public void resetOdometry(Pose2d pose) {
     odometryLock.lock();
-    swerveDrivePoseEstimator.resetPosition(pose.getRotation(), getModulePositions(), pose);
+    final SwerveModulePosition[] modulePositions = getModulePositions();
+    swerveDrivePoseEstimator.resetPosition(pose.getRotation(), modulePositions, pose);
+    _swerveDrivePoseEstimator_NoVision_.resetPosition(pose.getRotation(), modulePositions, pose);
     odometryLock.unlock();
     kinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, 0, pose.getRotation()));
   }
@@ -924,7 +941,12 @@ public class SwerveDrive {
     odometryLock.lock();
     try {
       // Update odometry
-      swerveDrivePoseEstimator.update(getYaw(), getModulePositions());
+      final Rotation2d yaw = getYaw();
+      final SwerveModulePosition[] modulePositions = getModulePositions();
+      swerveDrivePoseEstimator.update(yaw, modulePositions);
+      _swerveDrivePoseEstimator_NoVision_.update(yaw, modulePositions);
+      reportVisionVsNoVisionDelta(swerveDrivePoseEstimator.getEstimatedPosition(),
+          _swerveDrivePoseEstimator_NoVision_.getEstimatedPosition());
 
       // Update angle accumulator if the robot is simulated
       if (SwerveDriveTelemetry.verbosity.ordinal() >= TelemetryVerbosity.HIGH.ordinal()) {
@@ -1128,4 +1150,12 @@ public class SwerveDrive {
     }
   }
 
+  /**
+   * Reports on SmatrDashboard the difference between the estimated pose with and without vision.
+   */
+  private void reportVisionVsNoVisionDelta(Pose2d poseWithVision, Pose2d poseWithoutVision) {
+    final Transform2d translation = poseWithVision.minus(poseWithoutVision);
+    final double distance = Math.sqrt(Math.pow(translation.getX(), 2) + Math.pow(translation.getY(), 2));
+    SmartDashboard.putNumber("Vision vs NoVision pose delta", distance);
+  }
 }
