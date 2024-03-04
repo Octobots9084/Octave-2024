@@ -52,12 +52,11 @@ public class VisionEstimation extends SubsystemBase {
                         0.1,
                         0.1);
 
-        private final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"), VisionConstants.ROBOT_TO_INKY);
-
-        private final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"), VisionConstants.ROBOT_TO_PINKY);
-        private final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
+        public final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"), VisionConstants.ROBOT_TO_INKY);
+        public final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"), VisionConstants.ROBOT_TO_PINKY);
+        public final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
                         VisionConstants.ROBOT_TO_BLINKY);
-        private final Vision frontRightEstimator = new Vision(new PhotonCamera("Clyde"),
+        public final Vision frontRightEstimator = new Vision(new PhotonCamera("Clyde"),
                         VisionConstants.ROBOT_TO_CLYDE);
 
         private final Notifier allNotifier = new Notifier(() -> {

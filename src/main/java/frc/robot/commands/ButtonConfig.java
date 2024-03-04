@@ -19,6 +19,7 @@ import frc.robot.commands.swervedrive.ToggleTurnTo180;
 import frc.robot.commands.swervedrive.ToggleTurnToAmp;
 import frc.robot.commands.swervedrive.ToggleTurnToSource;
 import frc.robot.commands.swervedrive.ToggleTurnToSpeaker;
+import frc.robot.commands.vision.TagAlign;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -33,6 +34,7 @@ public class ButtonConfig {
 
     public void initTeleop() {
         driverButtons.button(10).onTrue(new SequentialCommandGroup(new PrepAmp(), new ToggleTurnToAmp()));
+        driverLeft.button(1).whileTrue(new TagAlign());
         driverLeft.button(2).whileTrue(new Driveby());
 
         driverRight.button(1).onTrue(new TheBigYeet());
