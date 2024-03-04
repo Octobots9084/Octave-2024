@@ -2,13 +2,9 @@ package frc.robot.commands.complex;
 
 import java.util.function.BooleanSupplier;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.commands.arm.JiggleNote;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
 import frc.robot.commands.arm.ShooterElevatorPosTolerance;
 import frc.robot.commands.arm.ShooterPivotPosInstant;
@@ -30,7 +26,6 @@ public class CollectAuto2 extends SequentialCommandGroup {
 
         BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
-        BooleanSupplier shooterSensorNotTrue = () -> ShooterTrack.getInstance().getSensor();
         addCommands(
             new SequentialCommandGroup(new InstantCommand(() -> {
                     ShooterPivot.getInstance().notSoFastEggman = true;

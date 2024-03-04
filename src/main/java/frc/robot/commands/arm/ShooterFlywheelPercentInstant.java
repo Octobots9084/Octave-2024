@@ -1,7 +1,6 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.ShooterFlywheel;
 
 public class ShooterFlywheelPercentInstant extends InstantCommand {
