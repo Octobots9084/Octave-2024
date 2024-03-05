@@ -7,6 +7,7 @@ public enum ShooterSpeeds {
     STOP(0, 0),
     PANIC(1, -500),
     AMP(1, -20),
+    FERRY_SHOT(1, -20),
     JIGGLE_FORWARD(0.15, 0),
     JIGGLE_BACKWARD(-0.15, 0),
     TRAP(1, -20),
