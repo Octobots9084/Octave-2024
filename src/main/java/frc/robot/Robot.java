@@ -7,8 +7,11 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 import java.io.File;
@@ -134,8 +137,15 @@ public class Robot extends TimedRobot {
   /**
    * This function is called periodically during operator control.
    */
+  XboxController xbox = new XboxController(0);
   @Override
   public void teleopPeriodic() {
+    // if(xbox.getAButtonPressed()){
+    //             new InstantCommand(() -> Climb.getInstance().setPosition(Climb.max,Climb.max));
+    //     }
+    //     if(xbox.getBButtonPressed()){
+    //             new InstantCommand(() -> Climb.getInstance().setPosition(0,0));
+    //     }
   }
 
   @Override

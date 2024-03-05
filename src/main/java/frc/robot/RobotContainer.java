@@ -18,6 +18,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.swervedrive.PathfindingTest;
 import frc.robot.commands.swervedrive.auto.TestingPaths;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
 import swervelib.imu.NavXSwerve;
@@ -83,23 +84,23 @@ public class RobotContainer {
         // () -> MathUtil.applyDeadband(driverXbox.getLeftX(),
         // OperatorConstants.LEFT_X_DEADBAND),
         // () -> driverXbox.getRawAxis(2), () -> true);
-        TeleopDrive closedFieldRel = new TeleopDrive(
-                SwerveSubsystem.getInstance(),
-                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(1),
-                        OperatorConstants.LEFT_Y_DEADBAND),
-                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(0),
-                        OperatorConstants.LEFT_X_DEADBAND),
-                () -> MathUtil.applyDeadband(-driverRight.getRawAxis(0), OperatorConstants.RIGHT_X_DEADBAND),
-                () -> true);
-        
         // TeleopDrive closedFieldRel = new TeleopDrive(
         //         SwerveSubsystem.getInstance(),
-        //         () -> MathUtil.applyDeadband(-controller.getLeftX(),
+        //         () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(1),
         //                 OperatorConstants.LEFT_Y_DEADBAND),
-        //         () -> MathUtil.applyDeadband(controller.getLeftY(),
+        //         () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(0),
         //                 OperatorConstants.LEFT_X_DEADBAND),
-        //         () -> MathUtil.applyDeadband(-controller.getRightX(), OperatorConstants.RIGHT_X_DEADBAND),
+        //         () -> MathUtil.applyDeadband(-driverRight.getRawAxis(0), OperatorConstants.RIGHT_X_DEADBAND),
         //         () -> true);
+        
+        TeleopDrive closedFieldRel = new TeleopDrive(
+                SwerveSubsystem.getInstance(),
+                () -> MathUtil.applyDeadband(-controller.getLeftX(),
+                        OperatorConstants.LEFT_Y_DEADBAND),
+                () -> MathUtil.applyDeadband(controller.getLeftY(),
+                        OperatorConstants.LEFT_X_DEADBAND),
+                () -> MathUtil.applyDeadband(-controller.getRightX(), OperatorConstants.RIGHT_X_DEADBAND),
+                () -> true);
 
         SwerveSubsystem.getInstance().setDefaultCommand(
                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
@@ -123,30 +124,31 @@ public class RobotContainer {
     private void configureBindings() {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
 
-        driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
-        driverLeft.button(2).onTrue((new InstantCommand(() -> {
-            SmartDashboard.putNumber("button press", 0);
-            // Not safe type casting, could break but should be obvious
-            NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
-            AHRS gyro = (AHRS) navx.getIMU();
-            gyro.reset();
+        // driverLeft.button(1).onTrue((new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro)));
+        // driverLeft.button(2).onTrue((new InstantCommand(() -> {
+        //     SmartDashboard.putNumber("button press", 0);
+        //     // Not safe type casting, could break but should be obvious
+        //     NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
+        //     AHRS gyro = (AHRS) navx.getIMU();
+        //     gyro.reset();
 
-        })));
+        // })));
+        
 
         // driverRight.button(1).onTrue(PathfindingTest.getTest());
 
-        // if(controller.getAButtonPressed()){
-        //     new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro);
-        // }
-        // if(controller.getBButtonPressed()){
-        //         new InstantCommand(() -> {
-        //         SmartDashboard.putNumber("button press", 0);
-        //         // Not safe type casting, could break but should be obvious
-        //         NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
-        //         AHRS gyro = (AHRS) navx.getIMU();
-        //         gyro.reset();
-        //         });
-        // }
+        if(controller.getAButtonPressed()){
+            new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro);
+        }
+        if(controller.getBButtonPressed()){
+                new InstantCommand(() -> {
+                SmartDashboard.putNumber("button press", 0);
+                // Not safe type casting, could break but should be obvious
+                NavXSwerve navx = (NavXSwerve) SwerveSubsystem.getInstance().getSwerveDrive().imu;
+                AHRS gyro = (AHRS) navx.getIMU();
+                gyro.reset();
+                });
+        }
     }
 
     public void setDriveMode() {
