@@ -16,6 +16,7 @@ import frc.robot.commands.complex.PrepAmp;
 import frc.robot.commands.complex.PrepClimb;
 import frc.robot.commands.complex.PrepSpeaker;
 import frc.robot.commands.complex.SimpleClimb;
+import frc.robot.commands.complex.SrcCollect;
 import frc.robot.commands.complex.TheBigYeet;
 import frc.robot.commands.complex.Undunk;
 import frc.robot.commands.intake.IntakeRollerSpeedInstant;
@@ -52,6 +53,8 @@ public class ButtonConfig {
         driverButtons.button(6).onTrue(new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro));
         driverButtons.button(11).onTrue(new Panic());
         driverButtons.button(9).onTrue(new CancelAllCommands());
+        driverButtons.button(10).onTrue(new SrcCollect());
+
 
         coDriverButtons.button(1).onTrue(new ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
         coDriverButtons.button(2).onTrue(new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT));
