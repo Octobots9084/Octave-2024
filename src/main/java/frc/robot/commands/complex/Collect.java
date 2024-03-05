@@ -53,6 +53,7 @@ public class Collect extends SequentialCommandGroup {
                         new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
+                        new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
                         new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
                         new WaitUntilCommand(shooterSensorTrue),
                         new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),

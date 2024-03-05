@@ -32,30 +32,39 @@ public class CollectAuto2 extends SequentialCommandGroup {
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorNotTrue = () -> ShooterTrack.getInstance().getSensor();
         addCommands(
-            new SequentialCommandGroup(new InstantCommand(() -> {
+                new SequentialCommandGroup(new InstantCommand(() -> {
                     ShooterPivot.getInstance().notSoFastEggman = true;
                 }),
-                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.COLLECTING);}),
-                
-                new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),
-                new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
-                new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
-                new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
-                new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
-                new WaitUntilCommand(intakeSensorTrue),
-                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);}),
-                new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
-                new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
-                new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
-                new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
-                new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
-                new WaitUntilCommand(shooterSensorTrue),
-                new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
-                new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
-                new IntakeRollerSpeedInstant(IntakeSpeeds.STOP),
-                new InstantCommand(() -> {ShooterPivot.getInstance().notSoFastEggman = false;}),
-                new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);}),
-                new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT)));
+                        new InstantCommand(() -> {
+                            Light.getInstance().setAnimation(Animations.COLLECTING);
+                        }),
+
+                        new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),
+                        new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
+                        new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
+                        new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
+                        new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
+                        new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
+                        new WaitUntilCommand(intakeSensorTrue),
+                        new InstantCommand(() -> {
+                            Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);
+                        }),
+                        new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
+                        new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
+                        new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
+                        new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
+                        new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
+                        new WaitUntilCommand(shooterSensorTrue),
+                        new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
+                        new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
+                        new IntakeRollerSpeedInstant(IntakeSpeeds.STOP),
+                        new InstantCommand(() -> {
+                            ShooterPivot.getInstance().notSoFastEggman = false;
+                        }),
+                        new InstantCommand(() -> {
+                            Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
+                        }),
+                        new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT)));
     }
 
 }
