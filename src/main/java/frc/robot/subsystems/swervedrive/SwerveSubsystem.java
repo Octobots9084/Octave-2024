@@ -41,6 +41,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private Rotation2d shootingRequest = new Rotation2d();
   private boolean shootingRequestActive = false;
+
+  private boolean alignRequestActive = false;
+  private Pose2d alignRequest;
+
   /**
    * Swerve drive object.
    */
@@ -192,6 +196,22 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public Rotation2d getShootingRequest() {
     return shootingRequest;
+  }
+
+  public void setAlignRequest(Pose2d target) {
+    alignRequest = target;
+  }
+
+  public void setAlignRequestActive(boolean isActive) {
+    alignRequestActive = isActive;
+  }
+
+  public boolean getAlignRequestActive() {
+    return alignRequestActive;
+  }
+
+  public Pose2d getAlignRequest() {
+    return alignRequest;
   }
 
   /**
