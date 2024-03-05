@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -19,8 +21,11 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.InitalSpeakerAuto;
+import frc.robot.commands.complex.InitalSpeakerAutoFast;
+import frc.robot.commands.swervedrive.auto.ParallelAutoHandling;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
@@ -70,12 +75,30 @@ public class RobotContainer {
 
                 SwerveSubsystem.getInstance().setDefaultCommand(
                                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
-                NamedCommands.registerCommand("SpeakerAuto", new InitalSpeakerAuto());
-                NamedCommands.registerCommand("Collect",
-                                new CollectAuto());
+                NamedCommands.registerCommand("SpeakerAuto", new InitalSpeakerAutoFast());
+                NamedCommands.registerCommand("SpeakerAutoSlow", new InitalSpeakerAuto());
+
+                NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(5));
+                NamedCommands.registerCommand("Multithread", new ParallelAutoHandling());
+
                 NamedCommands.registerCommand("Shoot", new DrivebyAuto());
                 NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
                         ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
+                }));
+
+                NamedCommands.registerCommand("SpinUpFlywheels", new InstantCommand(() -> {
+                        ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-20);
+                }));
+                NamedCommands.registerCommand("SpinUpFlywheelsFast", new InstantCommand(() -> {
+                        ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-500);
+                }));
+
+                NamedCommands.registerCommand("FlywheelsCurrentFast", new InstantCommand(() -> {
+                        ShooterFlywheel.getInstance().setFlywheelsCurrentFast();
+                }));
+
+                NamedCommands.registerCommand("FlywheelsCurrentNormal", new InstantCommand(() -> {
+                        ShooterFlywheel.getInstance().setFlywheelsCurrentNormal();
                 }));
                 AutoBuilder.configureHolonomic(
                                 SwerveSubsystem.getInstance()::getPose, // Robot pose supplier

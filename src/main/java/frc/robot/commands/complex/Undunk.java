@@ -15,9 +15,7 @@ public class Undunk extends SequentialCommandGroup{
             new ParallelCommandGroup(
             new ShooterElevatorPosTolerance(ArmPositions.TRAP_SEGUEAY),
             new ClimbPosTolerance(ClimbPositions.UP)
-            ),
-            new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
-            new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT)
+            )
         );
     }
 }

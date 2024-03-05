@@ -11,6 +11,7 @@ import frc.robot.util.SparkMax.SparkMaxConfig;
 import frc.robot.util.SparkMax.SparkMaxEncoderType;
 import frc.robot.util.SparkMax.SparkMaxSetup;
 import frc.robot.util.SparkMax.SparkMaxStatusFrames;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ShooterElevator extends SubsystemBase {
@@ -25,8 +26,8 @@ public class ShooterElevator extends SubsystemBase {
 
     CANSparkMax motor1, motor2;
     public boolean limSwitch;
-    private double gearing = 1;
-    public double max = 40;
+    public final double gearing = 1;
+    public double max = 44.8;
     public double min = 1;
     private SparkMaxConfig elevateConfig = new SparkMaxConfig(
             new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300), 1, true, SparkMaxEncoderType.Relative,

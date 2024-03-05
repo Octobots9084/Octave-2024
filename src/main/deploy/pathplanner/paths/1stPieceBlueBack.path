@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.815000388498094,
-        "y": 7.416269573147376
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 7.8308320092522425,
-        "y": 7.431778613256365
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 7.82,
-        "y": 7.42
-      },
-      "prevControl": {
-        "x": 7.843552950159616,
-        "y": 7.4326197667381
-      },
-      "nextControl": {
-        "x": 7.785629023851966,
-        "y": 7.401583890824312
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
         "x": 5.63,
         "y": 6.46
       },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.659371364646128,
+        "y": 6.46
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.195418754473873,
+        "y": 6.847299512780844
+      },
       "prevControl": {
-        "x": 5.592685016279123,
-        "y": 6.46932874593022
+        "x": 3.198856684876587,
+        "y": 6.8474338069372
+      },
+      "nextControl": {
+        "x": 2.0013392754058237,
+        "y": 6.8006557831297485
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.7681206271503453,
+        "y": 5.550603828480384
+      },
+      "prevControl": {
+        "x": 1.769459902556169,
+        "y": 5.537834530214515
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,21 +47,39 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": 0,
-      "rotateFast": false
+      "rotationDegrees": 148.54282897337742,
+      "rotateFast": true
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "Collect"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 2.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 6.706743652920386,
+    "velocity": 0.0,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,

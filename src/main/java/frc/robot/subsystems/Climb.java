@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ClimbPositions;
 import frc.robot.util.PIDConfig;
@@ -25,7 +26,7 @@ public class Climb extends SubsystemBase {
 
     CANSparkMax leftMotor, rightMotor;
     public boolean limSwitch;
-    private double gearing = 125;
+    private double gearing = 25;
     private double extensionDistance = 0.52;
 
     public Climb() {
@@ -43,7 +44,7 @@ public class Climb extends SubsystemBase {
                 1000,
                 true,
                 SparkMaxEncoderType.Relative,
-                IdleMode.kCoast,
+                IdleMode.kBrake,
                 30,
                 30,
                 false,
@@ -61,7 +62,7 @@ public class Climb extends SubsystemBase {
                 1000,
                 true,
                 SparkMaxEncoderType.Relative,
-                IdleMode.kCoast,
+                IdleMode.kBrake,
                 30,
                 30,
                 true,
@@ -104,5 +105,11 @@ public class Climb extends SubsystemBase {
         leftMotor.getEncoder().setPosition(0);
         rightMotor.getEncoder().setPosition(0);
         setPosition(0, 0);
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("rightclimb", getRightPosition());
+        SmartDashboard.putNumber("leftclimb", getLeftPosition());
     }
 }

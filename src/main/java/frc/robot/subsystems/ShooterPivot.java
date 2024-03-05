@@ -33,7 +33,8 @@ public class ShooterPivot extends SubsystemBase {
     public boolean notSoFastEggman = false;
 
     public ShooterPivot() {
-        //leadMotor and followMotor are outdated names, i'm changing it to left and right
+        // leadMotor and followMotor are outdated names, i'm changing it to left and
+        // right
         rightMotor = new CANSparkMax(14, MotorType.kBrushless);
         leftMotor = new CANSparkMax(13, MotorType.kBrushless);
         SparkMaxConfig right = new SparkMaxConfig(new SparkMaxStatusFrames(500,
@@ -43,7 +44,8 @@ public class ShooterPivot extends SubsystemBase {
                 500,
                 20,
                 500), 1000, true,
-                SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, true, false, 1, false, new PIDConfig(9, 0, 0,0.04));
+                SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, true, false, 1, false,
+                new PIDConfig(10, 0, 0, 0.04));
         SparkMaxConfig left = new SparkMaxConfig(new SparkMaxStatusFrames(500,
                 20,
                 500,
@@ -51,7 +53,8 @@ public class ShooterPivot extends SubsystemBase {
                 500,
                 20,
                 500), 1000, true,
-                SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, false, false, 1, false, new PIDConfig(9, 0, 0,0.04));
+                SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, false, false, 1, false,
+                new PIDConfig(10, 0, 0, 0.04));
 
         SparkMaxSetup.setup(leftMotor, left);
         SparkMaxSetup.setup(rightMotor, right);
@@ -60,7 +63,7 @@ public class ShooterPivot extends SubsystemBase {
     }
 
     public void setPosition(double target) {
-        
+
         target = MathUtil.clamp(target, minLimit, maxLimit);
         SmartDashboard.putNumber("targetPivot", target);
         leftMotor.getPIDController().setReference(target, ControlType.kPosition);
