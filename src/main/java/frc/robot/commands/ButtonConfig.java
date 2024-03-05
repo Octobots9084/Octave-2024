@@ -9,6 +9,7 @@ import frc.robot.commands.climb.ClimbPosTolerance;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.Dunk;
+import frc.robot.commands.complex.FerryShot;
 import frc.robot.commands.complex.Layup;
 import frc.robot.commands.complex.Panic;
 import frc.robot.commands.complex.PrepAmp;
@@ -41,7 +42,7 @@ public class ButtonConfig {
         driverLeft.button(2).whileTrue(new Driveby());
 
         driverRight.button(1).onTrue(new TheBigYeet());
-        driverRight.button(2).onTrue(new PrepSpeaker());
+        driverRight.button(2).onTrue(new FerryShot());
 
         driverButtons.button(1).onTrue(new ToggleTurnToSpeaker());
         driverButtons.button(2).onTrue(new ToggleTurnTo180());
@@ -56,7 +57,7 @@ public class ButtonConfig {
         coDriverButtons.button(2).onTrue(new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT));
         coDriverButtons.button(3).onTrue(new SequentialCommandGroup(new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT), new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT)));
         coDriverButtons.button(7).onTrue(new PrepClimb());
-        coDriverButtons.button(8).onTrue(new Dunk());
+        coDriverButtons.button(8).onTrue(new ClimbPosTolerance(ClimbPositions.MID));
         coDriverButtons.button(9).onTrue(new SimpleClimb());
         coDriverButtons.button(10).onTrue(new Layup());
         coDriverButtons.button(11).onTrue(new Undunk());
