@@ -28,22 +28,22 @@ public class TagAlign extends Command {
     public void execute() {
         try {
             realPose2d = swerveSubsystem.getPose();
-            // realSpeeds = swerveSubsystem.getFieldVelocity();
 
             if (Constants.isBlueAlliance) {
-                target = new Pose2d((realPose2d.getX() - 1.84) * -5, realPose2d.getY(),
-                        new Rotation2d((Math.atan2(realPose2d.getX(), realPose2d.getY()) - Math.PI)));
+                if (((realPose2d.getX() > 3.06 && realPose2d.getX() < 6.03)
+                        && (realPose2d.getY() > 2.00 && realPose2d.getY() < 6.00))) {
+                    target = new Pose2d((realPose2d.getX() - 4.065) * -5, realPose2d.getY(),
+                            new Rotation2d(
+                                    (Math.atan2((realPose2d.getX() - 4.065), (realPose2d.getY() - 4.106)) - Math.PI)));
+                } else {
+                    target = new Pose2d((realPose2d.getX() - 1.84) * -5, realPose2d.getY(),
+                            new Rotation2d((Math.atan2(realPose2d.getX() - 1.84, realPose2d.getY()) - Math.PI)));
+                }
+
             } else {
                 target = new Pose2d((realPose2d.getX() - 14.698) * -5, realPose2d.getY(),
                         new Rotation2d((Math.atan2(realPose2d.getX(), realPose2d.getY()) - Math.PI)));
             }
-
-            // targetTurn = new Rotation2d(
-            //     ReverseKinematics.calcRobotAngle(
-            //             ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
-            //             ReverseKinematics.convertSpeed(ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
-            //                     swerveSubsystem.getRobotVelocity()),
-            //             ShooterSpeeds.DRIVE_BY.flywheels));
 
             swerveSubsystem.setAlignRequest(target);
         } catch (Exception e) {
