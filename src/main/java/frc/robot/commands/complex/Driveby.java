@@ -48,8 +48,7 @@ public class Driveby extends Command {
     }
 
     public void updateTargets() {
-        // needs updating!!!!!!!!!!!!!!!!!!!
-        double elevatorConversionFactor = 1;
+        double elevatorConversionFactor = 0.1039;
 
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
@@ -61,8 +60,7 @@ public class Driveby extends Command {
                         ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
                         ReverseKinematics.convertSpeed(ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
                                 swerveSubsystem.getRobotVelocity()),
-                        ShooterSpeeds.DRIVE_BY.flywheels), 
-                        (ShooterElevator.getInstance().getPosition() * elevatorConversionFactor));
+                        ShooterSpeeds.DRIVE_BY.flywheels, ShooterElevator.getInstance().getPosition() * elevatorConversionFactor));
         SmartDashboard.putString("realPose2dAhh", realPose2d.toString());
     }
 
