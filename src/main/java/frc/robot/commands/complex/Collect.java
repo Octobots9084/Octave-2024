@@ -61,12 +61,11 @@ public class Collect extends SequentialCommandGroup {
                         new InstantCommand(() -> {
                             ShooterPivot.getInstance().notSoFastEggman = false;
                         }),
-                        new InstantCommand(() -> {
-                            Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
-                        }),
                         new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT),
                         new PrepSpeaker(),
-                        new JiggleNote(1)), new InstantCommand(), shooterSensorNotTrue));
+                        new JiggleNote(1),new InstantCommand(() -> {
+                            Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
+                        })), new InstantCommand(), shooterSensorNotTrue));
     }
 
 }

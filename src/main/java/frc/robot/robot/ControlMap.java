@@ -21,14 +21,15 @@
 package frc.robot.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 
 public class ControlMap {
-    public static final Joystick DRIVER_LEFT = new Joystick(0);
-    public static final Joystick DRIVER_RIGHT = new Joystick(1);
-    public static final Joystick DRIVER_BUTTONS = new Joystick(2);
-    public static final Joystick CO_DRIVER_LEFT = new Joystick(3);
-    public static final Joystick CO_DRIVER_RIGHT = new Joystick(4);
-    public static final Joystick CO_DRIVER_BUTTONS = new Joystick(5);
+    public static final CommandJoystick DRIVER_LEFT = new CommandJoystick(0);
+    public static final CommandJoystick DRIVER_RIGHT = new CommandJoystick(1);
+    public static final CommandJoystick DRIVER_BUTTONS = new CommandJoystick(2);
+    public static final CommandJoystick CO_DRIVER_LEFT = new CommandJoystick(3);
+    public static final CommandJoystick CO_DRIVER_RIGHT = new CommandJoystick(4);
+    public static final CommandJoystick CO_DRIVER_BUTTONS = new CommandJoystick(5);
 
     private ControlMap() {
     }
