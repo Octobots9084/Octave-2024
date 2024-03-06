@@ -57,8 +57,8 @@ public class ButtonConfig {
         driverButtons.button(7).onTrue(new PrepSpeaker());
         driverButtons.button(11).onTrue(new Panic());
         driverButtons.button(9).onTrue(new CancelAllCommands());
-        driverButtons.button(10).onTrue(new SrcCollect());
-        
+        // driverButtons.button(10).onTrue(new SrcCollect());
+
 
 
         coDriverButtons.button(1).onTrue(new PrepClimb());
