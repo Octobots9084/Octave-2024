@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.Constants;
 import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
 import frc.robot.commands.climb.ClimbPosTolerance;
+import frc.robot.commands.climb.ClimbZero;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.Dunk;
@@ -51,20 +52,33 @@ public class ButtonConfig {
         driverButtons.button(4).onTrue(new Collect());
         driverButtons.button(5).onTrue(new ToggleTurnToAmp());
         driverButtons.button(6).onTrue(new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro));
+        driverButtons.button(7).onTrue(new PrepSpeaker());
         driverButtons.button(11).onTrue(new Panic());
         driverButtons.button(9).onTrue(new CancelAllCommands());
         driverButtons.button(10).onTrue(new SrcCollect());
 
 
-        coDriverButtons.button(1).onTrue(new ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
-        coDriverButtons.button(2).onTrue(new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT));
-        coDriverButtons.button(3).onTrue(new SequentialCommandGroup(new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT), new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT)));
-        coDriverButtons.button(7).onTrue(new PrepClimb());
-        coDriverButtons.button(8).onTrue(new ClimbPosTolerance(ClimbPositions.MID));
-        coDriverButtons.button(9).onTrue(new SimpleClimb());
-        coDriverButtons.button(10).onTrue(new Layup());
-        coDriverButtons.button(11).onTrue(new Undunk());
-        coDriverButtons.button(12).onTrue(new ClimbPosTolerance(ClimbPositions.MID));
+        coDriverButtons.button(1).onTrue(new PrepClimb());
+        coDriverButtons.button(2).onTrue(new ClimbPosTolerance(ClimbPositions.MID));
+        coDriverButtons.button(3).onTrue(new SimpleClimb());
+        coDriverButtons.button(4).onTrue(new Layup());
+        coDriverButtons.button(5).onTrue(new Undunk());        
+        coDriverButtons.button(6).onTrue(new ClimbZero());
+        coDriverButtons.button(7).onTrue(new Collect());
+        coDriverButtons.button(2).onTrue(new InstantCommand()); // climb align
+        coDriverButtons.button(2).onTrue(new Panic());
+        coDriverButtons.button(2).onTrue(new CancelAllCommands());
+
+
+
+
+        // coDriverButtons.button(4).onTrue(new SequentialCommandGroup(new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT), new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT)));
+        // coDriverButtons.button(7).onTrue(new PrepClimb());
+        // coDriverButtons.button(8).onTrue(new ClimbPosTolerance(ClimbPositions.MID));
+        // coDriverButtons.button(9).onTrue(new SimpleClimb());
+        // coDriverButtons.button(10).onTrue(new Layup());
+        // coDriverButtons.button(11).onTrue(new Undunk());
+        // coDriverButtons.button(12).onTrue(new CancelAllCommands());
 
         // coDriverButtons.button(12).onTrue(new ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
 
