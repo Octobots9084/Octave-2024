@@ -58,6 +58,7 @@ public class ButtonConfig {
         driverButtons.button(11).onTrue(new Panic());
         driverButtons.button(9).onTrue(new CancelAllCommands());
         driverButtons.button(10).onTrue(new SrcCollect());
+        
 
 
         coDriverButtons.button(1).onTrue(new PrepClimb());
@@ -68,8 +69,8 @@ public class ButtonConfig {
         coDriverButtons.button(6).onTrue(new ClimbZero());
         coDriverButtons.button(7).onTrue(new Collect());
         coDriverButtons.button(8).onTrue(new InstantCommand()); // climb align
-        coDriverButtons.button(9).onTrue(new Panic());
-        coDriverButtons.button(10).onTrue(new CancelAllCommands());
+        coDriverButtons.button(11).onTrue(new Panic());
+        coDriverButtons.button(12).onTrue(new CancelAllCommands());
 
 
 
