@@ -5,7 +5,7 @@ public enum ArmPositions {
     AMP(20, 0.69),
     TRAP_SEGUEAY(5, 0.39),
     TRAP(44.8, 0.69),
-    LAYUP(1, 0.891),
+    LAYUP(5, 0.889),
     FERRY_SHOT(40, 0.55),
     SOURCE_COLLECT(0, 0), // placeholder
     SPEAKER_SHOT(0, 0.46);
