@@ -30,15 +30,16 @@ import frc.robot.commands.swervedrive.ToggleTurnToSpeaker;
 import frc.robot.constants.ClimbPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
+import frc.robot.robot.ControlMap;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class ButtonConfig {
-    CommandJoystick driverLeft = new CommandJoystick(Constants.OperatorConstants.DRIVER_LEFT);
-    CommandJoystick driverRight = new CommandJoystick(Constants.OperatorConstants.DRIVER_RIGHT);
-    CommandJoystick driverButtons = new CommandJoystick(Constants.OperatorConstants.DRIVER_BUTTONS);
-    CommandJoystick coDriverLeft = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_LEFT);
-    CommandJoystick coDriverRight = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_RIGHT);
-    CommandJoystick coDriverButtons = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_BUTTONS);
+    CommandJoystick driverLeft = ControlMap.DRIVER_LEFT;
+    CommandJoystick driverRight = ControlMap.DRIVER_RIGHT;
+    CommandJoystick driverButtons = ControlMap.DRIVER_BUTTONS;
+    CommandJoystick coDriverLeft = ControlMap.CO_DRIVER_LEFT;
+    CommandJoystick coDriverRight = ControlMap.CO_DRIVER_RIGHT;
+    CommandJoystick coDriverButtons = ControlMap.CO_DRIVER_BUTTONS;
 
     public void initTeleop() {
         driverButtons.button(10).onTrue(new SequentialCommandGroup(new PrepAmp(), new ToggleTurnToAmp()));
