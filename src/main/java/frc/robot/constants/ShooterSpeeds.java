@@ -1,7 +1,7 @@
 package frc.robot.constants;
 
 public enum ShooterSpeeds {
-    IDLE(0, -0.5),
+    IDLE(0.1, -0.5),
     PREPARE(0.15, 1),
     SPEAKER(0.7, -20),
     STOP(0, 0),

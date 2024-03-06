@@ -11,6 +11,7 @@ import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.Dunk;
 import frc.robot.commands.complex.FerryShot;
+import frc.robot.commands.complex.HalfClimb;
 import frc.robot.commands.complex.Layup;
 import frc.robot.commands.complex.Panic;
 import frc.robot.commands.complex.PrepAmp;
@@ -59,7 +60,7 @@ public class ButtonConfig {
 
 
         coDriverButtons.button(1).onTrue(new PrepClimb());
-        coDriverButtons.button(2).onTrue(new ClimbPosTolerance(ClimbPositions.MID));
+        coDriverButtons.button(2).onTrue(new HalfClimb());
         coDriverButtons.button(3).onTrue(new SimpleClimb());
         coDriverButtons.button(4).onTrue(new Layup());
         coDriverButtons.button(5).onTrue(new Undunk());        
