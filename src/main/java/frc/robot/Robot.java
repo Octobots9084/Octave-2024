@@ -15,9 +15,12 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
+import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
 import frc.robot.commands.ButtonConfig;
+import frc.robot.commands.arm.ElevatorManual;
+import frc.robot.commands.arm.PivotManual;
 import frc.robot.commands.climb.ClimbManual;
 
 import java.io.File;
@@ -171,6 +174,9 @@ public class Robot extends TimedRobot {
     }
     m_robotContainer.setDriveMode();
     ShooterFlywheel.getInstance().setFlywheelsCurrentNormal();
+    Climb.getInstance().setDefaultCommand(new ClimbManual());
+    ShooterPivot.getInstance().setDefaultCommand(new PivotManual());
+    ShooterElevator.getInstance().setDefaultCommand(new ElevatorManual());
   }
 
   /**

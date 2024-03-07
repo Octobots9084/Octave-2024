@@ -143,9 +143,7 @@ public class RobotContainer {
                                 },
                                 SwerveSubsystem.getInstance() // Reference to this subsystem to set requirements
                 );
-                Climb.getInstance().setDefaultCommand(new ClimbManual());
-                ShooterPivot.getInstance().setDefaultCommand(new PivotManual());
-                ShooterElevator.getInstance().setDefaultCommand(new ElevatorManual());
+                
                 autoChooser = AutoBuilder.buildAutoChooser();
                 SmartDashboard.putData("Auto Competition", autoChooser);
                 SwerveSubsystem.getInstance();
