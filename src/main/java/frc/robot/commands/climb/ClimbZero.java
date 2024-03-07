@@ -20,6 +20,8 @@ public class ClimbZero extends Command {
     @Override
     public void end(boolean interrupted) {
         climb.setHighCurrentLimits();
+        climb.setOffset();
        climb.setPosition(ClimbPositions.DOWN);
+       
     }
 }

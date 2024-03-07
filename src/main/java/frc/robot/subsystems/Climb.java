@@ -106,7 +106,6 @@ public class Climb extends SubsystemBase {
         
         leftMotor.set(-0.5);
         rightMotor.set(-0.5);
-        setOffset();
         // }
         // leftMotor.stopMotor();
 
