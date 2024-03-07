@@ -64,7 +64,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private SwerveSubsystem(File directory) {
 
     // objects being created.
-    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.MACHINE;
     try {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(5, 360,
 
@@ -270,7 +270,14 @@ public class SwerveSubsystem extends SubsystemBase {
    * facing toward 0.
    */
   public void zeroGyro() {
-    swerveDrive.zeroGyro();
+    if (Constants.isBlueAlliance) {
+      swerveDrive.zeroGyro();
+    } else {
+      swerveDrive.zeroGyro();
+      swerveDrive.setGyro(new Rotation3d(0,0,Math.PI));
+    }
+    
+    
   }
 
   /**
