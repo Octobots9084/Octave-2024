@@ -60,7 +60,7 @@ public class ReverseKinematics {
                 //                / timeInAir);
                 double verticalVel = (((constTargetHeightDiff - climbHeight)/timeInAir) + (0.5*g*timeInAir)); //(pos.getY() / timeInAir)
   
-                SmartDashboard.putNumber("verticalVel", verticalVel);
+                // SmartDashboard.putNumber("verticalVel", verticalVel);
                 //SmartDashboard.putNumber("heightDelta", heightDelta);
                 return verticalVel;
         }
@@ -101,9 +101,9 @@ public class ReverseKinematics {
         public static double calcSubwooferLaunchAngle(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS, double climbHeight) {
                 speed = convertSpeed(pos, speed);
                 double timeInAir = calcTimeInAir(pos, speed, flywheelSpeedMTS, climbHeight);
-                SmartDashboard.putNumber("targetAngleShoote",
-                                (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir, climbHeight),
-                                                calcLaunchXVel(pos, speed, timeInAir)))));
+                // SmartDashboard.putNumber("targetAngleShoote",
+                //                 (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir, climbHeight),
+                //                                 calcLaunchXVel(pos, speed, timeInAir)))));
                 double angleDiffRadians = (Math.PI
                                 + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir, climbHeight),
                                                 calcLaunchXVel(pos, speed, timeInAir))));

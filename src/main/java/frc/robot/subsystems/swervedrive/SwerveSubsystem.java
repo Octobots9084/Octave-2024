@@ -64,7 +64,7 @@ public class SwerveSubsystem extends SubsystemBase {
   private SwerveSubsystem(File directory) {
 
     // objects being created.
-    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.NONE;
+    SwerveDriveTelemetry.verbosity = TelemetryVerbosity.MACHINE;
     try {
       swerveDrive = new SwerveParser(directory).createSwerveDrive(5, 360,
 
