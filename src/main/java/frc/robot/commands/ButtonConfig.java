@@ -23,9 +23,11 @@ import frc.robot.commands.swervedrive.ToggleTurnTo180;
 import frc.robot.commands.swervedrive.ToggleTurnToAmp;
 import frc.robot.commands.swervedrive.ToggleTurnToSource;
 import frc.robot.commands.swervedrive.ToggleTurnToSpeaker;
+import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ClimbPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class ButtonConfig {
@@ -39,6 +41,7 @@ public class ButtonConfig {
     public void initTeleop() {
         driverButtons.button(10).onTrue(new SequentialCommandGroup(new PrepAmp(), new ToggleTurnToAmp()));
         driverLeft.button(2).whileTrue(new Driveby());
+        
 
         driverRight.button(1).onTrue(new TheBigYeet());
         driverRight.button(2).onTrue(new PrepSpeaker());
@@ -55,6 +58,9 @@ public class ButtonConfig {
         coDriverButtons.button(1).onTrue(new ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
         coDriverButtons.button(2).onTrue(new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT));
         coDriverButtons.button(3).onTrue(new SequentialCommandGroup(new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT), new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT)));
+        driverLeft.button(6).whileTrue(new SequentialCommandGroup(new InstantCommand(()->{
+            ShooterElevator.getInstance().setPosition(ArmPositions.AMP);
+        }), new Driveby()));
         coDriverButtons.button(7).onTrue(new PrepClimb());
         coDriverButtons.button(8).onTrue(new Dunk());
         coDriverButtons.button(9).onTrue(new SimpleClimb());
