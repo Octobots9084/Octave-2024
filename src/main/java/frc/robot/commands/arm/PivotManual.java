@@ -28,8 +28,8 @@ public class PivotManual extends Command{
         // Make sure the climb position is within the allowed range.
         newPos = edu.wpi.first.math.MathUtil.clamp(
                 newPos,
-                0.435,
-                0.69);
+                ShooterPivot.minLimit,
+                ShooterPivot.maxLimit);
         piv.setPosition(newPos);
     }
 }
