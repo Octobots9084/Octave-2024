@@ -91,10 +91,22 @@ public class Climb extends SubsystemBase {
     public double getRightPosition() {
         return rightMotor.getEncoder().getPosition();
     }
+    public void setLowCurrentLimits() {
+        leftMotor.setSmartCurrentLimit(10,10);
+        rightMotor.setSmartCurrentLimit(10,10);
+    }
+
+    public void setHighCurrentLimits() {
+        leftMotor.setSmartCurrentLimit(30,30);
+        rightMotor.setSmartCurrentLimit(30,30);
+    }
 
     public void zero() {
         // while (!limSwitch) {
-        // leftMotor.setVoltage(-0.1);
+        
+        leftMotor.set(-0.5);
+        rightMotor.set(-0.5);
+        setOffset();
         // }
         // leftMotor.stopMotor();
 

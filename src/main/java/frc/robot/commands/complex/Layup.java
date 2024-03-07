@@ -14,10 +14,14 @@ import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.ShooterFlywheel;
+import frc.robot.subsystems.lights.Animations;
+import frc.robot.subsystems.lights.Light;
 
 public class Layup extends SequentialCommandGroup {
     public Layup() {
-        addCommands(
+        addCommands(new InstantCommand(() -> {
+                    Light.getInstance().setAnimation(Animations.CLIMB);
+                }),
                 new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY),
                 new ShooterElevatorPosTolerance(ArmPositions.LAYUP).withTimeout(5),
                 new InstantCommand(() -> ShooterFlywheel.getInstance().setFlywheelActive(false)),

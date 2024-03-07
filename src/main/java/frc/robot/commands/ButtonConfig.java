@@ -72,7 +72,7 @@ public class ButtonConfig {
         coDriverButtons.button(3).onTrue(new SimpleClimb());
         coDriverButtons.button(4).onTrue(new Layup());
         coDriverButtons.button(5).onTrue(new Undunk());        
-        coDriverButtons.button(6).onTrue(new ClimbZero());
+        coDriverButtons.button(6).whileTrue(new ClimbZero());
         coDriverButtons.button(7).onTrue(new Collect());
         coDriverButtons.button(8).onTrue(new InstantCommand()); // climb align
         coDriverButtons.button(9).whileTrue(new SequentialCommandGroup(new InstantCommand(()->{

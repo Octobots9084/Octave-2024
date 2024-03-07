@@ -18,6 +18,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.arm.ElevatorManual;
+import frc.robot.commands.arm.PivotManual;
+import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.InitalSpeakerAuto;
@@ -25,7 +28,10 @@ import frc.robot.commands.complex.InitalSpeakerAutoFast;
 import frc.robot.commands.swervedrive.auto.ParallelAutoHandling;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
+import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
@@ -137,6 +143,9 @@ public class RobotContainer {
                                 },
                                 SwerveSubsystem.getInstance() // Reference to this subsystem to set requirements
                 );
+                Climb.getInstance().setDefaultCommand(new ClimbManual());
+                ShooterPivot.getInstance().setDefaultCommand(new PivotManual());
+                ShooterElevator.getInstance().setDefaultCommand(new ElevatorManual());
                 autoChooser = AutoBuilder.buildAutoChooser();
                 SmartDashboard.putData("Auto Competition", autoChooser);
                 SwerveSubsystem.getInstance();
