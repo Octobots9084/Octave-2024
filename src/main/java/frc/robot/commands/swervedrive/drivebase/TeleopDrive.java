@@ -53,6 +53,8 @@ public class TeleopDrive extends Command {
     if (swerve.getShootingRequestActive()) {
       swerve.targetAngleEnabled = true;
       swerve.targetAngle = swerve.getShootingRequest();
+    } else if (swerve.getAlignRequestActive()) {
+      swerve.targetAngle = swerve.getAlignRequest().getRotation();
     }
     double xSpeed = vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED;
     double ySpeed = vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED;
