@@ -26,7 +26,7 @@ public class ElevatorManual extends Command {
             // versa.
             // If we want to inverse the direction, change the sign below.
             final var leftDelta = 0.5 *
-                    Math.signum(MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getX(),0.1));
+                    Math.signum(MathUtil.fitDeadband(ControlMap.CO_DRIVER_LEFT.getX(),0.1));
 
             var newPos = elev.getPosition() + leftDelta;
 
