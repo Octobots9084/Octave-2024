@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.XboxConfig;
 import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.InitalSpeakerAuto;
@@ -65,11 +66,11 @@ public class RobotContainer {
 
                 TeleopDrive closedFieldRel = new TeleopDrive(
                                 SwerveSubsystem.getInstance(),
-                                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(1),
+                                () -> MathUtil.applyDeadband(-XboxConfig.driver.getRawAxis(1),
                                                 OperatorConstants.LEFT_Y_DEADBAND),
-                                () -> MathUtil.applyDeadband(-driverLeft.getRawAxis(0),
+                                () -> MathUtil.applyDeadband(-XboxConfig.driver.getRawAxis(0),
                                                 OperatorConstants.LEFT_X_DEADBAND),
-                                () -> MathUtil.applyDeadband(-driverRight.getRawAxis(0),
+                                () -> MathUtil.applyDeadband(-XboxConfig.driver.getRawAxis(4),
                                                 OperatorConstants.RIGHT_X_DEADBAND),
                                 () -> true);
 
