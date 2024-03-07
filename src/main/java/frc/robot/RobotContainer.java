@@ -138,7 +138,7 @@ public class RobotContainer {
                                 SwerveSubsystem.getInstance() // Reference to this subsystem to set requirements
                 );
                 autoChooser = AutoBuilder.buildAutoChooser();
-                SmartDashboard.putData("Auto Chooser", autoChooser);
+                SmartDashboard.putData("Auto Competition", autoChooser);
                 SwerveSubsystem.getInstance();
 
         }
