@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.Constants;
+import frc.robot.Constants.Arm;
 import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
 import frc.robot.commands.climb.ClimbPosTolerance;
 import frc.robot.commands.climb.ClimbZero;
@@ -72,9 +73,12 @@ public class ButtonConfig {
         coDriverButtons.button(6).onTrue(new ClimbZero());
         coDriverButtons.button(7).onTrue(new Collect());
         coDriverButtons.button(8).onTrue(new InstantCommand()); // climb align
-        driverLeft.button(9).whileTrue(new SequentialCommandGroup(new InstantCommand(()->{
+        coDriverButtons.button(9).whileTrue(new SequentialCommandGroup(new InstantCommand(()->{
             ShooterElevator.getInstance().setPosition(ArmPositions.AMP);
         }), new Driveby()));
+        coDriverButtons.button(10).onTrue(new InstantCommand(()->{
+            ShooterElevator.getInstance().setPosition(ArmPositions.PREP_TRAP);
+        }));
         coDriverButtons.button(11).onTrue(new Panic());
         coDriverButtons.button(12).onTrue(new CancelAllCommands());
 
