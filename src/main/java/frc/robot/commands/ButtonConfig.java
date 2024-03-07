@@ -34,6 +34,8 @@ import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.robot.ControlMap;
 import frc.robot.subsystems.ShooterElevator;
+import frc.robot.subsystems.ShooterFlywheel;
+import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class ButtonConfig {
@@ -76,9 +78,17 @@ public class ButtonConfig {
         coDriverButtons.button(9).whileTrue(new SequentialCommandGroup(new InstantCommand(()->{
             ShooterElevator.getInstance().setPosition(ArmPositions.AMP);
         }), new Driveby()));
-        coDriverButtons.button(10).onTrue(new InstantCommand(()->{
-            ShooterElevator.getInstance().setPosition(ArmPositions.PREP_TRAP);
-        }));
+        coDriverButtons.button(10).onTrue(
+            new SequentialCommandGroup(new InstantCommand(()->{
+                ShooterElevator.getInstance().setPosition(ArmPositions.PREP_TRAP);
+            }),
+            new InstantCommand(()->{
+                ShooterPivot.getInstance().setPosition(ArmPositions.PREP_TRAP);
+            }),
+            new InstantCommand(()->{
+                ShooterFlywheel.getInstance().setFlywheelSpeed(0);
+            }))
+        );
         coDriverButtons.button(11).onTrue(new Panic());
         coDriverButtons.button(12).onTrue(new CancelAllCommands());
 

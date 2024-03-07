@@ -17,6 +17,7 @@ public class PivotManual extends Command{
 
     @Override
     public void execute() {
+
         // Moving the joystick up moves the claw down so that the robot goes up and vice
         // versa.
         // If we want to inverse the direction, change the sign below.

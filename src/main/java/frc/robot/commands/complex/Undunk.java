@@ -11,10 +11,10 @@ import frc.robot.constants.ArmPositions;
 public class Undunk extends SequentialCommandGroup{
     public Undunk() {
         addCommands(
-            new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY),
+            new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY).withTimeout(3),
             new ParallelCommandGroup(
-            new ShooterElevatorPosTolerance(ArmPositions.TRAP_SEGUEAY),
-            new ClimbPosTolerance(ClimbPositions.UP)
+            new ShooterElevatorPosTolerance(ArmPositions.TRAP_SEGUEAY).withTimeout(3),
+            new ClimbPosTolerance(ClimbPositions.UP).withTimeout(3)
             )
         );
     }
