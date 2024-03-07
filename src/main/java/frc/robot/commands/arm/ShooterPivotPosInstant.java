@@ -16,7 +16,7 @@ public class ShooterPivotPosInstant extends InstantCommand {
 
     @Override
     public void initialize() {
-        SmartDashboard.putNumber("armpivo", armPositions.pivot);
+        // SmartDashboard.putNumber("armpivo", armPositions.pivot);
         pivot.setPosition(armPositions);
     }
 }

@@ -43,7 +43,7 @@ public class Driveby extends Command {
     public void initialize() {
         swerveSubsystem.setShootingRequestActive(true);
         CommandScheduler.getInstance().schedule(new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT));
-        SmartDashboard.putNumber("targetPoseX", 3.0);
+        // SmartDashboard.putNumber("targetPoseX", 3.0);
         Light.getInstance().setAnimation(Animations.AIMING);
     }
 
@@ -61,7 +61,7 @@ public class Driveby extends Command {
                         ReverseKinematics.convertSpeed(ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
                                 swerveSubsystem.getRobotVelocity()),
                         ShooterSpeeds.DRIVE_BY.flywheels, ShooterElevator.getInstance().getPosition() * elevatorConversionFactor));
-        SmartDashboard.putString("realPose2dAhh", realPose2d.toString());
+        // SmartDashboard.putString("realPose2dAhh", realPose2d.toString());
     }
 
     @Override
@@ -74,7 +74,7 @@ public class Driveby extends Command {
         ReverseKinematics.configHeightDif(ReverseKinematics.getHeightDif()
                 + MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.MANUAL_DEADBAND) * 0.05);
         updateTargets();
-        SmartDashboard.putString("realPose2d", realPose2d.toString());
+        // SmartDashboard.putString("realPose2d", realPose2d.toString());
         swerveSubsystem.setShootingRequest(targetTurn);
         flywheel.setFlyWheelSpeedMeters(targetFlywheel);
         if (!pivot.notSoFastEggman) {
@@ -85,12 +85,12 @@ public class Driveby extends Command {
     @Override
     public boolean isFinished() {
         double realRotation = swerveSubsystem.getHeading().getRadians();
-        SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
+        // SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
 
-        SmartDashboard.putNumber("targetPivot", targetPivot);
-        SmartDashboard.putNumber("realPivot", realPivot);
-        SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
-        SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
+        // SmartDashboard.putNumber("targetPivot", targetPivot);
+        // SmartDashboard.putNumber("realPivot", realPivot);
+        // SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
+        // SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
         if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.05)

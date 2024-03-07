@@ -65,7 +65,7 @@ public class ShooterPivot extends SubsystemBase {
     public void setPosition(double target) {
 
         target = MathUtil.clamp(target, minLimit, maxLimit);
-        SmartDashboard.putNumber("targetPivot", target);
+        // SmartDashboard.putNumber("targetPivot", target);
         leftMotor.getPIDController().setReference(target, ControlType.kPosition);
 
         rightMotor.getPIDController().setReference(target, ControlType.kPosition);

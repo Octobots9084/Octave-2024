@@ -89,7 +89,7 @@ public class ShooterFlywheel extends SubsystemBase {
 
     public void setFlywheelSpeed(double newSpeed) {
         lastSpeed = newSpeed;
-        SmartDashboard.putNumber("newSpeed", newSpeed);
+        // SmartDashboard.putNumber("newSpeed", newSpeed);
         motorOne.getPIDController().setReference(newSpeed, ControlType.kVelocity);
         motorTwo.getPIDController().setReference(-newSpeed, ControlType.kVelocity);
     }

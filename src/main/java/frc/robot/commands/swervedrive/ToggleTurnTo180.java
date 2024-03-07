@@ -34,13 +34,13 @@ public class ToggleTurnTo180 extends Command {
         if (MathUtil.isWithinTolerance(SwerveSubsystem.getInstance().getHeading().getRadians(), SwerveSubsystem.getInstance().targetAngle.getRadians(), Constants.Drivebase.TURN_TO_ANGLE_TOLERANCE)) {
             if (!startedInTolerance) {
                 startToleranceInTime = Timer.getFPGATimestamp();
-                SmartDashboard.putBoolean("InTolerance", true);
+                // SmartDashboard.putBoolean("InTolerance", true);
                 startedInTolerance = true;
             }
             
         } else {
             startToleranceInTime = Timer.getFPGATimestamp() + 10000;
-            SmartDashboard.putBoolean("InTolerance", false);
+            // SmartDashboard.putBoolean("InTolerance", false);
             startedInTolerance = false;
         }
     }

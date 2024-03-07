@@ -28,9 +28,16 @@ public class ReverseKinematics {
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
-                SmartDashboard.putString("poseconvert",
-                                new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d())
-                                                .toString());
+                if (Constants.isBlueAlliance) {
+                        subwooferXPos = 0;
+                        subwooferYPos = 5.5;
+                } else {
+                        subwooferXPos = 16.548;
+                        subwooferYPos = 5.55;
+                }
+                // SmartDashboard.putString("poseconvert",
+                //                 new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d())
+                //                                 .toString());
                 return new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d());
         }
 
@@ -62,7 +69,7 @@ public class ReverseKinematics {
         // for internal use only
         private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
                 double xVel = (pos.getX() / timeInAir) + (speed.vxMetersPerSecond * movementMultiplierX);
-                SmartDashboard.putNumber("xVel", xVel);
+                // SmartDashboard.putNumber("xVel", xVel);
                 return xVel;
         }
 
@@ -73,7 +80,7 @@ public class ReverseKinematics {
                 //((constTargetHeightDiff/timeInAir) + (0.5*g*timeInAir)) //
                 double yVel = (pos.getY() / timeInAir)
                                 - (speed.vyMetersPerSecond * movementMultiplierY);
-                SmartDashboard.putNumber("yVel", yVel);
+                // SmartDashboard.putNumber("yVel", yVel);
                 return yVel;
         }
 
@@ -107,7 +114,7 @@ public class ReverseKinematics {
 
         public static void configHeightDif(double targetHeightDiff) {
                 constTargetHeightDiff = targetHeightDiff;
-                SmartDashboard.putNumber("targetHeightDiff", constTargetHeightDiff);
+                // SmartDashboard.putNumber("targetHeightDiff", constTargetHeightDiff);
         }
 
         public static double getHeightDif() {

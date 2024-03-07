@@ -53,6 +53,7 @@ public class Collect extends SequentialCommandGroup {
                         new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
+                        new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
                         new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
                         new WaitUntilCommand(shooterSensorTrue),
                         new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
@@ -60,12 +61,11 @@ public class Collect extends SequentialCommandGroup {
                         new InstantCommand(() -> {
                             ShooterPivot.getInstance().notSoFastEggman = false;
                         }),
-                        new InstantCommand(() -> {
-                            Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
-                        }),
                         new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT),
                         new PrepSpeaker(),
-                        new JiggleNote(1)), new InstantCommand(), shooterSensorNotTrue));
+                        new JiggleNote(1),new InstantCommand(() -> {
+                            Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
+                        })), new InstantCommand(), shooterSensorNotTrue));
     }
 
 }
