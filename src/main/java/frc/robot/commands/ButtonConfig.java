@@ -67,7 +67,7 @@ public class ButtonConfig {
         coDriverButtons.button(1).onTrue(new PrepClimb());
         coDriverButtons.button(2).onTrue(new HalfClimb());
         coDriverButtons.button(3).onTrue(new SimpleClimb());
-        coDriverButtons.button(4).onTrue(new Layup());
+        coDriverButtons.button(4).onTrue(new Dunk());
         coDriverButtons.button(5).onTrue(new Undunk());        
         coDriverButtons.button(6).onTrue(new ClimbZero());
         coDriverButtons.button(7).onTrue(new Collect());
