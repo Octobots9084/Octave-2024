@@ -18,7 +18,7 @@ public class ShooterElevatorPosInstant extends InstantCommand {
     @Override
     public void initialize() {
         shooterElevator.setPosition(armPositions);
-        SmartDashboard.putNumber("elevator", armPositions.elevator);
+        // SmartDashboard.putNumber("elevator", armPositions.elevator);
     }
 
 }

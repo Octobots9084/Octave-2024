@@ -6,10 +6,10 @@ import frc.robot.commands.climb.ClimbPosTolerance;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ClimbPositions;
 
-public class SimpleClimb extends SequentialCommandGroup{
-    public SimpleClimb() {
+public class HalfClimb extends SequentialCommandGroup{
+    public HalfClimb() {
         addCommands(
             new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY).withTimeout(1),
-            new ClimbPosTolerance(ClimbPositions.DOWN));
+            new ClimbPosTolerance(ClimbPositions.MID));
     }
 }
