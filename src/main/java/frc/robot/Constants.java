@@ -98,7 +98,7 @@ public final class Constants {
 		private final static double ROBOT_TO_CAM_Y = 0.273;
 		private final static double ROBOT_TO_CAM_Z = 0.3937;
 
-		public final static boolean USE_VISION = true;
+		public final static boolean USE_VISION = false;
 
 		final static double back_cam_x = 13.97;
 
