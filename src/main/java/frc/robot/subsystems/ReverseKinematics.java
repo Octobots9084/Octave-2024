@@ -98,7 +98,7 @@ public class ReverseKinematics {
                                                 calcLaunchXVel(pos, speed, timeInAir)))));
                 double angleDiffRadians = (Math.PI
                                 + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir, climbHeight),
-                                                calcLaunchXVel(pos, speed, timeInAir))));
+                                                Math.sqrt((calcLaunchXVel(pos, speed, timeInAir) * calcLaunchXVel(pos, speed, timeInAir)) + (calcLaunchYVel(pos, speed, timeInAir) * calcLaunchYVel(pos, speed, timeInAir))))));
                 double normalizedAngleDiff = angleDiffRadians
                                 / (2 * Math.PI);
                 return encoderOffset
