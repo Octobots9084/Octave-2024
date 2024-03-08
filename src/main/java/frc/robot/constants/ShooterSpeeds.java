@@ -6,7 +6,7 @@ public enum ShooterSpeeds {
     SPEAKER(0.7, -20),
     STOP(0, 0),
     PANIC(1, -500),
-    AMP(1, -20),
+    AMP(1, -15),
     FERRY_SHOT(1, -20),
     JIGGLE_FORWARD(0.1, 0),
     JIGGLE_BACKWARD(-0.1, 0),
