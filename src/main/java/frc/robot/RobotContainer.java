@@ -25,6 +25,7 @@ import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
+import frc.robot.commands.complex.TheBigYeet;
 import frc.robot.commands.swervedrive.auto.ParallelAutoHandling;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.constants.ArmPositions;
@@ -89,7 +90,7 @@ public class RobotContainer {
                         NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(5));
                         NamedCommands.registerCommand("Multithread", new ParallelAutoHandling());
 
-                        NamedCommands.registerCommand("Shoot", new DrivebyAuto());
+                        NamedCommands.registerCommand("Shoot", new DrivebyAuto().withTimeout(2).andThen(new TheBigYeet()));
                         NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
                                 ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
                         }));
