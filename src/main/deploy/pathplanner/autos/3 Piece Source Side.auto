@@ -88,7 +88,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "SpeakerAuto"
           }
         },
         {
@@ -132,7 +132,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "SpeakerAuto"
           }
         }
       ]
