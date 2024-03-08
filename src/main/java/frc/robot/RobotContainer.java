@@ -27,6 +27,7 @@ import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
 import frc.robot.commands.swervedrive.auto.ParallelAutoHandling;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
+import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.ShooterElevator;
@@ -94,13 +95,16 @@ public class RobotContainer {
 
                 NamedCommands.registerCommand("SpinUpFlywheels", new InstantCommand(() -> {
                         ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-20);
+                        ShooterPivot.getInstance().setPosition(ArmPositions.SPEAKER_SHOT);
                 }));
                 NamedCommands.registerCommand("SpinUpFlywheelsFast", new InstantCommand(() -> {
                         ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-500);
+                        ShooterPivot.getInstance().setPosition(ArmPositions.SPEAKER_SHOT);
                 }));
 
                 NamedCommands.registerCommand("FlywheelsCurrentFast", new InstantCommand(() -> {
                         ShooterFlywheel.getInstance().setFlywheelsCurrentFast();
+                        
                 }));
 
                 NamedCommands.registerCommand("FlywheelsCurrentNormal", new InstantCommand(() -> {
