@@ -33,6 +33,8 @@ import frc.robot.constants.ClimbPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.robot.ControlMap;
+import frc.robot.subsystems.IntakeRoller;
+import frc.robot.subsystems.IntakeTrack;
 import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
@@ -63,6 +65,10 @@ public class ButtonConfig {
         driverButtons.button(7).onTrue(new PrepSpeaker());
         driverButtons.button(11).onTrue(new Panic());
         driverButtons.button(9).onTrue(new CancelAllCommands());
+        driverButtons.button(8).onTrue(new InstantCommand(() -> {
+            IntakeTrack.getInstance().set(ShooterSpeeds.PANIC);
+            IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
+        }));
         // driverButtons.button(10).onTrue(new SrcCollect());
 
 

@@ -82,72 +82,78 @@ public class RobotContainer {
 
                 SwerveSubsystem.getInstance().setDefaultCommand(
                                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
-                NamedCommands.registerCommand("SpeakerAuto", new InitalSpeakerAutoFast());
-                NamedCommands.registerCommand("SpeakerAutoSlow", new InitalSpeakerAuto());
+                try {
+                        NamedCommands.registerCommand("SpeakerAuto", new InitalSpeakerAutoFast());
+                        NamedCommands.registerCommand("SpeakerAutoSlow", new InitalSpeakerAuto());
 
-                NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(5));
-                NamedCommands.registerCommand("Multithread", new ParallelAutoHandling());
+                        NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(5));
+                        NamedCommands.registerCommand("Multithread", new ParallelAutoHandling());
 
-                NamedCommands.registerCommand("Shoot", new DrivebyAuto());
-                NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
-                        ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
-                }));
+                        NamedCommands.registerCommand("Shoot", new DrivebyAuto());
+                        NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
+                                ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
+                        }));
 
-                NamedCommands.registerCommand("SpinUpFlywheels", new InstantCommand(() -> {
-                        ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-20);
-                        ShooterPivot.getInstance().setPosition(ArmPositions.SPEAKER_SHOT);
-                }));
-                NamedCommands.registerCommand("SpinUpFlywheelsFast", new InstantCommand(() -> {
-                        ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-500);
-                        ShooterPivot.getInstance().setPosition(ArmPositions.SPEAKER_SHOT);
-                }));
+                        NamedCommands.registerCommand("SpinUpFlywheels", new InstantCommand(() -> {
+                                ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-20);
+                                ShooterPivot.getInstance().setPosition(ArmPositions.SPEAKER_SHOT);
+                        }));
+                        NamedCommands.registerCommand("SpinUpFlywheelsFast", new InstantCommand(() -> {
+                                ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-500);
+                                ShooterPivot.getInstance().setPosition(ArmPositions.SPEAKER_SHOT);
+                        }));
 
-                NamedCommands.registerCommand("FlywheelsCurrentFast", new InstantCommand(() -> {
-                        ShooterFlywheel.getInstance().setFlywheelsCurrentFast();
+                        NamedCommands.registerCommand("FlywheelsCurrentFast", new InstantCommand(() -> {
+                                ShooterFlywheel.getInstance().setFlywheelsCurrentFast();
+                                
+                        }));
+
+                        NamedCommands.registerCommand("FlywheelsCurrentNormal", new InstantCommand(() -> {
+                                ShooterFlywheel.getInstance().setFlywheelsCurrentNormal();
+                        }));
+                        AutoBuilder.configureHolonomic(
+                                        SwerveSubsystem.getInstance()::getPose, // Robot pose supplier
+                                        SwerveSubsystem.getInstance()::resetOdometry, // Method to reset odometry (will be
+                                                                                // called if your auto
+                                                                                // has a starting pose)
+                                        SwerveSubsystem.getInstance()::getRobotVelocity, // ChassisSpeeds supplier. MUST BE
+                                                                                        // ROBOT RELATIVE
+                                        SwerveSubsystem.getInstance()::setChassisSpeeds, // Method that will drive the robot
+                                                                                        // given ROBOT
+                                                                                        // RELATIVE ChassisSpeeds
+                                        new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live
+                                                                        // in your
+                                                                        // Constants class
+                                                        Constants.Auton.TRANSLATION_PID,
+                                                        // Translation PID constants
+                                                        Constants.Auton.ANGLE_AUTO_PID,
+                                                        // Rotation PID constants
+                                                        Constants.Auton.MAX_MODULE_SPEED,
+                                                        // Max module speed, in m/s
+                                                        SwerveSubsystem.getInstance().getSwerveDrive().swerveDriveConfiguration
+                                                                        .getDriveBaseRadiusMeters(),
+                                                        // Drive base radius in meters. Distance from robot center to furthest
+                                                        // module.
+                                                        new ReplanningConfig()
+                                        // Default path replanning config. See the API for the options here
+                                        ),
+                                        () -> {
+                                                // Boolean supplier that controls when the path will be mirrored for the red
+                                                // alliance
+                                                // This will flip the path being followed to the red side of the field.
+                                                // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+                                                var alliance = DriverStation.getAlliance();
+                                                return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red
+                                                                : false;
+                                        },
+                                        SwerveSubsystem.getInstance() // Reference to this subsystem to set requirements
+                        );
                         
-                }));
-
-                NamedCommands.registerCommand("FlywheelsCurrentNormal", new InstantCommand(() -> {
-                        ShooterFlywheel.getInstance().setFlywheelsCurrentNormal();
-                }));
-                AutoBuilder.configureHolonomic(
-                                SwerveSubsystem.getInstance()::getPose, // Robot pose supplier
-                                SwerveSubsystem.getInstance()::resetOdometry, // Method to reset odometry (will be
-                                                                              // called if your auto
-                                                                              // has a starting pose)
-                                SwerveSubsystem.getInstance()::getRobotVelocity, // ChassisSpeeds supplier. MUST BE
-                                                                                 // ROBOT RELATIVE
-                                SwerveSubsystem.getInstance()::setChassisSpeeds, // Method that will drive the robot
-                                                                                 // given ROBOT
-                                                                                 // RELATIVE ChassisSpeeds
-                                new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live
-                                                                 // in your
-                                                                 // Constants class
-                                                Constants.Auton.TRANSLATION_PID,
-                                                // Translation PID constants
-                                                Constants.Auton.ANGLE_AUTO_PID,
-                                                // Rotation PID constants
-                                                Constants.Auton.MAX_MODULE_SPEED,
-                                                // Max module speed, in m/s
-                                                SwerveSubsystem.getInstance().getSwerveDrive().swerveDriveConfiguration
-                                                                .getDriveBaseRadiusMeters(),
-                                                // Drive base radius in meters. Distance from robot center to furthest
-                                                // module.
-                                                new ReplanningConfig()
-                                // Default path replanning config. See the API for the options here
-                                ),
-                                () -> {
-                                        // Boolean supplier that controls when the path will be mirrored for the red
-                                        // alliance
-                                        // This will flip the path being followed to the red side of the field.
-                                        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-                                        var alliance = DriverStation.getAlliance();
-                                        return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red
-                                                        : false;
-                                },
-                                SwerveSubsystem.getInstance() // Reference to this subsystem to set requirements
-                );
-                
+                        
+                        
+                } catch(Exception err) {
+                        System.out.println(err);
+                }
                 autoChooser = AutoBuilder.buildAutoChooser();
                 SmartDashboard.putData("Auto Competition", autoChooser);
                 SwerveSubsystem.getInstance();
