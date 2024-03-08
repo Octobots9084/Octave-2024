@@ -25,7 +25,7 @@ public class ReverseKinematics {
         private static double encoderOffset = 0.597;
         private static double movementMultiplierX = 1.5;
         private static double movementMultiplierY = 1.5;
-        private static double flywheelSpeedMultiplier = 0.9;
+        private static double flywheelSpeedMultiplier = 0.8;
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
