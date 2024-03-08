@@ -34,7 +34,7 @@ public class TagAlign extends Command {
                 //         && (realPose2d.getY() > 2.00 && realPose2d.getY() < 6.00))) {
                 //     target = new Pose2d((realPose2d.getX() - 4.015) * 5, realPose2d.getY(),
                 //             new Rotation2d(
-                //                     (Math.atan2((realPose2d.getY() - 4.106), (realPose2d.getX() - 4.065)) - Math.PI)));
+                //                     (Math.atan2((realPose2d.getY() - 4.106), (realPose2d.getX() - 4.065)))));
                 // } else {
                 target = new Pose2d((realPose2d.getX() - 1.84) * -5, realPose2d.getY(),
                         new Rotation2d((Math.atan2(realPose2d.getY(), (realPose2d.getX() - 1.84)) - Math.PI)));
