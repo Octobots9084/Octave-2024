@@ -108,9 +108,11 @@ public class ReverseKinematics {
                 //                                 calcLaunchXVel(pos, speed, timeInAir)))));
                 double angleDiffRadians = (Math.PI
                                 + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
-                                                -Math.abs(calcLaunchXVel(pos, speed, timeInAir)))));
+                                                -Math.sqrt(Math.pow(calcLaunchXVel(pos, speed, timeInAir), 2) + Math.pow(calcLaunchYVel(pos, speed, timeInAir), 2)))));
                 double normalizedAngleDiff = angleDiffRadians
                                 / (2 * Math.PI);
+                                SmartDashboard.putNumber("PIVOT HEIGHT", encoderOffset
+                                - normalizedAngleDiff);
                 return encoderOffset
                                 - normalizedAngleDiff;
         }
