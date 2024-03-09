@@ -196,7 +196,7 @@ public class Robot extends TimedRobot {
   }
 
   public void checkDoubleNotes() {
-    if (!ShooterTrack.getInstance().getSensor() && !IntakeTrack.getInstance().getSensor()) {
+    if (!ShooterTrack.getInstance().getSensor() && (!IntakeRoller.getInstance().getSensor()||!IntakeTrack.getInstance().getSensor())) {
       doubleSensorTriggerLength = Timer.getFPGATimestamp();
       
     } else {
