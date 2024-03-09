@@ -31,7 +31,8 @@ import frc.robot.subsystems.lights.Light;
 public class Collect extends SequentialCommandGroup {
     public Collect() {
 
-        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
+        BooleanSupplier intakeSensorTrue = () -> (!IntakeTrack.getInstance().getSensor()
+                || !IntakeRoller.getInstance().getSensor());
         BooleanSupplier rollerSensor = () -> !IntakeRoller.getInstance().getSensor();
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorNotTrue = () -> ShooterTrack.getInstance().getSensor();
@@ -69,14 +70,14 @@ public class Collect extends SequentialCommandGroup {
                                 }),
                                 new JiggleNote(1), new InstantCommand(() -> {
                                     Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
-                                }), new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT)), 
-                                new WaitCommand(0.2).andThen(new IntakeRollerSpeedInstant(IntakeSpeeds.STOP))
-                                )),
-                        new InstantCommand(), shooterSensorNotTrue), new WaitUntilCommand(rollerSensor).andThen(new InstantCommand(() -> {
+                                }), new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT)),
+                                new WaitCommand(0.2).andThen(new IntakeRollerSpeedInstant(IntakeSpeeds.STOP)))),
+                        new InstantCommand(), shooterSensorNotTrue),
+                        new WaitUntilCommand(rollerSensor).andThen(new InstantCommand(() -> {
                             Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);
                         })))
-                
-                );
+
+        );
     }
 
 }
