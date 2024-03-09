@@ -66,8 +66,9 @@ public class Collect extends SequentialCommandGroup {
                                 new PrepSpeaker(),
                                 new JiggleNote(1), new InstantCommand(() -> {
                                     Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
-                                })), new WaitCommand(0.5).andThen(new IntakeRollerSpeedInstant(IntakeSpeeds.STOP)))),
-                        new InstantCommand(), shooterSensorNotTrue));
+                                })), new WaitCommand(0.2).andThen(new IntakeRollerSpeedInstant(IntakeSpeeds.STOP)))),
+                        new InstantCommand(), shooterSensorNotTrue),
+                new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT));
     }
 
 }
