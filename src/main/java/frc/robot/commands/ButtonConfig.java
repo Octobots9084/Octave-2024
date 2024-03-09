@@ -66,7 +66,7 @@ public class ButtonConfig {
         driverButtons.button(11).onTrue(new Panic());
         driverButtons.button(9).onTrue(new CancelAllCommands());
         driverButtons.button(8).onTrue(new InstantCommand(() -> {
-            IntakeTrack.getInstance().set(ShooterSpeeds.PANIC);
+            IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
             IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
         }));
         // driverButtons.button(10).onTrue(new SrcCollect());

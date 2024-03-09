@@ -20,7 +20,7 @@ public class CancelAllCommands extends InstantCommand {
         ShooterPivot.getInstance().notSoFastEggman = false;
         Light.getInstance().setAnimation(Animations.DEFAULT);
         ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
-        IntakeTrack.getInstance().set(ShooterSpeeds.STOP);
+        IntakeTrack.getInstance().set(IntakeSpeeds.STOP);
         IntakeRoller.getInstance().set(IntakeSpeeds.STOP);
     }
 }
