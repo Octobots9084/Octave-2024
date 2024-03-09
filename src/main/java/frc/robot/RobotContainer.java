@@ -26,7 +26,6 @@ import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
 import frc.robot.commands.complex.TheBigYeet;
-import frc.robot.commands.swervedrive.auto.ParallelAutoHandling;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
@@ -88,9 +87,9 @@ public class RobotContainer {
                         NamedCommands.registerCommand("SpeakerAutoSlow", new InitalSpeakerAuto());
 
                         NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(5));
-                        NamedCommands.registerCommand("Multithread", new ParallelAutoHandling());
 
-                        NamedCommands.registerCommand("Shoot", new DrivebyAuto().withTimeout(2).andThen(new TheBigYeet()));
+                        NamedCommands.registerCommand("Shoot",
+                                        new DrivebyAuto().withTimeout(2).andThen(new TheBigYeet()));
                         NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
                                 ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
                         }));
@@ -106,7 +105,7 @@ public class RobotContainer {
 
                         NamedCommands.registerCommand("FlywheelsCurrentFast", new InstantCommand(() -> {
                                 ShooterFlywheel.getInstance().setFlywheelsCurrentFast();
-                                
+
                         }));
 
                         NamedCommands.registerCommand("FlywheelsCurrentNormal", new InstantCommand(() -> {
@@ -114,45 +113,51 @@ public class RobotContainer {
                         }));
                         AutoBuilder.configureHolonomic(
                                         SwerveSubsystem.getInstance()::getPose, // Robot pose supplier
-                                        SwerveSubsystem.getInstance()::resetOdometry, // Method to reset odometry (will be
-                                                                                // called if your auto
-                                                                                // has a starting pose)
-                                        SwerveSubsystem.getInstance()::getRobotVelocity, // ChassisSpeeds supplier. MUST BE
-                                                                                        // ROBOT RELATIVE
-                                        SwerveSubsystem.getInstance()::setChassisSpeeds, // Method that will drive the robot
-                                                                                        // given ROBOT
-                                                                                        // RELATIVE ChassisSpeeds
-                                        new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live
-                                                                        // in your
-                                                                        // Constants class
+                                        SwerveSubsystem.getInstance()::resetOdometry, // Method to reset odometry (will
+                                                                                      // be
+                                                                                      // called if your auto
+                                                                                      // has a starting pose)
+                                        SwerveSubsystem.getInstance()::getRobotVelocity, // ChassisSpeeds supplier. MUST
+                                                                                         // BE
+                                                                                         // ROBOT RELATIVE
+                                        SwerveSubsystem.getInstance()::setChassisSpeeds, // Method that will drive the
+                                                                                         // robot
+                                                                                         // given ROBOT
+                                                                                         // RELATIVE ChassisSpeeds
+                                        new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should
+                                                                         // likely live
+                                                                         // in your
+                                                                         // Constants class
                                                         Constants.Auton.TRANSLATION_PID,
                                                         // Translation PID constants
                                                         Constants.Auton.ANGLE_AUTO_PID,
                                                         // Rotation PID constants
                                                         Constants.Auton.MAX_MODULE_SPEED,
                                                         // Max module speed, in m/s
-                                                        SwerveSubsystem.getInstance().getSwerveDrive().swerveDriveConfiguration
+                                                        SwerveSubsystem.getInstance()
+                                                                        .getSwerveDrive().swerveDriveConfiguration
                                                                         .getDriveBaseRadiusMeters(),
-                                                        // Drive base radius in meters. Distance from robot center to furthest
+                                                        // Drive base radius in meters. Distance from robot center to
+                                                        // furthest
                                                         // module.
                                                         new ReplanningConfig()
                                         // Default path replanning config. See the API for the options here
                                         ),
                                         () -> {
-                                                // Boolean supplier that controls when the path will be mirrored for the red
+                                                // Boolean supplier that controls when the path will be mirrored for the
+                                                // red
                                                 // alliance
                                                 // This will flip the path being followed to the red side of the field.
                                                 // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
                                                 var alliance = DriverStation.getAlliance();
-                                                return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red
+                                                return alliance.isPresent()
+                                                                ? alliance.get() == DriverStation.Alliance.Red
                                                                 : false;
                                         },
                                         SwerveSubsystem.getInstance() // Reference to this subsystem to set requirements
                         );
-                        
-                        
-                        
-                } catch(Exception err) {
+
+                } catch (Exception err) {
                         System.out.println(err);
                 }
                 autoChooser = AutoBuilder.buildAutoChooser();

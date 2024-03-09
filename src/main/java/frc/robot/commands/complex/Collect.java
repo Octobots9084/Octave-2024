@@ -32,7 +32,9 @@ public class Collect extends SequentialCommandGroup {
     public Collect() {
 
         BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
-        BooleanSupplier rollerSensor = () -> !IntakeRoller.getInstance().getSensor();
+        BooleanSupplier rollerSensor = () -> {
+            return (!IntakeRoller.getInstance().getSensor() || !IntakeTrack.getInstance().getSensor2());
+        };
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorNotTrue = () -> ShooterTrack.getInstance().getSensor();
         addCommands(
@@ -62,7 +64,6 @@ public class Collect extends SequentialCommandGroup {
                                 new InstantCommand(() -> {
                                     ShooterPivot.getInstance().notSoFastEggman = false;
                                 }),
-                                new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT),
                                 new PrepSpeaker(),
                                 new InstantCommand(() -> {
                                     Light.getInstance().setAnimation(Animations.PRE_INTAKE);
