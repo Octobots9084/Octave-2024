@@ -25,7 +25,7 @@ public class ReverseKinematics {
         private static double encoderOffset = 0.597;
         private static double movementMultiplierX = 1.5;
         private static double movementMultiplierY = 1.5;
-        private static double flywheelSpeedMultiplier = 0.8;
+        private static double flywheelSpeedMultiplier = 0.9;
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
@@ -37,8 +37,9 @@ public class ReverseKinematics {
                         subwooferYPos = 5.55;
                 }
                 // SmartDashboard.putString("poseconvert",
-                //                 new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d())
-                //                                 .toString());
+                // new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new
+                // Rotation2d())
+                // .toString());
                 return new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d());
         }
 
@@ -104,14 +105,15 @@ public class ReverseKinematics {
                 speed = convertSpeed(pos, speed);
                 double timeInAir = calcTimeInAir(pos, speed, flywheelSpeedMTS);
                 // SmartDashboard.putNumber("targetAngleShoote",
-                //                 (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
-                //                                 calcLaunchXVel(pos, speed, timeInAir)))));
+                // (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
+                // calcLaunchXVel(pos, speed, timeInAir)))));
                 double angleDiffRadians = (Math.PI
                                 + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
-                                                -Math.sqrt(Math.pow(calcLaunchXVel(pos, speed, timeInAir), 2) + Math.pow(calcLaunchYVel(pos, speed, timeInAir), 2)))));
+                                                -Math.sqrt(Math.pow(calcLaunchXVel(pos, speed, timeInAir), 2) + Math
+                                                                .pow(calcLaunchYVel(pos, speed, timeInAir), 2)))));
                 double normalizedAngleDiff = angleDiffRadians
                                 / (2 * Math.PI);
-                                SmartDashboard.putNumber("PIVOT HEIGHT", encoderOffset
+                SmartDashboard.putNumber("PIVOT HEIGHT", encoderOffset
                                 - normalizedAngleDiff);
                 return encoderOffset
                                 - normalizedAngleDiff;
