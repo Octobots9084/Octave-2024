@@ -31,10 +31,8 @@ import frc.robot.subsystems.lights.Light;
 public class Collect extends SequentialCommandGroup {
     public Collect() {
 
-        BooleanSupplier intakeSensorTrue = () -> (!IntakeTrack.getInstance().getSensor()
-                || !IntakeRoller.getInstance().getSensor());
-        BooleanSupplier rollerSensor = () -> (!IntakeRoller.getInstance().getSensor()
-                || !IntakeTrack.getInstance().getSensor());
+        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
+        BooleanSupplier rollerSensor = () -> !IntakeRoller.getInstance().getSensor();
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorNotTrue = () -> ShooterTrack.getInstance().getSensor();
         addCommands(
