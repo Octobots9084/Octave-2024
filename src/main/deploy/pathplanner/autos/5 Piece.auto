@@ -32,7 +32,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SpeakerAuto"
+            "name": "SpeakerAutoInital"
           }
         },
         {

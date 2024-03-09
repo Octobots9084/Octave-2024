@@ -25,6 +25,7 @@ import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
+import frc.robot.commands.complex.SpeakerAutoFast;
 import frc.robot.commands.complex.TheBigYeet;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.constants.ArmPositions;
@@ -83,7 +84,8 @@ public class RobotContainer {
                 SwerveSubsystem.getInstance().setDefaultCommand(
                                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
                 try {
-                        NamedCommands.registerCommand("SpeakerAuto", new InitalSpeakerAutoFast());
+                        NamedCommands.registerCommand("SpeakerAuto", new SpeakerAutoFast());
+                        NamedCommands.registerCommand("SpeakerAutoInital", new InitalSpeakerAutoFast());
                         NamedCommands.registerCommand("SpeakerAutoSlow", new InitalSpeakerAuto());
 
                         NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(5));
@@ -96,11 +98,11 @@ public class RobotContainer {
 
                         NamedCommands.registerCommand("SpinUpFlywheels", new InstantCommand(() -> {
                                 ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-20);
-                                ShooterPivot.getInstance().setPosition(ArmPositions.SPEAKER_SHOT);
+                                ShooterPivot.getInstance().setPosition(ArmPositions.HANDOFF_AND_DEFAULT_SHOT);
                         }));
                         NamedCommands.registerCommand("SpinUpFlywheelsFast", new InstantCommand(() -> {
                                 ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(-500);
-                                ShooterPivot.getInstance().setPosition(ArmPositions.SPEAKER_SHOT);
+                                ShooterPivot.getInstance().setPosition(ArmPositions.HANDOFF_AND_DEFAULT_SHOT);
                         }));
 
                         NamedCommands.registerCommand("FlywheelsCurrentFast", new InstantCommand(() -> {
