@@ -18,6 +18,9 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "Auto Competition": {
+          "open": true
+        },
         "open": true
       }
     }

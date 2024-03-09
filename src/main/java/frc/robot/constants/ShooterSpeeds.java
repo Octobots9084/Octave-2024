@@ -15,7 +15,8 @@ public enum ShooterSpeeds {
     SPECIAL_IDLE(0.1, 0),
     DRIVE_BY(0, -20),
     SRC_COLLECT(-.3, -1),
-    AUTO_SPEAKER(0, -20);
+    AUTO_SPEAKER(0, -20),
+    REVERSE_TRACK(-1, 0);
 
     public double track;
     public double flywheels;
