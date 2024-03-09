@@ -13,7 +13,7 @@ import frc.robot.constants.ShooterSpeeds;
 public class InitalSpeakerAutoFast extends SequentialCommandGroup {
     public InitalSpeakerAutoFast() {
 
-        addCommands(new ShooterPivotPosInstant(ArmPositions.SPEAKER_SHOT), new WaitCommand(0),
+        addCommands(new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT), new WaitCommand(0),
                 new ShooterFlywheelSpeedInstantMeters(ShooterSpeeds.AUTO_SPEAKER), new WaitCommand(0),
                 new ShooterTrackPercentInstant(1));
     }
