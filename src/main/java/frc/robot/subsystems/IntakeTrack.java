@@ -15,6 +15,7 @@ public class IntakeTrack extends SubsystemBase {
     public static IntakeTrack intakeTrack;
     private CANSparkFlex motor1;
     private DigitalInput sensor;
+    private DigitalInput sensor2;
 
     /*
      * Things this needs to do:
@@ -49,6 +50,7 @@ public class IntakeTrack extends SubsystemBase {
         motor1.setInverted(false);
 
         sensor = new DigitalInput(1);
+        sensor2 = new DigitalInput(3);
     }
 
     public void set(double percent) {
@@ -61,5 +63,9 @@ public class IntakeTrack extends SubsystemBase {
 
     public boolean getSensor() {
         return sensor.get();
+    }
+
+    public boolean getSensor2() {
+        return sensor2.get();
     }
 }

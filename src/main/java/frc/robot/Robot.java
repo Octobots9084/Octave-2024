@@ -196,7 +196,7 @@ public class Robot extends TimedRobot {
   }
 
   public void checkDoubleNotes() {
-    if (!ShooterTrack.getInstance().getSensor() && (!IntakeRoller.getInstance().getSensor()||!IntakeTrack.getInstance().getSensor())) {
+    if (!ShooterTrack.getInstance().getSensor() && (!IntakeRoller.getInstance().getSensor()||!IntakeTrack.getInstance().getSensor()||!IntakeTrack.getInstance().getSensor2())) {
       doubleSensorTriggerLength = Timer.getFPGATimestamp();
       
     } else {
@@ -204,7 +204,6 @@ public class Robot extends TimedRobot {
     }
 
     if (Timer.getFPGATimestamp() > doubleSensorTriggerLength + Constants.DOUBLE_NOTE_LENGTH) {
-      ShooterTrack.getInstance().set(ShooterSpeeds.PANIC);
       IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
       IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
     }
