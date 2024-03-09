@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.commands.arm.JiggleNote;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
@@ -55,17 +56,18 @@ public class Collect extends SequentialCommandGroup {
                         new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                         new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
                         new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
-                        new WaitUntilCommand(shooterSensorTrue),
-                        new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
-                        new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
-                        new InstantCommand(() -> {
-                            ShooterPivot.getInstance().notSoFastEggman = false;
-                        }),
-                        new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT),
-                        new PrepSpeaker(),
-                        new JiggleNote(1),new InstantCommand(() -> {
-                            Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
-                        })), new InstantCommand(), shooterSensorNotTrue));
+                        new ParallelCommandGroup(new SequentialCommandGroup(new WaitUntilCommand(shooterSensorTrue),
+                                new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
+                                new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
+                                new InstantCommand(() -> {
+                                    ShooterPivot.getInstance().notSoFastEggman = false;
+                                }),
+                                new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT),
+                                new PrepSpeaker(),
+                                new JiggleNote(1), new InstantCommand(() -> {
+                                    Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
+                                }), new WaitCommand(0.5).andThen(new IntakeRollerSpeedInstant(IntakeSpeeds.STOP))))),
+                        new InstantCommand(), shooterSensorNotTrue));
     }
 
 }
