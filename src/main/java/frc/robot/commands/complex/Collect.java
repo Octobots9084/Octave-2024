@@ -33,7 +33,8 @@ public class Collect extends SequentialCommandGroup {
 
         BooleanSupplier intakeSensorTrue = () -> (!IntakeTrack.getInstance().getSensor()
                 || !IntakeRoller.getInstance().getSensor());
-        BooleanSupplier rollerSensor = () -> !IntakeRoller.getInstance().getSensor();
+        BooleanSupplier rollerSensor = () -> (!IntakeRoller.getInstance().getSensor()
+                || !IntakeTrack.getInstance().getSensor());
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorNotTrue = () -> ShooterTrack.getInstance().getSensor();
         addCommands(
