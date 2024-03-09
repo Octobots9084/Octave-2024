@@ -38,7 +38,7 @@ public class IntakeRoller extends SubsystemBase {
                 true, SparkMaxEncoderType.Relative, IdleMode.kCoast, 30, 30, false, false, 1);
         SparkMaxSetup.setup(motor1, motorConfig);
 
-        sensor = new DigitalInput(3);
+        sensor = new DigitalInput(2);
     }
 
     public void set(double percent) {
