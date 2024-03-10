@@ -25,9 +25,9 @@ public class Layup extends SequentialCommandGroup {
                 new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY),
                 new ShooterElevatorPosTolerance(ArmPositions.LAYUP).withTimeout(5),
                 new InstantCommand(() -> ShooterFlywheel.getInstance().setFlywheelActive(false)),
-                new ClimbPosTolerance(ClimbPositions.DOWN).withTimeout(3),
+                new ClimbPosTolerance(ClimbPositions.LAYUP).withTimeout(3),
                 new ShooterPivotPosTolerance(ArmPositions.LAYUP),
-                new WaitCommand(0.5),
+                new WaitCommand(1),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.LAYUP),
                 new WaitCommand(3),
                 new ShooterPivotPosInstant(ArmPositions.TRAP_SEGUEAY)

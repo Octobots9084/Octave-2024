@@ -14,12 +14,13 @@ import frc.robot.subsystems.lights.Light;
 public class PrepClimb extends SequentialCommandGroup {
     public PrepClimb() {
         addCommands(
+            new InstantCommand(()->{
+                ShooterElevator.getInstance().setPosition(ArmPositions.PREP_TRAP);
+            }),
                 new ClimbPosTolerance(ClimbPositions.UP).withTimeout(10),
                 new InstantCommand(() -> {
                     Light.getInstance().setAnimation(Animations.CLIMB);
-                }),new SequentialCommandGroup(new InstantCommand(()->{
-                ShooterElevator.getInstance().setPosition(ArmPositions.PREP_TRAP);
-            }),
+                }),new SequentialCommandGroup(
             new InstantCommand(()->{
                 ShooterPivot.getInstance().setPosition(ArmPositions.PREP_TRAP);
             }),
