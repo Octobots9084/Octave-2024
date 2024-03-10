@@ -21,6 +21,7 @@ import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.commands.ButtonConfig;
 import frc.robot.commands.arm.ElevatorManual;
 import frc.robot.commands.arm.PivotManual;
@@ -87,6 +88,14 @@ public class Robot extends TimedRobot {
     disabledTimer = new Timer();
     // CommandScheduler.getInstance().setDefaultCommand(Climb.getInstance(), new
     // ClimbManual());
+    SwerveSubsystem.getInstance();
+    ShooterPivot.getInstance();
+    ShooterTrack.getInstance();
+    IntakeTrack.getInstance();
+    IntakeRoller.getInstance();
+    ShooterElevator.getInstance();
+    ShooterFlywheel.getInstance();
+    Climb.getInstance();
     Light.getInstance().setAnimation(Animations.DEFAULT);
 
   }
