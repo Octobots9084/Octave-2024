@@ -49,7 +49,7 @@ public class ButtonConfig {
     CommandJoystick coDriverButtons = ControlMap.CO_DRIVER_BUTTONS;
 
     public void initTeleop() {
-        driverButtons.button(10).onTrue(new SequentialCommandGroup(new PrepAmp(), new ToggleTurnToAmp()));
+        driverButtons.button(10).onTrue(new PrepAmp().andThen(new ToggleTurnToAmp()).withTimeout(2));
         driverLeft.button(2).whileTrue(new Driveby());
 
         driverRight.button(1).onTrue(new TheBigYeet());

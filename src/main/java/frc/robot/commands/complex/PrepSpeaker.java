@@ -22,12 +22,12 @@ public class PrepSpeaker extends InstantCommand {
 
     @Override
     public void initialize() {
-        if (shooterPivot.notSoFastEggman) {
-            return;
+        if (!shooterPivot.notSoFastEggman) {
+            shooterElevator.setPosition(ArmPositions.SPEAKER_SHOT);
+            shooterPivot.setPosition(ArmPositions.SPEAKER_SHOT);
+            shooterFlywheel.setFlyWheelSpeedMeters(ShooterSpeeds.SPEAKER.flywheels);
+            Light.getInstance().setAnimation(Animations.SHOT_SPECIAL);
         }
-        shooterElevator.setPosition(ArmPositions.SPEAKER_SHOT);
-        shooterPivot.setPosition(ArmPositions.SPEAKER_SHOT);
-        shooterFlywheel.setFlyWheelSpeedMeters(ShooterSpeeds.SPEAKER.flywheels);
-        Light.getInstance().setAnimation(Animations.SHOT_SPECIAL);
+        
     }
 }
