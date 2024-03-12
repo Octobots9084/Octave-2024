@@ -8,12 +8,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import frc.robot.util.MathUtil;
-
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
-import javax.xml.xpath.XPath;
 
 /**
  * An example command that uses an example subsystem.

@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.climb.ClimbPosTolerance;
 import frc.robot.constants.ClimbPositions;
 import frc.robot.commands.arm.ShooterElevatorPosTolerance;
-import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
 import frc.robot.commands.arm.ShooterFlywheelSpeedInstantMeters;
 import frc.robot.commands.arm.ShooterPivotPosTolerance;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;

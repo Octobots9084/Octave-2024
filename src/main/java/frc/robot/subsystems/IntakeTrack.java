@@ -8,7 +8,6 @@ import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IntakeSpeeds;
-import frc.robot.constants.ShooterSpeeds;
 
 public class IntakeTrack extends SubsystemBase {
 
