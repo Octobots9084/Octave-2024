@@ -15,9 +15,12 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
+import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
 import frc.robot.commands.ButtonConfig;
+import frc.robot.commands.arm.ElevatorManual;
+import frc.robot.commands.arm.PivotManual;
 import frc.robot.commands.climb.ClimbManual;
 
 import java.io.File;
@@ -102,14 +105,14 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("thng", ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
-    SmartDashboard.putNumber("thng2", ShooterFlywheel.getInstance().getRightFlywheelSpeed());
-    SmartDashboard.putNumber("realFlywheelTop", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
-    SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
-    SmartDashboard.putNumber("climbele",
-        ShooterElevator.getInstance().getPosition() * ShooterElevator.getInstance().gearing);
+    // SmartDashboard.putNumber("thng", ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
+    // SmartDashboard.putNumber("thng2", ShooterFlywheel.getInstance().getRightFlywheelSpeed());
+    // SmartDashboard.putNumber("realFlywheelTop", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
+    // SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
+    // SmartDashboard.putNumber("climbele",
+        // ShooterElevator.getInstance().getPosition() * ShooterElevator.getInstance().gearing);
 
-    SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
+    // SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
   }
 
   /**
@@ -171,6 +174,9 @@ public class Robot extends TimedRobot {
     }
     m_robotContainer.setDriveMode();
     ShooterFlywheel.getInstance().setFlywheelsCurrentNormal();
+    Climb.getInstance().setDefaultCommand(new ClimbManual());
+    ShooterPivot.getInstance().setDefaultCommand(new PivotManual());
+    ShooterElevator.getInstance().setDefaultCommand(new ElevatorManual());
   }
 
   /**

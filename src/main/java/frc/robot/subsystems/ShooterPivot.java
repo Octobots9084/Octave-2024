@@ -26,8 +26,8 @@ public class ShooterPivot extends SubsystemBase {
         return pivot;
     }
 
-    private static double minLimit = 0.393;
-    private static double maxLimit = 0.92;
+    public static double minLimit = 0.393;
+    public static double maxLimit = 0.92;
     public CANSparkMax leftMotor, rightMotor;
     private double position;
     public boolean notSoFastEggman = false;
@@ -65,7 +65,7 @@ public class ShooterPivot extends SubsystemBase {
     public void setPosition(double target) {
 
         target = MathUtil.clamp(target, minLimit, maxLimit);
-        SmartDashboard.putNumber("targetPivot", target);
+        // SmartDashboard.putNumber("targetPivot", target);
         leftMotor.getPIDController().setReference(target, ControlType.kPosition);
 
         rightMotor.getPIDController().setReference(target, ControlType.kPosition);

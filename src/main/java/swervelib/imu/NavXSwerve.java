@@ -143,7 +143,7 @@ public class NavXSwerve extends SwerveIMU
   @Override
   public Rotation3d getRotation3d()
   {
-    SmartDashboard.putString("rot", gyro.getRotation3d().toString());
+    // SmartDashboard.putString("rot", gyro.getRotation3d().toString());
     return gyro.getRotation3d().minus(offset);
   }
 

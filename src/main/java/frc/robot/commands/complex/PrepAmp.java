@@ -38,9 +38,9 @@ public class PrepAmp extends InstantCommand {
         if (shooterPivot.notSoFastEggman) {
             return;
         }
-        shooterElevator.setPosition(ArmPositions.AMP);
         shooterPivot.setPosition(ArmPositions.AMP);
         shooterFlywheel.setFlyWheelSpeedMeters(ShooterSpeeds.AMP.flywheels);
+        shooterElevator.setPosition(ArmPositions.AMP);
         Light.getInstance().setAnimation(Animations.SHOT_SPECIAL);
     }
 }
