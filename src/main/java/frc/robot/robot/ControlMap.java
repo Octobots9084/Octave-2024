@@ -20,7 +20,6 @@
 
 package frc.robot.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 
 public class ControlMap {

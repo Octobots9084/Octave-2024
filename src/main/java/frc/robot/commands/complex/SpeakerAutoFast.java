@@ -8,10 +8,10 @@ import frc.robot.commands.arm.ShooterTrackPercentInstant;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 
-public class InitalSpeakerAutoFast extends SequentialCommandGroup {
-    public InitalSpeakerAutoFast() {
+public class SpeakerAutoFast extends SequentialCommandGroup {
+    public SpeakerAutoFast() {
 
-        addCommands(new ShooterPivotPosInstant(ArmPositions.INITAL_AUTO), new WaitCommand(0),
+        addCommands(new ShooterPivotPosInstant(ArmPositions.SPEAKER_SHOT), new WaitCommand(0),
                 new ShooterFlywheelSpeedInstantMeters(ShooterSpeeds.AUTO_SPEAKER), new WaitCommand(0),
                 new ShooterTrackPercentInstant(1));
     }

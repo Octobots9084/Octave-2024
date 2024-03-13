@@ -1,11 +1,8 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.robot.ControlMap;
-import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.util.MathUtil;
 

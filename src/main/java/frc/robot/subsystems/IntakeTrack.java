@@ -7,13 +7,14 @@ import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.constants.ShooterSpeeds;
+import frc.robot.constants.IntakeSpeeds;
 
 public class IntakeTrack extends SubsystemBase {
 
     public static IntakeTrack intakeTrack;
     private CANSparkFlex motor1;
     private DigitalInput sensor;
+    private DigitalInput sensor2;
 
     /*
      * Things this needs to do:
@@ -48,17 +49,22 @@ public class IntakeTrack extends SubsystemBase {
         motor1.setInverted(false);
 
         sensor = new DigitalInput(1);
+        sensor2 = new DigitalInput(3);
     }
 
     public void set(double percent) {
         motor1.set(percent);
     }
 
-    public void set(ShooterSpeeds shooterSpeeds) {
+    public void set(IntakeSpeeds shooterSpeeds) {
         set(shooterSpeeds.track);
     }
 
     public boolean getSensor() {
         return sensor.get();
+    }
+
+    public boolean getSensor2() {
+        return sensor2.get();
     }
 }

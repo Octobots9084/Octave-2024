@@ -9,23 +9,25 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.IntakeRoller;
+import frc.robot.subsystems.IntakeTrack;
 import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
+import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.commands.ButtonConfig;
 import frc.robot.commands.arm.ElevatorManual;
 import frc.robot.commands.arm.PivotManual;
 import frc.robot.commands.climb.ClimbManual;
-
+import frc.robot.constants.IntakeSpeeds;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Driver;
 import java.util.Optional;
 
 import swervelib.parser.SwerveParser;
@@ -45,6 +47,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   private Timer disabledTimer;
+  private double doubleSensorTriggerLength = 0;
 
   public Robot() {
     instance = this;
@@ -81,6 +84,14 @@ public class Robot extends TimedRobot {
     disabledTimer = new Timer();
     // CommandScheduler.getInstance().setDefaultCommand(Climb.getInstance(), new
     // ClimbManual());
+    SwerveSubsystem.getInstance();
+    ShooterPivot.getInstance();
+    ShooterTrack.getInstance();
+    IntakeTrack.getInstance();
+    IntakeRoller.getInstance();
+    ShooterElevator.getInstance();
+    ShooterFlywheel.getInstance();
+    Climb.getInstance();
     Light.getInstance().setAnimation(Animations.DEFAULT);
 
   }
@@ -184,9 +195,23 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-
+    //checkDoubleNotes();
     // ShooterFlywheel.getInstance().increaseFlywheelSpeed(MathUtil.applyDeadband(5*ControlMap.FLYWHEEL_JOYSTICK.getY(),
     // 0.05));
+  }
+
+  public void checkDoubleNotes() {
+    if (!ShooterTrack.getInstance().getSensor() && (!IntakeRoller.getInstance().getSensor()||!IntakeTrack.getInstance().getSensor()||!IntakeTrack.getInstance().getSensor2())) {
+      doubleSensorTriggerLength = Timer.getFPGATimestamp();
+      
+    } else {
+      return;
+    }
+
+    if (Timer.getFPGATimestamp() > doubleSensorTriggerLength + Constants.DOUBLE_NOTE_LENGTH) {
+      IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
+      IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
+    }
   }
 
   @Override

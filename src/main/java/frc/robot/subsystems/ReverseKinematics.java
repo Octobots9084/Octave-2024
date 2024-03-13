@@ -37,8 +37,9 @@ public class ReverseKinematics {
                         subwooferYPos = 5.55;
                 }
                 // SmartDashboard.putString("poseconvert",
-                //                 new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d())
-                //                                 .toString());
+                // new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new
+                // Rotation2d())
+                // .toString());
                 return new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d());
         }
 
@@ -104,13 +105,16 @@ public class ReverseKinematics {
                 speed = convertSpeed(pos, speed);
                 double timeInAir = calcTimeInAir(pos, speed, flywheelSpeedMTS);
                 // SmartDashboard.putNumber("targetAngleShoote",
-                //                 (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
-                //                                 calcLaunchXVel(pos, speed, timeInAir)))));
+                // (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
+                // calcLaunchXVel(pos, speed, timeInAir)))));
                 double angleDiffRadians = (Math.PI
                                 + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
-                                                -Math.abs(calcLaunchXVel(pos, speed, timeInAir)))));
+                                                -Math.sqrt(Math.pow(calcLaunchXVel(pos, speed, timeInAir), 2) + Math
+                                                                .pow(calcLaunchYVel(pos, speed, timeInAir), 2)))));
                 double normalizedAngleDiff = angleDiffRadians
                                 / (2 * Math.PI);
+                SmartDashboard.putNumber("PIVOT HEIGHT", encoderOffset
+                                - normalizedAngleDiff);
                 return encoderOffset
                                 - normalizedAngleDiff;
         }
