@@ -3,14 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
-import frc.robot.Constants;
-import frc.robot.Constants.Arm;
-import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
-import frc.robot.commands.climb.ClimbPosTolerance;
+import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.commands.climb.ClimbZero;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.Driveby;
-import frc.robot.commands.complex.Dunk;
 import frc.robot.commands.complex.FerryShot;
 import frc.robot.commands.complex.HalfClimb;
 import frc.robot.commands.complex.Layup;
@@ -19,20 +15,18 @@ import frc.robot.commands.complex.PrepAmp;
 import frc.robot.commands.complex.PrepClimb;
 import frc.robot.commands.complex.PrepSpeaker;
 import frc.robot.commands.complex.SimpleClimb;
-import frc.robot.commands.complex.SrcCollect;
 import frc.robot.commands.complex.TheBigYeet;
 import frc.robot.commands.complex.Undunk;
-import frc.robot.commands.intake.IntakeRollerSpeedInstant;
-import frc.robot.commands.intake.IntakeTrackSpeedInstant;
 import frc.robot.commands.swervedrive.ToggleTurnTo180;
 import frc.robot.commands.swervedrive.ToggleTurnToAmp;
 import frc.robot.commands.swervedrive.ToggleTurnToSource;
 import frc.robot.commands.swervedrive.ToggleTurnToSpeaker;
 import frc.robot.constants.ArmPositions;
-import frc.robot.constants.ClimbPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.robot.ControlMap;
+import frc.robot.subsystems.IntakeRoller;
+import frc.robot.subsystems.IntakeTrack;
 import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
@@ -47,9 +41,8 @@ public class ButtonConfig {
     CommandJoystick coDriverButtons = ControlMap.CO_DRIVER_BUTTONS;
 
     public void initTeleop() {
-        driverButtons.button(10).onTrue(new SequentialCommandGroup(new PrepAmp(), new ToggleTurnToAmp()));
+        driverButtons.button(10).onTrue(new PrepAmp().andThen(new ToggleTurnToAmp()).withTimeout(2));
         driverLeft.button(2).whileTrue(new Driveby());
-        
 
         driverRight.button(1).onTrue(new TheBigYeet());
         driverRight.button(2).onTrue(new FerryShot());
@@ -58,44 +51,44 @@ public class ButtonConfig {
         driverButtons.button(2).onTrue(new ToggleTurnTo180());
         driverButtons.button(3).onTrue(new ToggleTurnToSource());
         driverButtons.button(4).onTrue(new Collect());
-        driverButtons.button(5).onTrue(new ToggleTurnToAmp());
+        driverButtons.button(5).onTrue(new ShooterTrackSpeedInstant(ShooterSpeeds.REVERSE_TRACK));
         driverButtons.button(6).onTrue(new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro));
         driverButtons.button(7).onTrue(new PrepSpeaker());
         driverButtons.button(11).onTrue(new Panic());
         driverButtons.button(9).onTrue(new CancelAllCommands());
+        driverButtons.button(8).onTrue(new InstantCommand(() -> {
+            IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
+            IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
+        }));
         // driverButtons.button(10).onTrue(new SrcCollect());
-
-
 
         coDriverButtons.button(1).onTrue(new PrepClimb());
         coDriverButtons.button(2).onTrue(new HalfClimb());
         coDriverButtons.button(3).onTrue(new SimpleClimb());
         coDriverButtons.button(4).onTrue(new Layup());
-        coDriverButtons.button(5).onTrue(new Undunk());        
+        coDriverButtons.button(5).onTrue(new Undunk());
         coDriverButtons.button(6).whileTrue(new ClimbZero());
         coDriverButtons.button(7).onTrue(new Collect());
         coDriverButtons.button(8).onTrue(new InstantCommand()); // climb align
-        coDriverButtons.button(9).whileTrue(new SequentialCommandGroup(new InstantCommand(()->{
+        coDriverButtons.button(9).whileTrue(new SequentialCommandGroup(new InstantCommand(() -> {
             ShooterElevator.getInstance().setPosition(ArmPositions.AMP);
         }), new Driveby()));
         coDriverButtons.button(10).onTrue(
-            new SequentialCommandGroup(new InstantCommand(()->{
-                ShooterElevator.getInstance().setPosition(ArmPositions.PREP_TRAP);
-            }),
-            new InstantCommand(()->{
-                ShooterPivot.getInstance().setPosition(ArmPositions.PREP_TRAP);
-            }),
-            new InstantCommand(()->{
-                ShooterFlywheel.getInstance().setFlywheelSpeed(0);
-            }))
-        );
+                new SequentialCommandGroup(new InstantCommand(() -> {
+                    ShooterElevator.getInstance().setPosition(ArmPositions.PREP_TRAP);
+                }),
+                        new InstantCommand(() -> {
+                            ShooterPivot.getInstance().setPosition(ArmPositions.PREP_TRAP);
+                        }),
+                        new InstantCommand(() -> {
+                            ShooterFlywheel.getInstance().setFlywheelSpeed(0);
+                        })));
         coDriverButtons.button(11).onTrue(new Panic());
         coDriverButtons.button(12).onTrue(new CancelAllCommands());
 
-
-
-
-        // coDriverButtons.button(4).onTrue(new SequentialCommandGroup(new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT), new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT)));
+        // coDriverButtons.button(4).onTrue(new SequentialCommandGroup(new
+        // IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT), new
+        // IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT)));
         // coDriverButtons.button(7).onTrue(new PrepClimb());
         // coDriverButtons.button(8).onTrue(new ClimbPosTolerance(ClimbPositions.MID));
         // coDriverButtons.button(9).onTrue(new SimpleClimb());
@@ -103,7 +96,8 @@ public class ButtonConfig {
         // coDriverButtons.button(11).onTrue(new Undunk());
         // coDriverButtons.button(12).onTrue(new CancelAllCommands());
 
-        // coDriverButtons.button(12).onTrue(new ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
+        // coDriverButtons.button(12).onTrue(new
+        // ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
 
     }
 }

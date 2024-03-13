@@ -4,12 +4,10 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
-import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.robot.ControlMap;
@@ -89,8 +87,8 @@ public class DrivebyAuto extends Command {
         // SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.03)
-                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.003)
+        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.05)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
                         MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05)) {

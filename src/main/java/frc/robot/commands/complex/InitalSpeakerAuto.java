@@ -2,8 +2,6 @@ package frc.robot.commands.complex;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.arm.ShooterElevatorPosTolerance;
-import frc.robot.commands.arm.ShooterFlywheelSpeedInstantMeters;
-import frc.robot.commands.arm.ShooterFlywheelSpeedTolerance;
 import frc.robot.commands.arm.ShooterFlywheelSpeedToleranceMeters;
 import frc.robot.commands.arm.ShooterPivotPosTolerance;
 import frc.robot.constants.ArmPositions;

@@ -8,12 +8,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import frc.robot.util.MathUtil;
-
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
-
-import javax.xml.xpath.XPath;
 
 /**
  * An example command that uses an example subsystem.
@@ -54,8 +50,8 @@ public class TeleopDrive extends Command {
       swerve.targetAngleEnabled = true;
       swerve.targetAngle = swerve.getShootingRequest();
     }
-    double xSpeed = vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED;
-    double ySpeed = vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED;
+    double xSpeed = vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED * 2;
+    double ySpeed = vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED * 2;
     if (!Constants.isBlueAlliance) {
       xSpeed = -xSpeed;
       ySpeed = -ySpeed;
