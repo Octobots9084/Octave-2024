@@ -2,8 +2,6 @@ package frc.robot.commands.complex;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
-import frc.robot.commands.arm.ShooterElevatorPosTolerance;
-import frc.robot.commands.arm.ShooterFlywheelSpeedInstant;
 import frc.robot.commands.arm.ShooterFlywheelSpeedInstantMeters;
 import frc.robot.commands.arm.ShooterPivotPosTolerance;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
@@ -15,7 +13,7 @@ public class FerryShot extends SequentialCommandGroup{
         addCommands(
             new ShooterFlywheelSpeedInstantMeters(ShooterSpeeds.FERRY_SHOT),
             new ShooterElevatorPosInstant(ArmPositions.FERRY_SHOT),
-            new ShooterPivotPosTolerance(ArmPositions.FERRY_SHOT).withTimeout(1),
+            new ShooterPivotPosTolerance(ArmPositions.FERRY_SHOT).withTimeout(0.25),
             new ShooterTrackSpeedInstant(ShooterSpeeds.FERRY_SHOT)
         );
     }    

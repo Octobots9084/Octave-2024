@@ -8,11 +8,6 @@
       "/SmartDashboard/navX-Sensor[4]": "Gyro"
     },
     "windows": {
-      "/SmartDashboard/Auto Chooser": {
-        "window": {
-          "visible": true
-        }
-      },
       "/SmartDashboard/Field": {
         "window": {
           "visible": true
@@ -23,6 +18,9 @@
   "NetworkTables": {
     "transitory": {
       "SmartDashboard": {
+        "Auto Competition": {
+          "open": true
+        },
         "open": true
       }
     }

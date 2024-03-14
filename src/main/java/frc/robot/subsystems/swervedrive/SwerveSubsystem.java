@@ -1,11 +1,6 @@
 
 package frc.robot.subsystems.swervedrive;
 
-import com.pathplanner.lib.auto.AutoBuilder;
-import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.ReplanningConfig;
-
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -17,15 +12,10 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.commands.complex.CollectAuto;
-import frc.robot.commands.complex.DrivebyAuto;
-import frc.robot.commands.complex.InitalSpeakerAuto;
-
 import java.io.File;
 import java.util.function.DoubleSupplier;
 import swervelib.SwerveController;
@@ -182,6 +172,11 @@ public class SwerveSubsystem extends SubsystemBase {
         false); // Open loop is disabled since it shouldn't be used most of the time.
   }
 
+  @Override
+  public void periodic() {
+    swerveDrive.updateOdometry();
+  }
+
   public void setShootingRequest(Rotation2d target) {
     shootingRequest = target;
   }
@@ -294,10 +289,9 @@ public class SwerveSubsystem extends SubsystemBase {
       swerveDrive.zeroGyro();
     } else {
       swerveDrive.zeroGyro();
-      swerveDrive.setGyro(new Rotation3d(0,0,Math.PI));
+      swerveDrive.setGyro(new Rotation3d(0, 0, Math.PI));
     }
-    
-    
+
   }
 
   /**

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.712645975054983,
-      "y": 4.347814572406395
+      "x": 0.7247481161628989,
+      "y": 6.71238675810685
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -48,7 +48,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3 Piece Source  - 1"
+                  "pathName": "3 Piece Amp Edge - 1"
                 }
               },
               {
@@ -96,12 +96,6 @@
           "data": {
             "commands": [
               {
-                "type": "path",
-                "data": {
-                  "pathName": "3 Piece Source - 2"
-                }
-              },
-              {
                 "type": "sequential",
                 "data": {
                   "commands": [
@@ -124,6 +118,12 @@
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "3 Piece Amp Edge - 2"
                 }
               }
             ]

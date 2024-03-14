@@ -26,13 +26,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 1.0
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "SpeakerAuto"
+            "name": "SpeakerAutoInital"
           }
         },
         {
@@ -64,7 +64,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.3
+                        "waitTime": 0.6
                       }
                     },
                     {

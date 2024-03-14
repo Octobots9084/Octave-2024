@@ -4,8 +4,6 @@
 
 package frc.robot;
 
-import java.util.Optional;
-
 import com.pathplanner.lib.util.PIDConstants;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -13,8 +11,6 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import swervelib.math.Matter;
 
 /**
@@ -31,17 +27,18 @@ import swervelib.math.Matter;
  */
 public final class Constants {
 
-	public static final double ROBOT_MASS = (65) * 0.453592; // 32lbs * kg per pound
+	public static final double ROBOT_MASS = (146.9) * 0.453592; // weight measured on 3/13 * kg per pound
 	public static final Matter CHASSIS = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
 	public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
 	public static final int NUM_LEDS = 90;
+	public static final double DOUBLE_NOTE_LENGTH = 2;
 	public static boolean isBlueAlliance = true;
 
 	public static final class Arm {
-		public static final double SHOOTER_ELEVATOR_TOLERANCE = 0.1;
+		public static final double SHOOTER_ELEVATOR_TOLERANCE = 5;
 		public static final double SHOOTER_FLYWHEEL_TOLERANCE_RPM = 10;
 		public static final double SHOOTER_FLYWHEEL_TOLERANCE_METERS = 0.2;
-		public static final double SHOOTER_PIVOT_TOLERANCE = 0.005;
+		public static final double SHOOTER_PIVOT_TOLERANCE = 0.009;
 	}
 
 	public static final class Climb {
