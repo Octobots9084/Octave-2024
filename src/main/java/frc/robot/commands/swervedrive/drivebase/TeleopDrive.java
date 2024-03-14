@@ -70,7 +70,7 @@ public class TeleopDrive extends Command {
       swerve.drive(
           new Translation2d(xSpeed,
               ySpeed),
-          omega.getAsDouble() * 6 * Math.PI,
+          omega.getAsDouble() * 3 * Math.PI,
           driveMode.getAsBoolean());
     }
 
