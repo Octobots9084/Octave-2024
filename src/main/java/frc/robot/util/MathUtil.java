@@ -97,4 +97,19 @@ public class MathUtil {
         double mirroredAngle = Math.toDegrees(mirroredRadians);
         return mirroredAngle;
     }
+
+    public static boolean isPointInTriangle(double x1, double y1, double x2, double y2, double x3, double y3, double xp,
+            double yp) {
+        // Calculate the area of the triangle ABC
+        double areaABC = Math.abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0);
+
+        // Calculate the area of triangles PAB, PBC, and PCA using the same formula
+        double areaPAB = Math.abs((xp * (y2 - y3) + x2 * (y3 - yp) + x3 * (yp - y2)) / 2.0);
+        double areaPBC = Math.abs((xp * (y1 - y3) + x1 * (y3 - yp) + x3 * (yp - y1)) / 2.0);
+        double areaPCA = Math.abs((xp * (y2 - y1) + x2 * (y1 - yp) + x1 * (yp - y2)) / 2.0);
+
+        // If the sum of the areas of PAB, PBC and PCA is equal to the area of ABC, then the point is inside the triangle
+        return (Math.abs(areaABC - (areaPAB + areaPBC + areaPCA)) < 0.0001);
+    }
+
 }

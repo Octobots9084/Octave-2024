@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
@@ -22,7 +23,7 @@ import frc.robot.commands.swervedrive.ToggleTurnToAmp;
 import frc.robot.commands.swervedrive.ToggleTurnToSource;
 import frc.robot.commands.swervedrive.ToggleTurnToSpeaker;
 import frc.robot.constants.ArmPositions;
-import frc.robot.commands.vision.TagAlign;
+import frc.robot.commands.vision.AmpAlign;
 import frc.robot.constants.ClimbPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
@@ -43,8 +44,8 @@ public class ButtonConfig {
     CommandJoystick coDriverButtons = ControlMap.CO_DRIVER_BUTTONS;
 
     public void initTeleop() {
-        driverButtons.button(10).onTrue(new PrepAmp().andThen(new ToggleTurnToAmp()).withTimeout(2));
-        driverLeft.button(1).whileTrue(new TagAlign());
+        // driverLeft.button(1).whileTrue(new TagAlign());
+        driverLeft.button(1).whileTrue(new ParallelCommandGroup(new PrepAmp(), new AmpAlign()));
         driverLeft.button(2).whileTrue(new Driveby());
 
         driverRight.button(1).onTrue(new TheBigYeet());
