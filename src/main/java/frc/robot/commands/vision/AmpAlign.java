@@ -61,9 +61,15 @@ public class AmpAlign extends Command {
                         realPose2d.getX(),
                         realPose2d.getY())) {
 
-                    target = new Pose2d((realPose2d.getX() - 1.84) * -5, realPose2d.getY(),
-                            new Rotation2d(
-                                    (Math.atan2(realPose2d.getY() - 8.22, (realPose2d.getX() - 1.84)) - Math.PI)));
+                    // target = new Pose2d((realPose2d.getX() - AlignHotSpots.BLUEAMP.targetPosition.getX()) * -5,
+                    //         realPose2d.getY(),
+                    //         new Rotation2d(
+                    //                 (Math.atan2(realPose2d.getY() - 8.22,
+                    //                         (realPose2d.getX() - AlignHotSpots.BLUEAMP.targetPosition.getX()))
+                    //                         - Math.PI)));
+                    target = new Pose2d((realPose2d.getX() - AlignHotSpots.BLUEAMP.targetPosition.getX()) * -5,
+                            realPose2d.getY(),
+                            AlignHotSpots.BLUEAMP.targetRotation);
                 }
 
             } else {
