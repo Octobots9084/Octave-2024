@@ -1,40 +1,15 @@
 package frc.robot.commands.vision;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.constants.AlignHotSpots;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import frc.robot.util.MathUtil;
+import frc.robot.util.Point;
 
 public class AmpAlign extends Command {
     private SwerveSubsystem swerveSubsystem;
-    ChassisSpeeds realSpeeds;
-    Pose2d realPose2d;
-    Pose2d target;
 
-    // HotSpot {
-    //     triangles: Triangle[]
-    //     turnToAngle: double
-    // }
-
-    // blueAmpHotSpot = {
-    //     triangles: [ trianghles, trinagle2]
-    //     turnToANgle: 45
-    // }
-
-    // blueSourceHotSPot ...
-
-    // blueCLimb1Hotpot
-    // blueCLimb2HotSPot
-
-    // private static final HotSpot[] blueTurnTo = [
-    //   blueAmptHotSpot,
-    //   blueSourceHotSpot,
-    //   blueCLimb1Hotpot,
-    // ];
 
     public AmpAlign() {
         swerveSubsystem = SwerveSubsystem.getInstance();
@@ -42,44 +17,40 @@ public class AmpAlign extends Command {
 
     @Override
     public void initialize() {
-        swerveSubsystem.setAlignRequestActive(true);
+    }
+    
+    private boolean isWithinHotSpotArea(AlignHotSpots hotSpots, Pose2d realPose2d) {
+        final Point realPose2dAsPoint = new Point(realPose2d.getX(),
+                realPose2d.getY());
+
+        for (int i = 0; i < hotSpots.hotSpotTriangles.length; i++) {
+            if (hotSpots.hotSpotTriangles[i].isPointInside(realPose2dAsPoint)) {
+                return true;
+            }
+        }
+        return false;
+    } 
+
+    private Pose2d getTargetPose(AlignHotSpots hotSpots, Pose2d realPose2d){
+        return new Pose2d(
+                realPose2d.getX() - hotSpots.targetPosition.getX(), // TODO: multiply by 5 or -5?
+                realPose2d.getY() - hotSpots.targetPosition.getY(),
+                hotSpots.targetRotation);
     }
 
     @Override
     public void execute() {
-        try {
-            realPose2d = swerveSubsystem.getPose();
+        final Pose2d realPose2d = swerveSubsystem.getPose();
+        final AlignHotSpots hotSpots = Constants.isBlueAlliance ? AlignHotSpots.BLUEAMP : AlignHotSpots.REDAMP;
 
-            if (Constants.isBlueAlliance) {
-
-                if (MathUtil.isPointInTriangle(AlignHotSpots.BLUEAMP.triangle[0],
-                        AlignHotSpots.BLUEAMP.triangle[1],
-                        AlignHotSpots.BLUEAMP.triangle[2],
-                        AlignHotSpots.BLUEAMP.triangle[3],
-                        AlignHotSpots.BLUEAMP.triangle[4],
-                        AlignHotSpots.BLUEAMP.triangle[5],
-                        realPose2d.getX(),
-                        realPose2d.getY())) {
-
-                    // target = new Pose2d((realPose2d.getX() - AlignHotSpots.BLUEAMP.targetPosition.getX()) * -5,
-                    //         realPose2d.getY(),
-                    //         new Rotation2d(
-                    //                 (Math.atan2(realPose2d.getY() - 8.22,
-                    //                         (realPose2d.getX() - AlignHotSpots.BLUEAMP.targetPosition.getX()))
-                    //                         - Math.PI)));
-                    target = new Pose2d((realPose2d.getX() - AlignHotSpots.BLUEAMP.targetPosition.getX()) * -5,
-                            realPose2d.getY(),
-                            AlignHotSpots.BLUEAMP.targetRotation);
-                }
-
-            } else {
-                target = new Pose2d((realPose2d.getX() - 14.698) * -5, realPose2d.getY(),
-                        new Rotation2d((Math.atan2(realPose2d.getY() - 8.22, realPose2d.getX() - 14.698) - Math.PI)));
+        if (isWithinHotSpotArea(hotSpots, realPose2d)) {
+            final Pose2d target = getTargetPose(hotSpots, realPose2d);
+            
+            // Activate "align request" only when we have a target to set.
+            if (!swerveSubsystem.getAlignRequestActive()) {
+                swerveSubsystem.setAlignRequestActive(true);
             }
-
             swerveSubsystem.setAlignRequest(target);
-        } catch (Exception e) {
-            //
         }
     }
 

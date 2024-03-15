@@ -2,20 +2,34 @@ package frc.robot.constants;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import frc.robot.util.Point;
+import frc.robot.util.Triangle;
 
+/** Contains tag align data. It contains an area (called hot spot) in which the robot needs to be in
+ * order to start aligning it (moving it) to the target position and rotation. */
 public enum AlignHotSpots {
-    // {x1, y1, x2, y2, x3, y3}
-    BLUEAMP(new double[] { 0.0, 8.186, 1.84, 4.1, 4.05, 8.186 }, new Translation2d(1.84, Double.MAX_VALUE),
+    BLUEAMP(new Triangle[] {
+            new Triangle(new Point(0.0, 8.186), new Point(1.84, 4.1), new Point(4.05, 8.186)),
+            // add more triangles to the hot spot here
+    }, new Translation2d(1.84, 7.1),
             new Rotation2d(-Math.PI / 2)),
-    REDAMP(new double[] { 12.3, 8.186, 14.6, 4.1, 16.48968, 8.186 }, new Translation2d(14.60754, Double.MAX_VALUE),
+    REDAMP(new Triangle[] {
+            new Triangle(new Point(12.3, 8.186), new Point(14.6, 4.1), new Point(16.48968, 8.186)),
+            // add more triangles to the hot spot here
+    }, new Translation2d(14.60754, 7.1),
             new Rotation2d(-Math.PI / 2));
 
-    public double[] triangle;
+    /** The hot spot, represented as a set of triangles on the field. The roboto needs to be inside
+     * this area in order to activate the aligning code for the corresponding taret position and
+     * rotation.*/
+    public Triangle[] hotSpotTriangles;
+    /** Target robot position. */
     public Translation2d targetPosition;
+    /** Target robot rotation. */
     public Rotation2d targetRotation;
 
-    AlignHotSpots(double[] hotSpotTriangle, Translation2d targetPosition, Rotation2d targetRotation) {
-        this.triangle = hotSpotTriangle;
+    AlignHotSpots(Triangle[] hotSpotTriangles, Translation2d targetPosition, Rotation2d targetRotation) {
+        this.hotSpotTriangles = hotSpotTriangles;
         this.targetPosition = targetPosition;
         this.targetRotation = targetRotation;
     }
