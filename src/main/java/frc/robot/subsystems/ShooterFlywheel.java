@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ShooterSpeeds;
 
@@ -46,10 +47,10 @@ public class ShooterFlywheel extends SubsystemBase {
         motorOne.setIdleMode(IdleMode.kCoast);
         motorOne.setSmartCurrentLimit(40, 40);
         motorOne.setInverted(false);
-        motorOne.getPIDController().setP(0.001);
+        motorOne.getPIDController().setP(0.00);
         motorOne.getPIDController().setI(0);
         motorOne.getPIDController().setD(0);
-        motorOne.getPIDController().setFF(0.00018);
+        motorOne.getPIDController().setFF(0.000182);
         motorOne.enableVoltageCompensation(10);
         // motorOne.getPIDController().setIZone(1);
 
@@ -69,10 +70,10 @@ public class ShooterFlywheel extends SubsystemBase {
         motorTwo.setIdleMode(IdleMode.kCoast);
         motorTwo.setSmartCurrentLimit(40, 40);
         motorTwo.setInverted(false);
-        motorTwo.getPIDController().setP(0.001);
+        motorTwo.getPIDController().setP(0.0000);
         motorTwo.getPIDController().setI(0.0);
         motorTwo.getPIDController().setD(0);
-        motorTwo.getPIDController().setFF(0.000185);
+        motorTwo.getPIDController().setFF(0.000179);
         motorTwo.enableVoltageCompensation(10);
         // motorTwo.getPIDController().setIZone(1);
 
@@ -88,7 +89,6 @@ public class ShooterFlywheel extends SubsystemBase {
 
     public void setFlywheelSpeed(double newSpeed) {
         lastSpeed = newSpeed;
-        // SmartDashboard.putNumber("newSpeed", newSpeed);
         motorOne.getPIDController().setReference(newSpeed, ControlType.kVelocity);
         motorTwo.getPIDController().setReference(-newSpeed, ControlType.kVelocity);
     }
@@ -161,4 +161,9 @@ public class ShooterFlywheel extends SubsystemBase {
         motorOne.setSmartCurrentLimit(40, 40);
     }
 
+    @Override
+    public void periodic() {
+                SmartDashboard.putNumber("newSpeed", lastSpeed);
+
+    }
 }

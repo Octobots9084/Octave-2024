@@ -59,16 +59,16 @@ public class ShooterPivot extends SubsystemBase {
         SparkMaxSetup.setup(rightMotor, right);
         leftMotor.getPIDController().setIMaxAccum(8, 0);
         rightMotor.getPIDController().setIMaxAccum(8, 0);
-        leftMotor.getAbsoluteEncoder(Type.kDutyCycle).setZeroOffset(0.2 - (1/3));
     }
 
     public void setPosition(double target) {
 
         target = MathUtil.clamp(target, minLimit, maxLimit);
         // SmartDashboard.putNumber("targetPivot", target);
-        leftMotor.getPIDController().setReference(target, ControlType.kPosition);
+        //up is down on the encoders. If something is going up too high, lower the number. - Xanthe
+        leftMotor.getPIDController().setReference(target + .072, ControlType.kPosition);
 
-        rightMotor.getPIDController().setReference(target, ControlType.kPosition);
+        rightMotor.getPIDController().setReference(target + .06, ControlType.kPosition);
         position = target;
     }
 
