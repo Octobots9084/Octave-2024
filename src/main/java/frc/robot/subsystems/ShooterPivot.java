@@ -30,6 +30,7 @@ public class ShooterPivot extends SubsystemBase {
     public CANSparkMax leftMotor, rightMotor;
     private double position;
     public boolean notSoFastEggman = false;
+    public double desiredPos;
 
     public ShooterPivot() {
         // leadMotor and followMotor are outdated names, i'm changing it to left and
@@ -44,7 +45,7 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, true, false, 1, false,
-                new PIDConfig(10, 0, 0, 0.04));
+                new PIDConfig(10, 0, 0, 0));
         SparkMaxConfig left = new SparkMaxConfig(new SparkMaxStatusFrames(500,
                 20,
                 500,
@@ -53,7 +54,7 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, false, false, 1, false,
-                new PIDConfig(10, 0, 0, 0.04));
+                new PIDConfig(10, 0, 0, 0));
 
         SparkMaxSetup.setup(leftMotor, left);
         SparkMaxSetup.setup(rightMotor, right);
@@ -62,7 +63,7 @@ public class ShooterPivot extends SubsystemBase {
     }
 
     public void setPosition(double target) {
-
+        desiredPos = target;
         target = MathUtil.clamp(target, minLimit, maxLimit);
         // SmartDashboard.putNumber("targetPivot", target);
         //up is down on the encoders. If something is going up too high, lower the number. - Xanthe
@@ -78,7 +79,11 @@ public class ShooterPivot extends SubsystemBase {
     }
 
     public double getPosition() {
-        return leftMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition();
+        return leftMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition() - .072;
+    }
+
+    public double getDesiredPosition(){
+        return desiredPos;
     }
 
     public double getLastTargetPosition() {

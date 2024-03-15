@@ -119,6 +119,8 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     // SmartDashboard.putNumber("thng", ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
     // SmartDashboard.putNumber("thng2", ShooterFlywheel.getInstance().getRightFlywheelSpeed());
+    SmartDashboard.putNumber("pivot position", ShooterPivot.getInstance().getPosition());
+    SmartDashboard.putNumber("desired pivot pos", ShooterPivot.getInstance().getDesiredPosition());
     SmartDashboard.putNumber("realFlywheelTop", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
     SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
     // SmartDashboard.putNumber("climbele",
