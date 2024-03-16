@@ -26,22 +26,22 @@ public class ReverseKinematics {
         private static double movementMultiplierX = 1.5;
         private static double movementMultiplierY = 1.5;
         private static double flywheelSpeedMultiplier = 0.9;
-        private static double gravityMultiplier = 1;
+        private static double gravityMultiplier = 0.46;
         private static double spinVComp = 0;
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
                 if (Constants.isBlueAlliance) {
                         subwooferXPos = 0;
-                        subwooferYPos = 5.55;
+                        subwooferYPos = 5.554;
                 } else {
                         subwooferXPos = 16.548;
-                        subwooferYPos = 5.55;
+                        subwooferYPos = 5.554;
                 }
-                // SmartDashboard.putString("poseconvert",
-                // new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new
-                // Rotation2d())
-                // .toString());
+                SmartDashboard.putString("poseconvert",
+                new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new
+                Rotation2d())
+                .toString());
                 return new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d());
         }
 
@@ -59,8 +59,7 @@ public class ReverseKinematics {
                 double verticalVel = ((constTargetHeightDiff / timeInAir) + (0.5 * g * timeInAir * gravityMultiplier)); // (pos.getY() /
                                                                                                     // timeInAir)
 
-                // SmartDashboard.putNumber("verticalVel", verticalVel);
-                // SmartDashboard.putNumber("heightDelta", heightDelta);
+                SmartDashboard.putNumber("verticalVel", verticalVel);
                 return verticalVel;
         }
 
@@ -68,7 +67,7 @@ public class ReverseKinematics {
         // for internal use only
         private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
                 double xVel = (pos.getX() / timeInAir) + (speed.vxMetersPerSecond * movementMultiplierX);
-                // SmartDashboard.putNumber("xVel", xVel);
+                SmartDashboard.putNumber("xVel", xVel);
                 return xVel;
         }
 
@@ -78,7 +77,7 @@ public class ReverseKinematics {
         private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
                 double yVel = (pos.getY() / timeInAir)
                                 - (speed.vyMetersPerSecond * movementMultiplierY);
-                // SmartDashboard.putNumber("yVel", yVel);
+                SmartDashboard.putNumber("yVel", yVel);
                 return yVel;
         }
 
@@ -99,13 +98,13 @@ public class ReverseKinematics {
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
                 double timeInAir = calcTimeInAir(pos, speed, flywheelSpeedMTS);
-                // SmartDashboard.putNumber("targetAngleShoote",
                 double angleDiffRadians = (Math.PI
                                 + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
                                                 -Math.sqrt(Math.pow(calcLaunchXVel(pos, speed, timeInAir), 2) + Math
                                                                 .pow(calcLaunchYVel(pos, speed, timeInAir), 2)))));
                 double normalizedAngleDiff = angleDiffRadians
                                 / (2 * Math.PI);
+                SmartDashboard.putNumber("targetAngleShoote", angleDiffRadians);
                 SmartDashboard.putNumber("PIVOT HEIGHT", encoderOffset
                                 - normalizedAngleDiff);
                 return encoderOffset
@@ -115,7 +114,7 @@ public class ReverseKinematics {
         // Not sure why this is here but I'll leave it just in case
         public static void configHeightDif(double targetHeightDiff) {
                 constTargetHeightDiff = targetHeightDiff;
-                // SmartDashboard.putNumber("targetHeightDiff", constTargetHeightDiff);
+                SmartDashboard.putNumber("targetHeightDiff", constTargetHeightDiff);
         }
 
         // Not sure why this is here but I'll leave it just in case

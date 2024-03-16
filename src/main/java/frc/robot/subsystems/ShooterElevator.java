@@ -28,6 +28,8 @@ public class ShooterElevator extends SubsystemBase {
     public final double gearing = 1;
     public double max = 44.8;
     public double min = 1;
+    public double desiredpos;
+
     private SparkMaxConfig elevateConfig = new SparkMaxConfig(
             new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300), 1, true, SparkMaxEncoderType.Relative,
             IdleMode.kBrake,
@@ -54,11 +56,16 @@ public class ShooterElevator extends SubsystemBase {
     }
 
     public void setPosition(double position) {
+        desiredpos = position;
         motor1.getPIDController().setReference(position, ControlType.kPosition);
     }
 
     public void setPosition(ArmPositions armPositions) {
         setPosition(armPositions.elevator);
+    }
+
+    public double getDesiredPosition(){
+        return desiredpos;
     }
 
     public double getPosition() {
