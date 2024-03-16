@@ -78,17 +78,17 @@
                       "data": {
                         "name": "StopShooterTrack"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Shoot"
+                      }
                     }
                   ]
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SpeakerAuto"
           }
         },
         {
@@ -115,6 +115,12 @@
                       "type": "named",
                       "data": {
                         "name": "StopShooterTrack"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Shoot"
                       }
                     }
                   ]
@@ -130,12 +136,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "SpeakerAuto"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -159,6 +159,12 @@
                       "type": "named",
                       "data": {
                         "name": "StopShooterTrack"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Shoot"
                       }
                     }
                   ]
@@ -174,12 +180,6 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "SpeakerAuto"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
@@ -204,6 +204,12 @@
                       "data": {
                         "name": "StopShooterTrack"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Shoot"
+                      }
                     }
                   ]
                 }
@@ -215,12 +221,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
           }
         }
       ]
