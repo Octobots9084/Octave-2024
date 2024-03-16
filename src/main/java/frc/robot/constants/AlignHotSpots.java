@@ -22,7 +22,7 @@ public class AlignHotSpots {
             new Triangle(new Point(0.0, 8.2), new Point(1.84, 4.1), new Point(4.05, 8.2)),
             new Triangle(new Point(0.0, 0.0), new Point(4.05, 8.2), new Point(4.05, 0)),
             // add more triangles to the hot spot here
-    }, new Translation2d(1.86, 8),
+    }, new Translation2d(1.88, 8),
             new Rotation2d(-Math.PI / 2));
 
     public static final AlignHotSpots BlueClimbOne = new AlignHotSpots(
@@ -40,7 +40,8 @@ public class AlignHotSpots {
             new Translation2d(4.5, FieldConstants.WIDTH - 3.5), new Rotation2d(2 * Math.PI / 3));
 
     public static final AlignHotSpots BlueClimbThree = new AlignHotSpots(
-            new Triangle[] { new Triangle(new Point(5.86, 2.46), new Point(8.23, 8.2), new Point(5.86, 5.78)),
+            new Triangle[] { new Triangle(new Point(5.86, 2.46), new Point(8.23, 8.2),
+                    new Point(5.86, 5.78)),
                     new Triangle(new Point(5.86, 2.46), new Point(8.23, 8.2), new Point(8.23, 0)),
                     new Triangle(new Point(10.6, 0), new Point(8.23, 8.2), new Point(8.23, 0)),
                     new Triangle(new Point(10.6, 0), new Point(8.23, 8.2), new Point(10.6, 8.2)),
