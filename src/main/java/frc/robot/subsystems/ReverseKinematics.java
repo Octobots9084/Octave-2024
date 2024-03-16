@@ -31,7 +31,7 @@ public class ReverseKinematics {
         public static Pose2d convert2dCoords(Pose2d pos) {
                 if (Constants.isBlueAlliance) {
                         subwooferXPos = 0;
-                        subwooferYPos = 5.5;
+                        subwooferYPos = 5.55;
                 } else {
                         subwooferXPos = 16.548;
                         subwooferYPos = 5.55;
