@@ -70,14 +70,14 @@ public class ButtonConfig {
         }));
         driverButtons.button(12).onTrue(new ShooterFlywheelSpeedInstantMeters(ShooterSpeeds.DRIVE_BY));
 
-        coDriverButtons.button(1).whileTrue(new ParallelCommandGroup(new PrepClimb(), new ClimbAlign()));
+        coDriverButtons.button(1).onTrue(new PrepClimb());
         coDriverButtons.button(2).onTrue(new HalfClimb());
         coDriverButtons.button(3).onTrue(new SimpleClimb());
         coDriverButtons.button(4).onTrue(new Layup());
         coDriverButtons.button(5).onTrue(new Undunk());
         coDriverButtons.button(6).whileTrue(new ClimbZero());
         coDriverButtons.button(7).onTrue(new Collect());
-        coDriverButtons.button(8).onTrue(new InstantCommand()); // climb align
+        coDriverButtons.button(8).whileTrue(new ClimbAlign()); // climb align
         coDriverButtons.button(9).whileTrue(new SequentialCommandGroup(new InstantCommand(() -> {
             ShooterElevator.getInstance().setPosition(ArmPositions.AMP);
         }), new Driveby()));
