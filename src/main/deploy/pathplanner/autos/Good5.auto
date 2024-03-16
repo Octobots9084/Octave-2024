@@ -20,18 +20,6 @@
         {
           "type": "named",
           "data": {
-            "name": "SpinUpFlywheelsFast"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.6
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "SpeakerAutoInital"
           }
         },
@@ -40,47 +28,60 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "named",
+                "data": {
+                  "name": "FlywheelsCurrentNormal"
+                }
+              },
+              {
+                "type": "parallel",
                 "data": {
                   "commands": [
                     {
-                      "type": "parallel",
+                      "type": "path",
+                      "data": {
+                        "pathName": "5 Piece - 1"
+                      }
+                    },
+                    {
+                      "type": "sequential",
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
+                            "type": "named",
                             "data": {
-                              "pathName": "5 Piece - 1"
+                              "name": "SpinUpFlywheels"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.21
                             }
                           },
                           {
                             "type": "named",
                             "data": {
-                              "name": "FlywheelsCurrentNormal"
+                              "name": "CollectDrivebyMF"
                             }
                           }
                         ]
                       }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.3
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5 Piece - 2"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5 Piece - 3"
-                      }
                     }
                   ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "5 Piece - 2"
                 }
               },
               {
@@ -90,27 +91,29 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "SpinUpFlywheels"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.2
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
                         "name": "CollectDrivebyMF"
                       }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CollectDrivebyMF"
-                      }
-                    },
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "5 Piece - 3"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
                     {
                       "type": "named",
                       "data": {
