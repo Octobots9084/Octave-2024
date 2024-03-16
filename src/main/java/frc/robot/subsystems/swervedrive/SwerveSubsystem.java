@@ -168,6 +168,11 @@ public class SwerveSubsystem extends SubsystemBase {
         false); // Open loop is disabled since it shouldn't be used most of the time.
   }
 
+  @Override
+  public void periodic() {
+    swerveDrive.updateOdometry();
+  }
+
   public void setShootingRequest(Rotation2d target) {
     shootingRequest = target;
   }
@@ -264,10 +269,9 @@ public class SwerveSubsystem extends SubsystemBase {
       swerveDrive.zeroGyro();
     } else {
       swerveDrive.zeroGyro();
-      swerveDrive.setGyro(new Rotation3d(0,0,Math.PI));
+      swerveDrive.setGyro(new Rotation3d(0, 0, Math.PI));
     }
-    
-    
+
   }
 
   /**

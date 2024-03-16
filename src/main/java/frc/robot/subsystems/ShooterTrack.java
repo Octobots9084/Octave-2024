@@ -5,6 +5,16 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix6.configs.FeedbackConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.StaticBrake;
+import com.ctre.phoenix6.hardware.TalonFX;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ShooterSpeeds;
@@ -12,7 +22,7 @@ import frc.robot.constants.ShooterSpeeds;
 public class ShooterTrack extends SubsystemBase {
 
     public static ShooterTrack shootingRetainer;
-    private CANSparkFlex motor1;
+    private TalonFX motor1;
     private DigitalInput sensor;
     public boolean pieceGood = false;
     public boolean currentlyShooting = false;
@@ -32,22 +42,8 @@ public class ShooterTrack extends SubsystemBase {
     }
 
     public ShooterTrack() {
-        motor1 = new CANSparkFlex(15, MotorType.kBrushless);
-        motor1.restoreFactoryDefaults();
-        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus0, 500);
-        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus1, 20);
-        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 500);
-        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus3, 20);
-        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus4, 500);
-        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus5, 500);
-        motor1.setPeriodicFramePeriod(PeriodicFrame.kStatus6, 500);
 
-        motor1.setCANTimeout(1000);
-
-        motor1.getPIDController().setFeedbackDevice(motor1.getEncoder());
-        motor1.setIdleMode(IdleMode.kBrake);
-        motor1.setSmartCurrentLimit(50, 50);
-        motor1.setInverted(false);
+        motor1 = new TalonFX(15);
 
         sensor = new DigitalInput(0);
     }
