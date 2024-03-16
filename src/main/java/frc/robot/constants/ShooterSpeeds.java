@@ -2,14 +2,14 @@ package frc.robot.constants;
 
 public enum ShooterSpeeds {
     IDLE(0.1, -0.5),
-    PREPARE(0.1, 1),
+    PREPARE(.35, 1),
     SPEAKER(0.7, -20),
     STOP(0, 0),
     PANIC(1, -500),
     AMP(1, -7),
     FERRY_SHOT(1, -20),
-    JIGGLE_FORWARD(0.1, 0),
-    JIGGLE_BACKWARD(-0.1, 0),
+    JIGGLE_FORWARD(.2, 0),
+    JIGGLE_BACKWARD(-.2, 0),
     TRAP(1, -20),
     LAYUP(-0.2, -5),
     SPECIAL_IDLE(0.1, 0),
