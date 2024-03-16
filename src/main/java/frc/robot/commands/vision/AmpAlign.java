@@ -32,9 +32,8 @@ public class AmpAlign extends Command {
     }
 
     private Pose2d getTargetPose(AlignHotSpots hotSpots, Pose2d realPose2d) {
-        return new Pose2d(
-                (realPose2d.getX() - hotSpots.targetPosition.getX()) * -3,
-                (realPose2d.getY() - hotSpots.targetPosition.getY()) * -3,
+        return new Pose2d(-Math.pow((realPose2d.getX() - hotSpots.targetPosition.getX()), 3),
+                -Math.pow((realPose2d.getY() - hotSpots.targetPosition.getY()), 3),
                 hotSpots.targetRotation);
     }
 
