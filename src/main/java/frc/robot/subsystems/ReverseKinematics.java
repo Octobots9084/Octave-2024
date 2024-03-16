@@ -26,6 +26,8 @@ public class ReverseKinematics {
         private static double movementMultiplierX = 1.5;
         private static double movementMultiplierY = 1.5;
         private static double flywheelSpeedMultiplier = 0.9;
+        private static double gravityMultiplier = 1;
+        private static double spinVComp = 0;
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
@@ -46,20 +48,15 @@ public class ReverseKinematics {
         // converts ChassisSpeeds to absolute rather than relative to the robot rotation
         public static ChassisSpeeds convertSpeed(Pose2d pos, ChassisSpeeds speed) {
                 return new ChassisSpeeds(
-                                -(pos.getRotation().getCos() * speed.vxMetersPerSecond)
-                                                - (pos.getRotation().getSin() * speed.vyMetersPerSecond),
-                                (pos.getRotation().getSin() * speed.vxMetersPerSecond)
-                                                + (pos.getRotation().getCos() * speed.vyMetersPerSecond),
+                                -(pos.getRotation().getCos() * speed.vxMetersPerSecond) - (pos.getRotation().getSin() * speed.vyMetersPerSecond),
+                                (pos.getRotation().getSin() * speed.vxMetersPerSecond) + (pos.getRotation().getCos() * speed.vyMetersPerSecond) + (pos.getRotation().getCos() * spinVComp),
                                 0);
         }
 
         // returns the vertical launch velocity of the note
         // for internal use only
         private static double calcLaunchVerticalVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
-                // double heightDelta = (g * Math.pow(timeInAir, 2)) / 2;
-                // double verticalVel = ((constTargetHeightDiff)// + heightDelta)
-                // / timeInAir);
-                double verticalVel = ((constTargetHeightDiff / timeInAir) + (0.5 * g * timeInAir)); // (pos.getY() /
+                double verticalVel = ((constTargetHeightDiff / timeInAir) + (0.5 * g * timeInAir * gravityMultiplier)); // (pos.getY() /
                                                                                                     // timeInAir)
 
                 // SmartDashboard.putNumber("verticalVel", verticalVel);
@@ -67,8 +64,7 @@ public class ReverseKinematics {
                 return verticalVel;
         }
 
-        // returns the horizontal (parallel to the subwoofer opening) launch velocity of
-        // the note
+        // returns the horizontal (parallel to the subwoofer opening) launch velocity of the note
         // for internal use only
         private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
                 double xVel = (pos.getX() / timeInAir) + (speed.vxMetersPerSecond * movementMultiplierX);
@@ -80,7 +76,6 @@ public class ReverseKinematics {
         // launch velocity of the note
         // for internal use only
         private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
-                // ((constTargetHeightDiff/timeInAir) + (0.5*g*timeInAir)) //
                 double yVel = (pos.getY() / timeInAir)
                                 - (speed.vyMetersPerSecond * movementMultiplierY);
                 // SmartDashboard.putNumber("yVel", yVel);
@@ -105,8 +100,6 @@ public class ReverseKinematics {
                 speed = convertSpeed(pos, speed);
                 double timeInAir = calcTimeInAir(pos, speed, flywheelSpeedMTS);
                 // SmartDashboard.putNumber("targetAngleShoote",
-                // (Math.PI + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
-                // calcLaunchXVel(pos, speed, timeInAir)))));
                 double angleDiffRadians = (Math.PI
                                 + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
                                                 -Math.sqrt(Math.pow(calcLaunchXVel(pos, speed, timeInAir), 2) + Math
@@ -119,15 +112,20 @@ public class ReverseKinematics {
                                 - normalizedAngleDiff;
         }
 
+        // Not sure why this is here but I'll leave it just in case
         public static void configHeightDif(double targetHeightDiff) {
                 constTargetHeightDiff = targetHeightDiff;
                 // SmartDashboard.putNumber("targetHeightDiff", constTargetHeightDiff);
         }
 
+        // Not sure why this is here but I'll leave it just in case
         public static double getHeightDif() {
                 return constTargetHeightDiff;
         }
 
+        // Calculates the time the note will spend in the air - linear aproximation
+        // error margins depend on the distance from the amp
+        // but errors are acceptably minimal via the approximation
         private static double calcTimeInAir(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS) {
                 return Math.sqrt((constTargetHeightDiff * constTargetHeightDiff) + (pos.getX() * pos.getX())
                                 + (pos.getY() * pos.getY()))
