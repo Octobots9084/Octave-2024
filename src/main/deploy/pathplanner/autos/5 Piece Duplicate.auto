@@ -40,15 +40,41 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "FlywheelsCurrentNormal"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "5 Piece - 1"
+                  "commands": [
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "5 Piece - 1"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "FlywheelsCurrentNormal"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "5 Piece - 2"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "5 Piece - 3"
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -72,21 +98,13 @@
                       "data": {
                         "name": "CollectDrivebyMF"
                       }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "CollectDrivebyMF"
+                      }
+                    },
                     {
                       "type": "named",
                       "data": {
@@ -94,38 +112,6 @@
                       }
                     }
                   ]
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "5 Piece - 2"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CollectDrivebyMF"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "5 Piece - 3"
                 }
               }
             ]

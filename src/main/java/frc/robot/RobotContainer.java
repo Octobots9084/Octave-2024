@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.complex.CollectAuto;
+import frc.robot.commands.complex.CollectDriveby;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
@@ -79,7 +80,9 @@ public class RobotContainer {
                         NamedCommands.registerCommand("SpeakerAutoInital", new InitalSpeakerAutoFast());
                         NamedCommands.registerCommand("SpeakerAutoSlow", new InitalSpeakerAuto());
 
-                        NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(1));
+                        NamedCommands.registerCommand("CollectDrivebyMF", new CollectDriveby());
+
+                        NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(3));
 
                         NamedCommands.registerCommand("Shoot",
                                         new DrivebyAuto().withTimeout(2).andThen(new TheBigYeet()));

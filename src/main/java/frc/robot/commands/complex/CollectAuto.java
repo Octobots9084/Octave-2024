@@ -68,9 +68,12 @@ public class CollectAuto extends SequentialCommandGroup {
                                 new InstantCommand(() -> {
                                     Light.getInstance().setAnimation(Animations.PRE_INTAKE);
                                 })),
+                                new JiggleNote(.5), new InstantCommand(() -> {
+                                    Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
+                                }),
                                 new WaitCommand(0.2).andThen(new IntakeRollerSpeedInstant(IntakeSpeeds.STOP)))),
                         new InstantCommand(), shooterSensorNotTrue),
-                        new WaitUntilCommand(rollerSensor).andThen(new InstantCommand(() -> {
+                        new WaitUntilCommand(shooterSensorTrue).andThen(new InstantCommand(() -> {
                             Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);
                         })))
 

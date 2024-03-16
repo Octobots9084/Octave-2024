@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
@@ -82,22 +83,32 @@ public class DrivebyAuto extends Command {
         double realRotation = swerveSubsystem.getHeading().getRadians();
         // SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
 
-        // SmartDashboard.putNumber("targetPivot", targetPivot);
-        // SmartDashboard.putNumber("realPivot", realPivot);
-        // SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
-        // SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
+        SmartDashboard.putNumber("targetPivot", targetPivot);
+        SmartDashboard.putNumber("realPivot", realPivot);
+        SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
+        SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
+        SmartDashboard.putNumber("realFlywheel", realFlywheel);
+        SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
+
+        SmartDashboard.putBoolean("flywheelTolerance", MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2));
+        SmartDashboard.putBoolean("pivotTolerance", MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005));
+        SmartDashboard.putBoolean("rotationTolerance", isInTolerance(realRotation));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.05)
-                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005)
-
-                && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05)) {
+        if (isInTolerance(realRotation)) {
             Light.getInstance().setAnimation(Animations.SHOT_READY);
             return true;
         } else {
             return false;
         }
+    }
+
+    private boolean isInTolerance(double realRotation) {
+        return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005)
+
+                && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05));
     }
 
     @Override
