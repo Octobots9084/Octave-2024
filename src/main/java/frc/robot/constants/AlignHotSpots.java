@@ -22,7 +22,7 @@ public class AlignHotSpots {
             new Triangle(new Point(0.0, 8.2), new Point(1.84, 4.1), new Point(4.05, 8.2)),
             new Triangle(new Point(0.0, 0.0), new Point(4.05, 8.2), new Point(4.05, 0)),
             // add more triangles to the hot spot here
-    }, new Translation2d(1.84, 8),
+    }, new Translation2d(1.86, 8),
             new Rotation2d(-Math.PI / 2));
 
     public static final AlignHotSpots BlueClimbOne = new AlignHotSpots(
