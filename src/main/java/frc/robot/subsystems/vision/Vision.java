@@ -28,8 +28,8 @@ public class Vision implements Runnable {
   public final String cameraName;
 
   // Telemetry
-  private final CountPerPeriodTelemetry runCountTelemetry;
-  private final CountPerPeriodTelemetry setAtomicCountTelemetry;
+  // private final CountPerPeriodTelemetry runCountTelemetry;
+  // private final CountPerPeriodTelemetry setAtomicCountTelemetry;
 
   public Vision(PhotonCamera photonCamera, Transform3d robotToCamera) {
     this.photonCamera = photonCamera;
@@ -52,14 +52,14 @@ public class Vision implements Runnable {
     this.photonPoseEstimator = photonPoseEstimator;
 
     // Initialize telemetry
-    runCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "runs per s"), 1);
-    setAtomicCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "meas per s push"), 1);
+    // runCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "runs per s"), 1);
+    // setAtomicCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "meas per s push"), 1);
   }
 
   @Override
   public void run() {
     // Update "run count" telemetry
-    runCountTelemetry.incCount(1);
+    // runCountTelemetry.incCount(1);
 
     // Get AprilTag data and updating the pose estimator
     try {
@@ -86,7 +86,7 @@ public class Vision implements Runnable {
               atomicEstimatedRobotPose.set(estimatedRobotPose);
 
               // Update "set atomic count" telemetry
-              setAtomicCountTelemetry.incCount(1);
+              // setAtomicCountTelemetry.incCount(1);
             }
           });
         }
@@ -96,8 +96,8 @@ public class Vision implements Runnable {
     }
 
     // Run telemetry
-    runCountTelemetry.periodic();
-    setAtomicCountTelemetry.periodic();
+    // runCountTelemetry.periodic();
+    // setAtomicCountTelemetry.periodic();
   }
 
   public boolean hasTargets() {

@@ -21,7 +21,7 @@ public static Command getTest() {
 
         3.0, 4.0,
         Units.degreesToRadians(540), Units.degreesToRadians(720));
-    SmartDashboard.putBoolean("test", true);
+    // SmartDashboard.putBoolean("test", true);
     // Since AutoBuilder is configured, we can use it to build pathfinding commands
     Command pathfindingTest = AutoBuilder.pathfindToPose(
         targetPose,

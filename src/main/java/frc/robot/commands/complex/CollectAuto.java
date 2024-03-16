@@ -52,6 +52,7 @@ public class CollectAuto extends SequentialCommandGroup {
                                 new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                                 new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
+                                new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
                                 new WaitUntilCommand(shooterSensorTrue),
                                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
@@ -59,7 +60,7 @@ public class CollectAuto extends SequentialCommandGroup {
                                 new InstantCommand(() -> {
                                     Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
                                 }),
-                                new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT), new JiggleNote(1)),
+                                new IntakeTrackSpeedInstant(IntakeSpeeds.REJECT)),
                         new InstantCommand(), shooterSensorNotTrue));
     }
 

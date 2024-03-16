@@ -13,7 +13,6 @@ import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.robot.ControlMap;
 import frc.robot.subsystems.ReverseKinematics;
-import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.lights.Animations;
@@ -43,25 +42,23 @@ public class Driveby extends Command {
     public void initialize() {
         swerveSubsystem.setShootingRequestActive(true);
         CommandScheduler.getInstance().schedule(new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT));
-        SmartDashboard.putNumber("targetPoseX", 3.0);
+        // SmartDashboard.putNumber("targetPoseX", 3.0);
         Light.getInstance().setAnimation(Animations.AIMING);
     }
 
     public void updateTargets() {
-        double elevatorConversionFactor = 0.1039;
-
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
         targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
-                ShooterSpeeds.DRIVE_BY.flywheels, ShooterElevator.getInstance().getPosition() * elevatorConversionFactor);
+                ShooterSpeeds.DRIVE_BY.flywheels);
         targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels;
         targetTurn = new Rotation2d(
                 ReverseKinematics.calcRobotAngle(
                         ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
                         ReverseKinematics.convertSpeed(ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
                                 swerveSubsystem.getRobotVelocity()),
-                        ShooterSpeeds.DRIVE_BY.flywheels, ShooterElevator.getInstance().getPosition() * elevatorConversionFactor));
-        SmartDashboard.putString("realPose2dAhh", realPose2d.toString());
+                        ShooterSpeeds.DRIVE_BY.flywheels));
+        // SmartDashboard.putString("realPose2dAhh", realPose2d.toString());
     }
 
     @Override
@@ -74,7 +71,7 @@ public class Driveby extends Command {
         ReverseKinematics.configHeightDif(ReverseKinematics.getHeightDif()
                 + MathUtil.fitDeadband(ControlMap.CO_DRIVER_RIGHT.getY(), Constants.Climb.MANUAL_DEADBAND) * 0.05);
         updateTargets();
-        SmartDashboard.putString("realPose2d", realPose2d.toString());
+        // SmartDashboard.putString("realPose2d", realPose2d.toString());
         swerveSubsystem.setShootingRequest(targetTurn);
         flywheel.setFlyWheelSpeedMeters(targetFlywheel);
         if (!pivot.notSoFastEggman) {
@@ -85,12 +82,12 @@ public class Driveby extends Command {
     @Override
     public boolean isFinished() {
         double realRotation = swerveSubsystem.getHeading().getRadians();
-        SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
+        // SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
 
-        SmartDashboard.putNumber("targetPivot", targetPivot);
-        SmartDashboard.putNumber("realPivot", realPivot);
-        SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
-        SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
+        // SmartDashboard.putNumber("targetPivot", targetPivot);
+        // SmartDashboard.putNumber("realPivot", realPivot);
+        // SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
+        // SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
         if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.05)

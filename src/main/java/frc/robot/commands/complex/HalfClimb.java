@@ -9,13 +9,13 @@ import frc.robot.constants.ClimbPositions;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
 
-public class SimpleClimb extends SequentialCommandGroup{
-    public SimpleClimb() {
+public class HalfClimb extends SequentialCommandGroup{
+    public HalfClimb() {
         addCommands(
             new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY).withTimeout(1),
-            new ClimbPosTolerance(ClimbPositions.DOWN),
+            new ClimbPosTolerance(ClimbPositions.MID),
             new InstantCommand(() -> {
-                    Light.getInstance().setAnimation(Animations.DEFAULT);
-                }));
+                Light.getInstance().setAnimation(Animations.CLIMB);
+            }));
     }
 }

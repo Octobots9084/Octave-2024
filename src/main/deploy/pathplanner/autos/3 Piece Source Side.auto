@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3682160697654728,
-      "y": 5.527051054102109
+      "x": 0.712645975054983,
+      "y": 4.347814572406395
     },
-    "rotation": 0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -26,7 +26,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.6
+            "waitTime": 1.0
           }
         },
         {
@@ -36,19 +36,19 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "FlywheelsCurrentNormal"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "FlywheelsCurrentNormal"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
-                  "pathName": "5 Piece - 1"
+                  "pathName": "3 Piece Source  - 1"
                 }
               },
               {
@@ -88,7 +88,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SpeakerAuto"
+            "name": "Shoot"
           }
         },
         {
@@ -123,95 +123,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "5 Piece - 2"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SpeakerAuto"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.3
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Collect"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "StopShooterTrack"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "5 Piece - 3"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SpeakerAuto"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.3
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Collect"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "StopShooterTrack"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "5 Piece - 4"
+                  "pathName": "3 Piece Source - 2"
                 }
               }
             ]
