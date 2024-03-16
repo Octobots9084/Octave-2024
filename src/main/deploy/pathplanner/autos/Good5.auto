@@ -20,7 +20,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SpeakerAutoInital"
+            "name": "SpinUpFlywheels"
           }
         },
         {
@@ -31,6 +31,12 @@
                 "type": "named",
                 "data": {
                   "name": "FlywheelsCurrentNormal"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "SpeakerAutoInital"
                 }
               },
               {
