@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import frc.robot.commands.arm.ShooterFlywheelSpeedInstantForce;
+import frc.robot.commands.arm.ShooterFlywheelSpeedInstantMeters;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.commands.climb.ClimbZero;
 import frc.robot.commands.complex.Collect;
@@ -64,7 +66,7 @@ public class ButtonConfig {
             IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
             IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
         }));
-        // driverButtons.button(10).onTrue(new SrcCollect());
+        driverButtons.button(12).onTrue(new ShooterFlywheelSpeedInstantMeters(ShooterSpeeds.DRIVE_BY));
 
         coDriverButtons.button(1).onTrue(new PrepClimb());
         coDriverButtons.button(2).onTrue(new HalfClimb());
