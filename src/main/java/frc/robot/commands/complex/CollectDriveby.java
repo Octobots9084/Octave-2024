@@ -9,12 +9,8 @@ import frc.robot.subsystems.ShooterTrack;
 public class CollectDriveby extends SequentialCommandGroup{
     public CollectDriveby() {
         addCommands(
-            new CollectAuto().withTimeout(3),
-            // new WaitCommand(.3),
-            // new InstantCommand(() -> {
-            //             ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
-            // }),
-            new DrivebyAuto().withTimeout(2).andThen(new TheBigYeet())
+            new CollectAuto(),
+            new DrivebyAuto(false)
         );
     }
 }

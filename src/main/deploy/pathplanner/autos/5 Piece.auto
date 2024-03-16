@@ -20,19 +20,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SpinUpFlywheelsFast"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.6
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "SpeakerAutoInital"
+            "name": "QuickDraw"
           }
         },
         {
@@ -46,31 +34,38 @@
                 }
               },
               {
-                "type": "path",
-                "data": {
-                  "pathName": "5 Piece - 1"
-                }
-              },
-              {
-                "type": "sequential",
+                "type": "parallel",
                 "data": {
                   "commands": [
                     {
-                      "type": "named",
+                      "type": "path",
                       "data": {
-                        "name": "SpinUpFlywheels"
+                        "pathName": "5 Piece - 1"
                       }
                     },
                     {
-                      "type": "wait",
+                      "type": "sequential",
                       "data": {
-                        "waitTime": 0.2
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CollectDrivebyMF"
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "SpinUpFlywheels"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.2
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "CollectDrivebyMF"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]
@@ -83,24 +78,17 @@
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "CollectDrivebyMF"
-                      }
-                    }
-                  ]
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "5 Piece - 2"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectDrivebyMF"
+                }
               }
             ]
           }
@@ -109,6 +97,12 @@
           "type": "parallel",
           "data": {
             "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "5 Piece - 3"
+                }
+              },
               {
                 "type": "sequential",
                 "data": {
@@ -120,12 +114,6 @@
                       }
                     }
                   ]
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "5 Piece - 3"
                 }
               }
             ]

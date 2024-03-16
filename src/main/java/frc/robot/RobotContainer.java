@@ -83,9 +83,12 @@ public class RobotContainer {
                         NamedCommands.registerCommand("CollectDrivebyMF", new CollectDriveby());
 
                         NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(3));
+                        
+                        NamedCommands.registerCommand("QuickDraw",
+                                        new DrivebyAuto(true).withTimeout(1).andThen(new TheBigYeet()));
 
                         NamedCommands.registerCommand("Shoot",
-                                        new DrivebyAuto().withTimeout(2).andThen(new TheBigYeet()));
+                                        new DrivebyAuto(false).withTimeout(2).andThen(new TheBigYeet()));
                         NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
                                 ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
                         }));
