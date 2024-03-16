@@ -29,7 +29,7 @@ public class ReverseKinematics {
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
-                if (!Constants.isBlueAlliance) {
+                if (Constants.isBlueAlliance) {
                         subwooferXPos = 0;
                         subwooferYPos = 5.55;
                 } else {

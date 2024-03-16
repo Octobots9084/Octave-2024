@@ -45,7 +45,7 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, true, false, 1, false,
-                new PIDConfig(10, 0, 2, 0));
+                new PIDConfig(10, 0, 4, 0));
         SparkMaxConfig left = new SparkMaxConfig(new SparkMaxStatusFrames(500,
                 20,
                 500,
@@ -54,7 +54,7 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, false, false, 1, false,
-                new PIDConfig(10, 0, 2, 0));
+                new PIDConfig(10, 0, 4, 0));
 
         SparkMaxSetup.setup(leftMotor, left);
         SparkMaxSetup.setup(rightMotor, right);

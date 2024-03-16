@@ -265,7 +265,7 @@ public class SwerveSubsystem extends SubsystemBase {
    * facing toward 0.
    */
   public void zeroGyro() {
-    if (!Constants.isBlueAlliance) {
+    if (Constants.isBlueAlliance) {
       swerveDrive.zeroGyro();
     } else {
       swerveDrive.zeroGyro();

@@ -79,7 +79,7 @@ public class RobotContainer {
                         NamedCommands.registerCommand("SpeakerAutoInital", new InitalSpeakerAutoFast());
                         NamedCommands.registerCommand("SpeakerAutoSlow", new InitalSpeakerAuto());
 
-                        NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(5));
+                        NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(1));
 
                         NamedCommands.registerCommand("Shoot",
                                         new DrivebyAuto().withTimeout(2).andThen(new TheBigYeet()));
@@ -142,7 +142,7 @@ public class RobotContainer {
                                                 // alliance
                                                 // This will flip the path being followed to the red side of the field.
                                                 // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-                                                return Constants.isBlueAlliance;
+                                                return !Constants.isBlueAlliance;
                                         },
                                         SwerveSubsystem.getInstance() // Reference to this subsystem to set requirements
                         );

@@ -64,7 +64,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.6
+                        "waitTime": 0.3
                       }
                     },
                     {
@@ -77,6 +77,12 @@
                       "type": "named",
                       "data": {
                         "name": "StopShooterTrack"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.3
                       }
                     },
                     {
@@ -190,7 +196,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 0.3
+                        "waitTime": 0.5
                       }
                     },
                     {
@@ -203,6 +209,12 @@
                       "type": "named",
                       "data": {
                         "name": "StopShooterTrack"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.0
                       }
                     },
                     {
