@@ -27,7 +27,7 @@ import swervelib.math.Matter;
  */
 public final class Constants {
 
-	public static final double ROBOT_MASS = (65) * 0.453592; // 32lbs * kg per pound
+	public static final double ROBOT_MASS = (146.9) * 0.453592; // weight measured on 3/13 * kg per pound
 	public static final Matter CHASSIS = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
 	public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
 	public static final int NUM_LEDS = 90;
@@ -60,7 +60,7 @@ public final class Constants {
 	public static final class Drivebase {
 		// Hold time on motor brakes when disabled
 		public static final double WHEEL_LOCK_TIME = 10; // seconds
-		public static final PIDController TAREGET_ANGLE_CONTROLLER = new PIDController(8, 0, 0.8);
+		public static final PIDController TAREGET_ANGLE_CONTROLLER = new PIDController(6, 0, 0.4);
 		public static final double TURN_TO_ANGLE_TOLERANCE = 0.2;
 		public static final double TURN_TO_ANGLE_TIME_TOLERANCE = 0.2;
 		public static final PIDController DRIVER_TAREGET_ANGLE_CONTROLLER = new PIDController(6, 0, 1);
