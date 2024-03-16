@@ -63,14 +63,6 @@ public class SwerveDrive {
    */
   private final SwerveModule[] swerveModules;
   /**
-   * WPILib {@link Notifier} to keep odometry up to date.
-   */
-  private final Notifier odometryThread;
-  /**
-   * Odometry lock to ensure thread safety.
-   */
-  private final Lock odometryLock = new ReentrantLock();
-  /**
    * Deadband for speeds in heading correction.
    */
   private double HEADING_CORRECTION_DEADBAND = 0.01;
@@ -189,7 +181,6 @@ public class SwerveDrive {
     swerveController = new SwerveController(controllerConfig);
     // Create Kinematics from swerve module locations.
     kinematics = new SwerveDriveKinematics(config.moduleLocationsMeters);
-    odometryThread = new Notifier(this::updateOdometry);
 
     // Create an integrator for angle if the robot is being simulated to emulate an
     // IMU
@@ -245,8 +236,6 @@ public class SwerveDrive {
       SwerveDriveTelemetry.desiredStates = new double[SwerveDriveTelemetry.moduleCount * 2];
     }
 
-    odometryThread.startPeriodic(SwerveDriveTelemetry.isSimulation ? 0.01 : 0.02);
-
     checkIfTunerXCompatible();
   }
 
@@ -268,23 +257,6 @@ public class SwerveDrive {
       tunerXRecommendation.set(true);
     }
 
-  }
-
-  /**
-   * Set the odometry update period in seconds.
-   *
-   * @param period period in seconds.
-   */
-  public void setOdometryPeriod(double period) {
-    odometryThread.stop();
-    odometryThread.startPeriodic(period);
-  }
-
-  /**
-   * Stop the odometry thread in favor of manually updating odometry.
-   */
-  public void stopOdometryThread() {
-    odometryThread.stop();
   }
 
   /**
@@ -632,9 +604,7 @@ public class SwerveDrive {
    */
   public Pose2d getPose() {
 
-    odometryLock.lock();
     Pose2d poseEstimation = swerveDrivePoseEstimator.getEstimatedPosition();
-    odometryLock.unlock();
     return poseEstimation;
   }
 
@@ -674,9 +644,7 @@ public class SwerveDrive {
    * @param pose The pose to set the odometry to
    */
   public void resetOdometry(Pose2d pose) {
-    odometryLock.lock();
     swerveDrivePoseEstimator.resetPosition(pose.getRotation(), getModulePositions(), pose);
-    odometryLock.unlock();
     kinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, 0, pose.getRotation()));
   }
 
@@ -940,7 +908,6 @@ public class SwerveDrive {
    * readings and states.
    */
   public void updateOdometry() {
-    odometryLock.lock();
     try {
       // Update odometry
       swerveDrivePoseEstimator.update(getYaw(), getModulePositions());
@@ -994,10 +961,8 @@ public class SwerveDrive {
         SwerveDriveTelemetry.updateData();
       }
     } catch (Exception e) {
-      odometryLock.unlock();
       throw e;
     }
-    odometryLock.unlock();
   }
 
   /**
@@ -1040,14 +1005,7 @@ public class SwerveDrive {
    *                  {@link Timer#getFPGATimestamp()} or similar sources.
    */
   public void addVisionMeasurement(Pose2d robotPose, double timestamp) {
-    odometryLock.lock();
     swerveDrivePoseEstimator.addVisionMeasurement(new Pose2d(robotPose.getX(), robotPose.getY(), getYaw()), timestamp);
-    // Pose2d newOdometry = new Pose2d(swerveDrivePoseEstimator.getEstimatedPosition().getTranslation(),
-    //     robotPose.getRotation());
-    odometryLock.unlock();
-
-    // setGyroOffset(new Rotation3d(0, 0, robotPose.getRotation().getRadians()));
-    // resetOdometry(newOdometry);
   }
 
   /**
