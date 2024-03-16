@@ -13,6 +13,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -198,6 +199,8 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void setAlignRequestActive(boolean isActive) {
+    SmartDashboard.putBoolean("Align Active", isActive);
+
     alignRequestActive = isActive;
   }
 
