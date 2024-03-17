@@ -13,6 +13,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -31,6 +32,10 @@ public class SwerveSubsystem extends SubsystemBase {
 
   private Rotation2d shootingRequest = new Rotation2d();
   private boolean shootingRequestActive = false;
+
+  private Pose2d alignRequest = new Pose2d();
+  private boolean alignRequestActive = false;
+
   /**
    * Swerve drive object.
    */
@@ -187,6 +192,24 @@ public class SwerveSubsystem extends SubsystemBase {
 
   public Rotation2d getShootingRequest() {
     return shootingRequest;
+  }
+
+  public void setAlignRequest(Pose2d target) {
+    alignRequest = target;
+  }
+
+  public void setAlignRequestActive(boolean isActive) {
+    SmartDashboard.putBoolean("Align Active", isActive);
+
+    alignRequestActive = isActive;
+  }
+
+  public boolean getAlignRequestActive() {
+    return alignRequestActive;
+  }
+
+  public Pose2d getAlignRequest() {
+    return alignRequest;
   }
 
   /**

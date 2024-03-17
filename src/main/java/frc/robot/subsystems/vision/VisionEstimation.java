@@ -36,6 +36,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
@@ -48,12 +49,11 @@ public class VisionEstimation extends SubsystemBase {
                         0.1,
                         0.1);
 
-        private final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"), VisionConstants.ROBOT_TO_INKY);
-
-        private final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"), VisionConstants.ROBOT_TO_PINKY);
-        private final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
+        public final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"), VisionConstants.ROBOT_TO_INKY);
+        public final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"), VisionConstants.ROBOT_TO_PINKY);
+        public final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
                         VisionConstants.ROBOT_TO_BLINKY);
-        private final Vision frontRightEstimator = new Vision(new PhotonCamera("Clyde"),
+        public final Vision frontRightEstimator = new Vision(new PhotonCamera("Clyde"),
                         VisionConstants.ROBOT_TO_CLYDE);
 
         private final Notifier allNotifier = new Notifier(() -> {
@@ -77,6 +77,9 @@ public class VisionEstimation extends SubsystemBase {
         // private final MeanPerPeriodTelemetry confidenceBlinkyTelemetry;
         // private final MeanPerPeriodTelemetry confidencePinkyTelemetry;
         // private final MeanPerPeriodTelemetry confidenceClydeTelemetry;
+
+        private static double ampXPos = 0;
+        private static double ampYPos = 5.55;
 
         public VisionEstimation() {
                 this.swerveSubsystem = SwerveSubsystem.getInstance();

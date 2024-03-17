@@ -63,11 +63,6 @@ public class Vision implements Runnable {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult(); //Gets the latest camera results
 
-        // SwerveSubsystem.getInstance().getSwerveDrive().field.getObject("vision/" + cameraName).setPose(
-        //     photonResults.getBestTarget().getBestCameraToTarget().getX(),
-        //     photonResults.getBestTarget().getBestCameraToTarget().getY(),
-        //     photonResults.getBestTarget().getBestCameraToTarget().getRotation().toRotation2d());
-
         if (photonResults.hasTargets()) {
           //Updates the pose estimator
           photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {

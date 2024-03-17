@@ -603,9 +603,7 @@ public class SwerveDrive {
    * @return The robot's pose
    */
   public Pose2d getPose() {
-
-    Pose2d poseEstimation = swerveDrivePoseEstimator.getEstimatedPosition();
-    return poseEstimation;
+    return swerveDrivePoseEstimator.getEstimatedPosition();
   }
 
   /**
