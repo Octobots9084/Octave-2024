@@ -83,7 +83,7 @@ public class RobotContainer {
                         NamedCommands.registerCommand("CollectDrivebyMF", new CollectDriveby());
 
                         NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(3));
-                        
+
                         NamedCommands.registerCommand("QuickDraw",
                                         new DrivebyAuto(true).withTimeout(1).andThen(new TheBigYeet()));
 
@@ -113,20 +113,20 @@ public class RobotContainer {
                         AutoBuilder.configureHolonomic(
                                         SwerveSubsystem.getInstance()::getPose, // Robot pose supplier
                                         SwerveSubsystem.getInstance()::resetOdometry, // Method to reset odometry (will
-                                                                                      // be
-                                                                                      // called if your auto
-                                                                                      // has a starting pose)
+                                        // be
+                                        // called if your auto
+                                        // has a starting pose)
                                         SwerveSubsystem.getInstance()::getRobotVelocity, // ChassisSpeeds supplier. MUST
-                                                                                         // BE
-                                                                                         // ROBOT RELATIVE
+                                        // BE
+                                        // ROBOT RELATIVE
                                         SwerveSubsystem.getInstance()::setChassisSpeeds, // Method that will drive the
-                                                                                         // robot
-                                                                                         // given ROBOT
-                                                                                         // RELATIVE ChassisSpeeds
+                                        // robot
+                                        // given ROBOT
+                                        // RELATIVE ChassisSpeeds
                                         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should
-                                                                         // likely live
-                                                                         // in your
-                                                                         // Constants class
+                                                        // likely live
+                                                        // in your
+                                                        // Constants class
                                                         Constants.Auton.TRANSLATION_PID,
                                                         // Translation PID constants
                                                         Constants.Auton.ANGLE_AUTO_PID,
