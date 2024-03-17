@@ -27,6 +27,7 @@ import frc.robot.commands.swervedrive.ToggleTurnToSpeaker;
 import frc.robot.constants.ArmPositions;
 import frc.robot.commands.vision.AmpAlign;
 import frc.robot.commands.vision.ClimbAlign;
+import frc.robot.commands.vision.SourceAlign;
 import frc.robot.constants.ClimbPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
@@ -57,7 +58,7 @@ public class ButtonConfig {
 
         driverButtons.button(1).onTrue(new ToggleTurnToSpeaker());
         driverButtons.button(2).onTrue(new ToggleTurnTo180());
-        driverButtons.button(3).onTrue(new ToggleTurnToSource());
+        driverButtons.button(3).whileTrue(new SourceAlign());
         driverButtons.button(4).onTrue(new Collect());
         driverButtons.button(5).onTrue(new ShooterTrackSpeedInstant(ShooterSpeeds.REVERSE_TRACK));
         driverButtons.button(6).onTrue(new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro));
@@ -70,7 +71,7 @@ public class ButtonConfig {
         }));
         driverButtons.button(12).onTrue(new ShooterFlywheelSpeedInstantMeters(ShooterSpeeds.DRIVE_BY));
 
-        coDriverButtons.button(1).onTrue(new PrepClimb());
+        coDriverButtons.button(1).whileTrue(new ParallelCommandGroup(new PrepClimb(), new ClimbAlign()));
         coDriverButtons.button(2).onTrue(new HalfClimb());
         coDriverButtons.button(3).onTrue(new SimpleClimb());
         coDriverButtons.button(4).onTrue(new Layup());

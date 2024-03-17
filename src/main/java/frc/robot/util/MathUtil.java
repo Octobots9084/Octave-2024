@@ -97,4 +97,9 @@ public class MathUtil {
         double mirroredAngle = Math.toDegrees(mirroredRadians);
         return mirroredAngle;
     }
+
+    public static double powPreserveSign(double a, double b) {
+        final double sign = Math.signum(a);
+        return sign * Math.pow(Math.abs(a), b);
+    }
 }
