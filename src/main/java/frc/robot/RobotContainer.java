@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.complex.CollectAuto;
+import frc.robot.commands.complex.CollectDriveby;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
@@ -79,10 +80,15 @@ public class RobotContainer {
                         NamedCommands.registerCommand("SpeakerAutoInital", new InitalSpeakerAutoFast());
                         NamedCommands.registerCommand("SpeakerAutoSlow", new InitalSpeakerAuto());
 
-                        NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(5));
+                        NamedCommands.registerCommand("CollectDrivebyMF", new CollectDriveby());
+
+                        NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(3));
+                        
+                        NamedCommands.registerCommand("QuickDraw",
+                                        new DrivebyAuto(true).withTimeout(1).andThen(new TheBigYeet()));
 
                         NamedCommands.registerCommand("Shoot",
-                                        new DrivebyAuto().withTimeout(2).andThen(new TheBigYeet()));
+                                        new DrivebyAuto(false).withTimeout(2).andThen(new TheBigYeet()));
                         NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
                                 ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
                         }));
@@ -142,7 +148,7 @@ public class RobotContainer {
                                                 // alliance
                                                 // This will flip the path being followed to the red side of the field.
                                                 // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-                                                return Constants.isBlueAlliance;
+                                                return !Constants.isBlueAlliance;
                                         },
                                         SwerveSubsystem.getInstance() // Reference to this subsystem to set requirements
                         );
