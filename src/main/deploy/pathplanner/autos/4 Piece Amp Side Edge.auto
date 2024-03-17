@@ -52,87 +52,31 @@
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "SpinUpFlywheels"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.3
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Collect"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "StopShooterTrack"
-                      }
-                    }
-                  ]
+                  "name": "CollectDrivebyMF"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
-          }
-        },
-        {
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.3
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Collect"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "StopShooterTrack"
-                      }
-                    }
-                  ]
-                }
-              },
               {
                 "type": "path",
                 "data": {
                   "pathName": "3 Piece Amp Edge - 2"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectDrivebyMF"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
           }
         },
         {
@@ -140,43 +84,18 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.3
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Collect"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "StopShooterTrack"
-                      }
-                    }
-                  ]
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "3 Piece Amp - 3"
                 }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectDrivebyMF"
+                }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
           }
         }
       ]
