@@ -111,13 +111,11 @@ public class ReverseKinematics {
                                 - normalizedAngleDiff;
         }
 
-        // Not sure why this is here but I'll leave it just in case
         public static void configHeightDif(double targetHeightDiff) {
                 constTargetHeightDiff = targetHeightDiff;
                 SmartDashboard.putNumber("targetHeightDiff", constTargetHeightDiff);
         }
 
-        // Not sure why this is here but I'll leave it just in case
         public static double getHeightDif() {
                 return constTargetHeightDiff;
         }
