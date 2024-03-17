@@ -33,7 +33,7 @@ public class DrivebyAuto extends Command {
     Rotation2d targetTurn;
     boolean first;
 
-    publicDrivebyAuto(boolean first) {
+    public DrivebyAuto(boolean first) {
         pivot = ShooterPivot.getInstance();
         flywheel = ShooterFlywheel.getInstance();
         swerveSubsystem = SwerveSubsystem.getInstance();
