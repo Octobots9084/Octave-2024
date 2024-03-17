@@ -46,6 +46,19 @@
           "data": {
             "commands": [
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
                 "type": "path",
                 "data": {
                   "pathName": "3 Piece Amp Edge - 1"
@@ -65,6 +78,19 @@
           "data": {
             "commands": [
               {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
                 "type": "path",
                 "data": {
                   "pathName": "3 Piece Amp Edge - 2"
@@ -74,6 +100,19 @@
                 "type": "named",
                 "data": {
                   "name": "CollectDrivebyMF"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.1
                 }
               }
             ]
