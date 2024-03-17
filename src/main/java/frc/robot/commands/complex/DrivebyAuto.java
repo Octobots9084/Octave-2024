@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants;
@@ -30,11 +31,13 @@ public class DrivebyAuto extends Command {
     double realFlywheel;
     double targetFlywheel;
     Rotation2d targetTurn;
+    boolean first;
 
-    public DrivebyAuto() {
+    public DrivebyAuto(boolean first) {
         pivot = ShooterPivot.getInstance();
         flywheel = ShooterFlywheel.getInstance();
         swerveSubsystem = SwerveSubsystem.getInstance();
+        this.first = first;
     }
 
     @Override
@@ -47,15 +50,24 @@ public class DrivebyAuto extends Command {
     public void updateTargets() {
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
+        if(first) {
+        targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
+                ShooterSpeeds.DRIVE_BY.flywheels - 20);
+        targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels - 20;
+
+        }
+        else{
         targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
                 ShooterSpeeds.DRIVE_BY.flywheels);
         targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels;
+
+        }
         targetTurn = new Rotation2d(
                 ReverseKinematics.calcRobotAngle(
                         ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
                         ReverseKinematics.convertSpeed(ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
                                 swerveSubsystem.getRobotVelocity()),
-                        ShooterSpeeds.DRIVE_BY.flywheels));
+                        targetFlywheel));
         // SmartDashboard.putString("realPose2dAhh", realPose2d.toString());
     }
 
@@ -81,17 +93,19 @@ public class DrivebyAuto extends Command {
         double realRotation = swerveSubsystem.getHeading().getRadians();
         // SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
 
-        // SmartDashboard.putNumber("targetPivot", targetPivot);
-        // SmartDashboard.putNumber("realPivot", realPivot);
-        // SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
-        // SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
+        SmartDashboard.putNumber("targetPivot", targetPivot);
+        SmartDashboard.putNumber("realPivot", realPivot);
+        SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
+        SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
+        SmartDashboard.putNumber("realFlywheel", realFlywheel);
+        SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
+
+        SmartDashboard.putBoolean("flywheelTolerance", MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2));
+        SmartDashboard.putBoolean("pivotTolerance", MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005));
+        SmartDashboard.putBoolean("rotationTolerance", isInTolerance(realRotation));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.05)
-                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005)
-
-                && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05)) {
+        if (isInTolerance(realRotation)) {
             Light.getInstance().setAnimation(Animations.SHOT_READY);
             return true;
         } else {
@@ -99,11 +113,22 @@ public class DrivebyAuto extends Command {
         }
     }
 
+    private boolean isInTolerance(double realRotation) {
+        if (first) {
+            
+        return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005));
+        }
+        return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005)
+
+                && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05));
+    }
+
     @Override
     public void end(boolean inturupted) {
-        if (!inturupted) {
-            CommandScheduler.getInstance().schedule(new TheBigYeet());
-        }
+        CommandScheduler.getInstance().schedule(new TheBigYeet());
         swerveSubsystem.setShootingRequestActive(false);
         swerveSubsystem.targetAngleEnabled = false;
     }
