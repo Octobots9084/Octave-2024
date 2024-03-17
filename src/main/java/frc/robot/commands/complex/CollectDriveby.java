@@ -10,7 +10,7 @@ public class CollectDriveby extends SequentialCommandGroup{
     public CollectDriveby() {
         addCommands(
             new CollectAuto(),
-            new DrivebyAuto(false)
+            new DrivebyAuto(false).withTimeout(1)
         );
     }
 }
