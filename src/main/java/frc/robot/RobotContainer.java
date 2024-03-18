@@ -82,10 +82,10 @@ public class RobotContainer {
 
                         NamedCommands.registerCommand("CollectDrivebyMF", new CollectDriveby());
 
-                        NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(3));
+                        NamedCommands.registerCommand("Collect", new CollectAuto());
 
                         NamedCommands.registerCommand("QuickDraw",
-                                        new DrivebyAuto(true).withTimeout(1).andThen(new TheBigYeet()));
+                                        new DrivebyAuto(true).withTimeout(1));
 
                         NamedCommands.registerCommand("Shoot",
                                         new DrivebyAuto(false).withTimeout(2).andThen(new TheBigYeet()));
