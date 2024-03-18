@@ -21,6 +21,10 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.MathUtil;
 
 public class DrivebyAuto extends Command {
+private int count = 0;
+private static int count2 = 0;
+
+
     ShooterPivot pivot;
     ShooterFlywheel flywheel;
     SwerveSubsystem swerveSubsystem;
@@ -38,6 +42,10 @@ public class DrivebyAuto extends Command {
         flywheel = ShooterFlywheel.getInstance();
         swerveSubsystem = SwerveSubsystem.getInstance();
         this.first = first;
+        count++;
+        SmartDashboard.putNumber("Driveby", SmartDashboard.getNumber("Driveby", 0) + 1);
+        System.out.println("drivebyconst");
+        System.out.println("driveinit " + count + " " + count2);
     }
 
     @Override
@@ -45,6 +53,10 @@ public class DrivebyAuto extends Command {
         CommandScheduler.getInstance().schedule(new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT));
         // SmartDashboard.putNumber("targetPoseX", 3.0);
         Light.getInstance().setAnimation(Animations.AIMING);
+        count2++;
+                System.out.println("driveinit " + count + " " + count2);
+
+
     }
 
     public void updateTargets() {
@@ -86,6 +98,7 @@ public class DrivebyAuto extends Command {
         pivot.setPosition(targetPivot);
         swerveSubsystem.drive(new Translation2d(), swerveSubsystem.targetAngleController
                 .calculate(swerveSubsystem.getHeading().getRadians(), targetTurn.getRadians()), true);
+                System.out.println("driveexe " + count + " " + count2);
     }
 
     @Override
@@ -114,6 +127,8 @@ public class DrivebyAuto extends Command {
     }
 
     private boolean isInTolerance(double realRotation) {
+                
+
         if (first) {
             
         return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2)
@@ -131,5 +146,6 @@ public class DrivebyAuto extends Command {
         CommandScheduler.getInstance().schedule(new TheBigYeet());
         swerveSubsystem.setShootingRequestActive(false);
         swerveSubsystem.targetAngleEnabled = false;
+        System.out.println("drivebyend "+inturupted + count + " " + count2);
     }
 }

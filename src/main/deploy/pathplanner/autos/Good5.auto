@@ -62,18 +62,6 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "SpinUpFlywheels"
-                            }
-                          },
-                          {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 0.21
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
                               "name": "CollectDrivebyMF"
                             }
                           }
@@ -81,19 +69,6 @@
                       }
                     }
                   ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.1
                 }
               }
             ]
@@ -130,19 +105,6 @@
           "data": {
             "commands": [
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.1
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
                 "type": "path",
                 "data": {
                   "pathName": "5 Piece - 3"
@@ -153,31 +115,12 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.01
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "CollectDrivebyMF"
                       }
                     }
                   ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.1
                 }
               }
             ]
