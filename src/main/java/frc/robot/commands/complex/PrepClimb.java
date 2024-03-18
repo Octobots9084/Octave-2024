@@ -14,6 +14,9 @@ import frc.robot.subsystems.lights.Light;
 public class PrepClimb extends SequentialCommandGroup {
     public PrepClimb() {
         addCommands(
+            new InstantCommand(() -> {
+                System.out.println("Climb prep requested");
+            }),
             new InstantCommand(()->{
                 ShooterElevator.getInstance().setPosition(ArmPositions.PREP_TRAP);
             }),
@@ -26,6 +29,9 @@ public class PrepClimb extends SequentialCommandGroup {
             }),
             new InstantCommand(()->{
                 ShooterFlywheel.getInstance().setFlywheelSpeed(0);
-            })));
+            })),
+            new InstantCommand(() -> {
+                System.out.println("Climb prepped");
+            }));
     }
 }
