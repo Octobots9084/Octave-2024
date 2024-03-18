@@ -84,7 +84,7 @@ public class Collect extends SequentialCommandGroup {
                                     System.out.println("Collect Complete");
                                 })),
                                 new WaitCommand(0.2).andThen(new IntakeRollerSpeedInstant(IntakeSpeeds.STOP)))),
-                        new InstantCommand(), shooterSensorNotTrue),
+                        new InstantCommand(() -> {Light.getInstance().setAnimation(Animations.SHOT_READY);}), shooterSensorNotTrue),
                         new WaitUntilCommand(rollerSensor).andThen(new InstantCommand(() -> {
                             Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);
                         })).andThen(new InstantCommand(() -> {

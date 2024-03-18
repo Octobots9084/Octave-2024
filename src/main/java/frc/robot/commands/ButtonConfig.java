@@ -68,6 +68,8 @@ public class ButtonConfig {
         driverButtons.button(8).onTrue(new InstantCommand(() -> {
             IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
             IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
+            System.out.println("Intake reverse needed, code is sad now.");
+
         }));
         driverButtons.button(12).onTrue(new ShooterFlywheelSpeedInstantMeters(ShooterSpeeds.DRIVE_BY));
 
