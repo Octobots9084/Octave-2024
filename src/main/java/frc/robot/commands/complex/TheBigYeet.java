@@ -10,6 +10,8 @@ import frc.robot.commands.intake.IntakeTrackSpeedInstant;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.ShooterFlywheel;
+import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
@@ -22,6 +24,9 @@ public class TheBigYeet extends SequentialCommandGroup {
                 }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.AMP),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
+                new InstantCommand(() -> {
+                    System.out.println("Firing command run with pivot at " + ShooterPivot.getInstance().getPosition() + " of " + ShooterPivot.getInstance().getDesiredPosition() + " and flywheels at " + ShooterFlywheel.getInstance().getFlywheelSpeedMeters()+ " and " + ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
+                }),
                 new WaitCommand(0.2),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
