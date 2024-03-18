@@ -71,7 +71,6 @@ public class ButtonConfig {
             System.out.println("Intake reverse needed, code is sad now.");
 
         }));
-        driverButtons.button(12).onTrue(new ShooterFlywheelSpeedInstantMeters(ShooterSpeeds.DRIVE_BY));
 
         coDriverButtons.button(1).whileTrue(new ParallelCommandGroup(new PrepClimb(), new ClimbAlign()));
         coDriverButtons.button(2).onTrue(new HalfClimb());
