@@ -41,6 +41,9 @@ public class Collect extends SequentialCommandGroup {
                     ShooterPivot.getInstance().notSoFastEggman = true;
                 }),
                         new InstantCommand(() -> {
+                            System.out.println("Collect requested");
+                        }),
+                        new InstantCommand(() -> {
                             Light.getInstance().setAnimation(Animations.COLLECTING);
                         }),
 
@@ -50,15 +53,21 @@ public class Collect extends SequentialCommandGroup {
                         new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                         new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
                         new WaitUntilCommand(intakeSensorTrue),
+                        new InstantCommand(() -> {
+                            System.out.println("Intake track sensor tripped");
+                        }),
                         new IntakeRollerSpeedInstant(IntakeSpeeds.STOP),
                         new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
                         new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT).withTimeout(2.5),
-                        new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT).withTimeout(0),
-
+                        new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT).withTimeout(0.1),
                         new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                         new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
                         new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
-                        new ParallelCommandGroup(new SequentialCommandGroup(new WaitUntilCommand(shooterSensorTrue),
+                        new ParallelCommandGroup(new SequentialCommandGroup(
+                                new WaitUntilCommand(shooterSensorTrue),
+                                new InstantCommand(() -> {
+                                    System.out.println("Shooter sensor tripped");
+                                }),
                                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
                                 new InstantCommand(() -> {
@@ -70,11 +79,16 @@ public class Collect extends SequentialCommandGroup {
                                 }),
                                 new JiggleNote(.5), new InstantCommand(() -> {
                                     Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
+                                }),
+                                new InstantCommand(() -> {
+                                    System.out.println("Collect Complete");
                                 })),
                                 new WaitCommand(0.2).andThen(new IntakeRollerSpeedInstant(IntakeSpeeds.STOP)))),
                         new InstantCommand(), shooterSensorNotTrue),
                         new WaitUntilCommand(rollerSensor).andThen(new InstantCommand(() -> {
                             Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);
+                        })).andThen(new InstantCommand(() -> {
+                            System.out.println("Roller sensors tripped");
                         })))
 
         );

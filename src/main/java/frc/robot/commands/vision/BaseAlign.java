@@ -14,6 +14,11 @@ public abstract class BaseAlign extends Command {
         swerveSubsystem = SwerveSubsystem.getInstance();
     }
 
+    @Override
+    public void initialize() {
+        System.out.println("Running align command: " + this.getName());
+    }
+
     protected boolean isWithinHotSpotArea(AlignHotSpots hotSpots, Pose2d realPose2d) {
         final Point realPose2dAsPoint = new Point(realPose2d.getX(),
                 realPose2d.getY());

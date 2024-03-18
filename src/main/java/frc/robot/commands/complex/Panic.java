@@ -20,6 +20,9 @@ public class Panic extends ParallelCommandGroup {
                 new ShooterFlywheelSpeedInstantForce(ShooterSpeeds.PANIC),
                 new IntakeRollerSpeedInstant(IntakeSpeeds.PANIC),
                 new IntakeTrackSpeedInstant(IntakeSpeeds.PANIC),
-                new ShooterTrackSpeedInstantForce(ShooterSpeeds.PANIC));
+                new ShooterTrackSpeedInstantForce(ShooterSpeeds.PANIC),
+                new InstantCommand(() -> {
+                    System.out.println("Panic has been pressed :(");
+                }));
     }
 }
