@@ -18,7 +18,7 @@ public class Undunk extends SequentialCommandGroup{
                     Light.getInstance().setAnimation(Animations.CLIMB);
                 }),
                 new InstantCommand(() -> {
-                    System.out.println("Undunck requested");
+                    System.out.println("Undunk requested");
                 }),
             new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY).withTimeout(3),
             new ParallelCommandGroup(
