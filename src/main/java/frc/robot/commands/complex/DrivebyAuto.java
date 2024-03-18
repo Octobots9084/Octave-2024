@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -21,6 +22,10 @@ import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.MathUtil;
 
 public class DrivebyAuto extends Command {
+private int count = 0;
+private static int count2 = 0;
+private static final double maintainToleranceTime = 0.1;
+
     ShooterPivot pivot;
     ShooterFlywheel flywheel;
     SwerveSubsystem swerveSubsystem;
@@ -32,12 +37,18 @@ public class DrivebyAuto extends Command {
     double targetFlywheel;
     Rotation2d targetTurn;
     boolean first;
+    private double initialToleranceTime = 0;
+
 
     public DrivebyAuto(boolean first) {
         pivot = ShooterPivot.getInstance();
         flywheel = ShooterFlywheel.getInstance();
         swerveSubsystem = SwerveSubsystem.getInstance();
         this.first = first;
+        count++;
+        SmartDashboard.putNumber("Driveby", SmartDashboard.getNumber("Driveby", 0) + 1);
+        System.out.println("drivebyconst");
+        System.out.println("driveinit " + count + " " + count2);
     }
 
     @Override
@@ -45,6 +56,10 @@ public class DrivebyAuto extends Command {
         CommandScheduler.getInstance().schedule(new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT));
         // SmartDashboard.putNumber("targetPoseX", 3.0);
         Light.getInstance().setAnimation(Animations.AIMING);
+        count2++;
+                System.out.println("driveinit " + count + " " + count2);
+
+
     }
 
     public void updateTargets() {
@@ -86,6 +101,7 @@ public class DrivebyAuto extends Command {
         pivot.setPosition(targetPivot);
         swerveSubsystem.drive(new Translation2d(), swerveSubsystem.targetAngleController
                 .calculate(swerveSubsystem.getHeading().getRadians(), targetTurn.getRadians()), true);
+                System.out.println("driveexe " + count + " " + count2);
     }
 
     @Override
@@ -105,7 +121,7 @@ public class DrivebyAuto extends Command {
         SmartDashboard.putBoolean("rotationTolerance", isInTolerance(realRotation));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (isInTolerance(realRotation)) {
+        if (longTolerance(realRotation)) {
             Light.getInstance().setAnimation(Animations.SHOT_READY);
             return true;
         } else {
@@ -114,6 +130,8 @@ public class DrivebyAuto extends Command {
     }
 
     private boolean isInTolerance(double realRotation) {
+                
+
         if (first) {
             
         return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2)
@@ -126,10 +144,25 @@ public class DrivebyAuto extends Command {
                         MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05));
     }
 
+    private boolean longTolerance(double realFlywheel) {
+        if (isInTolerance(realFlywheel)) {
+            if (initialToleranceTime == 0) {
+                initialToleranceTime = Timer.getFPGATimestamp();
+            } else if (Timer.getFPGATimestamp() - initialToleranceTime > maintainToleranceTime) {
+                return true;
+            }
+        } else {
+            initialToleranceTime = 0;
+        }
+
+        return false;
+    }
+
     @Override
     public void end(boolean inturupted) {
         CommandScheduler.getInstance().schedule(new TheBigYeet());
         swerveSubsystem.setShootingRequestActive(false);
         swerveSubsystem.targetAngleEnabled = false;
+        System.out.println("drivebyend "+inturupted + count + " " + count2);
     }
 }
