@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -23,7 +24,7 @@ import frc.robot.util.MathUtil;
 public class DrivebyAuto extends Command {
 private int count = 0;
 private static int count2 = 0;
-
+private static final double maintainToleranceTime = 0.1;
 
     ShooterPivot pivot;
     ShooterFlywheel flywheel;
@@ -36,6 +37,8 @@ private static int count2 = 0;
     double targetFlywheel;
     Rotation2d targetTurn;
     boolean first;
+    private double initialToleranceTime = 0;
+
 
     public DrivebyAuto(boolean first) {
         pivot = ShooterPivot.getInstance();
@@ -118,7 +121,7 @@ private static int count2 = 0;
         SmartDashboard.putBoolean("rotationTolerance", isInTolerance(realRotation));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (isInTolerance(realRotation)) {
+        if (longTolerance(realRotation)) {
             Light.getInstance().setAnimation(Animations.SHOT_READY);
             return true;
         } else {
@@ -139,6 +142,20 @@ private static int count2 = 0;
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
                         MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05));
+    }
+
+    private boolean longTolerance(double realFlywheel) {
+        if (isInTolerance(realFlywheel)) {
+            if (initialToleranceTime == 0) {
+                initialToleranceTime = Timer.getFPGATimestamp();
+            } else if (Timer.getFPGATimestamp() - initialToleranceTime > maintainToleranceTime) {
+                return true;
+            }
+        } else {
+            initialToleranceTime = 0;
+        }
+
+        return false;
     }
 
     @Override
