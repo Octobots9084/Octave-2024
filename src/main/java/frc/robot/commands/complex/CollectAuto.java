@@ -78,8 +78,7 @@ public class CollectAuto extends SequentialCommandGroup {
                                 }),
                                 new InstantCommand(() -> {
                                     System.out.println("collect stage 2.1");
-                                }),
-                                new JiggleNote(.5)),
+                                })),
                                 new InstantCommand(() -> {
                                     System.out.println("collect stage 2.2");
                                 }),
