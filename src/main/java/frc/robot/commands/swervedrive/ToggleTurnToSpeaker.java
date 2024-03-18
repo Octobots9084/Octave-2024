@@ -23,6 +23,8 @@ public class ToggleTurnToSpeaker extends Command {
         }
 
         SwerveSubsystem.getInstance().targetAngleEnabled = !SwerveSubsystem.getInstance().targetAngleEnabled;
+        System.out.println("Rotation command started: " + this.getName());
+
 
     }
 
