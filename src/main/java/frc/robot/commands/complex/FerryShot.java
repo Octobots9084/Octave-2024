@@ -30,7 +30,7 @@ public class FerryShot extends Command {
     double realPivot;
     double targetPivot;
     double realFlywheel;
-    Pose2d targetLanding = new Pose2d(Constants.isBlueAlliance ? 1.86 : 16.548 - 1.86 , 6.28, new Rotation2d());
+    Pose2d targetLanding;
     double targetFlywheel;
     Rotation2d targetTurn;
     private double initialToleranceTime = 0;
@@ -58,6 +58,11 @@ public class FerryShot extends Command {
         targetTurn = new Rotation2d(
                 ReverseKinematics.calcFerryRotation(realPose2d, targetLanding)
         );
+        if (Constants.isBlueAlliance) {
+            targetLanding = new Pose2d(realPose2d.getX() >= 10.65 ? 8.2 : 1.86, realPose2d.getX() >= 10.65 ? 5.7 : 6.28, new Rotation2d());
+        } else {
+            targetLanding = new Pose2d(realPose2d.getX() <= 5.85 ? 8.2 : 14.6, realPose2d.getX() <= 5.85 ? 5.7 : 6.28, new Rotation2d());
+        }
     }
 
     @Override

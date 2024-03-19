@@ -141,8 +141,8 @@ public class ReverseKinematics {
                 v = v*flywheelSpeedMultiplier;
                 // distance from the robot to the target position
                 double d = Math.sqrt(Math.pow(target.getX() - pos.getX(), 2) + Math.pow(target.getY() - pos.getY(), 2));
-
-                return encoderOffset - (Math.PI/2.0 + 2.0*Math.atan(
+                // launch angle
+                double angle = encoderOffset - (Math.PI/2.0 + 2.0*Math.atan(
                         (5.0*v*v/(49.0*d)) - 
                         Math.sqrt(5.0)*Math.sqrt((5.0*v*v*v*v) + 
                         (49*v*v*d))/(49.0*d) + 
@@ -152,7 +152,9 @@ public class ReverseKinematics {
                                 (4802.0*Math.sqrt(5)*v*v)/Math.sqrt((5.0*v*v*v*v) + (49.0*v*v*d)) - 
                                 (50.0*Math.sqrt(5.0)*v*v*v*v*v*v)/(d*d*Math.sqrt((5.0*v*v*v*v) + (49.0*v*v*d))) - 
                                 2401.0
-                        )) / (2 * Math.PI) // this last division is to normalize the angle difference
+                        )) / (2 * Math.PI) // this last division is to normalize the angle difference 
                 );
+                
+                return !Double.isNaN(angle) ? angle : encoderOffset - 0.25;
         }
 }
