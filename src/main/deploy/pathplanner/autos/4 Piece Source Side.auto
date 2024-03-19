@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.3180507946482447,
-      "y": 2.8139145295631622
+      "x": 0.7785377750772017,
+      "y": 4.405136473361304
     },
-    "rotation": 0.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -20,19 +20,25 @@
         {
           "type": "named",
           "data": {
-            "name": "QuickDraw"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FlywheelsCurrentNormal"
+            "name": "SpinUpFlywheels"
           }
         },
         {
           "type": "wait",
           "data": {
             "waitTime": 0.5
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SpeakerAutoInital"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FlywheelsCurrentNormal"
           }
         },
         {
