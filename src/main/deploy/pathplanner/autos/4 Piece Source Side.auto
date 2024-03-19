@@ -102,12 +102,31 @@
                 }
               },
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "CollectDrivebyMF"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Collect"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    }
+                  ]
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
           }
         },
         {
