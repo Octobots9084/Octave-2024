@@ -30,7 +30,7 @@ public class FerryShot extends Command {
     double realPivot;
     double targetPivot;
     double realFlywheel;
-    Pose2d targetLanding;
+    Pose2d targetLanding = new Pose2d(Constants.isBlueAlliance ? 1.86 : 16.548 - 1.86 , 6.28, new Rotation2d());
     double targetFlywheel;
     Rotation2d targetTurn;
     private double initialToleranceTime = 0;
