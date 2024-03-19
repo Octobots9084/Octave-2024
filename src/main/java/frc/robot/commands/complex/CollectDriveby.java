@@ -4,10 +4,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.constants.ShooterSpeeds;
-import frc.robot.subsystems.ShooterTrack;
-import frc.robot.subsystems.lights.Animations;
-import frc.robot.subsystems.lights.Light;
 
 public class CollectDriveby extends SequentialCommandGroup{
     public CollectDriveby() {
