@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.2429287286320239,
-      "y": 2.9846464977818483
+      "x": 1.3180507946482447,
+      "y": 2.8139145295631622
     },
-    "rotation": 0.9240453527727076
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,19 @@
         {
           "type": "named",
           "data": {
+            "name": "FlywheelsCurrentFast"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "QuickDraw"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "FlywheelsCurrentNormal"
           }
         },
         {
