@@ -290,9 +290,13 @@ public class SwerveSubsystem extends SubsystemBase {
   public void zeroGyro() {
     if (Constants.isBlueAlliance) {
       swerveDrive.zeroGyro();
+      System.out.println("Gyro zeroed on Blue side.");
+
     } else {
       swerveDrive.zeroGyro();
       swerveDrive.setGyro(new Rotation3d(0, 0, Math.PI));
+      System.out.println("Gyro zeroed on Red side.");
+
     }
 
   }

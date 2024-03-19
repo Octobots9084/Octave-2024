@@ -16,6 +16,9 @@ public class HalfClimb extends SequentialCommandGroup{
             new ClimbPosTolerance(ClimbPositions.MID),
             new InstantCommand(() -> {
                 Light.getInstance().setAnimation(Animations.CLIMB);
+            }),
+            new InstantCommand(() -> {
+                System.out.println("Climb set to half.");
             }));
     }
 }

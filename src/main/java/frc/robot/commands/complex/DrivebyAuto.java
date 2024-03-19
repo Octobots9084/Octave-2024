@@ -101,7 +101,7 @@ private static final double maintainToleranceTime = 0.1;
         pivot.setPosition(targetPivot);
         swerveSubsystem.drive(new Translation2d(), swerveSubsystem.targetAngleController
                 .calculate(swerveSubsystem.getHeading().getRadians(), targetTurn.getRadians()), true);
-                System.out.println("driveexe " + count + " " + count2);
+                // System.out.println("driveexe " + count + " " + count2);
     }
 
     @Override
@@ -123,6 +123,8 @@ private static final double maintainToleranceTime = 0.1;
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
         if (longTolerance(realRotation)) {
             Light.getInstance().setAnimation(Animations.SHOT_READY);
+            System.out.println("Teleop shot authorized. Flywheels at " + targetFlywheel + " of " + realFlywheel + " with a tolerance of " + flywheelTolerance + " and error of " + (targetFlywheel-realFlywheel) + " Pivot at " + realPivot + " of " + targetPivot + " with a tolerance of " + pivotTolerance + " and an error of " + (targetPivot - realPivot) + " Bot rotation at " + realPose2d.getRotation().getRadians() + " of " + targetTurn.getRadians() + " with a tolerance of " + rotationTolerance +  " and an error of " + (realPose2d.getRotation().getRadians() - targetTurn.getRadians()) + ". Good luck!");
+
             return true;
         } else {
             return false;
@@ -144,11 +146,15 @@ private static final double maintainToleranceTime = 0.1;
                         MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05));
     }
 
+    private double flywheelTolerance = 2;
+    private double pivotTolerance = 0.005;
+    private double rotationTolerance = 0.03;
     private boolean longTolerance(double realFlywheel) {
         if (isInTolerance(realFlywheel)) {
             if (initialToleranceTime == 0) {
                 initialToleranceTime = Timer.getFPGATimestamp();
             } else if (Timer.getFPGATimestamp() - initialToleranceTime > maintainToleranceTime) {
+                System.out.println("Autonomous shot authorized. Flywheels at " + targetFlywheel + " of " + realFlywheel + " with a tolerance of " + flywheelTolerance + " Pivot at " + realPivot + " of " + targetPivot + " with a tolerance of " + pivotTolerance + " Bot rotation at " + realPose2d.getRotation().getRadians() + " of " + targetTurn.getRadians() + " with a tolerance of " + rotationTolerance + ". Good luck!");
                 return true;
             }
         } else {
@@ -163,6 +169,8 @@ private static final double maintainToleranceTime = 0.1;
         CommandScheduler.getInstance().schedule(new TheBigYeet());
         swerveSubsystem.setShootingRequestActive(false);
         swerveSubsystem.targetAngleEnabled = false;
+        System.out.println("Teleop shot canceled. Flywheels at " + targetFlywheel + " of " + realFlywheel + " with a tolerance of " + flywheelTolerance + " and error of " + (targetFlywheel-realFlywheel) + " Pivot at " + realPivot + " of " + targetPivot + " with a tolerance of " + pivotTolerance + " and an error of " + (targetPivot - realPivot) + " Bot rotation at " + realPose2d.getRotation().getRadians() + " of " + targetTurn.getRadians() + " with a tolerance of " + rotationTolerance +  " and an error of " + (realPose2d.getRotation().getRadians() - targetTurn.getRadians()) + ". RIP");
+
         System.out.println("drivebyend "+inturupted + count + " " + count2);
     }
 }

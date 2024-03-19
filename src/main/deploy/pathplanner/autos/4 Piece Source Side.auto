@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.495612041595677,
-      "y": 2.597016758014558
+      "x": 0.7785377750772017,
+      "y": 4.405136473361304
     },
     "rotation": -60.0
   },
@@ -20,13 +20,13 @@
         {
           "type": "named",
           "data": {
-            "name": "SpinUpFlywheelsFast"
+            "name": "SpinUpFlywheels"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.7
           }
         },
         {
@@ -48,7 +48,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3 Piece Source  - 1"
+                  "pathName": "4 Piece Source  - 1"
                 }
               },
               {
@@ -62,21 +62,15 @@
                       }
                     },
                     {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.3
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "Collect"
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "StopShooterTrack"
+                        "waitTime": 0.1
                       }
                     }
                   ]
@@ -98,7 +92,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3 Piece Source - 2"
+                  "pathName": "4 Piece Source - 2"
                 }
               },
               {
@@ -106,21 +100,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.3
-                      }
-                    },
-                    {
                       "type": "named",
                       "data": {
                         "name": "Collect"
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "StopShooterTrack"
+                        "waitTime": 0.1
                       }
                     }
                   ]
@@ -133,6 +121,25 @@
           "type": "named",
           "data": {
             "name": "Shoot"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "4 Piece Source 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Collect"
+                }
+              }
+            ]
           }
         }
       ]

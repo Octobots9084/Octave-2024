@@ -27,6 +27,11 @@ public class PrepAmp extends InstantCommand {
             shooterFlywheel.setFlyWheelSpeedMeters(ShooterSpeeds.AMP.flywheels);
             shooterElevator.setPosition(ArmPositions.AMP);
             Light.getInstance().setAnimation(Animations.SHOT_SPECIAL);
+            System.out.println("PrepAmp active.");
+
+        }
+        else {
+            System.out.println("PrepAmp blocked due to pivot lock, try again.");
         }
         
     }

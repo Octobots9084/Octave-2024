@@ -12,10 +12,14 @@ import frc.robot.subsystems.lights.Light;
 public class SimpleClimb extends SequentialCommandGroup{
     public SimpleClimb() {
         addCommands(
+            new InstantCommand(() -> {
+                    System.out.println("SimpleClimb requested");
+                }),
             new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY).withTimeout(1),
             new ClimbPosTolerance(ClimbPositions.DOWN),
             new InstantCommand(() -> {
                     Light.getInstance().setAnimation(Animations.DEFAULT);
+                    System.out.println("SimpleClimb Complete");
                 }));
     }
 }
