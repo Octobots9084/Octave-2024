@@ -131,16 +131,23 @@ public class ReverseKinematics {
         
 
 
+        private static double calcFerryDistance(Pose2d pos, Pose2d target) {
+                return Math.sqrt(Math.pow(target.getX() - pos.getX(), 2) + Math.pow(target.getY() - pos.getY(), 2));
+        }
 
         public static double calcFerryRotation(Pose2d pos, Pose2d target) {
                 return Math.atan2(target.getY() - pos.getY(), target.getX() - pos.getX());
         }
 
-        public static double calcFerryLaunchAngle(Pose2d pos, Pose2d target, double v) {
+        public static double calcFerryVelocity(Pose2d pos, Pose2d target) {
+                return((calcFerryDistance(pos, target)/2) + 5)*flywheelSpeedMultiplier;
+        }
+
+        public static double calcFerryLaunchAngle(Pose2d pos, Pose2d target) {
                 // assumed transferred flywheel speed
-                v = v*flywheelSpeedMultiplier;
+                double v = calcFerryVelocity(pos, target);
                 // distance from the robot to the target position
-                double d = Math.sqrt(Math.pow(target.getX() - pos.getX(), 2) + Math.pow(target.getY() - pos.getY(), 2));
+                double d = calcFerryDistance(pos, target);
                 // launch angle
                 double angle = encoderOffset - (Math.PI/2.0 + 2.0*Math.atan(
                         (5.0*v*v/(49.0*d)) - 
