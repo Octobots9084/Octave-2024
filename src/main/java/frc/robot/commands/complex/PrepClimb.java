@@ -20,18 +20,12 @@ public class PrepClimb extends SequentialCommandGroup {
             new InstantCommand(()->{
                 ShooterElevator.getInstance().setPosition(ArmPositions.PREP_TRAP);
             }),
-                new ClimbPosTolerance(ClimbPositions.UP).withTimeout(10),
+                new ClimbPosTolerance(ClimbPositions.UP).withTimeout(4),
                 new InstantCommand(() -> {
                     Light.getInstance().setAnimation(Animations.CLIMB);
-                }),new SequentialCommandGroup(
-            new InstantCommand(()->{
-                ShooterPivot.getInstance().setPosition(ArmPositions.PREP_TRAP);
-            }),
-            new InstantCommand(()->{
-                ShooterFlywheel.getInstance().setFlywheelSpeed(0);
-            })),
-            new InstantCommand(() -> {
-                System.out.println("Climb prepped");
-            }));
+                    ShooterPivot.getInstance().setPosition(ArmPositions.PREP_TRAP);
+                    ShooterFlywheel.getInstance().setFlywheelSpeed(0);
+                    System.out.println("Climb prepped");
+                }));
     }
 }
