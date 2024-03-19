@@ -98,6 +98,10 @@ public class FerryShot extends Command {
         SmartDashboard.putNumber("pivotTolerance", MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005) ? 1 : 0);
         SmartDashboard.putNumber("rotationTolerance", isInTolerance(realRotation) ? 1 : 0);
 
+        // same side ferrying protection
+        if ((Constants.isBlueAlliance && realPose2d.getX() <= 5.85) || (!Constants.isBlueAlliance && realPose2d.getX() >= 10.65)) {
+            return false;
+        }
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
         if (longTolerance(realRotation)) {
             Light.getInstance().setAnimation(Animations.SHOT_READY);
