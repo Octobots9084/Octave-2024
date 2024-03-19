@@ -8,24 +8,40 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.859521149265254,
-        "y": 1.1270826835625603
+        "x": 5.675130623589075,
+        "y": 1.1680583559350453
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.06537817865066,
-        "y": 2.137815935417171
+        "x": 7.198059780099741,
+        "y": 1.4480587838136871
       },
       "prevControl": {
-        "x": 7.894646210431974,
-        "y": 1.891961901182265
+        "x": 6.83181095871533,
+        "y": 1.1496338182412038
       },
       "nextControl": {
-        "x": 8.175625341656211,
-        "y": 2.2965718501451637
+        "x": 7.382450305775921,
+        "y": 1.5983029158461306
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.03806106373567,
+        "y": 2.2607429525346245
+      },
+      "prevControl": {
+        "x": 7.901475489160722,
+        "y": 2.124157377959675
+      },
+      "nextControl": {
+        "x": 8.17473197763452,
+        "y": 2.397413866433476
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +52,8 @@
         "y": 2.62
       },
       "prevControl": {
-        "x": 6.078058068585172,
-        "y": 0.9085457642426432
+        "x": 5.634154951216591,
+        "y": 0.9631799940726231
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,13 +62,13 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 2.0,
       "rotationDegrees": 46.668337448293414,
       "rotateFast": false
     },
     {
-      "waypointRelativePos": 0.3,
-      "rotationDegrees": 0,
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 40.100907546212284,
       "rotateFast": false
     }
   ],
@@ -60,7 +76,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 5.0,
-    "maxAcceleration": 4.0,
+    "maxAcceleration": 3.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
