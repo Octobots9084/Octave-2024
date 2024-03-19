@@ -70,13 +70,25 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "CollectDrivebyMF"
+                        "name": "Collect"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
                       }
                     }
                   ]
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
           }
         },
         {
