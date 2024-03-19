@@ -148,7 +148,7 @@ private static final double maintainToleranceTime = 0.1;
 
     private double flywheelTolerance = 2;
     private double pivotTolerance = 0.005;
-    private double rotationTolerance = 0.05;
+    private double rotationTolerance = 0.03;
     private boolean longTolerance(double realFlywheel) {
         if (isInTolerance(realFlywheel)) {
             if (initialToleranceTime == 0) {
