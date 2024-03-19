@@ -14,12 +14,6 @@
         {
           "type": "named",
           "data": {
-            "name": "FlywheelsCurrentFast"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "SpinUpFlywheelsFast"
           }
         },
@@ -30,21 +24,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "4 Piece Source - 0"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FlywheelsCurrentNormal"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "4 Piece Source - 0"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.2
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Shoot"
+                }
+              }
+            ]
           }
         },
         {
