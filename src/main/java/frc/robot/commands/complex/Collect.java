@@ -30,7 +30,7 @@ import frc.robot.subsystems.lights.Light;
 public class Collect extends SequentialCommandGroup {
     public Collect() {
 
-        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
+        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getAnalogDigital();
         BooleanSupplier rollerSensor = () -> {
             return (!IntakeRoller.getInstance().getSensor() || !IntakeTrack.getInstance().getSensor2());
         };

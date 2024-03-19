@@ -27,6 +27,8 @@ import frc.robot.commands.arm.ElevatorManual;
 import frc.robot.commands.arm.PivotManual;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.constants.IntakeSpeeds;
+import frc.robot.constants.ShooterSpeeds;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
@@ -124,7 +126,7 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("realFlywheelTop", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
     // SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
     SmartDashboard.putBoolean("Shooter track", ShooterTrack.getInstance().getSensor());
-    SmartDashboard.putBoolean("Intake track", IntakeTrack.getInstance().getSensor());
+    SmartDashboard.putBoolean("Intake track", IntakeTrack.getInstance().getAnalogDigital());
     SmartDashboard.putBoolean("Intake 1", IntakeRoller.getInstance().getSensor());
     SmartDashboard.putBoolean("Intake 2", IntakeTrack.getInstance().getSensor2());
     // SmartDashboard.putNumber("climbele",
@@ -202,17 +204,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //checkDoubleNotes();
+    checkDoubleNotes();
     // ShooterFlywheel.getInstance().increaseFlywheelSpeed(MathUtil.applyDeadband(5*ControlMap.FLYWHEEL_JOYSTICK.getY(),
     // 0.05));
   }
 
   public void checkDoubleNotes() {
-    if (!ShooterTrack.getInstance().getSensor() && (!IntakeRoller.getInstance().getSensor()||!IntakeTrack.getInstance().getSensor()||!IntakeTrack.getInstance().getSensor2())) {
-      doubleSensorTriggerLength = Timer.getFPGATimestamp();
-      
-    } else {
-      return;
+    if (!ShooterTrack.getInstance().getSensor() && !ShooterPivot.getInstance().notSoFastEggman && (!IntakeRoller.getInstance().getSensor()||!IntakeTrack.getInstance().getAnalogDigital()||!IntakeTrack.getInstance().getSensor2())) {
+      IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
+      IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
+      Light.getInstance().setAnimation(Animations.CLIMB);
     }
 
     if (Timer.getFPGATimestamp() > doubleSensorTriggerLength + Constants.DOUBLE_NOTE_LENGTH) {

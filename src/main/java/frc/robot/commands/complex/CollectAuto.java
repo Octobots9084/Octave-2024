@@ -28,7 +28,7 @@ public class CollectAuto extends SequentialCommandGroup {
     public CollectAuto() {
         SmartDashboard.putNumber("Collect", SmartDashboard.getNumber("Collect", 0) + 1);
         System.out.println("collectconst");
-        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
+        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getAnalogDigital();
         BooleanSupplier rollerSensor = () -> {
             return (!IntakeRoller.getInstance().getSensor() || !IntakeTrack.getInstance().getSensor2());
         };
