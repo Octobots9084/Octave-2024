@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "SpinUpFlywheelsFast"
+            "name": "QuickDraw"
           }
         },
         {
@@ -34,12 +34,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Shoot"
           }
         },
         {
