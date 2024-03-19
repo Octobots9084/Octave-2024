@@ -7,6 +7,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ArmPositions;
 import frc.robot.util.PIDConfig;
@@ -45,7 +46,7 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, true, false, 1, false,
-                new PIDConfig(7, 0, 0, 0.04));
+                new PIDConfig(7, 0.001, 0, 0.04));
         SparkMaxConfig left = new SparkMaxConfig(new SparkMaxStatusFrames(500,
                 20,
                 500,
@@ -54,18 +55,19 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, false, false, 1, false,
-                new PIDConfig(7, 0, 0, 0.04));
+                new PIDConfig(7, 0.001, 0, 0.04));
 
         SparkMaxSetup.setup(leftMotor, left);
         SparkMaxSetup.setup(rightMotor, right);
-        leftMotor.getPIDController().setIMaxAccum(8, 0);
-        rightMotor.getPIDController().setIMaxAccum(8, 0);
+        leftMotor.getPIDController().setIMaxAccum(10, 0);
+        rightMotor.getPIDController().setIMaxAccum(10, 0);
     }
 
     public void setPosition(double target) {
         desiredPos = target;
         target = MathUtil.clamp(target, minLimit, maxLimit);
-        // SmartDashboard.putNumber("targetPivot", target);
+        SmartDashboard.putNumber("targetPivot", target);
+        //SmartDashboard.putNumber("realPivot", );
         //up is down on the encoders. If something is going up too high, lower the number. - Xanthe
         leftMotor.getPIDController().setReference(target + .072, ControlType.kPosition);
 
