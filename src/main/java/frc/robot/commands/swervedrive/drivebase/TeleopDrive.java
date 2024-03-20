@@ -60,10 +60,10 @@ public class TeleopDrive extends Command {
     }
 
     if (swerve.targetAngleEnabled) {
-      double angleSpeed = swerve.driverTargetAngleController.calculate(swerve.getHeading().getRadians(),
+      double angleSpeed = swerve.targetAngleController.calculate(swerve.getHeading().getRadians(),
           swerve.targetAngle.getRadians());
       if (!swerve.getShootingRequestActive()) {
-        angleSpeed = swerve.driverTargetAngleController.calculate(swerve.getHeading().getRadians(),
+        angleSpeed = swerve.targetAngleController.calculate(swerve.getHeading().getRadians(),
             swerve.targetAngle.getRadians());
       }
       swerve.drive(

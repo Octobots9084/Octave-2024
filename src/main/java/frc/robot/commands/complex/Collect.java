@@ -95,7 +95,7 @@ public class Collect extends SequentialCommandGroup {
                                 }),
                                 new WaitCommand(0.5),
                                 new InstantCommand(() -> {
-                                    Light.getInstance().setAnimation(Animations.DEFAULT);
+                                    Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
                                 })), shooterSensorNotTrue),
                         new WaitUntilCommand(rollerSensor).andThen(new InstantCommand(() -> {
                             Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);
