@@ -26,7 +26,10 @@ import frc.robot.commands.ButtonConfig;
 import frc.robot.commands.arm.ElevatorManual;
 import frc.robot.commands.arm.PivotManual;
 import frc.robot.commands.climb.ClimbManual;
+import frc.robot.commands.complex.SystemsCheck;
 import frc.robot.constants.IntakeSpeeds;
+import frc.robot.constants.ShooterSpeeds;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
@@ -124,7 +127,7 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("realFlywheelTop", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
     // SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
     SmartDashboard.putBoolean("Shooter track", ShooterTrack.getInstance().getSensor());
-    SmartDashboard.putBoolean("Intake track", IntakeTrack.getInstance().getSensor());
+    SmartDashboard.putBoolean("Intake track", IntakeTrack.getInstance().getAnalogDigital());
     SmartDashboard.putBoolean("Intake 1", IntakeRoller.getInstance().getSensor());
     SmartDashboard.putBoolean("Intake 2", IntakeTrack.getInstance().getSensor2());
     // SmartDashboard.putNumber("climbele",
@@ -202,23 +205,32 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    //checkDoubleNotes();
+    checkDoubleNotes();
     // ShooterFlywheel.getInstance().increaseFlywheelSpeed(MathUtil.applyDeadband(5*ControlMap.FLYWHEEL_JOYSTICK.getY(),
     // 0.05));
   }
 
   public void checkDoubleNotes() {
-    if (!ShooterTrack.getInstance().getSensor() && (!IntakeRoller.getInstance().getSensor()||!IntakeTrack.getInstance().getSensor()||!IntakeTrack.getInstance().getSensor2())) {
-      doubleSensorTriggerLength = Timer.getFPGATimestamp();
-      
-    } else {
-      return;
+    SmartDashboard.putBoolean("dn condition 1", !ShooterTrack.getInstance().getSensor());
+    SmartDashboard.putBoolean("dn condition 2", !ShooterPivot.getInstance().notSoFastEggman);
+    SmartDashboard.putBoolean("dn condition 3", !IntakeRoller.getInstance().getSensor());
+    SmartDashboard.putBoolean("dn condition 4", !IntakeTrack.getInstance().getSensor());
+    SmartDashboard.putBoolean("dn condition 5", !ShooterPivot.getInstance().notSoFastEggman);
+    SmartDashboard.putBoolean("dn condition 6", !IntakeTrack.getInstance().getSensor2());
+
+    if (!ShooterTrack.getInstance().getSensor() && !ShooterPivot.getInstance().notSoFastEggman
+        && (!IntakeRoller.getInstance().getSensor() 
+            || !IntakeTrack.getInstance().getSensor()
+            || !IntakeTrack.getInstance().getSensor2())) {
+      IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
+      IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
+      Light.getInstance().setAnimation(Animations.CLIMB);
     }
 
-    if (Timer.getFPGATimestamp() > doubleSensorTriggerLength + Constants.DOUBLE_NOTE_LENGTH) {
-      IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
-      IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
-    }
+    // if (Timer.getFPGATimestamp() > doubleSensorTriggerLength + Constants.DOUBLE_NOTE_LENGTH) {
+    //   IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
+    //   IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
+    // }
   }
 
   @Override
@@ -229,6 +241,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().schedule(new SystemsCheck());
 
     try {
       File swerveFile = new File(Filesystem.getDeployDirectory(), "swerve");

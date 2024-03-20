@@ -3,16 +3,12 @@ package frc.robot.commands.complex;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
-import frc.robot.commands.arm.JiggleNote;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
-import frc.robot.commands.arm.ShooterElevatorPosTolerance;
 import frc.robot.commands.arm.ShooterPivotPosInstant;
 import frc.robot.commands.arm.ShooterPivotPosTolerance;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
@@ -32,7 +28,7 @@ public class CollectAuto extends SequentialCommandGroup {
     public CollectAuto() {
         SmartDashboard.putNumber("Collect", SmartDashboard.getNumber("Collect", 0) + 1);
         System.out.println("collectconst");
-        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
+        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getAnalogDigital();
         BooleanSupplier rollerSensor = () -> {
             return (!IntakeRoller.getInstance().getSensor() || !IntakeTrack.getInstance().getSensor2());
         };

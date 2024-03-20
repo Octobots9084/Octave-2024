@@ -24,7 +24,7 @@ import frc.robot.subsystems.lights.Light;
 public class CollectAuto2 extends SequentialCommandGroup {
     public CollectAuto2() {
 
-        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
+        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getAnalogDigital();
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
         BooleanSupplier shooterSensorNotTrue = () -> ShooterTrack.getInstance().getSensor();
         addCommands(

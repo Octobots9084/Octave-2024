@@ -13,6 +13,7 @@ public enum Animations {
     INTAKE_STAGE_2(new StrobeAnimation(0, 0, 255, 0, 1, Constants.NUM_LEDS), 0),
     AIMING(new StrobeAnimation(255, 0, 0, 0, 0.5, Constants.NUM_LEDS), 0),
     SHOT_READY(new StrobeAnimation(0, 255, 0, 0, 1, Constants.NUM_LEDS), 0),
+    JADEN_U_HAVE_A_NOTE(new StrobeAnimation(255, 0, 255, 0, 0.8, Constants.NUM_LEDS), 0),
     CLIMB(new RainbowAnimation(), 0),
     SHOT_SPECIAL(new StrobeAnimation(0, 255, 0, 0, 0.5, Constants.NUM_LEDS), 0),
     PRE_INTAKE(new StrobeAnimation(0, 255, 0, 0, 1, Constants.NUM_LEDS), 0);

@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.IntakeSpeeds;
@@ -15,6 +16,7 @@ public class IntakeTrack extends SubsystemBase {
     private CANSparkFlex motor1;
     private DigitalInput sensor;
     private DigitalInput sensor2;
+    private AnalogInput beamInput;
 
     /*
      * Things this needs to do:
@@ -50,6 +52,7 @@ public class IntakeTrack extends SubsystemBase {
 
         sensor = new DigitalInput(1);
         sensor2 = new DigitalInput(3);
+        beamInput = new AnalogInput(0);
     }
 
     public void set(double percent) {
@@ -66,5 +69,9 @@ public class IntakeTrack extends SubsystemBase {
 
     public boolean getSensor2() {
         return sensor2.get();
+    }
+
+    public boolean getAnalogDigital() {
+        return beamInput.getValue() > 100;
     }
 }

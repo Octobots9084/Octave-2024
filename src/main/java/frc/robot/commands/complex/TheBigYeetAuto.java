@@ -16,8 +16,8 @@ import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
 
-public class TheBigYeet extends SequentialCommandGroup {
-    public TheBigYeet() {
+public class TheBigYeetAuto extends SequentialCommandGroup {
+    public TheBigYeetAuto() {
         addCommands(
                 new InstantCommand(() -> {
                     ShooterTrack.getInstance().currentlyShooting = true;
@@ -35,9 +35,7 @@ public class TheBigYeet extends SequentialCommandGroup {
                 }),
                 new InstantCommand(() -> {
                     ShooterTrack.getInstance().currentlyShooting = false;
-                }),
-                new InstantCommand(()->{
-                    ShooterFlywheel.getInstance().setFlywheelActive(false);
-                }));
+                })
+                );
     }
 }

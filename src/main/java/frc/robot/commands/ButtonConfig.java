@@ -4,8 +4,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
-import frc.robot.commands.arm.ShooterFlywheelSpeedInstantForce;
-import frc.robot.commands.arm.ShooterFlywheelSpeedInstantMeters;
 import frc.robot.commands.arm.ShooterTrackSpeedInstant;
 import frc.robot.commands.climb.ClimbZero;
 import frc.robot.commands.complex.Collect;
@@ -13,6 +11,7 @@ import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.FerryShot;
 import frc.robot.commands.complex.HalfClimb;
 import frc.robot.commands.complex.Layup;
+import frc.robot.commands.complex.OldFerryShot;
 import frc.robot.commands.complex.Panic;
 import frc.robot.commands.complex.PrepAmp;
 import frc.robot.commands.complex.PrepClimb;
@@ -21,14 +20,11 @@ import frc.robot.commands.complex.SimpleClimb;
 import frc.robot.commands.complex.TheBigYeet;
 import frc.robot.commands.complex.Undunk;
 import frc.robot.commands.swervedrive.ToggleTurnTo180;
-import frc.robot.commands.swervedrive.ToggleTurnToAmp;
-import frc.robot.commands.swervedrive.ToggleTurnToSource;
 import frc.robot.commands.swervedrive.ToggleTurnToSpeaker;
 import frc.robot.constants.ArmPositions;
 import frc.robot.commands.vision.AmpAlign;
 import frc.robot.commands.vision.ClimbAlign;
 import frc.robot.commands.vision.SourceAlign;
-import frc.robot.constants.ClimbPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.robot.ControlMap;
@@ -38,7 +34,6 @@ import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import swervelib.telemetry.Alert;
 
 public class ButtonConfig {
     CommandJoystick driverLeft = ControlMap.DRIVER_LEFT;
@@ -54,7 +49,7 @@ public class ButtonConfig {
         driverLeft.button(2).whileTrue(new Driveby());
 
         driverRight.button(1).onTrue(new TheBigYeet());
-        driverRight.button(2).onTrue(new FerryShot());
+        driverRight.button(2).whileTrue(new FerryShot());
 
         driverButtons.button(1).onTrue(new ToggleTurnToSpeaker());
         driverButtons.button(2).onTrue(new ToggleTurnTo180());

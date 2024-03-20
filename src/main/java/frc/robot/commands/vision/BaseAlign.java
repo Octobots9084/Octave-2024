@@ -4,7 +4,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.constants.AlignHotSpots;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
-import frc.robot.util.MathUtil;
 import frc.robot.util.Point;
 
 public abstract class BaseAlign extends Command {
