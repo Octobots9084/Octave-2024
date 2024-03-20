@@ -53,16 +53,16 @@ public class FerryShot extends Command {
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
         realFlywheel = flywheel.getFlywheelSpeed();
-        targetPivot = ReverseKinematics.calcFerryLaunchAngle(realPose2d, targetLanding);
-        targetFlywheel = ReverseKinematics.calcFerryVelocity(realPose2d, targetLanding);
-        targetTurn = new Rotation2d(
-                ReverseKinematics.calcFerryRotation(realPose2d, targetLanding)
-        );
         if (Constants.isBlueAlliance) {
             targetLanding = new Pose2d(realPose2d.getX() >= 10.65 ? 8.2 : 1.86, realPose2d.getX() >= 10.65 ? 5.7 : 6.28, new Rotation2d());
         } else {
             targetLanding = new Pose2d(realPose2d.getX() <= 5.85 ? 8.2 : 14.6, realPose2d.getX() <= 5.85 ? 5.7 : 6.28, new Rotation2d());
         }
+        targetPivot = ReverseKinematics.calcFerryLaunchAngle(realPose2d, targetLanding);
+        targetFlywheel = ReverseKinematics.calcFerryVelocity(realPose2d, targetLanding);
+        targetTurn = new Rotation2d(
+                ReverseKinematics.calcFerryRotation(realPose2d, targetLanding)
+        );
     }
 
     @Override
