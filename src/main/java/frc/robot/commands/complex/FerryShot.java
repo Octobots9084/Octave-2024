@@ -53,16 +53,18 @@ public class FerryShot extends Command {
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
         realFlywheel = flywheel.getFlywheelSpeed();
-        targetPivot = ReverseKinematics.calcFerryLaunchAngle(realPose2d, targetLanding);
-        targetFlywheel = ReverseKinematics.calcFerryVelocity(realPose2d, targetLanding);
-        targetTurn = new Rotation2d(
-                ReverseKinematics.calcFerryRotation(realPose2d, targetLanding)
-        );
+
         if (Constants.isBlueAlliance) {
-            targetLanding = new Pose2d(realPose2d.getX() >= 10.65 ? 8.2 : 1.86, realPose2d.getX() >= 10.65 ? 5.7 : 6.28, new Rotation2d());
+            targetLanding = new Pose2d(realPose2d.getX() >= 10.65 ? 8.2 : 2.1, realPose2d.getX() >= 10.65 ? 5.7 : 7.0, new Rotation2d());
         } else {
             targetLanding = new Pose2d(realPose2d.getX() <= 5.85 ? 8.2 : 14.6, realPose2d.getX() <= 5.85 ? 5.7 : 6.28, new Rotation2d());
         }
+        targetPivot = ReverseKinematics.calcFerryLaunchAngle(realPose2d, targetLanding);
+        targetFlywheel = -ReverseKinematics.calcFerryVelocity(realPose2d, targetLanding)*2;
+        SmartDashboard.putNumber("targetflywheeeeel", targetFlywheel);
+        targetTurn = new Rotation2d(
+                ReverseKinematics.calcFerryRotation(realPose2d, targetLanding)
+        );
     }
 
     @Override
@@ -76,6 +78,7 @@ public class FerryShot extends Command {
         updateTargets();
         // SmartDashboard.putString("realPose2d", realPose2d.toString());
         swerveSubsystem.setShootingRequest(targetTurn);
+        SmartDashboard.putNumber("flywheelgo", targetFlywheel);
         flywheel.setFlyWheelSpeedMeters(targetFlywheel);
         if (!pivot.notSoFastEggman) {
             pivot.setPosition(targetPivot);
@@ -103,7 +106,7 @@ public class FerryShot extends Command {
             return false;
         }
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (longTolerance(realRotation)) {
+        if (isInTolerance(realRotation)) {
             Light.getInstance().setAnimation(Animations.SHOT_READY);
             return true;
         } else {
@@ -112,27 +115,14 @@ public class FerryShot extends Command {
     }
 
     private boolean isInTolerance(double realRotation) {
-        return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2)
-                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005)
+        return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 3)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.05)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
                         MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05));
     }
 
-    private boolean longTolerance(double realFlywheel) {
-        if (isInTolerance(realFlywheel)) {
-            if (initialToleranceTime == 0) {
-                initialToleranceTime = Timer.getFPGATimestamp();
-            } else if (Timer.getFPGATimestamp() - initialToleranceTime > maintainToleranceTime) {
-                return true;
-            }
-        } else {
-            initialToleranceTime = 0;
-        }
-
-        return false;
-    }
-
+   
     @Override
     public void end(boolean inturupted) {
         if (!inturupted) {
