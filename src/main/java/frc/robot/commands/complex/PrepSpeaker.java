@@ -27,6 +27,12 @@ public class PrepSpeaker extends InstantCommand {
             shooterPivot.setPosition(ArmPositions.SPEAKER_SHOT);
             shooterFlywheel.setFlyWheelSpeedMeters(ShooterSpeeds.SPEAKER.flywheels);
             Light.getInstance().setAnimation(Animations.SHOT_SPECIAL);
+            System.out.println("Prep speaker run successfully.");
+
+        }
+        else {
+            System.out.println("Prep speaker blocked by pivot lock, try again.");
+
         }
         
     }

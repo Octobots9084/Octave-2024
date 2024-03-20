@@ -14,6 +14,11 @@ public abstract class BaseAlign extends Command {
         swerveSubsystem = SwerveSubsystem.getInstance();
     }
 
+    @Override
+    public void initialize() {
+        System.out.println("Running align command: " + this.getName());
+    }
+
     protected boolean isWithinHotSpotArea(AlignHotSpots hotSpots, Pose2d realPose2d) {
         final Point realPose2dAsPoint = new Point(realPose2d.getX(),
                 realPose2d.getY());
@@ -29,8 +34,8 @@ public abstract class BaseAlign extends Command {
     protected Pose2d getTargetPose(AlignHotSpots hotSpots, Pose2d realPose2d) {
         //Cannot be even powers b/c we want to preserve the sign
         return new Pose2d(
-                -MathUtil.powPreserveSign(realPose2d.getX() - hotSpots.targetPosition.getX(), 2),
-                -MathUtil.powPreserveSign(realPose2d.getY() - hotSpots.targetPosition.getY(), 2),
+                realPose2d.getX() - hotSpots.targetPosition.getX(),
+                realPose2d.getY() - hotSpots.targetPosition.getY(),
                 hotSpots.targetRotation);
     }
 

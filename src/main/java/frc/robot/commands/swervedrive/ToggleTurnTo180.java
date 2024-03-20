@@ -24,7 +24,7 @@ public class ToggleTurnTo180 extends Command {
         }
 
         SwerveSubsystem.getInstance().targetAngleEnabled = !SwerveSubsystem.getInstance().targetAngleEnabled;
-
+        System.out.println("Rotation command started: " + this.getName());
     }
 
     @Override

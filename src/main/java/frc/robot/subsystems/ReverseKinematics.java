@@ -26,16 +26,16 @@ public class ReverseKinematics {
         private static double movementMultiplierX = 1.5;
         private static double movementMultiplierY = 1.5;
         private static double flywheelSpeedMultiplier = 0.9;
-        private static double gravityMultiplier = 0.46;
+        private static double gravityMultiplier = 0.55;
         private static double spinVComp = 0;
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
                 if (Constants.isBlueAlliance) {
-                        subwooferXPos = 0;
+                        subwooferXPos = 0.22;
                         subwooferYPos = 5.554;
                 } else {
-                        subwooferXPos = 16.548;
+                        subwooferXPos = 16.526;
                         subwooferYPos = 5.554;
                 }
                 SmartDashboard.putString("poseconvert",

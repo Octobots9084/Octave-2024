@@ -20,6 +20,9 @@ public class Layup extends SequentialCommandGroup {
         addCommands(new InstantCommand(() -> {
                     Light.getInstance().setAnimation(Animations.CLIMB);
                 }),
+                new InstantCommand(() -> {
+                    System.out.println("Layup requested");
+                }),
                 new ShooterPivotPosTolerance(ArmPositions.TRAP_SEGUEAY),
                 new ShooterElevatorPosTolerance(ArmPositions.LAYUP).withTimeout(5),
                 new InstantCommand(() -> ShooterFlywheel.getInstance().setFlywheelActive(false)),
@@ -28,7 +31,10 @@ public class Layup extends SequentialCommandGroup {
                 new WaitCommand(1),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.LAYUP),
                 new WaitCommand(3),
-                new ShooterPivotPosInstant(ArmPositions.TRAP_SEGUEAY)
+                new ShooterPivotPosInstant(ArmPositions.TRAP_SEGUEAY),
+                new InstantCommand(() -> {
+                    System.out.println("Layup completed");
+                })
                 );
     }
 }

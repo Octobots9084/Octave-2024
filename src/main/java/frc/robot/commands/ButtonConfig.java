@@ -50,7 +50,7 @@ public class ButtonConfig {
 
     public void initTeleop() {
         // driverLeft.button(1).whileTrue(new TagAlign());
-        driverLeft.button(1).whileTrue(new ParallelCommandGroup(new PrepAmp(), new AmpAlign()));
+        driverButtons.button(10).whileTrue(new ParallelCommandGroup(new PrepAmp(), new AmpAlign()));
         driverLeft.button(2).whileTrue(new Driveby());
 
         driverRight.button(1).onTrue(new TheBigYeet());
@@ -68,10 +68,11 @@ public class ButtonConfig {
         driverButtons.button(8).onTrue(new InstantCommand(() -> {
             IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
             IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
-        }));
-        driverButtons.button(12).onTrue(new ShooterFlywheelSpeedInstantMeters(ShooterSpeeds.DRIVE_BY));
+            System.out.println("Intake reverse needed, code is sad now.");
 
-        coDriverButtons.button(1).whileTrue(new ParallelCommandGroup(new PrepClimb(), new ClimbAlign()));
+        }));
+
+        coDriverButtons.button(1).onTrue(new PrepClimb());
         coDriverButtons.button(2).onTrue(new HalfClimb());
         coDriverButtons.button(3).onTrue(new SimpleClimb());
         coDriverButtons.button(4).onTrue(new Layup());

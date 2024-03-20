@@ -15,6 +15,7 @@ public class CancelAllCommands extends InstantCommand {
 
     @Override
     public void initialize() {
+        System.out.println("Cancel run. Pivot locking was previously " + ShooterPivot.getInstance().notSoFastEggman + ". Commands now being canceled.");
         CommandScheduler.getInstance().cancelAll();
         CommandScheduler.getInstance().clearComposedCommands();
         ShooterPivot.getInstance().notSoFastEggman = false;
@@ -22,5 +23,6 @@ public class CancelAllCommands extends InstantCommand {
         ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
         IntakeTrack.getInstance().set(IntakeSpeeds.STOP);
         IntakeRoller.getInstance().set(IntakeSpeeds.STOP);
+        System.out.println("Cancel complete.");
     }
 }

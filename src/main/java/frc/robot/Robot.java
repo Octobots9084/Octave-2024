@@ -119,10 +119,10 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
     // SmartDashboard.putNumber("thng", ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
     // SmartDashboard.putNumber("thng2", ShooterFlywheel.getInstance().getRightFlywheelSpeed());
-    SmartDashboard.putNumber("elevator position", ShooterElevator.getInstance().getPosition());
-    SmartDashboard.putNumber("desired elevator pos", ShooterElevator.getInstance().getDesiredPosition());
-    SmartDashboard.putNumber("realFlywheelTop", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
-    SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
+    // SmartDashboard.putNumber("elevator position", ShooterElevator.getInstance().getPosition());
+    // SmartDashboard.putNumber("desired elevator pos", ShooterElevator.getInstance().getDesiredPosition());
+    // SmartDashboard.putNumber("realFlywheelTop", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
+    // SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
     SmartDashboard.putBoolean("Shooter track", ShooterTrack.getInstance().getSensor());
     SmartDashboard.putBoolean("Intake track", IntakeTrack.getInstance().getSensor());
     SmartDashboard.putBoolean("Intake 1", IntakeRoller.getInstance().getSensor());
