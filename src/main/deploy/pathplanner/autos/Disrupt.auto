@@ -66,6 +66,12 @@
               }
             ]
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Disrupt"
+          }
         }
       ]
     }

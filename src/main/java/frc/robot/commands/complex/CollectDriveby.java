@@ -19,7 +19,7 @@ public class CollectDriveby extends SequentialCommandGroup{
             }),
             new DrivebyAuto(false).withTimeout(1),
             //trigger time
-            new WaitCommand(0.1),
+            new WaitCommand(0.05),
             new InstantCommand(() -> {
                     System.out.println("collectdrvebyrun3");
             })
