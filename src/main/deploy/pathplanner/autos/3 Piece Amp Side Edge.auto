@@ -134,6 +134,12 @@
           "data": {
             "name": "Shoot"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3 Piece Amp Edge -3"
+          }
         }
       ]
     }
