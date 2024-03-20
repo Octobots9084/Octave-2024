@@ -26,6 +26,7 @@ import frc.robot.commands.ButtonConfig;
 import frc.robot.commands.arm.ElevatorManual;
 import frc.robot.commands.arm.PivotManual;
 import frc.robot.commands.climb.ClimbManual;
+import frc.robot.commands.complex.SystemsCheck;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
 
@@ -230,6 +231,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    CommandScheduler.getInstance().schedule(new SystemsCheck());
 
     try {
       File swerveFile = new File(Filesystem.getDeployDirectory(), "swerve");
