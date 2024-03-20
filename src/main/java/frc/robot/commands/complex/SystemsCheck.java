@@ -29,6 +29,8 @@ public class SystemsCheck extends SequentialCommandGroup{
             new WaitCommand(0.1),
             new Collect(),
             new PrepSpeaker(),
+            new WaitCommand(2),
+            new TheBigYeet(),
             new WaitCommand(0.1),
             new Collect(),
             new HalfClimb(),

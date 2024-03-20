@@ -211,16 +211,26 @@ public class Robot extends TimedRobot {
   }
 
   public void checkDoubleNotes() {
-    if (!ShooterTrack.getInstance().getSensor() && !ShooterPivot.getInstance().notSoFastEggman && (!IntakeRoller.getInstance().getSensor()||!IntakeTrack.getInstance().getAnalogDigital()||!IntakeTrack.getInstance().getSensor2())) {
+    SmartDashboard.putBoolean("dn condition 1", !ShooterTrack.getInstance().getSensor());
+    SmartDashboard.putBoolean("dn condition 2", !ShooterPivot.getInstance().notSoFastEggman);
+    SmartDashboard.putBoolean("dn condition 3", !IntakeRoller.getInstance().getSensor());
+    SmartDashboard.putBoolean("dn condition 4", !IntakeTrack.getInstance().getSensor());
+    SmartDashboard.putBoolean("dn condition 5", !ShooterPivot.getInstance().notSoFastEggman);
+    SmartDashboard.putBoolean("dn condition 6", !IntakeTrack.getInstance().getSensor2());
+
+    if (!ShooterTrack.getInstance().getSensor() && !ShooterPivot.getInstance().notSoFastEggman
+        && (!IntakeRoller.getInstance().getSensor() 
+            || !IntakeTrack.getInstance().getSensor()
+            || !IntakeTrack.getInstance().getSensor2())) {
       IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
       IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
       Light.getInstance().setAnimation(Animations.CLIMB);
     }
 
-    if (Timer.getFPGATimestamp() > doubleSensorTriggerLength + Constants.DOUBLE_NOTE_LENGTH) {
-      IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
-      IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
-    }
+    // if (Timer.getFPGATimestamp() > doubleSensorTriggerLength + Constants.DOUBLE_NOTE_LENGTH) {
+    //   IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
+    //   IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
+    // }
   }
 
   @Override

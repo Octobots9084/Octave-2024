@@ -35,7 +35,7 @@ public class Collect extends SequentialCommandGroup {
             return (!IntakeRoller.getInstance().getSensor() || !IntakeTrack.getInstance().getSensor2());
         };
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
-        BooleanSupplier shooterSensorNotTrue = () -> ShooterTrack.getInstance().getSensor();
+        BooleanSupplier shooterSensorNotTrue = ()->{return (ShooterTrack.getInstance().getSensor()||IntakeTrack.getInstance().getAnalogDigital());};
         addCommands(
                 new ParallelDeadlineGroup(new ConditionalCommand(new SequentialCommandGroup(new InstantCommand(() -> {
                     ShooterPivot.getInstance().notSoFastEggman = true;
@@ -50,8 +50,10 @@ public class Collect extends SequentialCommandGroup {
                         new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),
                         new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
-                        new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                         new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
+                        new ShooterPivotPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT).withTimeout(2.5),
+                        new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT).withTimeout(0.1),
+                        new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                         new WaitUntilCommand(intakeSensorTrue),
                         new InstantCommand(() -> {
                             System.out.println("Intake track sensor tripped");

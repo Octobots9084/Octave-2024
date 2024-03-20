@@ -72,6 +72,6 @@ public class IntakeTrack extends SubsystemBase {
     }
 
     public boolean getAnalogDigital() {
-        return beamInput.getValue() < 100;
+        return beamInput.getValue() > 100;
     }
 }
