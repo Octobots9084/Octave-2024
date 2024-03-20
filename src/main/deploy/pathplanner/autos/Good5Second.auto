@@ -14,12 +14,6 @@
         {
           "type": "named",
           "data": {
-            "name": "FlywheelsCurrentFast"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "SpinUpFlywheels"
           }
         },
@@ -33,12 +27,6 @@
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "FlywheelsCurrentNormal"
-                }
-              },
               {
                 "type": "named",
                 "data": {
