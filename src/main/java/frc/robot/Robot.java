@@ -35,6 +35,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.pathplanner.lib.commands.PathfindingCommand;
+
 import swervelib.parser.SwerveParser;
 
 /**
@@ -97,7 +99,7 @@ public class Robot extends TimedRobot {
     ShooterFlywheel.getInstance();
     Climb.getInstance();
     Light.getInstance().setAnimation(Animations.DEFAULT);
-
+    PathfindingCommand.warmupCommand().schedule();
   }
 
   /**
