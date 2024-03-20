@@ -166,7 +166,7 @@ private static final double maintainToleranceTime = 0.1;
 
     @Override
     public void end(boolean inturupted) {
-        CommandScheduler.getInstance().schedule(new TheBigYeet());
+        CommandScheduler.getInstance().schedule(new TheBigYeetAuto());
         swerveSubsystem.setShootingRequestActive(false);
         swerveSubsystem.targetAngleEnabled = false;
         System.out.println("Teleop shot canceled. Flywheels at " + targetFlywheel + " of " + realFlywheel + " with a tolerance of " + flywheelTolerance + " and error of " + (targetFlywheel-realFlywheel) + " Pivot at " + realPivot + " of " + targetPivot + " with a tolerance of " + pivotTolerance + " and an error of " + (targetPivot - realPivot) + " Bot rotation at " + realPose2d.getRotation().getRadians() + " of " + targetTurn.getRadians() + " with a tolerance of " + rotationTolerance +  " and an error of " + (realPose2d.getRotation().getRadians() - targetTurn.getRadians()) + ". RIP");

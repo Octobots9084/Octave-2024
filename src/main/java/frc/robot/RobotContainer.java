@@ -22,6 +22,7 @@ import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
 import frc.robot.commands.complex.SpeakerAutoFast;
 import frc.robot.commands.complex.TheBigYeet;
+import frc.robot.commands.complex.TheBigYeetAuto;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
 import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
@@ -89,7 +90,7 @@ public class RobotContainer {
                                         new DrivebyAuto(true).withTimeout(2).andThen(new WaitCommand(0.1)));
 
                         NamedCommands.registerCommand("Shoot",
-                                        new DrivebyAuto(false).withTimeout(1.5).andThen(new TheBigYeet()));
+                                        new DrivebyAuto(false).withTimeout(1.5).andThen(new TheBigYeetAuto()));
                         NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
                                 ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
                         }));
