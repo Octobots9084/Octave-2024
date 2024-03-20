@@ -14,7 +14,7 @@ public class FerryShot extends SequentialCommandGroup{
             new ShooterFlywheelSpeedInstantMeters(ShooterSpeeds.FERRY_SHOT),
             new ShooterElevatorPosInstant(ArmPositions.FERRY_SHOT),
             new ShooterPivotPosTolerance(ArmPositions.FERRY_SHOT).withTimeout(0.25),
-            new ShooterTrackSpeedInstant(ShooterSpeeds.FERRY_SHOT)
+            new TheBigYeet()
         );
     }    
 }

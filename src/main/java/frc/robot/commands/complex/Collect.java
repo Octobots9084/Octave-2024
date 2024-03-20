@@ -22,6 +22,7 @@ import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.IntakeRoller;
 import frc.robot.subsystems.IntakeTrack;
+import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.lights.Animations;
@@ -35,7 +36,7 @@ public class Collect extends SequentialCommandGroup {
             return (!IntakeRoller.getInstance().getSensor() || !IntakeTrack.getInstance().getSensor2());
         };
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
-        BooleanSupplier shooterSensorNotTrue = ()->{return (ShooterTrack.getInstance().getSensor()||IntakeTrack.getInstance().getAnalogDigital());};
+        BooleanSupplier shooterSensorNotTrue = ()->{return (ShooterTrack.getInstance().getSensor()||!IntakeTrack.getInstance().getAnalogDigital());};
         addCommands(
                 new ParallelDeadlineGroup(new ConditionalCommand(new SequentialCommandGroup(new InstantCommand(() -> {
                     ShooterPivot.getInstance().notSoFastEggman = true;
@@ -45,6 +46,9 @@ public class Collect extends SequentialCommandGroup {
                         }),
                         new InstantCommand(() -> {
                             Light.getInstance().setAnimation(Animations.COLLECTING);
+                        }),
+                        new InstantCommand(()->{
+                            ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(ShooterSpeeds.SPEAKER.flywheels);
                         }),
 
                         new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),
