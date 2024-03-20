@@ -111,13 +111,11 @@ public class ReverseKinematics {
                                 - normalizedAngleDiff;
         }
 
-        // Not sure why this is here but I'll leave it just in case
         public static void configHeightDif(double targetHeightDiff) {
                 constTargetHeightDiff = targetHeightDiff;
                 SmartDashboard.putNumber("targetHeightDiff", constTargetHeightDiff);
         }
 
-        // Not sure why this is here but I'll leave it just in case
         public static double getHeightDif() {
                 return constTargetHeightDiff;
         }
@@ -129,5 +127,41 @@ public class ReverseKinematics {
                 return Math.sqrt((constTargetHeightDiff * constTargetHeightDiff) + (pos.getX() * pos.getX())
                                 + (pos.getY() * pos.getY()))
                                 / (flywheelSpeedMTS * flywheelSpeedMultiplier);
+        }
+        
+
+
+        private static double calcFerryDistance(Pose2d pos, Pose2d target) {
+                return Math.sqrt(Math.pow(target.getX() - pos.getX(), 2) + Math.pow(target.getY() - pos.getY(), 2));
+        }
+
+        public static double calcFerryRotation(Pose2d pos, Pose2d target) {
+                return Math.atan2(target.getY() - pos.getY(), target.getX() - pos.getX());
+        }
+
+        public static double calcFerryVelocity(Pose2d pos, Pose2d target) {
+                return((calcFerryDistance(pos, target)/2) + 5)*flywheelSpeedMultiplier;
+        }
+
+        public static double calcFerryLaunchAngle(Pose2d pos, Pose2d target) {
+                // assumed transferred flywheel speed
+                double v = calcFerryVelocity(pos, target);
+                // distance from the robot to the target position
+                double d = calcFerryDistance(pos, target);
+                // launch angle
+                double angle = encoderOffset - (Math.PI/2.0 + 2.0*Math.atan(
+                        (5.0*v*v/(49.0*d)) - 
+                        Math.sqrt(5.0)*Math.sqrt((5.0*v*v*v*v) + 
+                        (49*v*v*d))/(49.0*d) + 
+                        (1.0/49.0) * Math.sqrt(
+                                (50.0*v*v*v*v)/(d*d) - 
+                                (245.0*v*v)/d + 
+                                (4802.0*Math.sqrt(5)*v*v)/Math.sqrt((5.0*v*v*v*v) + (49.0*v*v*d)) - 
+                                (50.0*Math.sqrt(5.0)*v*v*v*v*v*v)/(d*d*Math.sqrt((5.0*v*v*v*v) + (49.0*v*v*d))) - 
+                                2401.0
+                        )) / (2 * Math.PI) // this last division is to normalize the angle difference 
+                );
+                
+                return !Double.isNaN(angle) ? angle : encoderOffset - 0.25;
         }
 }
