@@ -14,12 +14,6 @@
         {
           "type": "named",
           "data": {
-            "name": "FlywheelsCurrentFast"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "SpinUpFlywheelsFast"
           }
         },
@@ -33,12 +27,6 @@
           "type": "named",
           "data": {
             "name": "SpeakerAutoInital"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "FlywheelsCurrentNormal"
           }
         },
         {
