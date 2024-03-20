@@ -100,6 +100,17 @@ public class Climb extends SubsystemBase {
         rightMotor.setSmartCurrentLimit(30,30);
     }
 
+    public void setCoast(boolean coast) {
+        if (coast) {
+            leftMotor.setIdleMode(IdleMode.kCoast);
+            rightMotor.setIdleMode(IdleMode.kCoast);
+        }
+        else {
+            leftMotor.setIdleMode(IdleMode.kBrake);
+            rightMotor.setIdleMode(IdleMode.kBrake);
+        }
+    }
+
     public void zero() {
         // while (!limSwitch) {
         
