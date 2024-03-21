@@ -155,7 +155,7 @@ public class Robot extends TimedRobot {
     Light.getInstance().setAnimation(Animations.DEFAULT);
   }
 
-  DigitalInput coastSwitch = new DigitalInput(69);
+  DigitalInput coastSwitch = new DigitalInput(6);
 
   @Override
   public void disabledPeriodic() {

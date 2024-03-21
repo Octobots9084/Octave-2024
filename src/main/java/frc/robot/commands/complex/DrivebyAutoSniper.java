@@ -102,16 +102,16 @@ public class DrivebyAutoSniper extends Command {
         double realRotation = swerveSubsystem.getHeading().getRadians();
         // SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
 
-        SmartDashboard.putNumber("targetPivot", targetPivot);
-        SmartDashboard.putNumber("realPivot", realPivot);
-        SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
-        SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
-        SmartDashboard.putNumber("realFlywheel", realFlywheel);
-        SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
+        // SmartDashboard.putNumber("targetPivot", targetPivot);
+        // SmartDashboard.putNumber("realPivot", realPivot);
+        // SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
+        // SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
+        // SmartDashboard.putNumber("realFlywheel", realFlywheel);
+        // SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
 
-        SmartDashboard.putBoolean("flywheelTolerance", MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2));
-        SmartDashboard.putBoolean("pivotTolerance", MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005));
-        SmartDashboard.putBoolean("rotationTolerance", isInTolerance(realRotation));
+        // SmartDashboard.putBoolean("flywheelTolerance", MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2));
+        // SmartDashboard.putBoolean("pivotTolerance", MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005));
+        // SmartDashboard.putBoolean("rotationTolerance", isInTolerance(realRotation));
 
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
         if (isInTolerance(realRotation)) {
