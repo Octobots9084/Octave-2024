@@ -144,6 +144,12 @@
                       "data": {
                         "pathName": "Flickshot 6"
                       }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "Flickshot - 7"
+                      }
                     }
                   ]
                 }
