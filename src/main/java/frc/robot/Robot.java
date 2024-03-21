@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,6 +34,8 @@ import frc.robot.constants.ShooterSpeeds;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
+
+import com.pathplanner.lib.commands.PathfindingCommand;
 
 import swervelib.parser.SwerveParser;
 
@@ -80,7 +83,6 @@ public class Robot extends TimedRobot {
       }
     }
     m_robotContainer = new RobotContainer();
-
     new ButtonConfig().initTeleop();
     // Create a timer to disable motor brake a few seconds after disable. This will
     // let the robot stop
@@ -97,7 +99,6 @@ public class Robot extends TimedRobot {
     ShooterFlywheel.getInstance();
     Climb.getInstance();
     Light.getInstance().setAnimation(Animations.DEFAULT);
-
   }
 
   /**
@@ -120,20 +121,28 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    // SmartDashboard.putNumber("thng", ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
-    // SmartDashboard.putNumber("thng2", ShooterFlywheel.getInstance().getRightFlywheelSpeed());
-    // SmartDashboard.putNumber("elevator position", ShooterElevator.getInstance().getPosition());
-    // SmartDashboard.putNumber("desired elevator pos", ShooterElevator.getInstance().getDesiredPosition());
-    // SmartDashboard.putNumber("realFlywheelTop", ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
-    // SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
+    // SmartDashboard.putNumber("thng",
+    // ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
+    // SmartDashboard.putNumber("thng2",
+    // ShooterFlywheel.getInstance().getRightFlywheelSpeed());
+    // SmartDashboard.putNumber("elevator position",
+    // ShooterElevator.getInstance().getPosition());
+    // SmartDashboard.putNumber("desired elevator pos",
+    // ShooterElevator.getInstance().getDesiredPosition());
+    // SmartDashboard.putNumber("realFlywheelTop",
+    // ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
+    // SmartDashboard.putNumber("realFlywheelBottom",
+    // ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
     SmartDashboard.putBoolean("Shooter track", ShooterTrack.getInstance().getSensor());
     SmartDashboard.putBoolean("Intake track", IntakeTrack.getInstance().getAnalogDigital());
     SmartDashboard.putBoolean("Intake 1", IntakeRoller.getInstance().getSensor());
     SmartDashboard.putBoolean("Intake 2", IntakeTrack.getInstance().getSensor2());
     // SmartDashboard.putNumber("climbele",
-        // ShooterElevator.getInstance().getPosition() * ShooterElevator.getInstance().gearing);
+    // ShooterElevator.getInstance().getPosition() *
+    // ShooterElevator.getInstance().gearing);
 
-    // SmartDashboard.putNumber("realFlywheelBottom", ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
+    // SmartDashboard.putNumber("realFlywheelBottom",
+    // ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
   }
 
   /**
@@ -146,12 +155,14 @@ public class Robot extends TimedRobot {
     Light.getInstance().setAnimation(Animations.DEFAULT);
   }
 
+  //DigitalInput coastSwitch = new DigitalInput(69);
+
   @Override
   public void disabledPeriodic() {
-    if (disabledTimer.hasElapsed(Constants.Drivebase.WHEEL_LOCK_TIME)) {
-      disabledTimer.stop();
-    }
-
+    // if (disabledTimer.hasElapsed(Constants.Drivebase.WHEEL_LOCK_TIME)) {
+    //   disabledTimer.stop();
+    // }
+    //Climb.getInstance().setCoast(coastSwitch.get());
     Optional<Alliance> ally = DriverStation.getAlliance();
     if (ally.isPresent()) {
       if (ally.get() == Alliance.Red) {
@@ -169,6 +180,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    Climb.getInstance().setCoast(false);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -193,6 +205,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    Climb.getInstance().setCoast(false);
     m_robotContainer.setDriveMode();
     ShooterFlywheel.getInstance().setFlywheelsCurrentNormal();
     Climb.getInstance().setDefaultCommand(new ClimbManual());
@@ -219,7 +232,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("dn condition 6", !IntakeTrack.getInstance().getSensor2());
 
     if (!ShooterTrack.getInstance().getSensor() && !ShooterPivot.getInstance().notSoFastEggman
-        && (!IntakeRoller.getInstance().getSensor() 
+        && (!IntakeRoller.getInstance().getSensor()
             || !IntakeTrack.getInstance().getSensor()
             || !IntakeTrack.getInstance().getSensor2())) {
       IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
@@ -227,9 +240,10 @@ public class Robot extends TimedRobot {
       Light.getInstance().setAnimation(Animations.CLIMB);
     }
 
-    // if (Timer.getFPGATimestamp() > doubleSensorTriggerLength + Constants.DOUBLE_NOTE_LENGTH) {
-    //   IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
-    //   IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
+    // if (Timer.getFPGATimestamp() > doubleSensorTriggerLength +
+    // Constants.DOUBLE_NOTE_LENGTH) {
+    // IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
+    // IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
     // }
   }
 
@@ -241,6 +255,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    Climb.getInstance().setCoast(false);
     CommandScheduler.getInstance().schedule(new SystemsCheck());
 
     try {

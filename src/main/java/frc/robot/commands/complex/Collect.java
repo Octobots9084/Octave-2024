@@ -36,7 +36,9 @@ public class Collect extends SequentialCommandGroup {
             return (!IntakeRoller.getInstance().getSensor() || !IntakeTrack.getInstance().getSensor2());
         };
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
-        BooleanSupplier shooterSensorNotTrue = ()->{return (ShooterTrack.getInstance().getSensor()||!IntakeTrack.getInstance().getAnalogDigital());};
+        BooleanSupplier shooterSensorNotTrue = () -> {
+            return (ShooterTrack.getInstance().getSensor() || !IntakeTrack.getInstance().getAnalogDigital());
+        };
         addCommands(
                 new ParallelDeadlineGroup(new ConditionalCommand(new SequentialCommandGroup(new InstantCommand(() -> {
                     ShooterPivot.getInstance().notSoFastEggman = true;
@@ -47,10 +49,6 @@ public class Collect extends SequentialCommandGroup {
                         new InstantCommand(() -> {
                             Light.getInstance().setAnimation(Animations.COLLECTING);
                         }),
-                        new InstantCommand(()->{
-                            ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(ShooterSpeeds.SPEAKER.flywheels);
-                        }),
-
                         new ShooterTrackSpeedInstant(ShooterSpeeds.IDLE),
                         new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                         new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
@@ -90,18 +88,24 @@ public class Collect extends SequentialCommandGroup {
                                     System.out.println("Collect Complete");
                                 })),
                                 new WaitCommand(0.2).andThen(new IntakeRollerSpeedInstant(IntakeSpeeds.STOP)))),
-                                new SequentialCommandGroup(new InstantCommand(() -> {
-                                    Light.getInstance().setAnimation(Animations.JADEN_U_HAVE_A_NOTE);
-                                }),
+                        new SequentialCommandGroup(new InstantCommand(() -> {
+                            Light.getInstance().setAnimation(Animations.JADEN_U_HAVE_A_NOTE);
+                            System.out.println("Jaden has confirmed he has a note.");
+                        }),
                                 new WaitCommand(0.5),
                                 new InstantCommand(() -> {
                                     Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
-                                })), shooterSensorNotTrue),
+                                })),
+                        shooterSensorNotTrue),
                         new WaitUntilCommand(rollerSensor).andThen(new InstantCommand(() -> {
                             Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);
                         })).andThen(new InstantCommand(() -> {
                             System.out.println("Roller sensors tripped");
-                        })))
+                        }).andThen(
+                                new InstantCommand(() -> {
+                                    ShooterFlywheel.getInstance()
+                                            .setFlyWheelSpeedMeters(ShooterSpeeds.SPEAKER.flywheels);
+                                }))))
 
         );
     }
