@@ -2,7 +2,9 @@
   "robotWidth": 0.85,
   "robotLength": 0.97,
   "holonomicMode": true,
-  "pathFolders": [],
+  "pathFolders": [
+    "Annie's Garbage"
+  ],
   "autoFolders": [
     "Choreo Paths"
   ],
