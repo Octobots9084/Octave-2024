@@ -74,7 +74,7 @@ public class TeleopDrive extends Command {
       double angleSpeed = swerve.driverTargetAngleController.calculate(swerve.getHeading().getRadians(),
           swerve.targetAngle.getRadians());
       swerve.drive(
-          new Translation2d(-swerve.getAlignRequest().getX()*4, -swerve.getAlignRequest().getY()*2),
+          new Translation2d(-swerve.getAlignRequest().getX()*6, -swerve.getAlignRequest().getY()*2),
           angleSpeed,
           driveMode.getAsBoolean());
     } else {
