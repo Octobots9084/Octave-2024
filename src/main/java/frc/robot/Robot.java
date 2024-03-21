@@ -155,14 +155,14 @@ public class Robot extends TimedRobot {
     Light.getInstance().setAnimation(Animations.DEFAULT);
   }
 
-  DigitalInput coastSwitch = new DigitalInput(69);
+  //DigitalInput coastSwitch = new DigitalInput(69);
 
   @Override
   public void disabledPeriodic() {
-    if (disabledTimer.hasElapsed(Constants.Drivebase.WHEEL_LOCK_TIME)) {
-      disabledTimer.stop();
-    }
-    Climb.getInstance().setCoast(coastSwitch.get());
+    // if (disabledTimer.hasElapsed(Constants.Drivebase.WHEEL_LOCK_TIME)) {
+    //   disabledTimer.stop();
+    // }
+    //Climb.getInstance().setCoast(coastSwitch.get());
     Optional<Alliance> ally = DriverStation.getAlliance();
     if (ally.isPresent()) {
       if (ally.get() == Alliance.Red) {
