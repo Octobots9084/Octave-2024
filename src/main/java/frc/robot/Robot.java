@@ -99,7 +99,6 @@ public class Robot extends TimedRobot {
     ShooterFlywheel.getInstance();
     Climb.getInstance();
     Light.getInstance().setAnimation(Animations.DEFAULT);
-    PathfindingCommand.warmupCommand().schedule();
   }
 
   /**
