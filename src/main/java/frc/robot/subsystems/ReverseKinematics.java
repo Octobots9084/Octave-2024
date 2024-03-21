@@ -21,7 +21,7 @@ public class ReverseKinematics {
         // X and Y positions of the subwoofer with regards to (0,0) on the robot's
         // Pose2d
         private static double subwooferXPos = 0;
-        private static double subwooferYPos = 5;
+        private static double subwooferYPos = 6;
         private static double encoderOffset = 0.597;
         private static double movementMultiplierX = 1.5;
         private static double movementMultiplierY = 1.5;
