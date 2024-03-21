@@ -163,6 +163,12 @@
               }
             ]
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "5 Piece - 5"
+          }
         }
       ]
     }
