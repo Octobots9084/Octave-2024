@@ -199,7 +199,7 @@ public class SwerveSubsystem extends SubsystemBase {
   }
 
   public void setAlignRequestActive(boolean isActive) {
-    SmartDashboard.putBoolean("Align Active", isActive);
+    // SmartDashboard.putBoolean("Align Active", isActive);
 
     alignRequestActive = isActive;
   }

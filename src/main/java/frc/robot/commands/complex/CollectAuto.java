@@ -26,7 +26,8 @@ import frc.robot.subsystems.lights.Light;
 
 public class CollectAuto extends SequentialCommandGroup {
     public CollectAuto() {
-        SmartDashboard.putNumber("Collect", SmartDashboard.getNumber("Collect", 0) + 1);
+        // SmartDashboard.putNumber("Collect", SmartDashboard.getNumber("Collect", 0) +
+        // 1);
         System.out.println("collectconst");
         BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getAnalogDigital();
         BooleanSupplier rollerSensor = () -> {
@@ -75,9 +76,9 @@ public class CollectAuto extends SequentialCommandGroup {
                                 new InstantCommand(() -> {
                                     System.out.println("collect stage 2.1");
                                 })),
-                                new InstantCommand(() -> {
-                                    System.out.println("collect stage 2.2");
-                                }),
+                        new InstantCommand(() -> {
+                            System.out.println("collect stage 2.2");
+                        }),
                         new WaitCommand(0.2).andThen(new IntakeRollerSpeedInstant(IntakeSpeeds.STOP))),
                 new InstantCommand(() -> {
                     System.out.println("collect stage 3");

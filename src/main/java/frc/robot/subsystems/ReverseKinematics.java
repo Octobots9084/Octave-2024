@@ -38,36 +38,41 @@ public class ReverseKinematics {
                         subwooferXPos = 16.526;
                         subwooferYPos = 5.554;
                 }
-                SmartDashboard.putString("poseconvert",
-                new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new
-                Rotation2d())
-                .toString());
+                // SmartDashboard.putString("poseconvert",
+                // new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new
+                // Rotation2d())
+                // .toString());
                 return new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new Rotation2d());
         }
 
         // converts ChassisSpeeds to absolute rather than relative to the robot rotation
         public static ChassisSpeeds convertSpeed(Pose2d pos, ChassisSpeeds speed) {
                 return new ChassisSpeeds(
-                                -(pos.getRotation().getCos() * speed.vxMetersPerSecond) - (pos.getRotation().getSin() * speed.vyMetersPerSecond),
-                                (pos.getRotation().getSin() * speed.vxMetersPerSecond) + (pos.getRotation().getCos() * speed.vyMetersPerSecond) + (pos.getRotation().getCos() * spinVComp),
+                                -(pos.getRotation().getCos() * speed.vxMetersPerSecond)
+                                                - (pos.getRotation().getSin() * speed.vyMetersPerSecond),
+                                (pos.getRotation().getSin() * speed.vxMetersPerSecond)
+                                                + (pos.getRotation().getCos() * speed.vyMetersPerSecond)
+                                                + (pos.getRotation().getCos() * spinVComp),
                                 0);
         }
 
         // returns the vertical launch velocity of the note
         // for internal use only
         private static double calcLaunchVerticalVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
-                double verticalVel = ((constTargetHeightDiff / timeInAir) + (0.5 * g * timeInAir * gravityMultiplier)); // (pos.getY() /
-                                                                                                    // timeInAir)
+                double verticalVel = ((constTargetHeightDiff / timeInAir) + (0.5 * g * timeInAir * gravityMultiplier)); // (pos.getY()
+                                                                                                                        // /
+                // timeInAir)
 
-                SmartDashboard.putNumber("verticalVel", verticalVel);
+                // SmartDashboard.putNumber("verticalVel", verticalVel);
                 return verticalVel;
         }
 
-        // returns the horizontal (parallel to the subwoofer opening) launch velocity of the note
+        // returns the horizontal (parallel to the subwoofer opening) launch velocity of
+        // the note
         // for internal use only
         private static double calcLaunchXVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
                 double xVel = (pos.getX() / timeInAir) + (speed.vxMetersPerSecond * movementMultiplierX);
-                SmartDashboard.putNumber("xVel", xVel);
+                // SmartDashboard.putNumber("xVel", xVel);
                 return xVel;
         }
 
@@ -77,7 +82,7 @@ public class ReverseKinematics {
         private static double calcLaunchYVel(Pose2d pos, ChassisSpeeds speed, double timeInAir) {
                 double yVel = (pos.getY() / timeInAir)
                                 - (speed.vyMetersPerSecond * movementMultiplierY);
-                SmartDashboard.putNumber("yVel", yVel);
+                // SmartDashboard.putNumber("yVel", yVel);
                 return yVel;
         }
 
@@ -104,16 +109,16 @@ public class ReverseKinematics {
                                                                 .pow(calcLaunchYVel(pos, speed, timeInAir), 2)))));
                 double normalizedAngleDiff = angleDiffRadians
                                 / (2 * Math.PI);
-                SmartDashboard.putNumber("targetAngleShoote", angleDiffRadians);
-                SmartDashboard.putNumber("PIVOT HEIGHT", encoderOffset
-                                - normalizedAngleDiff);
+                // SmartDashboard.putNumber("targetAngleShoote", angleDiffRadians);
+                // SmartDashboard.putNumber("PIVOT HEIGHT", encoderOffset
+                // - normalizedAngleDiff);
                 return encoderOffset
                                 - normalizedAngleDiff;
         }
 
         public static void configHeightDif(double targetHeightDiff) {
                 constTargetHeightDiff = targetHeightDiff;
-                SmartDashboard.putNumber("targetHeightDiff", constTargetHeightDiff);
+                // SmartDashboard.putNumber("targetHeightDiff", constTargetHeightDiff);
         }
 
         public static double getHeightDif() {
@@ -128,22 +133,20 @@ public class ReverseKinematics {
                                 + (pos.getY() * pos.getY()))
                                 / (flywheelSpeedMTS * flywheelSpeedMultiplier);
         }
-        
-
 
         private static double calcFerryDistance(Pose2d pos, Pose2d target) {
                 return Math.sqrt(Math.pow(target.getX() - pos.getX(), 2) + Math.pow(target.getY() - pos.getY(), 2));
         }
 
         public static double calcFerryRotation(Pose2d pos, Pose2d target) {
-                return Math.atan2(target.getY() - pos.getY(), target.getX() - pos.getX())- Math.PI;
+                return Math.atan2(target.getY() - pos.getY(), target.getX() - pos.getX()) - Math.PI;
         }
 
         public static double calcFerryVelocity(Pose2d pos, Pose2d target) {
                 // if ((calcFerryDistance(pos, target))<7.1) {
-                //         return 7.1;
+                // return 7.1;
                 // }
-                return ((calcFerryDistance(pos, target))/2.0 + 5.0);
+                return ((calcFerryDistance(pos, target)) / 2.0 + 5.0);
         }
 
         public static double calcFerryLaunchAngle(Pose2d pos, Pose2d target) {
@@ -152,33 +155,53 @@ public class ReverseKinematics {
                 // distance from the robot to the target position
                 double d = calcFerryDistance(pos, target);
                 // launch angle
-                double angle = encoderOffset - (Math.PI/2.0 + 2.0*Math.atan(
-                        (5.0*v*v/(49.0*d)) - 
-                        Math.sqrt(5.0)*Math.sqrt((5.0*v*v*v*v) + 
-                        (49*v*v*d))/(49.0*d) + 
-                        (1.0/49.0) * Math.sqrt(
-                                (50.0*v*v*v*v)/(d*d) - 
-                                (245.0*v*v)/d + 
-                                (4802.0*Math.sqrt(5)*v*v)/Math.sqrt((5.0*v*v*v*v) + (49.0*v*v*d)) - 
-                                (50.0*Math.sqrt(5.0)*v*v*v*v*v*v)/(d*d*Math.sqrt((5.0*v*v*v*v) + (49.0*v*v*d))) - 
-                                2401.0
-                        )) 
-                )/ (2 * Math.PI);
-                SmartDashboard.putNumber("d", d);
-                SmartDashboard.putNumber("v", v);
-                SmartDashboard.putNumber("ahhhh", (Math.PI/2.0 + 2.0*Math.atan(
-                        (5.0*v*v/(49.0*d)) - 
-                        Math.sqrt(5.0)*Math.sqrt((5.0*v*v*v*v) + 
-                        (49*v*v*d))/(49.0*d) + 
-                        (1.0/49.0) * Math.sqrt(
-                                (50.0*v*v*v*v)/(d*d) - 
-                                (245.0*v*v)/d + 
-                                (4802.0*Math.sqrt(5)*v*v)/Math.sqrt((5.0*v*v*v*v) + (49.0*v*v*d)) - 
-                                (50.0*Math.sqrt(5.0)*v*v*v*v*v*v)/(d*d*Math.sqrt((5.0*v*v*v*v) + (49.0*v*v*d))) - 
-                                2401.0
-                        ))  // this last division is to normalize the angle difference 
-                )/ (2 * Math.PI));
-                
+                double angle = encoderOffset - (Math.PI / 2.0 + 2.0 * Math.atan(
+                                (5.0 * v * v / (49.0 * d)) -
+                                                Math.sqrt(5.0) * Math.sqrt((5.0 * v * v * v * v) +
+                                                                (49 * v * v * d)) / (49.0 * d)
+                                                +
+                                                (1.0 / 49.0) * Math.sqrt(
+                                                                (50.0 * v * v * v * v) / (d * d) -
+                                                                                (245.0 * v * v) / d +
+                                                                                (4802.0 * Math.sqrt(5) * v * v)
+                                                                                                / Math.sqrt((5.0 * v * v
+                                                                                                                * v * v)
+                                                                                                                + (49.0 * v * v * d))
+                                                                                -
+                                                                                (50.0 * Math.sqrt(5.0) * v * v * v * v
+                                                                                                * v * v)
+                                                                                                / (d * d * Math.sqrt(
+                                                                                                                (5.0 * v * v * v * v)
+                                                                                                                                + (49.0 * v * v * d)))
+                                                                                -
+                                                                                2401.0)))
+                                / (2 * Math.PI);
+                // SmartDashboard.putNumber("d", d);
+                // SmartDashboard.putNumber("v", v);
+                // SmartDashboard.putNumber("ahhhh", (Math.PI / 2.0 + 2.0 * Math.atan(
+                // (5.0 * v * v / (49.0 * d)) -
+                // Math.sqrt(5.0) * Math.sqrt((5.0 * v * v * v * v) +
+                // (49 * v * v * d)) / (49.0 * d)
+                // +
+                // (1.0 / 49.0) * Math.sqrt(
+                // (50.0 * v * v * v * v) / (d * d) -
+                // (245.0 * v * v) / d +
+                // (4802.0 * Math.sqrt(5) * v * v)
+                // / Math.sqrt((5.0 * v * v
+                // * v * v)
+                // + (49.0 * v * v * d))
+                // -
+                // (50.0 * Math.sqrt(5.0) * v * v * v * v
+                // * v * v)
+                // / (d * d * Math.sqrt(
+                // (5.0 * v * v * v * v)
+                // + (49.0 * v * v * d)))
+                // -
+                // 2401.0)) // this last division is to
+                // // normalize the angle
+                // // difference
+                // ) / (2 * Math.PI));
+
                 return !Double.isNaN(angle) ? angle : encoderOffset - 0.07;
         }
 }

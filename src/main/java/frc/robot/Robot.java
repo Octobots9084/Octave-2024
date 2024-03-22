@@ -133,10 +133,14 @@ public class Robot extends TimedRobot {
     // ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
     // SmartDashboard.putNumber("realFlywheelBottom",
     // ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
-    SmartDashboard.putBoolean("Shooter track", ShooterTrack.getInstance().getSensor());
-    SmartDashboard.putBoolean("Intake track", IntakeTrack.getInstance().getAnalogDigital());
-    SmartDashboard.putBoolean("Intake 1", IntakeRoller.getInstance().getSensor());
-    SmartDashboard.putBoolean("Intake 2", IntakeTrack.getInstance().getSensor2());
+    // SmartDashboard.putBoolean("Shooter track",
+    // ShooterTrack.getInstance().getSensor());
+    // SmartDashboard.putBoolean("Intake track",
+    // IntakeTrack.getInstance().getAnalogDigital());
+    // SmartDashboard.putBoolean("Intake 1",
+    // IntakeRoller.getInstance().getSensor());
+    // SmartDashboard.putBoolean("Intake 2",
+    // IntakeTrack.getInstance().getSensor2());
     // SmartDashboard.putNumber("climbele",
     // ShooterElevator.getInstance().getPosition() *
     // ShooterElevator.getInstance().gearing);
@@ -155,14 +159,14 @@ public class Robot extends TimedRobot {
     Light.getInstance().setAnimation(Animations.DEFAULT);
   }
 
-  //DigitalInput coastSwitch = new DigitalInput(69);
+  // DigitalInput coastSwitch = new DigitalInput(69);
 
   @Override
   public void disabledPeriodic() {
     // if (disabledTimer.hasElapsed(Constants.Drivebase.WHEEL_LOCK_TIME)) {
-    //   disabledTimer.stop();
+    // disabledTimer.stop();
     // }
-    //Climb.getInstance().setCoast(coastSwitch.get());
+    // Climb.getInstance().setCoast(coastSwitch.get());
     Optional<Alliance> ally = DriverStation.getAlliance();
     if (ally.isPresent()) {
       if (ally.get() == Alliance.Red) {
@@ -224,12 +228,18 @@ public class Robot extends TimedRobot {
   }
 
   public void checkDoubleNotes() {
-    SmartDashboard.putBoolean("dn condition 1", !ShooterTrack.getInstance().getSensor());
-    SmartDashboard.putBoolean("dn condition 2", !ShooterPivot.getInstance().notSoFastEggman);
-    SmartDashboard.putBoolean("dn condition 3", !IntakeRoller.getInstance().getSensor());
-    SmartDashboard.putBoolean("dn condition 4", !IntakeTrack.getInstance().getSensor());
-    SmartDashboard.putBoolean("dn condition 5", !ShooterPivot.getInstance().notSoFastEggman);
-    SmartDashboard.putBoolean("dn condition 6", !IntakeTrack.getInstance().getSensor2());
+    // SmartDashboard.putBoolean("dn condition 1",
+    // !ShooterTrack.getInstance().getSensor());
+    // SmartDashboard.putBoolean("dn condition 2",
+    // !ShooterPivot.getInstance().notSoFastEggman);
+    // SmartDashboard.putBoolean("dn condition 3",
+    // !IntakeRoller.getInstance().getSensor());
+    // SmartDashboard.putBoolean("dn condition 4",
+    // !IntakeTrack.getInstance().getSensor());
+    // SmartDashboard.putBoolean("dn condition 5",
+    // !ShooterPivot.getInstance().notSoFastEggman);
+    // SmartDashboard.putBoolean("dn condition 6",
+    // !IntakeTrack.getInstance().getSensor2());
 
     if (!ShooterTrack.getInstance().getSensor() && !ShooterPivot.getInstance().notSoFastEggman
         && (!IntakeRoller.getInstance().getSensor()
