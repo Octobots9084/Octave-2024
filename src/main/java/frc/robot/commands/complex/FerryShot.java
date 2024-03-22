@@ -108,13 +108,21 @@ public class FerryShot extends Command {
         // : 0);
 
         // same side ferrying protection
-        if ((!Constants.isBlueAlliance && realPose2d.getX() >= 5.85)
-                || (Constants.isBlueAlliance && realPose2d.getX() <= 10.65)) {
-            return false;
-        }
+        // if ((!Constants.isBlueAlliance && realPose2d.getX() >= 5.85)
+        // || (Constants.isBlueAlliance && realPose2d.getX() <= 10.65)) {
+        // return false;
+        // }
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
         if (isInTolerance(realRotation)) {
             Light.getInstance().setAnimation(Animations.SHOT_READY);
+            System.out.println("Ferry shot authorized. Flywheels at " + targetFlywheel + " of " + realFlywheel
+                    + " with a tolerance of " + 3 + " and error of " + (targetFlywheel - realFlywheel) + " Pivot at "
+                    + realPivot + " of " + targetPivot + " with a tolerance of " + 0.05 + " and an error of "
+                    + (targetPivot - realPivot) + " Bot rotation at " + realPose2d.getRotation().getRadians() + " of "
+                    + targetTurn.getRadians() + " with a tolerance of " + 0.05 + " and an error of "
+                    + (realPose2d.getRotation().getRadians() - targetTurn.getRadians()) + "and a position of "
+                    + realPose2d.toString() + ". Good luck!");
+
             return true;
         } else {
             return false;
@@ -133,6 +141,15 @@ public class FerryShot extends Command {
     public void end(boolean inturupted) {
         if (!inturupted) {
             CommandScheduler.getInstance().schedule(new TheBigYeet());
+        } else {
+            System.out.println("Ferry shot fired out of tolerance. Flywheels at " + targetFlywheel + " of "
+                    + realFlywheel
+                    + " with a tolerance of " + 3 + " and error of " + (targetFlywheel - realFlywheel) + " Pivot at "
+                    + realPivot + " of " + targetPivot + " with a tolerance of " + 0.05 + " and an error of "
+                    + (targetPivot - realPivot) + " Bot rotation at " + realPose2d.getRotation().getRadians() + " of "
+                    + targetTurn.getRadians() + " with a tolerance of " + 0.05 + " and an error of "
+                    + (realPose2d.getRotation().getRadians() - targetTurn.getRadians()) + "and a position of "
+                    + realPose2d.toString() + ". Good luck!");
         }
         swerveSubsystem.setShootingRequestActive(false);
         swerveSubsystem.targetAngleEnabled = false;
