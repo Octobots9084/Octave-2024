@@ -58,7 +58,7 @@ public class FerryShot extends Command {
             targetLanding = new Pose2d(realPose2d.getX() >= 10.65 ? 8.2 : 2.1, realPose2d.getX() >= 10.65 ? 5.7 : 7.0,
                     new Rotation2d());
         } else {
-            targetLanding = new Pose2d(realPose2d.getX() <= 5.85 ? 8.2 : 14.6, realPose2d.getX() <= 5.85 ? 5.7 : 6.28,
+            targetLanding = new Pose2d(realPose2d.getX() <= 5.85 ? 8.2 : 14.6, realPose2d.getX() <= 5.85 ? 5.7 : 7.0,
                     new Rotation2d());
         }
         targetPivot = ReverseKinematics.calcFerryLaunchAngle(realPose2d, targetLanding);
