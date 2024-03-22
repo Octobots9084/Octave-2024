@@ -1,0 +1,79 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.79,
+        "y": 0.9
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.79,
+        "y": 0.9000000000000004
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.9108698975691785,
+        "y": 2.1593173044165987
+      },
+      "prevControl": {
+        "x": 2.1613161910038188,
+        "y": 1.4973737713458921
+      },
+      "nextControl": {
+        "x": 3.65982229594791,
+        "y": 2.820729812075735
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.79,
+        "y": 2.2760371587093875
+      },
+      "prevControl": {
+        "x": 5.955312763706097,
+        "y": 0.9045788707691147
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.2,
+      "rotationDegrees": -44.198491065110545,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.65,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 6.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 24.11738949172383,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Annie's Garbage",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}
