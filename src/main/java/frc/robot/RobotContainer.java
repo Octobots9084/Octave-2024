@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -17,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.CollectDriveby;
+import frc.robot.commands.complex.CollectDrivebySafely;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
@@ -31,6 +33,9 @@ import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
+
+import java.util.function.BooleanSupplier;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -78,19 +83,26 @@ public class RobotContainer {
                 SwerveSubsystem.getInstance().setDefaultCommand(
                                 !RobotBase.isSimulation() ? closedFieldRel : closedFieldRel);
                 try {
+                        BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
                         NamedCommands.registerCommand("SpeakerAuto", new SpeakerAutoFast());
                         NamedCommands.registerCommand("SpeakerAutoInital", new InitalSpeakerAutoFast());
                         NamedCommands.registerCommand("SpeakerAutoSlow", new InitalSpeakerAuto());
 
                         NamedCommands.registerCommand("CollectDrivebyMF", new CollectDriveby());
+                        NamedCommands.registerCommand("CollectDrivebyMFSafely", new CollectDrivebySafely());
 
-                        NamedCommands.registerCommand("Collect", new CollectAuto());
+                        NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(10));
 
                         NamedCommands.registerCommand("QuickDraw",
                                         new DrivebyAuto(true).withTimeout(2).andThen(new WaitCommand(0.1)));
 
                         NamedCommands.registerCommand("Shoot",
                                         new DrivebyAuto(false).withTimeout(1.5).andThen(new TheBigYeetAuto()));
+                        NamedCommands.registerCommand("ShootSafely",
+                                        new ConditionalCommand(
+                                                        new DrivebyAuto(false).withTimeout(1.5)
+                                                                        .andThen(new TheBigYeetAuto()),
+                                                        new InstantCommand(), shooterSensorTrue));
                         NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
                                 ShooterTrack.getInstance().set(ShooterSpeeds.STOP);
                         }));

@@ -76,13 +76,19 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "ShootSafely"
           }
         },
         {
-          "type": "parallel",
+          "type": "deadline",
           "data": {
             "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "3 Piece Amp Edge - 2"
+                }
+              },
               {
                 "type": "sequential",
                 "data": {
@@ -107,12 +113,6 @@
                     }
                   ]
                 }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "3 Piece Amp Edge - 2"
-                }
               }
             ]
           }
@@ -120,7 +120,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "ShootSafely"
           }
         },
         {
