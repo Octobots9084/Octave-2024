@@ -21,7 +21,7 @@ public class ReverseKinematics {
         // X and Y positions of the subwoofer with regards to (0,0) on the robot's
         // Pose2d
         private static double subwooferXPos = 0;
-        private static double subwooferYPos = 6;
+        private static double subwooferYPos = 5.5;
         private static double encoderOffset = 0.597;
         private static double movementMultiplierX = 1.5;
         private static double movementMultiplierY = 1.5;
@@ -146,7 +146,7 @@ public class ReverseKinematics {
                 // if ((calcFerryDistance(pos, target))<7.1) {
                 // return 7.1;
                 // }
-                return ((calcFerryDistance(pos, target)) / 2.0 + 5.0);
+                return ((calcFerryDistance(pos, target)) / 2.0 + 5.0)/2;
         }
 
         public static double calcFerryLaunchAngle(Pose2d pos, Pose2d target) {

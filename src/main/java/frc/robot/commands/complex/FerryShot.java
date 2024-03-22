@@ -108,8 +108,8 @@ public class FerryShot extends Command {
         // : 0);
 
         // same side ferrying protection
-        if ((Constants.isBlueAlliance && realPose2d.getX() <= 5.85)
-                || (!Constants.isBlueAlliance && realPose2d.getX() >= 10.65)) {
+        if ((!Constants.isBlueAlliance && realPose2d.getX() >= 5.85)
+                || (Constants.isBlueAlliance && realPose2d.getX() <= 10.65)) {
             return false;
         }
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
