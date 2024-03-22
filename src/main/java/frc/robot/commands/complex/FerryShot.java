@@ -55,14 +55,14 @@ public class FerryShot extends Command {
         realFlywheel = flywheel.getFlywheelSpeed();
 
         if (Constants.isBlueAlliance) {
-            targetLanding = new Pose2d(realPose2d.getX() >= 10.65 ? 8.2 : 2.1, realPose2d.getX() >= 10.65 ? 5.7 : 7.0,
+            targetLanding = new Pose2d(realPose2d.getX() >= 10.65 ? 8.2 : 2.1, realPose2d.getX() >= 10.65 ? 5.7 : 6.5,
                     new Rotation2d());
         } else {
-            targetLanding = new Pose2d(realPose2d.getX() <= 5.85 ? 8.2 : 14.6, realPose2d.getX() <= 5.85 ? 5.7 : 7.0,
+            targetLanding = new Pose2d(realPose2d.getX() <= 5.85 ? 8.2 : 14.6, realPose2d.getX() <= 5.85 ? 5.7 : 6.5,
                     new Rotation2d());
         }
         targetPivot = ReverseKinematics.calcFerryLaunchAngle(realPose2d, targetLanding);
-        targetFlywheel = -ReverseKinematics.calcFerryVelocity(realPose2d, targetLanding) * 2;
+        targetFlywheel = -ReverseKinematics.calcFerryVelocity(realPose2d, targetLanding) * 1.7;
         // SmartDashboard.putNumber("targetflywheeeeel", targetFlywheel);
         targetTurn = new Rotation2d(
                 ReverseKinematics.calcFerryRotation(realPose2d, targetLanding));
