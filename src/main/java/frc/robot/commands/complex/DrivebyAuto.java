@@ -45,7 +45,8 @@ public class DrivebyAuto extends Command {
         swerveSubsystem = SwerveSubsystem.getInstance();
         this.first = first;
         count++;
-        SmartDashboard.putNumber("Driveby", SmartDashboard.getNumber("Driveby", 0) + 1);
+        // SmartDashboard.putNumber("Driveby", SmartDashboard.getNumber("Driveby", 0) +
+        // 1);
         System.out.println("drivebyconst");
         System.out.println("driveinit " + count + " " + count2);
     }
