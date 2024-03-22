@@ -20,6 +20,7 @@ import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.CollectDriveby;
 import frc.robot.commands.complex.CollectDrivebySafely;
 import frc.robot.commands.complex.DrivebyAuto;
+import frc.robot.commands.complex.DrivebyAutoSniper;
 import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
 import frc.robot.commands.complex.SpeakerAutoFast;
@@ -92,6 +93,7 @@ public class RobotContainer {
                         NamedCommands.registerCommand("CollectDrivebyMFSafely", new CollectDrivebySafely());
 
                         NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(10));
+                        NamedCommands.registerCommand("Snipe", new DrivebyAutoSniper(false));
 
                         NamedCommands.registerCommand("QuickDraw",
                                         new DrivebyAuto(true).withTimeout(2).andThen(new WaitCommand(0.1)));

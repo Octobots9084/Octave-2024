@@ -3,32 +3,43 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3740584827141216,
-        "y": 5.408019915565896
+        "x": 7.83,
+        "y": 5.93
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6366781548728973,
-        "y": 5.087040316260727
+        "x": 3.134582951630359,
+        "y": 7.593237037848483
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.550983680166412,
-        "y": 4.367267881455193
+        "x": 7.83,
+        "y": 4.08519490024762
       },
       "prevControl": {
-        "x": 1.8798445179828744,
-        "y": 4.853600607675149
+        "x": 2.298090662532036,
+        "y": 4.036561627625624
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.55,
+      "rotationDegrees": 3.765501029917158,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 0.8,
+      "rotationDegrees": -17.90597403609559,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -39,13 +50,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -20.409882833803998,
+    "rotation": 3.1644557515557725,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Annie's Garbage",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -31.866738361701966,
     "velocity": 0
   },
   "useDefaultConstraints": false

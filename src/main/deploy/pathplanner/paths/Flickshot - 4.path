@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3740584827141216,
-        "y": 5.408019915565896
+        "x": 2.55,
+        "y": 6.83
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6366781548728973,
-        "y": 5.087040316260727
+        "x": 2.6677035344592013,
+        "y": 5.631732969627076
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.550983680166412,
-        "y": 4.367267881455193
+        "x": 7.832557086915123,
+        "y": 7.2269043116285285
       },
       "prevControl": {
-        "x": 1.8798445179828744,
-        "y": 4.853600607675149
+        "x": 5.546793273681335,
+        "y": 6.1083390413226315
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -20.409882833803998,
+    "rotation": 22.380135051959538,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "Annie's Garbage",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 27.201369740851025,
     "velocity": 0
   },
   "useDefaultConstraints": false
