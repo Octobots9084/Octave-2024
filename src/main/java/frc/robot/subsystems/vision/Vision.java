@@ -61,12 +61,14 @@ public class Vision implements Runnable {
     // Get AprilTag data and updating the pose estimator
     try {
       if (photonPoseEstimator != null && photonCamera != null) {
-        var photonResults = photonCamera.getLatestResult(); //Gets the latest camera results
-
+        var photonResults = photonCamera.getLatestResult();
         if (photonResults.hasTargets()) {
+     
+        
           //Updates the pose estimator
           photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
             var estimatedPose = estimatedRobotPose.estimatedPose;
+
             /** 
             * If present then makes sure the measurement is on the field and
             * sets the atomic estimated pose to the current estimated pose

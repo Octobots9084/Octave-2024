@@ -46,12 +46,6 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "SpinUpFlywheels"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
                         "name": "Collect"
                       }
                     },
