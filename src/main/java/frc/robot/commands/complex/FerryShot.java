@@ -55,16 +55,17 @@ public class FerryShot extends Command {
         realFlywheel = flywheel.getFlywheelSpeed();
 
         if (Constants.isBlueAlliance) {
-            targetLanding = new Pose2d(realPose2d.getX() >= 10.65 ? 8.2 : 2.1, realPose2d.getX() >= 10.65 ? 5.7 : 7.0, new Rotation2d());
+            targetLanding = new Pose2d(realPose2d.getX() >= 10.65 ? 8.2 : 2.1, realPose2d.getX() >= 10.65 ? 5.7 : 7.0,
+                    new Rotation2d());
         } else {
-            targetLanding = new Pose2d(realPose2d.getX() <= 5.85 ? 8.2 : 14.6, realPose2d.getX() <= 5.85 ? 5.7 : 6.28, new Rotation2d());
+            targetLanding = new Pose2d(realPose2d.getX() <= 5.85 ? 8.2 : 14.6, realPose2d.getX() <= 5.85 ? 5.7 : 7.0,
+                    new Rotation2d());
         }
         targetPivot = ReverseKinematics.calcFerryLaunchAngle(realPose2d, targetLanding);
-        targetFlywheel = -ReverseKinematics.calcFerryVelocity(realPose2d, targetLanding)*2;
-        SmartDashboard.putNumber("targetflywheeeeel", targetFlywheel);
+        targetFlywheel = -ReverseKinematics.calcFerryVelocity(realPose2d, targetLanding) * 2;
+        // SmartDashboard.putNumber("targetflywheeeeel", targetFlywheel);
         targetTurn = new Rotation2d(
-                ReverseKinematics.calcFerryRotation(realPose2d, targetLanding)
-        );
+                ReverseKinematics.calcFerryRotation(realPose2d, targetLanding));
     }
 
     @Override
@@ -78,7 +79,7 @@ public class FerryShot extends Command {
         updateTargets();
         // SmartDashboard.putString("realPose2d", realPose2d.toString());
         swerveSubsystem.setShootingRequest(targetTurn);
-        SmartDashboard.putNumber("flywheelgo", targetFlywheel);
+        // SmartDashboard.putNumber("flywheelgo", targetFlywheel);
         flywheel.setFlyWheelSpeedMeters(targetFlywheel);
         if (!pivot.notSoFastEggman) {
             pivot.setPosition(targetPivot);
@@ -90,19 +91,25 @@ public class FerryShot extends Command {
         double realRotation = swerveSubsystem.getHeading().getRadians();
         // SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
 
-        SmartDashboard.putNumber("targetPivot", targetPivot);
-        SmartDashboard.putNumber("realPivot", realPivot);
-        SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation, 2 * Math.PI));
-        SmartDashboard.putNumber("targetRotation", MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
-        SmartDashboard.putNumber("realFlywheel", realFlywheel);
-        SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
+        // SmartDashboard.putNumber("targetPivot", targetPivot);
+        // SmartDashboard.putNumber("realPivot", realPivot);
+        // SmartDashboard.putNumber("realRotation", MathUtil.wrapToCircle(realRotation,
+        // 2 * Math.PI));
+        // SmartDashboard.putNumber("targetRotation",
+        // MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
+        // SmartDashboard.putNumber("realFlywheel", realFlywheel);
+        // SmartDashboard.putNumber("targetFlywheel", targetFlywheel);
 
-        SmartDashboard.putNumber("flywheelTolerance", MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2) ? 1 : 0);
-        SmartDashboard.putNumber("pivotTolerance", MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005) ? 1 : 0);
-        SmartDashboard.putNumber("rotationTolerance", isInTolerance(realRotation) ? 1 : 0);
+        // SmartDashboard.putNumber("flywheelTolerance",
+        // MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 2) ? 1 : 0);
+        // SmartDashboard.putNumber("pivotTolerance",
+        // MathUtil.isWithinTolerance(realPivot, targetPivot, 0.005) ? 1 : 0);
+        // SmartDashboard.putNumber("rotationTolerance", isInTolerance(realRotation) ? 1
+        // : 0);
 
         // same side ferrying protection
-        if ((Constants.isBlueAlliance && realPose2d.getX() <= 5.85) || (!Constants.isBlueAlliance && realPose2d.getX() >= 10.65)) {
+        if ((!Constants.isBlueAlliance && realPose2d.getX() >= 5.85)
+                || (Constants.isBlueAlliance && realPose2d.getX() <= 10.65)) {
             return false;
         }
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
@@ -122,7 +129,6 @@ public class FerryShot extends Command {
                         MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05));
     }
 
-   
     @Override
     public void end(boolean inturupted) {
         if (!inturupted) {

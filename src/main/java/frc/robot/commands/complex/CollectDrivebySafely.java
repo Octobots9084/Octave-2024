@@ -12,7 +12,7 @@ import frc.robot.subsystems.ShooterTrack;
 public class CollectDrivebySafely extends SequentialCommandGroup {
     public CollectDrivebySafely() {
         BooleanSupplier shooterSensorTrue = () -> !ShooterTrack.getInstance().getSensor();
-        SmartDashboard.putNumber("Auto", SmartDashboard.getNumber("Auto", 0) + 1);
+        // SmartDashboard.putNumber("Auto", SmartDashboard.getNumber("Auto", 0) + 1);
         System.out.println("collectdrivebyconst");
         addCommands(
                 new InstantCommand(() -> {
