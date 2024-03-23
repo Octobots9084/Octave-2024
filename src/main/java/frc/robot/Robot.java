@@ -102,6 +102,9 @@ public class Robot extends TimedRobot {
     ShooterFlywheel.getInstance();
     Climb.getInstance();
     Light.getInstance().setAnimation(Animations.DEFAULT);
+
+    autoInit = new PathPlannerAuto("AutoInit").ignoringDisable(true);
+    autoInit.schedule();
   }
 
   /**
@@ -160,8 +163,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     Light.getInstance().setAnimation(Animations.DEFAULT);
-    autoInit = new PathPlannerAuto("AutoInit").ignoringDisable(true);
-    autoInit.schedule();
+    
   }
 
   // DigitalInput coastSwitch = new DigitalInput(69);
