@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.commands.PathfindingCommand;
 
 import swervelib.parser.SwerveParser;
@@ -154,9 +155,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    disabledTimer.reset();
-    disabledTimer.start();
     Light.getInstance().setAnimation(Animations.DEFAULT);
+    Command autoInit = new PathPlannerAuto("AutoInit").ignoringDisable(true);
+    autoInit.schedule();
   }
 
   // DigitalInput coastSwitch = new DigitalInput(69);
