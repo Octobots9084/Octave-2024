@@ -189,6 +189,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    autoInit.cancel();
     Climb.getInstance().setCoast(false);
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
