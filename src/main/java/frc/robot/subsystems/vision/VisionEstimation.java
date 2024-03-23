@@ -121,22 +121,15 @@ public class VisionEstimation extends SubsystemBase {
                 return INSTANCE;
         }
 
-        boolean first = true;
-
         @Override
         public void periodic() {
                 if (VisionConstants.USE_VISION) {
                         // Update "run count" telemetry
                         // runCountTelemetry.incCount(1);
-                        if (first) {
-                                estimatorChecker(frontLeftEstimator);
-                                estimatorChecker(frontRightEstimator);
-                                first = false;
-                        } else {
-                                estimatorChecker(backRightEstimator);
-                                estimatorChecker(backLeftEstimator);
-                                first = true;
-                        }
+                        estimatorChecker(frontLeftEstimator);
+                        estimatorChecker(frontRightEstimator);
+                        estimatorChecker(backRightEstimator);
+                        estimatorChecker(backLeftEstimator);
 
                 } else {
                         allNotifier.close();

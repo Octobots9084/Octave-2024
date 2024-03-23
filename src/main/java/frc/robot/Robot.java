@@ -152,13 +152,15 @@ public class Robot extends TimedRobot {
     // ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
   }
 
+  Command autoInit;
+
   /**
    * This function is called once each time the robot enters Disabled mode.
    */
   @Override
   public void disabledInit() {
     Light.getInstance().setAnimation(Animations.DEFAULT);
-    Command autoInit = new PathPlannerAuto("AutoInit").ignoringDisable(true);
+    autoInit = new PathPlannerAuto("AutoInit").ignoringDisable(true);
     autoInit.schedule();
   }
 
@@ -212,6 +214,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    autoInit.cancel();
     Climb.getInstance().setCoast(false);
     m_robotContainer.setDriveMode();
     ShooterFlywheel.getInstance().setFlywheelsCurrentNormal();
