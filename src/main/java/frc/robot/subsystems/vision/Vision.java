@@ -68,7 +68,6 @@ public class Vision implements Runnable {
         var photonResults = photonCamera.getLatestResult();
         if (photonResults.hasTargets()) {
           for (int i = 0; i < photonResults.targets.size(); i++) {
-            System.out.println("Targets for : " + photonResults.toString());
             if (photonResults.targets.get(i).getFiducialId() == 14
                 || photonResults.targets.get(i).getFiducialId() == 5
                 || photonResults.targets.get(i).getFiducialId() == 6) {
