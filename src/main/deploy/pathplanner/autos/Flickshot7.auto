@@ -41,15 +41,28 @@
           "data": {
             "commands": [
               {
-                "type": "named",
-                "data": {
-                  "name": "Collect"
-                }
-              },
-              {
                 "type": "path",
                 "data": {
                   "pathName": "Flickshot - 1"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Collect"
+                      }
+                    }
+                  ]
                 }
               }
             ]
@@ -73,6 +86,12 @@
                       "type": "named",
                       "data": {
                         "name": "Snipe"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
                       }
                     },
                     {
@@ -108,6 +127,12 @@
                       }
                     },
                     {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.1
+                      }
+                    },
+                    {
                       "type": "named",
                       "data": {
                         "name": "Collect"
@@ -124,34 +149,34 @@
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "path",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Flickshot - 4"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Flickshot - 5"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Flickshot 6"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Flickshot - 7"
-                      }
-                    }
-                  ]
+                  "pathName": "Flickshot - 4"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Snipe"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.1
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Flickshot - 5"
                 }
               },
               {
@@ -165,42 +190,37 @@
                       }
                     },
                     {
-                      "type": "named",
+                      "type": "wait",
                       "data": {
-                        "name": "Collect"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Snipe"
+                        "waitTime": 0.1
                       }
                     },
                     {
                       "type": "named",
                       "data": {
                         "name": "Collect"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Snipe"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Collect"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Snipe"
                       }
                     }
                   ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Flickshot 6"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Snipe"
                 }
               }
             ]
