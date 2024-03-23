@@ -20,6 +20,7 @@ import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.CollectDriveby;
 import frc.robot.commands.complex.CollectDrivebySafely;
 import frc.robot.commands.complex.DrivebyAuto;
+import frc.robot.commands.complex.DrivebyAutoHigher;
 import frc.robot.commands.complex.DrivebyAutoSniper;
 import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
@@ -100,6 +101,11 @@ public class RobotContainer {
 
                         NamedCommands.registerCommand("Shoot",
                                         new DrivebyAuto(false).withTimeout(1.5).andThen(new TheBigYeetAuto()));
+                        NamedCommands.registerCommand("ShootSafelyHigher",
+                                        new ConditionalCommand(
+                                                        new DrivebyAutoHigher(false).withTimeout(1.5)
+                                                                        .andThen(new TheBigYeetAuto()),
+                                                        new InstantCommand(), shooterSensorTrue));
                         NamedCommands.registerCommand("ShootSafely",
                                         new ConditionalCommand(
                                                         new DrivebyAuto(false).withTimeout(1.5)
