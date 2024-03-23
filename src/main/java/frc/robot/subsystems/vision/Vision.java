@@ -35,7 +35,8 @@ public class Vision implements Runnable {
 
     try {
       var layout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
-      layout.setOrigin(OriginPosition.kBlueAllianceWallRightSide); // Sets the Origin to the Blue AllianceWall and will be flipped in the robot thread
+      layout.setOrigin(OriginPosition.kBlueAllianceWallRightSide); // Sets the Origin to the Blue AllianceWall and will
+                                                                   // be flipped in the robot thread
 
       photonPoseEstimator = photonCamera != null
           ? new PhotonPoseEstimator(layout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, photonCamera, robotToCamera)
@@ -49,8 +50,11 @@ public class Vision implements Runnable {
     this.photonPoseEstimator = photonPoseEstimator;
 
     // Initialize telemetry
-    // runCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "runs per s"), 1);
-    // setAtomicCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "meas per s push"), 1);
+    // runCountTelemetry = new
+    // CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "runs per s"), 1);
+    // setAtomicCountTelemetry = new
+    // CountPerPeriodTelemetry(TelemUtils.getCamSDKey(cameraName, "meas per s
+    // push"), 1);
   }
 
   @Override
@@ -63,22 +67,22 @@ public class Vision implements Runnable {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult();
         if (photonResults.hasTargets()) {
-        for (int i = 0; i < photonResults.targets.size(); i++) {
-          if (photonResults.targets.get(i).getFiducialId()==5) {
-            photonResults.targets.remove(i);
-            i++;
+          for (int i = 0; i < photonResults.targets.size(); i++) {
+            if (photonResults.targets.get(i).getFiducialId() == 14) {
+              photonResults.targets.remove(i);
+              i++;
+            }
           }
-        }
-        
-          //Updates the pose estimator
+
+          // Updates the pose estimator
           photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
             var estimatedPose = estimatedRobotPose.estimatedPose;
 
-            /** 
-            * If present then makes sure the measurement is on the field and
-            * sets the atomic estimated pose to the current estimated pose
-            * from PhotonPoseEstimator
-            */
+            /**
+             * If present then makes sure the measurement is on the field and
+             * sets the atomic estimated pose to the current estimated pose
+             * from PhotonPoseEstimator
+             */
             if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.LENGTH
                 && estimatedPose.getY() > 0.0
                 && estimatedPose.getY() <= FieldConstants.WIDTH) {
