@@ -136,7 +136,7 @@ public class DrivebyAutoSniper extends Command {
 
     private boolean isInTolerance(double realRotation) {
         return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 4)
-                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.009)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.008)
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
                         MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05));
     }
