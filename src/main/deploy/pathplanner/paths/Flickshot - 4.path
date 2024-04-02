@@ -16,27 +16,22 @@
     },
     {
       "anchor": {
-        "x": 7.696383923573536,
-        "y": 7.411710747592111
+        "x": 7.92,
+        "y": 7.3
       },
       "prevControl": {
-        "x": 1.3156985555677279,
-        "y": 5.7289995148710675
+        "x": 1.539314631994192,
+        "y": 5.617288767278956
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Flickshot transition 1"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 0.65,
       "rotationDegrees": 6.889972175244068,
-      "rotateFast": false
-    },
-    {
-      "waypointRelativePos": 0.8,
-      "rotationDegrees": 23.198590513648035,
       "rotateFast": false
     }
   ],
