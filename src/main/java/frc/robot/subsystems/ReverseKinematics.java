@@ -13,7 +13,7 @@ import frc.robot.Constants;
 
 public class ReverseKinematics {
         // distance between launcher opening and the subwoofer target
-        private static double constTargetHeightDiff = 1.41;
+        private static double constTargetHeightDiff = 1.35;
         // gravity
         private static double g = 9.8;
         // the final y velocity for the note to be moving at when it enters the target
