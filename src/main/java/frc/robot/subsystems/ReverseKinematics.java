@@ -146,7 +146,7 @@ public class ReverseKinematics {
                 // if ((calcFerryDistance(pos, target))<7.1) {
                 // return 7.1;
                 // }
-                return ((calcFerryDistance(pos, target)) / 7.0 + 5.0);
+                return ((calcFerryDistance(pos, target)) / 6.1 + 5.0);
         }
 
         public static double calcFerryLaunchAngle(Pose2d pos, Pose2d target) {
