@@ -10,7 +10,7 @@ public enum ArmPositions {
     SOURCE_COLLECT(0, 0), // placeholder
     SPEAKER_SHOT(0, 0.462),
     PREP_TRAP(15, 0.39),
-    INITAL_AUTO(15, 0.45);
+    INITAL_AUTO(15, 0.45), DYNAMIC_FERRY_SHOT(0, 0.443);
 
     public double elevator, pivot;
 
