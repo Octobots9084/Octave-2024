@@ -26,7 +26,7 @@ public class ReverseKinematics {
         private static double movementMultiplierX = 1;
         private static double movementMultiplierY = 1;
         private static double flywheelSpeedMultiplier = 0.9;
-        private static double gravityMultiplier = 0.55;
+        private static double gravityMultiplier = 0.3;
         private static double spinVComp = 0;
 
         // converts Pose2d coords into positions relative to the target
@@ -146,7 +146,7 @@ public class ReverseKinematics {
                 // if ((calcFerryDistance(pos, target))<7.1) {
                 // return 7.1;
                 // }
-                return ((calcFerryDistance(pos, target)) / 2.0 + 5.0);
+                return ((calcFerryDistance(pos, target)) / 7.0 + 5.0);
         }
 
         public static double calcFerryLaunchAngle(Pose2d pos, Pose2d target) {
