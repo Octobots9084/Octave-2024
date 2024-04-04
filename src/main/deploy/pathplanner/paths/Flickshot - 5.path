@@ -1,0 +1,79 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.822830432390724,
+        "y": 7.3533508204457165
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.778387566253807,
+        "y": 7.440890711165308
+      },
+      "isLocked": false,
+      "linkedName": "Flickshot transition 1"
+    },
+    {
+      "anchor": {
+        "x": 2.609343607312807,
+        "y": 6.186152277517825
+      },
+      "prevControl": {
+        "x": 2.5367921544851386,
+        "y": 6.685951174775096
+      },
+      "nextControl": {
+        "x": 2.6968834980323986,
+        "y": 5.58309969700508
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.92,
+        "y": 6.069432423225036
+      },
+      "prevControl": {
+        "x": 5.128547129132174,
+        "y": 8.053669946202453
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.65,
+      "rotationDegrees": 4.6777229463866945,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.3,
+      "rotationDegrees": 25.400726298104036,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 6.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -38.29284006448931,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Annie's Garbage",
+  "previewStartingState": {
+    "rotation": 26.606743010233803,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

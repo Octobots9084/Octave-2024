@@ -88,25 +88,28 @@ public class VisionEstimation extends SubsystemBase {
                 allNotifier.startPeriodic(0.02);
 
                 // Initialize telemetry
-                // runCountTelemetry = new CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Estimation", "runs per s"), 1);
+                // runCountTelemetry = new
+                // CountPerPeriodTelemetry(TelemUtils.getCamSDKey("Estimation", "runs per s"),
+                // 1);
 
                 // getAtomicCountInkyTelemetry = new CountPerPeriodTelemetry(
-                //                 TelemUtils.getCamSDKey("Inky", "meas per s pull"), 1);
+                // TelemUtils.getCamSDKey("Inky", "meas per s pull"), 1);
                 // getAtomicCountBlinkyTelemetry = new CountPerPeriodTelemetry(
-                //                 TelemUtils.getCamSDKey("Blinky", "meas per s pull"), 1);
+                // TelemUtils.getCamSDKey("Blinky", "meas per s pull"), 1);
                 // getAtomicCountPinkyTelemetry = new CountPerPeriodTelemetry(
-                //                 TelemUtils.getCamSDKey("Pinky", "meas per s pull"), 1);
+                // TelemUtils.getCamSDKey("Pinky", "meas per s pull"), 1);
                 // getAtomicCountClydeTelemetry = new CountPerPeriodTelemetry(
-                //                 TelemUtils.getCamSDKey("Clyde", "meas per s pull"), 1);
+                // TelemUtils.getCamSDKey("Clyde", "meas per s pull"), 1);
 
-                // confidenceInkyTelemetry = new MeanPerPeriodTelemetry(TelemUtils.getCamSDKey("Inky", "confidence mult"),
-                //                 0.5, -999.99);
+                // confidenceInkyTelemetry = new
+                // MeanPerPeriodTelemetry(TelemUtils.getCamSDKey("Inky", "confidence mult"),
+                // 0.5, -999.99);
                 // confidenceBlinkyTelemetry = new MeanPerPeriodTelemetry(
-                //                 TelemUtils.getCamSDKey("Blinky", "confidence mult"), 0.5, -999.99);
+                // TelemUtils.getCamSDKey("Blinky", "confidence mult"), 0.5, -999.99);
                 // confidencePinkyTelemetry = new MeanPerPeriodTelemetry(
-                //                 TelemUtils.getCamSDKey("Pinky", "confidence mult"), 0.5, -999.99);
+                // TelemUtils.getCamSDKey("Pinky", "confidence mult"), 0.5, -999.99);
                 // confidenceClydeTelemetry = new MeanPerPeriodTelemetry(
-                //                 TelemUtils.getCamSDKey("Clyde", "confidence mult"), 0.5, -999.99);
+                // TelemUtils.getCamSDKey("Clyde", "confidence mult"), 0.5, -999.99);
         }
 
         public static VisionEstimation getInstance() {
@@ -123,25 +126,25 @@ public class VisionEstimation extends SubsystemBase {
                 if (VisionConstants.USE_VISION) {
                         // Update "run count" telemetry
                         // runCountTelemetry.incCount(1);
-
-                        estimatorChecker(backRightEstimator);
                         estimatorChecker(frontLeftEstimator);
+                        estimatorChecker(frontRightEstimator);
                         estimatorChecker(backRightEstimator);
                         estimatorChecker(backLeftEstimator);
+
                 } else {
                         allNotifier.close();
                 }
 
-        //         // Run telemetry
-        //         // runCountTelemetry.periodic();
-        //         // getAtomicCountInkyTelemetry.periodic();
-        //         // getAtomicCountBlinkyTelemetry.periodic();
-        //         // getAtomicCountPinkyTelemetry.periodic();
-        //         // getAtomicCountClydeTelemetry.periodic();
-        //         // confidenceInkyTelemetry.periodic();
-        //         // confidenceBlinkyTelemetry.periodic();
-        //         // confidencePinkyTelemetry.periodic();
-        //         // confidenceClydeTelemetry.periodic();
+                // // Run telemetry
+                // // runCountTelemetry.periodic();
+                // // getAtomicCountInkyTelemetry.periodic();
+                // // getAtomicCountBlinkyTelemetry.periodic();
+                // // getAtomicCountPinkyTelemetry.periodic();
+                // // getAtomicCountClydeTelemetry.periodic();
+                // // confidenceInkyTelemetry.periodic();
+                // // confidenceBlinkyTelemetry.periodic();
+                // // confidencePinkyTelemetry.periodic();
+                // // confidenceClydeTelemetry.periodic();
         }
 
         /**
@@ -191,7 +194,7 @@ public class VisionEstimation extends SubsystemBase {
                                                                 + ((estimation.targetsUsed.size() - 1)
                                                                                 * VisionConstants.TAG_PRESENCE_WEIGHT)));
 
-                SmartDashboard.putNumber("confidence multiplier",confidenceMultiplier);
+                // SmartDashboard.putNumber("confidence multiplier",confidenceMultiplier);
                 return visionMeasurementStdDevs.times(confidenceMultiplier);
         }
 
@@ -211,8 +214,9 @@ public class VisionEstimation extends SubsystemBase {
                         // Update "get atomic count" telemetry
                 }
 
-                // final String smartDashboardCamPoseKey = TelemUtils.getCamSDKey(estimator.cameraName, "last pose");
+                // final String smartDashboardCamPoseKey =
+                // TelemUtils.getCamSDKey(estimator.cameraName, "last pose");
                 // SmartDashboard.putString(smartDashboardCamPoseKey,
-                //                 cameraPose != null ? cameraPose.estimatedPose.toString() : "no pose");
+                // cameraPose != null ? cameraPose.estimatedPose.toString() : "no pose");
         }
 }

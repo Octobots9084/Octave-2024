@@ -163,7 +163,7 @@ public class ShooterFlywheel extends SubsystemBase {
 
     @Override
     public void periodic() {
-                SmartDashboard.putNumber("newSpeed", lastSpeed);
+        // SmartDashboard.putNumber("newSpeed", lastSpeed);
 
     }
 }

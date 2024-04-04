@@ -57,7 +57,9 @@ public class Collect extends SequentialCommandGroup {
                         new ShooterElevatorPosTolerance(ArmPositions.HANDOFF_AND_DEFAULT_SHOT).withTimeout(0.1),
                         new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                         new WaitUntilCommand(intakeSensorTrue),
+                        
                         new InstantCommand(() -> {
+                            Light.getInstance().setAnimation(Animations.TEAL);
                             System.out.println("Intake track sensor tripped");
                         }),
                         new IntakeRollerSpeedInstant(IntakeSpeeds.STOP),

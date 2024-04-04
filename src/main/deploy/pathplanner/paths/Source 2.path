@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.85,
-        "y": 3.2
+        "x": 7.79,
+        "y": 0.9
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.193171780182424,
-        "y": 0.43617316334158623
+        "x": 8.79,
+        "y": 0.9000000000000004
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.172989995269091,
-        "y": 3.9392950823816335
+        "x": 2.9108698975691785,
+        "y": 2.1593173044165987
       },
       "prevControl": {
-        "x": 7.501850833085554,
-        "y": 1.001845416013106
+        "x": 2.1613161910038188,
+        "y": 1.4973737713458921
       },
       "nextControl": {
-        "x": 8.191626823713657,
-        "y": 4.020864969196979
+        "x": 3.65982229594791,
+        "y": 2.820729812075735
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.525865159079615,
-        "y": 4.726112573612431
+        "x": 7.79,
+        "y": 2.2760371587093875
       },
       "prevControl": {
-        "x": 7.69690643572332,
-        "y": 4.6314323462120495
+        "x": 5.955312763706097,
+        "y": 0.9045788707691147
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,29 +46,34 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.95,
-      "rotationDegrees": 66.36243220223274,
+      "waypointRelativePos": 1.2,
+      "rotationDegrees": -44.198491065110545,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 1.65,
+      "rotationDegrees": 0,
       "rotateFast": false
     }
   ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 5.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 3.936437426662373,
+    "rotation": 24.11738949172383,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Annie's Garbage",
   "previewStartingState": {
-    "rotation": -34.01411996478063,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -11,9 +11,9 @@ import frc.robot.Constants;
 // xPos is the distance from being in line with the subwoofer
 // yPos is distance from the subwoofer (including the extended base part of it)
 
-public class ReverseKinematics {
+public class ReverseKinematicsHigher {
         // distance between launcher opening and the subwoofer target
-        private static double constTargetHeightDiff = 1.41;
+        private static double constTargetHeightDiff = 1.48;
         // gravity
         private static double g = 9.8;
         // the final y velocity for the note to be moving at when it enters the target
@@ -23,8 +23,8 @@ public class ReverseKinematics {
         private static double subwooferXPos = 0;
         private static double subwooferYPos = 5.5;
         private static double encoderOffset = 0.597;
-        private static double movementMultiplierX = 1;
-        private static double movementMultiplierY = 1;
+        private static double movementMultiplierX = 1.5;
+        private static double movementMultiplierY = 1.5;
         private static double flywheelSpeedMultiplier = 0.9;
         private static double gravityMultiplier = 0.55;
         private static double spinVComp = 0;
