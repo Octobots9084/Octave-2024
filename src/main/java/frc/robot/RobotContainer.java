@@ -108,7 +108,7 @@ public class RobotContainer {
                                                         new InstantCommand(), shooterSensorTrue));
                         NamedCommands.registerCommand("ShootSafely",
                                         new ConditionalCommand(
-                                                        new DrivebyAuto(false).withTimeout(1.5)
+                                                        new DrivebyAuto(false).withTimeout(2)
                                                                         .andThen(new TheBigYeetAuto()),
                                                         new InstantCommand(), shooterSensorTrue));
                         NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
