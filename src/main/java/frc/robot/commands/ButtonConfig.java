@@ -44,51 +44,51 @@ public class ButtonConfig {
 
     public void initTeleop() {
         // driverLeft.button(1).whileTrue(new TagAlign());
-        driverButtons.button(10).whileTrue(new ParallelCommandGroup(new PrepAmp(), new AmpAlign()));
-        driverLeft.button(2).whileTrue(new Driveby());
+        driverButtons.button(1).whileTrue(new ParallelCommandGroup(new PrepAmp()));
+        // driverLeft.button(2).whileTrue(new Driveby());
 
-        driverRight.button(1).onTrue(new TheBigYeet());
-        driverRight.button(2).whileTrue(new FerryShot().withTimeout(1).andThen(new TheBigYeet()));
+        driverButtons.button(2).onTrue(new TheBigYeet());
+        // driverRight.button(2).whileTrue(new FerryShot().withTimeout(1).andThen(new TheBigYeet()));
 
-        driverButtons.button(1).onTrue(new ToggleTurnToSpeaker());
-        driverButtons.button(2).onTrue(new ToggleTurnTo180());
-        driverButtons.button(3).whileTrue(new SourceAlign());
-        driverButtons.button(4).onTrue(new Collect());
-        driverButtons.button(5).onTrue(new ShooterTrackSpeedInstant(ShooterSpeeds.REVERSE_TRACK));
-        driverButtons.button(6).onTrue(new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro));
-        driverButtons.button(7).onTrue(new PrepSpeaker());
-        driverButtons.button(11).onTrue(new Panic());
-        driverButtons.button(9).onTrue(new CancelAllCommands());
-        driverButtons.button(8).onTrue(new InstantCommand(() -> {
-            IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
-            IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
-            System.out.println("Intake reverse needed, code is sad now.");
+        // driverButtons.button(1).onTrue(new ToggleTurnToSpeaker());
+        // driverButtons.button(2).onTrue(new ToggleTurnTo180());
+        // driverButtons.button(3).whileTrue(new SourceAlign());
+        driverButtons.button(3).onTrue(new Collect());
+        // driverButtons.button(5).onTrue(new ShooterTrackSpeedInstant(ShooterSpeeds.REVERSE_TRACK));
+        driverButtons.button(16).onTrue(new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro));
+        driverButtons.button(4).onTrue(new PrepSpeaker());
+        // driverButtons.button(11).onTrue(new Panic());
+        // driverButtons.button(5).onTrue(new CancelAllCommands());
+        // driverButtons.button(8).onTrue(new InstantCommand(() -> {
+        //     IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
+        //     IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
+        //     System.out.println("Intake reverse needed, code is sad now.");
 
-        }));
+        // }));
 
-        coDriverButtons.button(1).onTrue(new PrepClimb());
-        coDriverButtons.button(2).onTrue(new HalfClimb());
-        coDriverButtons.button(3).onTrue(new SimpleClimb());
-        coDriverButtons.button(4).onTrue(new Layup());
-        coDriverButtons.button(5).onTrue(new Undunk());
-        coDriverButtons.button(6).whileTrue(new ClimbZero());
-        coDriverButtons.button(7).onTrue(new Collect());
-        coDriverButtons.button(8).whileTrue(new ClimbAlign()); // climb align
-        coDriverButtons.button(9).whileTrue(new SequentialCommandGroup(new InstantCommand(() -> {
-            ShooterElevator.getInstance().setPosition(ArmPositions.AMP);
-        }), new Driveby()));
-        coDriverButtons.button(10).onTrue(
-                new SequentialCommandGroup(new InstantCommand(() -> {
-                    ShooterElevator.getInstance().setPosition(ArmPositions.PREP_TRAP);
-                }),
-                        new InstantCommand(() -> {
-                            ShooterPivot.getInstance().setPosition(ArmPositions.PREP_TRAP);
-                        }),
-                        new InstantCommand(() -> {
-                            ShooterFlywheel.getInstance().setFlywheelSpeed(0);
-                        })));
-        coDriverButtons.button(11).onTrue(new Panic());
-        coDriverButtons.button(12).onTrue(new CancelAllCommands());
+        driverButtons.button(7).onTrue(new PrepClimb());
+        driverButtons.button(9).onTrue(new HalfClimb());
+        driverButtons.button(11).onTrue(new SimpleClimb());
+        // coDriverButtons.button(4).onTrue(new Layup());
+        // coDriverButtons.button(5).onTrue(new Undunk());
+        driverButtons.button(8).whileTrue(new ClimbZero());
+        // coDriverButtons.button(7).onTrue(new Collect());
+        // coDriverButtons.button(8).whileTrue(new ClimbAlign()); // climb align
+        // coDriverButtons.button(9).whileTrue(new SequentialCommandGroup(new InstantCommand(() -> {
+        //     ShooterElevator.getInstance().setPosition(ArmPositions.AMP);
+        // }), new Driveby()));
+        // coDriverButtons.button(10).onTrue(
+        //         new SequentialCommandGroup(new InstantCommand(() -> {
+        //             ShooterElevator.getInstance().setPosition(ArmPositions.PREP_TRAP);
+        //         }),
+        //                 new InstantCommand(() -> {
+        //                     ShooterPivot.getInstance().setPosition(ArmPositions.PREP_TRAP);
+        //                 }),
+        //                 new InstantCommand(() -> {
+        //                     ShooterFlywheel.getInstance().setFlywheelSpeed(0);
+        //                 })));
+        driverButtons.button(10).onTrue(new Panic());
+        driverButtons.button(12).onTrue(new CancelAllCommands());
 
         // coDriverButtons.button(4).onTrue(new SequentialCommandGroup(new
         // IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT), new
