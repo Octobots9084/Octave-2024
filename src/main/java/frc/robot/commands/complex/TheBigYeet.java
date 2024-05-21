@@ -22,9 +22,14 @@ public class TheBigYeet extends SequentialCommandGroup {
                 new InstantCommand(() -> {
                     ShooterTrack.getInstance().currentlyShooting = true;
                 }),
-                new ShooterTrackSpeedInstant(ShooterSpeeds.AMP),
+                new ShooterPivotPosInstant(ArmPositions.YEET),
+                new WaitCommand(0.4),
+                new ShooterTrackSpeedInstant(ShooterSpeeds.PANIC),
                 new InstantCommand(() -> {
-                    System.out.println("Firing command run with pivot at " + ShooterPivot.getInstance().getPosition() + " of " + ShooterPivot.getInstance().getDesiredPosition() + " and flywheels at " + ShooterFlywheel.getInstance().getFlywheelSpeedMeters()+ " and " + ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
+                    System.out.println("Firing command run with pivot at " + ShooterPivot.getInstance().getPosition()
+                            + " of " + ShooterPivot.getInstance().getDesiredPosition() + " and flywheels at "
+                            + ShooterFlywheel.getInstance().getFlywheelSpeedMeters() + " and "
+                            + ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
                 }),
                 new WaitCommand(0.2),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
@@ -36,7 +41,7 @@ public class TheBigYeet extends SequentialCommandGroup {
                 new InstantCommand(() -> {
                     ShooterTrack.getInstance().currentlyShooting = false;
                 }),
-                new InstantCommand(()->{
+                new InstantCommand(() -> {
                     ShooterFlywheel.getInstance().setFlywheelActive(false);
                 }));
     }
