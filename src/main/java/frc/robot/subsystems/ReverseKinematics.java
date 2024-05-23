@@ -13,7 +13,7 @@ import frc.robot.Constants;
 
 public class ReverseKinematics {
         // distance between launcher opening and the subwoofer target
-        private static double constTargetHeightDiff = 1.41;
+        private static double constTargetHeightDiff = 1;
         // gravity
         private static double g = 9.8;
         // the final y velocity for the note to be moving at when it enters the target
@@ -91,7 +91,7 @@ public class ReverseKinematics {
         // a value of pi/2, for example, means directly north (from a bird's eye view)
         // with the subwoofer north of the robot
         public static double calcRobotAngle(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS) {
-                double timeInAir = calcTimeInAir(pos, speed, flywheelSpeedMTS);
+                double timeInAir = 0.2;//calcTimeInAir(pos, speed, flywheelSpeedMTS);
                 return Math.atan2(calcLaunchYVel(pos, speed, timeInAir),
                                 calcLaunchXVel(pos, speed, timeInAir)) - Math.PI;
 

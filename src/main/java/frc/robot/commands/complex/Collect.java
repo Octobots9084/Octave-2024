@@ -31,7 +31,7 @@ import frc.robot.subsystems.lights.Light;
 public class Collect extends SequentialCommandGroup {
     public Collect() {
 
-        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getAnalogDigital();
+        BooleanSupplier intakeSensorTrue = () -> !IntakeTrack.getInstance().getSensor();
         BooleanSupplier rollerSensor = () -> {
             return (!IntakeRoller.getInstance().getSensor() || !IntakeTrack.getInstance().getSensor2());
         };
@@ -69,23 +69,30 @@ public class Collect extends SequentialCommandGroup {
                         new IntakeTrackSpeedInstant(IntakeSpeeds.COLLECT),
                         new IntakeRollerSpeedInstant(IntakeSpeeds.COLLECT),
                         new ShooterTrackSpeedInstant(ShooterSpeeds.PREPARE),
+                        
                         new ParallelCommandGroup(new SequentialCommandGroup(
                                 new WaitUntilCommand(shooterSensorTrue),
                                 new InstantCommand(() -> {
                                     System.out.println("Shooter sensor tripped");
                                 }),
+                                new InstantCommand(()->{
+                                    ShooterTrack.getInstance().motor1.setVoltage(0);
+                                }),
                                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
+                                new InstantCommand(()->{
+                                    ShooterTrack.getInstance().motor1.setVoltage(0);
+                                }),
                                 new IntakeTrackSpeedInstant(IntakeSpeeds.STOP),
                                 new InstantCommand(() -> {
                                     ShooterPivot.getInstance().notSoFastEggman = false;
                                 }),
-                                new PrepSpeaker(),
+                               new PrepSpeaker(),
                                 new InstantCommand(() -> {
                                     Light.getInstance().setAnimation(Animations.PRE_INTAKE);
                                 }),
-                                new JiggleNote(.5), new InstantCommand(() -> {
-                                    Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
-                                }),
+                                // new JiggleNote(.5), new InstantCommand(() -> {
+                                //     Light.getInstance().setAnimation(Animations.INTAKE_STAGE_2);
+                                // }),
                                 new InstantCommand(() -> {
                                     System.out.println("Collect Complete");
                                 })),

@@ -52,8 +52,8 @@ public class TeleopDrive extends Command {
     } else if (swerve.getAlignRequestActive()) {
       swerve.targetAngle = swerve.getAlignRequest().getRotation();
     }
-    double xSpeed = vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED;
-    double ySpeed = vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED;
+    double xSpeed = -vX.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED;
+    double ySpeed = -vY.getAsDouble() * SwerveSubsystem.MAXIMUM_SPEED;
     if (!Constants.isBlueAlliance) {
       xSpeed = -xSpeed;
       ySpeed = -ySpeed;
@@ -81,7 +81,7 @@ public class TeleopDrive extends Command {
       swerve.drive(
           new Translation2d(xSpeed,
               ySpeed),
-          omega.getAsDouble() * 1.25 * Math.PI,
+          omega.getAsDouble() * 2 * Math.PI,
           driveMode.getAsBoolean());
     }
 

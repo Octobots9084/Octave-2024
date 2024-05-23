@@ -2,8 +2,8 @@ package frc.robot.constants;
 
 public enum ShooterSpeeds {
     IDLE(0.1, -0.5),
-    PREPARE(.25, 1),
-    PREPARE_AUTO(.2, 1),
+    PREPARE(.05, 10),
+    PREPARE_AUTO(.2, 10),
     SPEAKER(0.7, -10),
     STOP(0, 0),
     PANIC(1, -500),
@@ -14,7 +14,7 @@ public enum ShooterSpeeds {
     TRAP(1, -10),
     LAYUP(-0.2, -5),
     SPECIAL_IDLE(0.1, 0),
-    DRIVE_BY(0, -10),
+    DRIVE_BY(0, -30),
     SRC_COLLECT(-.3, -1),
     AUTO_SPEAKER(0, -10),
     REVERSE_TRACK(-1, 0);

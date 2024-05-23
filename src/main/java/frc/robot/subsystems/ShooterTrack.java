@@ -3,13 +3,14 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.constants.ShooterSpeeds;
 
 public class ShooterTrack extends SubsystemBase {
 
     public static ShooterTrack shootingRetainer;
-    private TalonFX motor1;
+    public TalonFX motor1;
     private DigitalInput sensor;
     public boolean pieceGood = false;
     public boolean currentlyShooting = false;
@@ -36,6 +37,7 @@ public class ShooterTrack extends SubsystemBase {
     }
 
     public void set(double percent) {
+        SmartDashboard.putNumber("shootersetpoint", percent);
         motor1.set(percent);
     }
 

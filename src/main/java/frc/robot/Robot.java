@@ -139,14 +139,14 @@ public class Robot extends TimedRobot {
     // ShooterFlywheel.getInstance().getFlywheelSpeedMeters());
     // SmartDashboard.putNumber("realFlywheelBottom",
     // ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
-    // SmartDashboard.putBoolean("Shooter track",
-    // ShooterTrack.getInstance().getSensor());
-    // SmartDashboard.putBoolean("Intake track",
-    // IntakeTrack.getInstance().getAnalogDigital());
-    // SmartDashboard.putBoolean("Intake 1",
-    // IntakeRoller.getInstance().getSensor());
-    // SmartDashboard.putBoolean("Intake 2",
-    // IntakeTrack.getInstance().getSensor2());
+    SmartDashboard.putBoolean("Shooter track",
+    ShooterTrack.getInstance().getSensor());
+    SmartDashboard.putBoolean("Intake track",
+    IntakeTrack.getInstance().getAnalogDigital());
+    SmartDashboard.putBoolean("Intake 1",
+    IntakeRoller.getInstance().getSensor());
+    SmartDashboard.putBoolean("Intake 2",
+    IntakeTrack.getInstance().getSensor2());
     // SmartDashboard.putNumber("climbele",
     // ShooterElevator.getInstance().getPosition() *
     // ShooterElevator.getInstance().gearing);

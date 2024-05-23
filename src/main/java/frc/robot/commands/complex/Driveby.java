@@ -50,8 +50,9 @@ public class Driveby extends Command {
     public void updateTargets() {
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
-        targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
-                ShooterSpeeds.DRIVE_BY.flywheels);
+        // targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
+        //         ShooterSpeeds.DRIVE_BY.flywheels);
+        targetPivot = ArmPositions.HANDOFF_AND_DEFAULT_SHOT.pivot;
         targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels;
         targetTurn = new Rotation2d(
                 ReverseKinematics.calcRobotAngle(

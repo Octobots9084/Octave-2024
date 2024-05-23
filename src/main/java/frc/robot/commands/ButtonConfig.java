@@ -45,7 +45,7 @@ public class ButtonConfig {
     public void initTeleop() {
         // driverLeft.button(1).whileTrue(new TagAlign());
         driverButtons.button(1).whileTrue(new ParallelCommandGroup(new PrepAmp()));
-        // driverLeft.button(2).whileTrue(new Driveby());
+        driverButtons.button(6).whileTrue(new Driveby());
 
         driverButtons.button(2).onTrue(new TheBigYeet());
         // driverRight.button(2).whileTrue(new FerryShot().withTimeout(1).andThen(new TheBigYeet()));
@@ -58,7 +58,7 @@ public class ButtonConfig {
         driverButtons.button(16).onTrue(new InstantCommand(SwerveSubsystem.getInstance()::zeroGyro));
         driverButtons.button(4).onTrue(new PrepSpeaker());
         // driverButtons.button(11).onTrue(new Panic());
-        // driverButtons.button(5).onTrue(new CancelAllCommands());
+        driverButtons.button(5).onTrue(new CancelAllCommands());
         // driverButtons.button(8).onTrue(new InstantCommand(() -> {
         //     IntakeTrack.getInstance().set(IntakeSpeeds.PANIC);
         //     IntakeRoller.getInstance().set(IntakeSpeeds.PANIC);
