@@ -24,15 +24,15 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "SpeakerAutoInital"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "SpeakerAutoInital"
-                }
-              },
               {
                 "type": "parallel",
                 "data": {

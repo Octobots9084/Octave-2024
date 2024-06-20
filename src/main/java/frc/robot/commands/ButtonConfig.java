@@ -48,7 +48,7 @@ public class ButtonConfig {
         driverLeft.button(2).whileTrue(new Driveby());
 
         driverRight.button(1).onTrue(new TheBigYeet());
-        driverRight.button(2).whileTrue(new FerryShot().withTimeout(1).andThen(new TheBigYeet()));
+        driverRight.button(2).whileTrue(new FerryShot().withTimeout(0.5).andThen(new TheBigYeet()));
 
         driverButtons.button(1).onTrue(new ToggleTurnToSpeaker());
         driverButtons.button(2).onTrue(new ToggleTurnTo180());
