@@ -9,8 +9,10 @@ import frc.robot.subsystems.ShooterPivot;
 public class StartIntaking extends InstantCommand {
   @Override
   public void initialize() {
+
     IntakeRoller.getInstance().set(IntakeSpeeds.COLLECT);
     IntakeTrack.getInstance().set(IntakeSpeeds.COLLECT);
     ShooterPivot.getInstance().notSoFastEggman = true;
+    System.out.println("Started Intaking");
   }
 }

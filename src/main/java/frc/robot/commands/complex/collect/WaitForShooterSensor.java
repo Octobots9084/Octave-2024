@@ -13,5 +13,6 @@ public class WaitForShooterSensor extends Command {
   @Override
   public void end(boolean interrupted) {
     ShooterPivot.getInstance().notSoFastEggman = false;
+    System.out.println("Shooter sensor triggered");
   }
 }

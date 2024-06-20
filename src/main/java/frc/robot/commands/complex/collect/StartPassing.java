@@ -13,5 +13,6 @@ public class StartPassing extends InstantCommand {
     IntakeRoller.getInstance().set(IntakeSpeeds.COLLECT);
     IntakeTrack.getInstance().set(IntakeSpeeds.COLLECT);
     ShooterTrack.getInstance().set(ShooterSpeeds.PREPARE);
+    System.out.println("Started Passing");
   }
 }

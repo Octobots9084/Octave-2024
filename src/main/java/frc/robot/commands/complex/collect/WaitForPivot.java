@@ -14,4 +14,9 @@ public class WaitForPivot extends Command {
         Constants.Arm.SHOOTER_PIVOT_TOLERANCE);
 
   }
+
+  @Override
+  public void end(boolean interrupted) {
+    System.out.println("Pivot at handoff");
+  }
 }
