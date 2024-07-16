@@ -16,7 +16,7 @@ import frc.robot.subsystems.ShooterTrack;
 
 public class Collect extends SequentialCommandGroup {
   public Collect() {
-    BooleanSupplier shooterHoldingNote = () -> !ShooterTrack.getInstance().getSensor();
+    BooleanSupplier shooterHoldingNote = () -> ShooterTrack.getInstance().getSensor();
     addCommands(
         new ConditionalCommand(new SequentialCommandGroup(new StartIntaking(),
             new WaitForIntakeSensor(),
