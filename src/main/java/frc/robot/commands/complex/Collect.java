@@ -24,7 +24,8 @@ public class Collect extends SequentialCommandGroup {
             new WaitForPivot(),
             new StartPassing(),
             new WaitForShooterSensor(),
-            new StopPassing()), 
+            new StopPassing(),
+            new PrepSpeaker()), 
             new InstantCommand(()-> {System.out.println("nothing from collect");}), 
             shooterHoldingNote)
 
