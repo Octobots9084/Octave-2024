@@ -3,6 +3,7 @@ package frc.robot.commands.complex;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.complex.collect.StartIntaking;
 import frc.robot.commands.complex.collect.StartPassing;
@@ -23,7 +24,9 @@ public class Collect extends SequentialCommandGroup {
             new WaitForPivot(),
             new StartPassing(),
             new WaitForShooterSensor(),
-            new StopPassing()), null, shooterHoldingNote)
+            new StopPassing()), 
+            new InstantCommand(()-> {System.out.println("nothing from collect");}), 
+            shooterHoldingNote)
 
     /* new JiggleNote(1) */);
   }
