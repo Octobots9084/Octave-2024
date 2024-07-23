@@ -1,7 +1,7 @@
 package frc.robot.constants;
 
 public enum ArmPositions {
-    HANDOFF_AND_DEFAULT_SHOT(0, 0.443),
+    HANDOFF_AND_DEFAULT_SHOT(0, 0.453), //original pivot: 0.443
     AMP(22.5, 0.73),
     TRAP_SEGUEAY(5, 0.39),
     TRAP(44.8, 0.64),
