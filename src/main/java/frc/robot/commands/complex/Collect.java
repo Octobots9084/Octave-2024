@@ -18,7 +18,8 @@ public class Collect extends SequentialCommandGroup {
   public Collect() {
     BooleanSupplier shooterHoldingNote = () -> ShooterTrack.getInstance().getSensor();
     addCommands(
-        new ConditionalCommand(new SequentialCommandGroup(new StartIntaking(),
+        new ConditionalCommand(new SequentialCommandGroup(
+            new StartIntaking(),
             new WaitForIntakeSensor(),
             new StopIntaking(),
             new WaitForPivot(),
