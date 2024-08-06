@@ -22,7 +22,7 @@ public class ReverseKinematics {
         // Pose2d
         private static double subwooferXPos = 0;
         private static double subwooferYPos = 5.5;
-        private static double encoderOffset = 0.597;
+        private static double encoderOffset = 0.595;
         private static double movementMultiplierX = 1;
         private static double movementMultiplierY = 1;
         private static double flywheelSpeedMultiplier = 0.9;

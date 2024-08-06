@@ -45,9 +45,9 @@ public class VisionEstimation extends SubsystemBase {
         private final SwerveSubsystem swerveSubsystem;
         public static VisionEstimation INSTANCE;
 
-        public Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.1,
-                        0.1,
-                        0.1);
+        public Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.3,
+                        0.3,
+                        0.3);
 
         public final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"), VisionConstants.ROBOT_TO_INKY);
         public final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"), VisionConstants.ROBOT_TO_PINKY);
@@ -209,8 +209,8 @@ public class VisionEstimation extends SubsystemBase {
                                 pose2d = flipAlliance(pose2d);
                         }
 
-                        final var confidence = confidenceCalculator(cameraPose);
-                        swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds, confidence);
+                        // final var confidence = confidenceCalculator(cameraPose);
+                        swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds, visionMeasurementStdDevs);
 
                         // Update "get atomic count" telemetry
                 }

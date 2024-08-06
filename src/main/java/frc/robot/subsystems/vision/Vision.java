@@ -13,6 +13,7 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.Constants.FieldConstants;
+import frc.robot.util.MathUtil;
 
 /**
  * Runnable that gets AprilTag data from PhotonVision.
@@ -70,7 +71,8 @@ public class Vision implements Runnable {
           for (int i = 0; i < photonResults.targets.size(); i++) {
             if (photonResults.targets.get(i).getFiducialId() == 14
                 || photonResults.targets.get(i).getFiducialId() == 5
-                || photonResults.targets.get(i).getFiducialId() == 6) {
+                || photonResults.targets.get(i).getFiducialId() == 6
+                || photonResults.targets.get(i).getPoseAmbiguity() > 0.4) {
               photonResults.targets.remove(i);
               i++;
             }
@@ -87,7 +89,8 @@ public class Vision implements Runnable {
              */
             if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.LENGTH
                 && estimatedPose.getY() > 0.0
-                && estimatedPose.getY() <= FieldConstants.WIDTH) {
+                && estimatedPose.getY() <= FieldConstants.WIDTH
+                && MathUtil.isWithinTolerance(estimatedPose.getZ(), 0, 0.02)) {
               atomicEstimatedRobotPose.set(estimatedRobotPose);
 
               // Update "set atomic count" telemetry

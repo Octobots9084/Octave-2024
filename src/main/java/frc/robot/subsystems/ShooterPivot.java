@@ -46,7 +46,7 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, true, false, 1, false,
-                new PIDConfig(15, 0, 5, 0.04));
+                new PIDConfig(7, 0, 0.7, 0.04));
         SparkMaxConfig left = new SparkMaxConfig(new SparkMaxStatusFrames(500,
                 20,
                 500,
@@ -55,7 +55,7 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, false, false, 1, false,
-                new PIDConfig(15, 0, 5, 0.04));
+                new PIDConfig(7, 0, 0.7, 0.04));
 
         SparkMaxSetup.setup(leftMotor, left);
         SparkMaxSetup.setup(rightMotor, right);
@@ -85,6 +85,10 @@ public class ShooterPivot extends SubsystemBase {
 
     public double getPosition() {
         return leftMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition() - .072;
+    }
+
+    public double getPositionSecondary() {
+        return rightMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition() - .072;
     }
 
     public double getDesiredPosition() {
