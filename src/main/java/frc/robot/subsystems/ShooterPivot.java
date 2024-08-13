@@ -46,7 +46,7 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, true, false, 1, false,
-                new PIDConfig(7, 0, 0.7, 0.04));
+                new PIDConfig(10, 0, 0.2, 0.0));
         SparkMaxConfig left = new SparkMaxConfig(new SparkMaxStatusFrames(500,
                 20,
                 500,
@@ -55,7 +55,7 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, false, false, 1, false,
-                new PIDConfig(7, 0, 0.7, 0.04));
+                new PIDConfig(10, 0, 0.2, 0.0));
 
         SparkMaxSetup.setup(leftMotor, left);
         SparkMaxSetup.setup(rightMotor, right);
@@ -72,9 +72,9 @@ public class ShooterPivot extends SubsystemBase {
         // SmartDashboard.putNumber("realPivot", );
         // up is down on the encoders. If something is going up too high, lower the
         // number. - Xanthe
-        leftMotor.getPIDController().setReference(target + .072, ControlType.kPosition);
+        leftMotor.getPIDController().setReference(target + .072, ControlType.kPosition, 0, 0.52);
 
-        rightMotor.getPIDController().setReference(target + .06, ControlType.kPosition);
+        rightMotor.getPIDController().setReference(target + .06, ControlType.kPosition, 0, 0.52);
         position = target;
     }
 

@@ -136,7 +136,7 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("thng",
     // ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
     // SmartDashboard.putNumber("thng2",
-    // ShooterFlywheel.getInstance().getRightFlywheelSpeed());
+    // -ShooterFlywheel.getInstance().getRightFlywheelSpeed());
     // SmartDashboard.putNumber("elevator position",
     // ShooterElevator.getInstance().getPosition());
     // SmartDashboard.putNumber("desired elevator pos",
@@ -231,7 +231,7 @@ public class Robot extends TimedRobot {
     ShooterPivot.getInstance().setDefaultCommand(new PivotManual());
     ShooterElevator.getInstance().setDefaultCommand(new ElevatorManual());
 
-    // ShooterPivot.getInstance().setPosition(ArmPositions.TUNE);
+    // ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(20);
   }
 
   /**
