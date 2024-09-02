@@ -72,7 +72,7 @@ public class Vision implements Runnable {
             if (photonResults.targets.get(i).getFiducialId() == 14
                 || photonResults.targets.get(i).getFiducialId() == 5
                 || photonResults.targets.get(i).getFiducialId() == 6
-                || photonResults.targets.get(i).getPoseAmbiguity() > 0.4) {
+                || photonResults.targets.get(i).getPoseAmbiguity() > 0.65) {
               photonResults.targets.remove(i);
               i++;
             }
@@ -90,7 +90,7 @@ public class Vision implements Runnable {
             if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.LENGTH
                 && estimatedPose.getY() > 0.0
                 && estimatedPose.getY() <= FieldConstants.WIDTH
-                && MathUtil.isWithinTolerance(estimatedPose.getZ(), 0, 0.02)) {
+                && MathUtil.isWithinTolerance(estimatedPose.getZ(), 0, 0.05)) {
               atomicEstimatedRobotPose.set(estimatedRobotPose);
 
               // Update "set atomic count" telemetry
