@@ -32,10 +32,10 @@ public class ReverseKinematics {
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
                 if (Constants.isBlueAlliance) {
-                        subwooferXPos = -0.2;
+                        subwooferXPos = -0;
                         subwooferYPos = 5.8;
                 } else {
-                        subwooferXPos = 16.7;
+                        subwooferXPos = 16.5;
                         subwooferYPos = 5.8;
                 }
                 // SmartDashboard.putString("poseconvert",
@@ -103,9 +103,9 @@ public class ReverseKinematics {
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
                 double distance = Math.sqrt(pos.getX() * pos.getX() + pos.getY() * pos.getY());
-                double k = 0.01;
+                double k = 0.00002;
                 SmartDashboard.putNumber("distance", distance);
-                double angle = Math.atan((constTargetHeightDiff + k * (distance * distance)) / distance);
+                double angle = Math.atan((constTargetHeightDiff + k * (distance * distance * distance)) / distance);
                 SmartDashboard.putNumber("angle", angle / (2 * Math.PI));
                 // SmartDashboard.putNumber("targetAngleShoote", angleDiffRadians);
                 // SmartDashboard.putNumber("PIVOT HEIGHT", encoderOffset
