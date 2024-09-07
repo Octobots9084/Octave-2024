@@ -20,8 +20,8 @@ public class ReverseKinematics {
 
         // X and Y positions of the subwoofer with regards to (0,0) on the robot's
         // Pose2d
-        private static double subwooferXPos = 0;
-        private static double subwooferYPos = 5.5;
+        private static double subwooferXPos = -0.5;
+        private static double subwooferYPos = 7;
         private static double encoderOffset = 0.595;
         private static double movementMultiplierX = 1;
         private static double movementMultiplierY = 1;
@@ -32,11 +32,11 @@ public class ReverseKinematics {
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
                 if (Constants.isBlueAlliance) {
-                        subwooferXPos = 0.22;
-                        subwooferYPos = 5.554;
+                        subwooferXPos = -0.2;
+                        subwooferYPos = 5.8;
                 } else {
-                        subwooferXPos = 16.526;
-                        subwooferYPos = 5.554;
+                        subwooferXPos = 16.7;
+                        subwooferYPos = 5.8;
                 }
                 // SmartDashboard.putString("poseconvert",
                 // new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new
@@ -103,7 +103,7 @@ public class ReverseKinematics {
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
                 double distance = Math.sqrt(pos.getX() * pos.getX() + pos.getY() * pos.getY());
-                double k = 0;
+                double k = 0.01;
                 SmartDashboard.putNumber("distance", distance);
                 double angle = Math.atan((constTargetHeightDiff + k * (distance * distance)) / distance);
                 SmartDashboard.putNumber("angle", angle / (2 * Math.PI));
