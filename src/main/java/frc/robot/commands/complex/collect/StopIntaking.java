@@ -11,7 +11,7 @@ public class StopIntaking extends InstantCommand {
   @Override
   public void initialize() {
     IntakeRoller.getInstance().set(IntakeSpeeds.STOP);
-    IntakeTrack.getInstance().set(IntakeSpeeds.STOP);
+    IntakeTrack.getInstance().set(IntakeSpeeds.STOP.track);
     System.out.println("Stopped Intaking");
   }
 }

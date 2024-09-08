@@ -13,7 +13,7 @@ public class StartIntaking extends InstantCommand {
   public void initialize() {
 
     IntakeRoller.getInstance().set(IntakeSpeeds.COLLECT);
-    IntakeTrack.getInstance().set(IntakeSpeeds.COLLECT);
+    IntakeTrack.getInstance().setVoltage(IntakeSpeeds.COLLECT.track);
     ShooterPivot.getInstance().notSoFastEggman = true;
     ShooterPivot.getInstance().setPosition(ArmPositions.HANDOFF_AND_DEFAULT_SHOT);
     ShooterElevator.getInstance().setPosition(ArmPositions.HANDOFF_AND_DEFAULT_SHOT);

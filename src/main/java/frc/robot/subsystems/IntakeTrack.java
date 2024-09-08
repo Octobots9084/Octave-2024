@@ -74,4 +74,8 @@ public class IntakeTrack extends SubsystemBase {
     public boolean getAnalogDigital() {
         return beamInput.getValue() > 100;
     }
+
+    public void setVoltage(double voltage) {
+        motor1.setVoltage(voltage);
+    }
 }

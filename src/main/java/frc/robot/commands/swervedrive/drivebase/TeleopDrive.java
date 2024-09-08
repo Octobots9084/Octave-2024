@@ -8,6 +8,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.vision.PieceVision;
+
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
@@ -74,14 +76,14 @@ public class TeleopDrive extends Command {
       double angleSpeed = swerve.driverTargetAngleController.calculate(swerve.getHeading().getRadians(),
           swerve.targetAngle.getRadians());
       swerve.drive(
-          new Translation2d(-swerve.getAlignRequest().getX()*6, -swerve.getAlignRequest().getY()*2),
+          new Translation2d(-swerve.getAlignRequest().getX() * 6, -swerve.getAlignRequest().getY() * 2),
           angleSpeed,
           driveMode.getAsBoolean());
     } else {
       swerve.drive(
           new Translation2d(xSpeed,
               ySpeed),
-          omega.getAsDouble() * 3 * Math.PI,
+          omega.getAsDouble() * 3 * Math.PI - PieceVision.getInstance().getYaw() / 20,
           driveMode.getAsBoolean());
     }
 

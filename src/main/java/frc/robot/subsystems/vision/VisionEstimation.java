@@ -211,9 +211,13 @@ public class VisionEstimation extends SubsystemBase {
 
                         // final var confidence = confidenceCalculator(cameraPose);
                         swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds, visionMeasurementStdDevs);
-                        swerveSubsystem.setShooterPose(shooterPose.estimatedPose.toPose2d());
 
                         // Update "get atomic count" telemetry
+                }
+                if (shooterPose == null) {
+                        swerveSubsystem.setShooterPose(swerveSubsystem.getPose());
+                } else {
+                        swerveSubsystem.setShooterPose(shooterPose.estimatedPose.toPose2d());
                 }
 
                 // final String smartDashboardCamPoseKey =

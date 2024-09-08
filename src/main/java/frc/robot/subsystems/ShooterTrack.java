@@ -43,6 +43,10 @@ public class ShooterTrack extends SubsystemBase {
         set(shooterSpeeds.track);
     }
 
+    public void setVoltage(double voltage) {
+        motor1.setVoltage(voltage);
+    }
+
     public boolean getSensor() {
         return sensor.get();
     }

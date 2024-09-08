@@ -21,6 +21,6 @@ public class TriggerLightsOnFirstSensors extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        Light.getInstance().setAnimation(Animations.JADEN_U_HAVE_A_NOTE);
+        Light.getInstance().setAnimation(Animations.INTAKE_STAGE_1);
     }
 }

@@ -35,6 +35,7 @@ import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.vision.PieceVision;
 import frc.robot.subsystems.vision.VisionEstimation;
 
 import java.util.function.BooleanSupplier;
@@ -64,7 +65,7 @@ public class RobotContainer {
         CommandJoystick coDriverButtons = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_BUTTONS);
 
         private final VisionEstimation visionEstimation = VisionEstimation.getInstance();
-
+        private final PieceVision pieceVision = PieceVision.getInstance();
         private final SendableChooser<Command> autoChooser;
 
         /**
@@ -214,4 +215,5 @@ public class RobotContainer {
         public VisionEstimation getVisionEstimation() {
                 return visionEstimation;
         }
+
 }
