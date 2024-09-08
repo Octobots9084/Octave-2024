@@ -105,7 +105,7 @@ public class ReverseKinematics {
                 double distance = Math.sqrt(pos.getX() * pos.getX() + pos.getY() * pos.getY());
                 double k = 0.00002;
                 SmartDashboard.putNumber("distance", distance);
-                double angle = Math.atan((constTargetHeightDiff + k * (distance * distance * distance)) / distance);
+                double angle = Math.atan((constTargetHeightDiff + k * (distance * distance)) / distance);
                 SmartDashboard.putNumber("angle", angle / (2 * Math.PI));
                 // SmartDashboard.putNumber("targetAngleShoote", angleDiffRadians);
                 // SmartDashboard.putNumber("PIVOT HEIGHT", encoderOffset

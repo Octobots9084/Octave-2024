@@ -77,8 +77,9 @@ public class DrivebyAuto extends Command {
         }
         targetTurn = new Rotation2d(
                 ReverseKinematics.calcRobotAngle(
-                        ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
-                        ReverseKinematics.convertSpeed(ReverseKinematics.convert2dCoords(swerveSubsystem.getPose()),
+                        ReverseKinematics.convert2dCoords(swerveSubsystem.getShooterPose()),
+                        ReverseKinematics.convertSpeed(
+                                ReverseKinematics.convert2dCoords(swerveSubsystem.getShooterPose()),
                                 swerveSubsystem.getRobotVelocity()),
                         targetFlywheel));
         // SmartDashboard.putString("realPose2dAhh", realPose2d.toString());

@@ -23,6 +23,8 @@ public class Vision implements Runnable {
   private final PhotonPoseEstimator photonPoseEstimator;
   private final PhotonCamera photonCamera;
   private final AtomicReference<EstimatedRobotPose> atomicEstimatedRobotPose = new AtomicReference<EstimatedRobotPose>();
+  private final AtomicReference<EstimatedRobotPose> atomicShooterEstimatedRobotPose = new AtomicReference<EstimatedRobotPose>();
+
   public final String cameraName;
 
   // Telemetry
@@ -69,7 +71,7 @@ public class Vision implements Runnable {
         var photonResults = photonCamera.getLatestResult();
         if (photonResults.hasTargets()) {
           for (int i = 0; i < photonResults.targets.size(); i++) {
-            if (photonResults.targets.get(i).getPoseAmbiguity() > 0.8) {
+            if (photonResults.targets.get(i).getPoseAmbiguity() > 0.5) {
               photonResults.targets.remove(i);
               i++;
             }
@@ -87,8 +89,26 @@ public class Vision implements Runnable {
             if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.LENGTH
                 && estimatedPose.getY() > 0.0
                 && estimatedPose.getY() <= FieldConstants.WIDTH
-                && MathUtil.isWithinTolerance(estimatedPose.getZ(), 0, 0.1)) {
+                && MathUtil.isWithinTolerance(estimatedPose.getZ(), 0, 0.05)) {
               atomicEstimatedRobotPose.set(estimatedRobotPose);
+
+              // Update "set atomic count" telemetry
+              // setAtomicCountTelemetry.incCount(1);
+            }
+
+            for (int i = 0; i < photonResults.targets.size(); i++) {
+              if (photonResults.targets.get(i).getFiducialId() != 7
+                  || photonResults.targets.get(i).getFiducialId() != 4) {
+                photonResults.targets.remove(i);
+                i++;
+              }
+            }
+
+            if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.LENGTH
+                && estimatedPose.getY() > 0.0
+                && estimatedPose.getY() <= FieldConstants.WIDTH
+                && MathUtil.isWithinTolerance(estimatedPose.getZ(), 0, 0.05)) {
+              atomicShooterEstimatedRobotPose.set(estimatedRobotPose);
 
               // Update "set atomic count" telemetry
               // setAtomicCountTelemetry.incCount(1);
@@ -124,5 +144,9 @@ public class Vision implements Runnable {
    */
   public EstimatedRobotPose grabLatestEstimatedPose() {
     return atomicEstimatedRobotPose.getAndSet(null);
+  }
+
+  public EstimatedRobotPose grabLatestShooterEstimatedPose() {
+    return atomicShooterEstimatedRobotPose.getAndSet(null);
   }
 }

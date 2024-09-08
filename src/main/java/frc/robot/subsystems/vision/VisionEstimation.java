@@ -200,6 +200,7 @@ public class VisionEstimation extends SubsystemBase {
 
         public void estimatorChecker(Vision estimator) {
                 var cameraPose = estimator.grabLatestEstimatedPose();
+                var shooterPose = estimator.grabLatestShooterEstimatedPose();
 
                 if (cameraPose != null) {
                         // New pose from vision
@@ -210,6 +211,7 @@ public class VisionEstimation extends SubsystemBase {
 
                         // final var confidence = confidenceCalculator(cameraPose);
                         swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds, visionMeasurementStdDevs);
+                        swerveSubsystem.setShooterPose(shooterPose.estimatedPose.toPose2d());
 
                         // Update "get atomic count" telemetry
                 }

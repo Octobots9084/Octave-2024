@@ -133,10 +133,10 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("Pivot Secondary Position",
     // ShooterPivot.getInstance().getPositionSecondary());
 
-    // SmartDashboard.putNumber("thng",
-    // ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
-    // SmartDashboard.putNumber("thng2",
-    // -ShooterFlywheel.getInstance().getRightFlywheelSpeed());
+    SmartDashboard.putNumber("thng",
+        ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
+    SmartDashboard.putNumber("thng2",
+        -ShooterFlywheel.getInstance().getRightFlywheelSpeed());
     // SmartDashboard.putNumber("elevator position",
     // ShooterElevator.getInstance().getPosition());
     // SmartDashboard.putNumber("desired elevator pos",
