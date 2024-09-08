@@ -11,8 +11,8 @@ public class StopPassing extends InstantCommand {
   @Override
   public void initialize() {
     IntakeRoller.getInstance().set(IntakeSpeeds.STOP);
-    IntakeTrack.getInstance().set(IntakeSpeeds.STOP.track);
-    ShooterTrack.getInstance().set(ShooterSpeeds.STOP.track);
+    IntakeTrack.getInstance().setVoltage(IntakeSpeeds.STOP.track);
+    ShooterTrack.getInstance().setVoltage(ShooterSpeeds.STOP.track);
     System.out.println("Stopped Passing");
   }
 }
