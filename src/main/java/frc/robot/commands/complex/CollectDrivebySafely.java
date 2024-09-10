@@ -18,14 +18,13 @@ public class CollectDrivebySafely extends SequentialCommandGroup {
                 new InstantCommand(() -> {
                     System.out.println("collectdrvebyrun");
                 }),
-                new Collect().withTimeout(3),
+                new CollectAuto().withTimeout(3),
                 new InstantCommand(() -> {
                     System.out.println("collectdrvebyrun2");
                 }),
                 new ConditionalCommand(new DrivebyAuto(false).withTimeout(1.5), new InstantCommand(),
                         shooterSensorTrue),
                 // trigger time
-                new WaitCommand(0.2),
                 new InstantCommand(() -> {
                     System.out.println("collectdrvebyrun3");
                 }));

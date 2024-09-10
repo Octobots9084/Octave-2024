@@ -95,7 +95,7 @@ public class RobotContainer {
                         NamedCommands.registerCommand("CollectDrivebyMF", new CollectDriveby());
                         NamedCommands.registerCommand("CollectDrivebyMFSafely", new CollectDrivebySafely());
 
-                        NamedCommands.registerCommand("Collect", new Collect().withTimeout(10));
+                        NamedCommands.registerCommand("Collect", new Collect().withTimeout(3));
                         NamedCommands.registerCommand("Snipe", new DrivebyAutoSniper(false));
 
                         NamedCommands.registerCommand("QuickDraw",
@@ -110,7 +110,7 @@ public class RobotContainer {
                                                         new InstantCommand(), shooterSensorTrue));
                         NamedCommands.registerCommand("ShootSafely",
                                         new ConditionalCommand(
-                                                        new DrivebyAuto(false).withTimeout(2)
+                                                        new DrivebyAuto(false).withTimeout(1.5)
                                                                         .andThen(new TheBigYeetAuto()),
                                                         new InstantCommand(), shooterSensorTrue));
                         NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {

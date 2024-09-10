@@ -154,9 +154,9 @@ public class DrivebyAuto extends Command {
                         MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05));
     }
 
-    private double flywheelTolerance = 2;
+    private double flywheelTolerance = 0.2;
     private double pivotTolerance = 0.005;
-    private double rotationTolerance = 0.03;
+    private double rotationTolerance = 0.05;
 
     private boolean longTolerance(double realFlywheel) {
         if (isInTolerance(realFlywheel)) {
