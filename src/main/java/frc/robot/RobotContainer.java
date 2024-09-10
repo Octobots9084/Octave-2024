@@ -95,7 +95,7 @@ public class RobotContainer {
                         NamedCommands.registerCommand("CollectDrivebyMF", new CollectDriveby());
                         NamedCommands.registerCommand("CollectDrivebyMFSafely", new CollectDrivebySafely());
 
-                        NamedCommands.registerCommand("Collect", new Collect().withTimeout(3));
+                        NamedCommands.registerCommand("Collect", new Collect().withTimeout(9));
                         NamedCommands.registerCommand("Snipe", new DrivebyAutoSniper(false));
 
                         NamedCommands.registerCommand("QuickDraw",
