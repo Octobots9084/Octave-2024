@@ -41,6 +41,8 @@ public class Layup extends SequentialCommandGroup {
                 }),
                 new WaitCommand(1),
                 new ShooterPivotPosInstant(ArmPositions.TRAP_SEGUEAY),
+                new WaitCommand(1),
+                new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new InstantCommand(() -> {
                     System.out.println("Layup completed");
                 }));

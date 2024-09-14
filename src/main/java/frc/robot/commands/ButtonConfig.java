@@ -11,6 +11,7 @@ import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.FerryShot;
 import frc.robot.commands.complex.HalfClimb;
 import frc.robot.commands.complex.Layup;
+import frc.robot.commands.complex.LowFerryShot;
 import frc.robot.commands.complex.Panic;
 import frc.robot.commands.complex.PrepAmp;
 import frc.robot.commands.complex.PrepClimb;
@@ -49,7 +50,7 @@ public class ButtonConfig {
         driverLeft.button(2).whileTrue(new Driveby());
 
         driverRight.button(1).onTrue(new TheBigYeet());
-        driverRight.button(2).whileTrue(new FerryShot().withTimeout(0.5).andThen(new TheBigYeet()));
+        driverRight.button(2).whileTrue(new LowFerryShot().withTimeout(2).andThen(new TheBigYeet()));
 
         driverButtons.button(1).onTrue(new ToggleTurnToSpeaker());
         driverButtons.button(2).onTrue(new ToggleTurnTo180());

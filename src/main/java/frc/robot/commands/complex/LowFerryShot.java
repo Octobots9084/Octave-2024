@@ -20,7 +20,7 @@ import frc.robot.subsystems.lights.Light;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.MathUtil;
 
-public class FerryShot extends Command {
+public class LowFerryShot extends Command {
     private static final double maintainToleranceTime = 0.1;
     ShooterPivot pivot;
     ShooterFlywheel flywheel;
@@ -35,7 +35,7 @@ public class FerryShot extends Command {
     Rotation2d targetTurn;
     private double initialToleranceTime = 0;
 
-    public FerryShot() {
+    public LowFerryShot() {
         pivot = ShooterPivot.getInstance();
         flywheel = ShooterFlywheel.getInstance();
         swerveSubsystem = SwerveSubsystem.getInstance();
@@ -52,7 +52,6 @@ public class FerryShot extends Command {
     public void updateTargets() {
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
-        realFlywheel = flywheel.getFlywheelSpeed();
 
         if (Constants.isBlueAlliance) {
             targetLanding = new Pose2d(realPose2d.getX() >= 10.65 ? 8.2 : 2.1, realPose2d.getX() >= 10.65 ? 5.7 : 6.5,
@@ -61,7 +60,7 @@ public class FerryShot extends Command {
             targetLanding = new Pose2d(realPose2d.getX() <= 5.85 ? 8.2 : 14.6, realPose2d.getX() <= 5.85 ? 5.7 : 6.5,
                     new Rotation2d());
         }
-        targetPivot = 0.5;
+        targetPivot = 0.63;
         targetFlywheel = -20;
         // SmartDashboard.putNumber("targetflywheeeeel", targetFlywheel);
         targetTurn = new Rotation2d(
@@ -130,7 +129,7 @@ public class FerryShot extends Command {
     }
 
     private boolean isInTolerance(double realRotation) {
-        return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 3)
+        return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.1)
                 && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.05)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
