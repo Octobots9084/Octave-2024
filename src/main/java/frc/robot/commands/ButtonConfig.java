@@ -33,6 +33,7 @@ import frc.robot.subsystems.ShooterElevator;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.vision.PieceVision;
 
 public class ButtonConfig {
     CommandJoystick driverLeft = ControlMap.DRIVER_LEFT;
@@ -103,5 +104,12 @@ public class ButtonConfig {
         // coDriverButtons.button(12).onTrue(new
         // ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
 
+        driverButtons.button(16).onTrue(new InstantCommand(() -> {
+            PieceVision.getInstance().setIsUsingPieceVision(true);
+        }));
+
+        driverButtons.button(16).onFalse(new InstantCommand(() -> {
+            PieceVision.getInstance().setIsUsingPieceVision(false);
+        }));
     }
 }
