@@ -15,6 +15,7 @@ public class PieceVision extends SubsystemBase {
     public static PieceVision INSTANCE;
     private double yaw;
     private boolean usePieceVision;
+    private boolean canUsePieceVision = true;
 
     public static PieceVision getInstance() {
         if (INSTANCE == null) {
@@ -30,6 +31,9 @@ public class PieceVision extends SubsystemBase {
     }
 
     public void setIsUsingPieceVision(boolean val) {
+        if (canUsePieceVision == false) {
+            return;
+        }
         this.usePieceVision = val;
     }
 
@@ -66,5 +70,12 @@ public class PieceVision extends SubsystemBase {
 
         }
 
+    }
+
+    public void setCanUsePieceVision(boolean val) {
+        canUsePieceVision = val;
+        if (val == false) {
+            usePieceVision = false;
+        }
     }
 }

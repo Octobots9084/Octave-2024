@@ -105,11 +105,11 @@ public class ButtonConfig {
         // ShooterFlywheelSpeedInstant(ShooterSpeeds.SPEAKER));
 
         driverButtons.button(16).onTrue(new InstantCommand(() -> {
-            PieceVision.getInstance().setIsUsingPieceVision(true);
+            PieceVision.getInstance().setCanUsePieceVision(false);
         }));
 
         driverButtons.button(16).onFalse(new InstantCommand(() -> {
-            PieceVision.getInstance().setIsUsingPieceVision(false);
+            PieceVision.getInstance().setCanUsePieceVision(true);
         }));
     }
 }
