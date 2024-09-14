@@ -24,6 +24,7 @@ import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
+import frc.robot.Constants.Arm;
 import frc.robot.commands.ButtonConfig;
 import frc.robot.commands.arm.ElevatorManual;
 import frc.robot.commands.arm.PivotManual;
@@ -230,7 +231,7 @@ public class Robot extends TimedRobot {
     Climb.getInstance().setDefaultCommand(new ClimbManual());
     ShooterPivot.getInstance().setDefaultCommand(new PivotManual());
     ShooterElevator.getInstance().setDefaultCommand(new ElevatorManual());
-
+    ShooterPivot.getInstance().setPosition(ArmPositions.TUNE);
     // ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(20);
   }
 
