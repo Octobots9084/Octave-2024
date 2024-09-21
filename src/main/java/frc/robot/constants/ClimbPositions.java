@@ -3,7 +3,7 @@ package frc.robot.constants;
 public enum ClimbPositions {
     DOWN(0, 0),
     MID(2, 2),
-    UP(4.2, 4.2), LAYUP(0.4,0.4);
+    UP(4.3, 4.3), LAYUP(0.52, 0.52);
 
     public double leftPosition;
     public double rightPosition;

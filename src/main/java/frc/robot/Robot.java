@@ -138,6 +138,8 @@ public class Robot extends TimedRobot {
         ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
     SmartDashboard.putNumber("thng2",
         -ShooterFlywheel.getInstance().getRightFlywheelSpeed());
+    SmartDashboard.putNumber("climbLeft", Climb.getInstance().getLeftPosition());
+    SmartDashboard.putNumber("climbRight", Climb.getInstance().getRightPosition());
     // SmartDashboard.putNumber("elevator position",
     // ShooterElevator.getInstance().getPosition());
     // SmartDashboard.putNumber("desired elevator pos",
@@ -241,6 +243,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     checkDoubleNotes();
+
     // ShooterFlywheel.getInstance().increaseFlywheelSpeed(MathUtil.applyDeadband(5*ControlMap.FLYWHEEL_JOYSTICK.getY(),
     // 0.05));
   }

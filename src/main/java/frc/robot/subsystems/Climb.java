@@ -71,7 +71,8 @@ public class Climb extends SubsystemBase {
         SparkMaxSetup.setup(rightMotor, rightConfig);
         leftMotor.getEncoder().setPositionConversionFactor(1.0 / gearing);
         rightMotor.getEncoder().setPositionConversionFactor(1.0 / gearing);
-        setOffset();
+
+        setOffset(0.26);
     }
 
     public void setPosition(double leftPosition, double rightPosition) {
@@ -90,22 +91,22 @@ public class Climb extends SubsystemBase {
     public double getRightPosition() {
         return rightMotor.getEncoder().getPosition();
     }
+
     public void setLowCurrentLimits() {
-        leftMotor.setSmartCurrentLimit(10,10);
-        rightMotor.setSmartCurrentLimit(10,10);
+        leftMotor.setSmartCurrentLimit(10, 10);
+        rightMotor.setSmartCurrentLimit(10, 10);
     }
 
     public void setHighCurrentLimits() {
-        leftMotor.setSmartCurrentLimit(30,30);
-        rightMotor.setSmartCurrentLimit(30,30);
+        leftMotor.setSmartCurrentLimit(30, 30);
+        rightMotor.setSmartCurrentLimit(30, 30);
     }
 
     public void setCoast(boolean coast) {
         if (coast) {
             leftMotor.setIdleMode(IdleMode.kCoast);
             rightMotor.setIdleMode(IdleMode.kCoast);
-        }
-        else {
+        } else {
             leftMotor.setIdleMode(IdleMode.kBrake);
             rightMotor.setIdleMode(IdleMode.kBrake);
         }
@@ -113,7 +114,7 @@ public class Climb extends SubsystemBase {
 
     public void zero() {
         // while (!limSwitch) {
-        
+
         leftMotor.set(-0.5);
         rightMotor.set(-0.5);
         // }
@@ -122,10 +123,10 @@ public class Climb extends SubsystemBase {
         // return leftMotor.getEncoder().getPosition() / gearing;
     }
 
-    public void setOffset() {
-        leftMotor.getEncoder().setPosition(0);
-        rightMotor.getEncoder().setPosition(0);
-        setPosition(0, 0);
+    public void setOffset(double position) {
+        leftMotor.getEncoder().setPosition(position);
+        rightMotor.getEncoder().setPosition(position);
+        setPosition(position, position);
     }
 
     @Override
