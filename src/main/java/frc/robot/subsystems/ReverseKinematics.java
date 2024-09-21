@@ -13,7 +13,7 @@ import frc.robot.Constants;
 
 public class ReverseKinematics {
         // distance between launcher opening and the subwoofer target
-        private static double constTargetHeightDiff = 1.4;
+        private static double constTargetHeightDiff = 1.35;
         // gravity
         private static double g = 9.8;
         // the final y velocity for the note to be moving at when it enters the target
@@ -103,7 +103,7 @@ public class ReverseKinematics {
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
                 double distance = Math.sqrt(pos.getX() * pos.getX() + pos.getY() * pos.getY());
-                double k = 0.00015;
+                double k = 0.0075;
                 SmartDashboard.putNumber("distance", distance);
                 double angle = Math.atan((constTargetHeightDiff + k * (distance * distance)) / distance);
                 SmartDashboard.putNumber("angle", angle / (2 * Math.PI));
