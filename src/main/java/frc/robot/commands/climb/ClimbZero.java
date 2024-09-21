@@ -21,7 +21,7 @@ public class ClimbZero extends Command {
     public void end(boolean interrupted) {
         climb.setHighCurrentLimits();
         climb.setOffset(0);
-        climb.setPosition(ClimbPositions.DOWN);
+        climb.setPosition(0.26, 0.26);
 
     }
 }
