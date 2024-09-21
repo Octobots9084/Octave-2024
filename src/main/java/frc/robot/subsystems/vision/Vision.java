@@ -97,7 +97,8 @@ public class Vision implements Runnable {
             }
 
             for (int i = 0; i < photonResults.targets.size(); i++) {
-              if (photonResults.targets.get(i).getFiducialId() != 7
+              if (photonResults.targets.get(i).getFiducialId() != 7 || photonResults.targets.get(i).getFiducialId() != 8
+                  || photonResults.targets.get(i).getFiducialId() != 5
                   || photonResults.targets.get(i).getFiducialId() != 4) {
                 photonResults.targets.remove(i);
                 i++;

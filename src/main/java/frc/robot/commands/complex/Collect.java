@@ -16,6 +16,8 @@ import frc.robot.commands.complex.collect.TriggerLightsOnFirstSensors;
 import frc.robot.commands.complex.collect.WaitForIntakeSensor;
 import frc.robot.commands.complex.collect.WaitForPivot;
 import frc.robot.commands.complex.collect.WaitForShooterSensor;
+import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterTrack;
 
 public class Collect extends SequentialCommandGroup {
@@ -32,7 +34,9 @@ public class Collect extends SequentialCommandGroup {
                 new StopPassing(),
                 new WaitCommand(1),
                 new JiggleNote(1),
-                new PrepSpeaker()), new TriggerLightsOnFirstSensors())),
+                new InstantCommand(() -> {
+                  ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(ShooterSpeeds.SPEAKER.flywheels);
+                })), new TriggerLightsOnFirstSensors())),
             new InstantCommand(() -> {
               System.out.println("nothing from collect");
             }),

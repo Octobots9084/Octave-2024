@@ -13,6 +13,7 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -54,6 +55,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public PIDController driverTargetAngleController;
   public boolean collectAutoRunning = false;
   private Pose2d shooterPose = new Pose2d();
+  private Field2d driveByField = new Field2d();
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -82,6 +84,7 @@ public class SwerveSubsystem extends SubsystemBase {
     driverTargetAngleController = Constants.Drivebase.DRIVER_TAREGET_ANGLE_CONTROLLER;
     ;
     driverTargetAngleController.enableContinuousInput(-Math.PI, Math.PI);
+    SmartDashboard.putData("DriverField", driveByField);
   }
 
   public static SwerveSubsystem getInstance() {
@@ -179,6 +182,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    driveByField.setRobotPose(shooterPose);
     swerveDrive.updateOdometry();
   }
 
