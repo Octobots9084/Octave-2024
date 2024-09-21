@@ -2,6 +2,7 @@ package frc.robot.subsystems.vision;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.ejml.simple.SimpleMatrix;
 import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
 import org.photonvision.PhotonPoseEstimator;
@@ -12,6 +13,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.FieldConstants;
 import frc.robot.util.MathUtil;
 
@@ -26,6 +28,7 @@ public class Vision implements Runnable {
   private final AtomicReference<EstimatedRobotPose> atomicShooterEstimatedRobotPose = new AtomicReference<EstimatedRobotPose>();
 
   public final String cameraName;
+  private PhotonPoseEstimator photonPoseEstimatorDriver;
 
   // Telemetry
   // private final CountPerPeriodTelemetry runCountTelemetry;
@@ -35,6 +38,7 @@ public class Vision implements Runnable {
     this.photonCamera = photonCamera;
     cameraName = photonCamera.getName();
     PhotonPoseEstimator photonPoseEstimator = null;
+    PhotonPoseEstimator photonPoseEstimatorDriver = null;
 
     try {
       var layout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField();
@@ -45,12 +49,17 @@ public class Vision implements Runnable {
           ? new PhotonPoseEstimator(layout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, photonCamera, robotToCamera)
           : null;
       photonPoseEstimator.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
+      photonPoseEstimatorDriver = photonCamera != null
+          ? new PhotonPoseEstimator(layout, PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, photonCamera, robotToCamera)
+          : null;
+      photonPoseEstimatorDriver.setMultiTagFallbackStrategy(PoseStrategy.LOWEST_AMBIGUITY);
     } catch (Exception e) {
       DriverStation.reportError("Failed to load AprilTagFieldLayout", e.getStackTrace());
       photonPoseEstimator = null;
     }
 
     this.photonPoseEstimator = photonPoseEstimator;
+    this.photonPoseEstimatorDriver = photonPoseEstimatorDriver;
 
     // Initialize telemetry
     // runCountTelemetry = new
@@ -69,6 +78,7 @@ public class Vision implements Runnable {
     try {
       if (photonPoseEstimator != null && photonCamera != null) {
         var photonResults = photonCamera.getLatestResult();
+        var photonResultsDriver = photonCamera.getLatestResult();
         if (photonResults.hasTargets()) {
           for (int i = 0; i < photonResults.targets.size(); i++) {
             if (photonResults.targets.get(i).getPoseAmbiguity() > 0.5) {
@@ -96,28 +106,41 @@ public class Vision implements Runnable {
               // setAtomicCountTelemetry.incCount(1);
             }
 
-            for (int i = 0; i < photonResults.targets.size(); i++) {
-              if (photonResults.targets.get(i).getFiducialId() != 7 || photonResults.targets.get(i).getFiducialId() != 8
-                  || photonResults.targets.get(i).getFiducialId() != 5
-                  || photonResults.targets.get(i).getFiducialId() != 4) {
-                photonResults.targets.remove(i);
-                i++;
-              }
+          });
+        }
+        if (photonResultsDriver.hasTargets()) {
+
+          for (int i = 0; i < photonResultsDriver.targets.size(); i++) {
+            if (!(photonResultsDriver.targets.get(i).getFiducialId() == 7
+                || photonResultsDriver.targets.get(i).getFiducialId() == 8
+                || photonResultsDriver.targets.get(i).getFiducialId() == 5
+                || photonResultsDriver.targets.get(i).getFiducialId() == 4)) {
+              photonResultsDriver.targets.remove(i);
+
+              i++;
             }
+          }
+          // Updates the pose estimator
+          photonPoseEstimatorDriver.update(photonResultsDriver).ifPresent(estimatedRobotPose -> {
+            var estimatedPose = estimatedRobotPose.estimatedPose;
 
             if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.LENGTH
                 && estimatedPose.getY() > 0.0
                 && estimatedPose.getY() <= FieldConstants.WIDTH
                 && MathUtil.isWithinTolerance(estimatedPose.getZ(), 0, 0.05)) {
+
               atomicShooterEstimatedRobotPose.set(estimatedRobotPose);
 
               // Update "set atomic count" telemetry
               // setAtomicCountTelemetry.incCount(1);
             }
           });
+
         }
       }
-    } catch (Exception e) {
+    } catch (
+
+    Exception e) {
       DriverStation.reportError(e.getMessage(), e.getStackTrace());
     }
 

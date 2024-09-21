@@ -214,10 +214,14 @@ public class VisionEstimation extends SubsystemBase {
 
                         // Update "get atomic count" telemetry
                 }
-                if (shooterPose == null) {
-                        swerveSubsystem.setShooterPose(swerveSubsystem.getPose());
+                if (shooterPose != null) {
+                        swerveSubsystem.setShooterPose(new Pose2d(shooterPose.estimatedPose.toPose2d().getX(),
+                                        shooterPose.estimatedPose.toPose2d().getY(),
+                                        swerveSubsystem.getPose().getRotation()));
                 } else {
-                        swerveSubsystem.setShooterPose(shooterPose.estimatedPose.toPose2d());
+                        swerveSubsystem.setShooterPose(new Pose2d(swerveSubsystem.getPose().getX(),
+                                        swerveSubsystem.getPose().getY(),
+                                        swerveSubsystem.getPose().getRotation()));
                 }
 
                 // final String smartDashboardCamPoseKey =

@@ -103,7 +103,7 @@ public class ReverseKinematics {
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
                 double distance = Math.sqrt(pos.getX() * pos.getX() + pos.getY() * pos.getY());
-                double k = 0.000015;
+                double k = 0.00015;
                 SmartDashboard.putNumber("distance", distance);
                 double angle = Math.atan((constTargetHeightDiff + k * (distance * distance)) / distance);
                 SmartDashboard.putNumber("angle", angle / (2 * Math.PI));
