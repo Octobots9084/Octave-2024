@@ -231,7 +231,7 @@ public class Robot extends TimedRobot {
     Climb.getInstance().setDefaultCommand(new ClimbManual());
     ShooterPivot.getInstance().setDefaultCommand(new PivotManual());
     ShooterElevator.getInstance().setDefaultCommand(new ElevatorManual());
-    ShooterPivot.getInstance().setPosition(ArmPositions.TUNE);
+    ShooterPivot.getInstance().setPosition(ArmPositions.HANDOFF_AND_DEFAULT_SHOT);
     // ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(20);
   }
 
