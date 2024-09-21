@@ -3,6 +3,7 @@ package swervelib;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.estimator2.SwerveDrivePoseEstimator2;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -22,6 +23,9 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.vision.PieceVision;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -588,7 +592,8 @@ public class SwerveDrive {
   public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) {
     SwerveDriveTelemetry.desiredChassisSpeeds[1] = chassisSpeeds.vyMetersPerSecond;
     SwerveDriveTelemetry.desiredChassisSpeeds[0] = chassisSpeeds.vxMetersPerSecond;
-    SwerveDriveTelemetry.desiredChassisSpeeds[2] = Math.toDegrees(chassisSpeeds.omegaRadiansPerSecond);
+    SwerveDriveTelemetry.desiredChassisSpeeds[2] = Math
+        .toDegrees(chassisSpeeds.omegaRadiansPerSecond + PieceVision.getInstance().getYaw());
 
     setRawModuleStates(kinematics.toSwerveModuleStates(chassisSpeeds), false);
   }
@@ -1000,7 +1005,8 @@ public class SwerveDrive {
    *                  {@link Timer#getFPGATimestamp()} or similar sources.
    */
   public void addVisionMeasurement(Pose2d robotPose, double timestamp) {
-    swerveDrivePoseEstimator.addVisionMeasurement(new Pose2d(robotPose.getX(), robotPose.getY(), getYaw()), timestamp);
+    swerveDrivePoseEstimator.addVisionMeasurement(new Pose2d(robotPose.getX(), robotPose.getY(), getYaw()), timestamp,
+        visionMeasurementStdDevs);
   }
 
   /**

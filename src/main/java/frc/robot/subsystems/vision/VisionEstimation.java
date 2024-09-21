@@ -45,22 +45,21 @@ public class VisionEstimation extends SubsystemBase {
         private final SwerveSubsystem swerveSubsystem;
         public static VisionEstimation INSTANCE;
 
-        public Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.1,
-                        0.1,
-                        0.1);
+        public Matrix<N3, N1> visionMeasurementStdDevs = VecBuilder.fill(0.5,
+                        0.5,
+                        0.5);
 
         public final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"), VisionConstants.ROBOT_TO_INKY);
         public final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"), VisionConstants.ROBOT_TO_PINKY);
-        // public final Vision frontLeftEstimator = new Vision(new
-        // PhotonCamera("Blinky"),
-        // VisionConstants.ROBOT_TO_BLINKY);
+        public final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
+                        VisionConstants.ROBOT_TO_BLINKY);
         public final Vision frontRightEstimator = new Vision(new PhotonCamera("Clyde"),
                         VisionConstants.ROBOT_TO_CLYDE);
 
         private final Notifier allNotifier = new Notifier(() -> {
                 backRightEstimator.run();
                 backLeftEstimator.run();
-                // frontLeftEstimator.run();
+                frontLeftEstimator.run();
                 frontRightEstimator.run();
         });
 
@@ -127,7 +126,7 @@ public class VisionEstimation extends SubsystemBase {
                 if (VisionConstants.USE_VISION) {
                         // Update "run count" telemetry
                         // runCountTelemetry.incCount(1);
-                        // estimatorChecker(frontLeftEstimator);
+                        estimatorChecker(frontLeftEstimator);
                         estimatorChecker(frontRightEstimator);
                         estimatorChecker(backRightEstimator);
                         estimatorChecker(backLeftEstimator);
@@ -201,6 +200,7 @@ public class VisionEstimation extends SubsystemBase {
 
         public void estimatorChecker(Vision estimator) {
                 var cameraPose = estimator.grabLatestEstimatedPose();
+                var shooterPose = estimator.grabLatestShooterEstimatedPose();
 
                 if (cameraPose != null) {
                         // New pose from vision
@@ -209,10 +209,15 @@ public class VisionEstimation extends SubsystemBase {
                                 pose2d = flipAlliance(pose2d);
                         }
 
-                        final var confidence = confidenceCalculator(cameraPose);
-                        swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds, confidence);
+                        // final var confidence = confidenceCalculator(cameraPose);
+                        swerveSubsystem.addVisionReading(pose2d, cameraPose.timestampSeconds, visionMeasurementStdDevs);
 
                         // Update "get atomic count" telemetry
+                }
+                if (shooterPose == null) {
+                        swerveSubsystem.setShooterPose(swerveSubsystem.getPose());
+                } else {
+                        swerveSubsystem.setShooterPose(shooterPose.estimatedPose.toPose2d());
                 }
 
                 // final String smartDashboardCamPoseKey =

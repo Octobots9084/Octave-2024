@@ -13,11 +13,11 @@ public class CollectDriveby extends SequentialCommandGroup {
                 new InstantCommand(() -> {
                     System.out.println("collectdrvebyrun");
                 }),
-                new CollectAuto(),
+                new Collect(),
                 new InstantCommand(() -> {
                     System.out.println("collectdrvebyrun2");
                 }),
-                new DrivebyAuto(false).withTimeout(1),
+                new Driveby().withTimeout(1),
                 // trigger time
                 new WaitCommand(0.05),
                 new InstantCommand(() -> {

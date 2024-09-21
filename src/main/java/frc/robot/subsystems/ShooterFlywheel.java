@@ -47,10 +47,10 @@ public class ShooterFlywheel extends SubsystemBase {
         motorOne.setIdleMode(IdleMode.kCoast);
         motorOne.setSmartCurrentLimit(40, 40);
         motorOne.setInverted(false);
-        motorOne.getPIDController().setP(0.00);
+        motorOne.getPIDController().setP(0.0008);
         motorOne.getPIDController().setI(0);
         motorOne.getPIDController().setD(0);
-        motorOne.getPIDController().setFF(0.000183);
+        motorOne.getPIDController().setFF(0.00018);
         motorOne.enableVoltageCompensation(10);
         // motorOne.getPIDController().setIZone(1);
 
@@ -70,10 +70,10 @@ public class ShooterFlywheel extends SubsystemBase {
         motorTwo.setIdleMode(IdleMode.kCoast);
         motorTwo.setSmartCurrentLimit(40, 40);
         motorTwo.setInverted(false);
-        motorTwo.getPIDController().setP(0.0000);
+        motorTwo.getPIDController().setP(0.0008);
         motorTwo.getPIDController().setI(0.0);
         motorTwo.getPIDController().setD(0);
-        motorTwo.getPIDController().setFF(0.000181);
+        motorTwo.getPIDController().setFF(0.00018);
         motorTwo.enableVoltageCompensation(10);
         // motorTwo.getPIDController().setIZone(1);
 
@@ -127,11 +127,11 @@ public class ShooterFlywheel extends SubsystemBase {
     }
 
     public double getLeftFlywheelSpeed() {
-        return motorOne.getEncoder().getVelocity();
+        return motorOne.getEncoder().getVelocity() * circumference / 60.0;
     }
 
     public double getRightFlywheelSpeed() {
-        return motorTwo.getEncoder().getVelocity();
+        return motorTwo.getEncoder().getVelocity() * circumference / 60.0;
     }
 
     public double getAuxiluryFlywheelSpeed() {

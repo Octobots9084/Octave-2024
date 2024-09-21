@@ -46,7 +46,7 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, true, false, 1, false,
-                new PIDConfig(7, 0.001, 0, 0.04));
+                new PIDConfig(15, 0, 2, 0.0));
         SparkMaxConfig left = new SparkMaxConfig(new SparkMaxStatusFrames(500,
                 20,
                 500,
@@ -55,12 +55,14 @@ public class ShooterPivot extends SubsystemBase {
                 20,
                 500), 1000, true,
                 SparkMaxEncoderType.Absolute, IdleMode.kCoast, 30, 30, false, false, 1, false,
-                new PIDConfig(7, 0.001, 0, 0.04));
+                new PIDConfig(15, 0, 2, 0.0));
 
         SparkMaxSetup.setup(leftMotor, left);
         SparkMaxSetup.setup(rightMotor, right);
-        leftMotor.getPIDController().setIMaxAccum(10, 0);
-        rightMotor.getPIDController().setIMaxAccum(10, 0);
+        leftMotor.getPIDController().setIMaxAccum(20, 0);
+        rightMotor.getPIDController().setIMaxAccum(20, 0);
+        leftMotor.getPIDController().setIZone(5000);
+        rightMotor.getPIDController().setIZone(5000);
     }
 
     public void setPosition(double target) {
@@ -70,9 +72,10 @@ public class ShooterPivot extends SubsystemBase {
         // SmartDashboard.putNumber("realPivot", );
         // up is down on the encoders. If something is going up too high, lower the
         // number. - Xanthe
-        leftMotor.getPIDController().setReference(target + .072, ControlType.kPosition);
+        leftMotor.getPIDController().setReference(target + .072, ControlType.kPosition, 0, 0.605);
 
-        rightMotor.getPIDController().setReference(target + .06, ControlType.kPosition);
+        rightMotor.getPIDController().setReference(target + .06, ControlType.kPosition, 0,
+                0.605);
         position = target;
     }
 
@@ -83,6 +86,10 @@ public class ShooterPivot extends SubsystemBase {
 
     public double getPosition() {
         return leftMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition() - .072;
+    }
+
+    public double getPositionSecondary() {
+        return rightMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition() - .072;
     }
 
     public double getDesiredPosition() {

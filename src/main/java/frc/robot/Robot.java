@@ -24,11 +24,13 @@ import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
+import frc.robot.Constants.Arm;
 import frc.robot.commands.ButtonConfig;
 import frc.robot.commands.arm.ElevatorManual;
 import frc.robot.commands.arm.PivotManual;
 import frc.robot.commands.climb.ClimbManual;
 import frc.robot.commands.complex.SystemsCheck;
+import frc.robot.constants.ArmPositions;
 import frc.robot.constants.IntakeSpeeds;
 import frc.robot.constants.ShooterSpeeds;
 
@@ -127,10 +129,15 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    // SmartDashboard.putNumber("thng",
-    // ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
-    // SmartDashboard.putNumber("thng2",
-    // ShooterFlywheel.getInstance().getRightFlywheelSpeed());
+    // SmartDashboard.putNumber("Pivot Position",
+    // ShooterPivot.getInstance().getPosition());
+    // SmartDashboard.putNumber("Pivot Secondary Position",
+    // ShooterPivot.getInstance().getPositionSecondary());
+
+    SmartDashboard.putNumber("thng",
+        ShooterFlywheel.getInstance().getLeftFlywheelSpeed());
+    SmartDashboard.putNumber("thng2",
+        -ShooterFlywheel.getInstance().getRightFlywheelSpeed());
     // SmartDashboard.putNumber("elevator position",
     // ShooterElevator.getInstance().getPosition());
     // SmartDashboard.putNumber("desired elevator pos",
@@ -163,7 +170,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     Light.getInstance().setAnimation(Animations.DEFAULT);
-    
+
   }
 
   // DigitalInput coastSwitch = new DigitalInput(69);
@@ -224,6 +231,8 @@ public class Robot extends TimedRobot {
     Climb.getInstance().setDefaultCommand(new ClimbManual());
     ShooterPivot.getInstance().setDefaultCommand(new PivotManual());
     ShooterElevator.getInstance().setDefaultCommand(new ElevatorManual());
+    ShooterPivot.getInstance().setPosition(ArmPositions.HANDOFF_AND_DEFAULT_SHOT);
+    // ShooterFlywheel.getInstance().setFlyWheelSpeedMeters(20);
   }
 
   /**

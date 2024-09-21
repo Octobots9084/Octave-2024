@@ -11,8 +11,7 @@ public class StopIntaking extends InstantCommand {
   @Override
   public void initialize() {
     IntakeRoller.getInstance().set(IntakeSpeeds.STOP);
-    IntakeTrack.getInstance().set(IntakeSpeeds.STOP);
-    ShooterPivot.getInstance().setPosition(ArmPositions.HANDOFF_AND_DEFAULT_SHOT);
+    IntakeTrack.getInstance().set(IntakeSpeeds.STOP.track);
     System.out.println("Stopped Intaking");
   }
 }

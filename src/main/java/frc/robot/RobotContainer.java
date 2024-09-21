@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.CollectDriveby;
 import frc.robot.commands.complex.CollectDrivebySafely;
@@ -34,6 +35,7 @@ import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.vision.PieceVision;
 import frc.robot.subsystems.vision.VisionEstimation;
 
 import java.util.function.BooleanSupplier;
@@ -63,7 +65,7 @@ public class RobotContainer {
         CommandJoystick coDriverButtons = new CommandJoystick(Constants.OperatorConstants.CO_DRIVER_BUTTONS);
 
         private final VisionEstimation visionEstimation = VisionEstimation.getInstance();
-
+        private final PieceVision pieceVision = PieceVision.getInstance();
         private final SendableChooser<Command> autoChooser;
 
         /**
@@ -93,11 +95,11 @@ public class RobotContainer {
                         NamedCommands.registerCommand("CollectDrivebyMF", new CollectDriveby());
                         NamedCommands.registerCommand("CollectDrivebyMFSafely", new CollectDrivebySafely());
 
-                        NamedCommands.registerCommand("Collect", new CollectAuto().withTimeout(10));
+                        NamedCommands.registerCommand("Collect", new Collect().withTimeout(9));
                         NamedCommands.registerCommand("Snipe", new DrivebyAutoSniper(false));
 
                         NamedCommands.registerCommand("QuickDraw",
-                                        new DrivebyAuto(true).withTimeout(2).andThen(new WaitCommand(0.1)));
+                                        new DrivebyAuto(false).withTimeout(2).andThen(new WaitCommand(0.1)));
 
                         NamedCommands.registerCommand("Shoot",
                                         new DrivebyAuto(false).withTimeout(1.5).andThen(new TheBigYeetAuto()));
@@ -108,7 +110,7 @@ public class RobotContainer {
                                                         new InstantCommand(), shooterSensorTrue));
                         NamedCommands.registerCommand("ShootSafely",
                                         new ConditionalCommand(
-                                                        new DrivebyAuto(false).withTimeout(2)
+                                                        new DrivebyAuto(false).withTimeout(1.5)
                                                                         .andThen(new TheBigYeetAuto()),
                                                         new InstantCommand(), shooterSensorTrue));
                         NamedCommands.registerCommand("StopShooterTrack", new InstantCommand(() -> {
@@ -213,4 +215,5 @@ public class RobotContainer {
         public VisionEstimation getVisionEstimation() {
                 return visionEstimation;
         }
+
 }

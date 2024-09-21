@@ -13,30 +13,30 @@ import frc.robot.Constants;
 
 public class ReverseKinematics {
         // distance between launcher opening and the subwoofer target
-        private static double constTargetHeightDiff = 1.35;
+        private static double constTargetHeightDiff = 1.4;
         // gravity
         private static double g = 9.8;
         // the final y velocity for the note to be moving at when it enters the target
 
         // X and Y positions of the subwoofer with regards to (0,0) on the robot's
         // Pose2d
-        private static double subwooferXPos = 0;
-        private static double subwooferYPos = 5.5;
-        private static double encoderOffset = 0.597;
+        private static double subwooferXPos = -0.5;
+        private static double subwooferYPos = 7;
+        private static double encoderOffset = 0.595;
         private static double movementMultiplierX = 1;
         private static double movementMultiplierY = 1;
         private static double flywheelSpeedMultiplier = 0.9;
-        private static double gravityMultiplier = 0.3;
+        private static double gravityMultiplier = 0.35;
         private static double spinVComp = 0;
 
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
                 if (Constants.isBlueAlliance) {
-                        subwooferXPos = 0.22;
-                        subwooferYPos = 5.554;
+                        subwooferXPos = -0.2;
+                        subwooferYPos = 5.8;
                 } else {
-                        subwooferXPos = 16.526;
-                        subwooferYPos = 5.554;
+                        subwooferXPos = 16.7;
+                        subwooferYPos = 5.8;
                 }
                 // SmartDashboard.putString("poseconvert",
                 // new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new
@@ -102,18 +102,16 @@ public class ReverseKinematics {
         public static double calcSubwooferLaunchAngle(Pose2d pos, ChassisSpeeds speed, double flywheelSpeedMTS) {
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
-                double timeInAir = calcTimeInAir(pos, speed, flywheelSpeedMTS);
-                double angleDiffRadians = (Math.PI
-                                + (Math.atan2(calcLaunchVerticalVel(pos, speed, timeInAir),
-                                                -Math.sqrt(Math.pow(calcLaunchXVel(pos, speed, timeInAir), 2) + Math
-                                                                .pow(calcLaunchYVel(pos, speed, timeInAir), 2)))));
-                double normalizedAngleDiff = angleDiffRadians
-                                / (2 * Math.PI);
+                double distance = Math.sqrt(pos.getX() * pos.getX() + pos.getY() * pos.getY());
+                double k = 0.000015;
+                SmartDashboard.putNumber("distance", distance);
+                double angle = Math.atan((constTargetHeightDiff + k * (distance * distance)) / distance);
+                SmartDashboard.putNumber("angle", angle / (2 * Math.PI));
                 // SmartDashboard.putNumber("targetAngleShoote", angleDiffRadians);
                 // SmartDashboard.putNumber("PIVOT HEIGHT", encoderOffset
                 // - normalizedAngleDiff);
                 return encoderOffset
-                                - normalizedAngleDiff;
+                                - (angle / (2.0 * Math.PI));
         }
 
         public static void configHeightDif(double targetHeightDiff) {

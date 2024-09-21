@@ -31,9 +31,9 @@ public class JiggleNote extends Command {
             shooterTrack.set(ShooterSpeeds.STOP);
             return true;
         } else if (sensor) {
-            shooterTrack.set(ShooterSpeeds.JIGGLE_BACKWARD);
+            shooterTrack.setVoltage(ShooterSpeeds.JIGGLE_BACKWARD.track);
         } else {
-            shooterTrack.set(ShooterSpeeds.JIGGLE_FORWARD);
+            shooterTrack.setVoltage(ShooterSpeeds.JIGGLE_FORWARD.track);
         }
 
         return false;

@@ -33,7 +33,7 @@ public class ShooterElevator extends SubsystemBase {
     private SparkMaxConfig elevateConfig = new SparkMaxConfig(
             new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300), 1, true, SparkMaxEncoderType.Relative,
             IdleMode.kBrake,
-            30, 30, false, false, 1, false, new PIDConfig(1, 0, 0));
+            30, 30, false, false, 1, false, new PIDConfig(2, 0, 0));
     private SparkMaxConfig followConfig = new SparkMaxConfig(new SparkMaxStatusFrames(300, 300, 10, 300, 300, 300, 300),
             1, true, IdleMode.kBrake, 30, 30, false, motor1);
 
@@ -57,14 +57,14 @@ public class ShooterElevator extends SubsystemBase {
 
     public void setPosition(double position) {
         desiredpos = position;
-        motor1.getPIDController().setReference(position, ControlType.kPosition);
+        motor1.getPIDController().setReference(position, ControlType.kPosition, 0, 1);
     }
 
     public void setPosition(ArmPositions armPositions) {
         setPosition(armPositions.elevator);
     }
 
-    public double getDesiredPosition(){
+    public double getDesiredPosition() {
         return desiredpos;
     }
 

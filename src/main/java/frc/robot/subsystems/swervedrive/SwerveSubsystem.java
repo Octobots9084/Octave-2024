@@ -19,6 +19,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import java.io.File;
 import java.util.function.DoubleSupplier;
+
+import org.photonvision.EstimatedRobotPose;
+
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.math.SwerveMath;
@@ -50,6 +53,7 @@ public class SwerveSubsystem extends SubsystemBase {
   public PIDController targetAngleController;
   public PIDController driverTargetAngleController;
   public boolean collectAutoRunning = false;
+  private Pose2d shooterPose = new Pose2d();
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -420,5 +424,13 @@ public class SwerveSubsystem extends SubsystemBase {
   public void addVisionReading(Pose2d robotPose, double timestamp,
       Matrix<N3, N1> visionMeasurementStdDevs) {
     swerveDrive.addVisionMeasurement(robotPose, timestamp, visionMeasurementStdDevs);
+  }
+
+  public void setShooterPose(Pose2d shooterPose) {
+    this.shooterPose = shooterPose;
+  }
+
+  public Pose2d getShooterPose() {
+    return shooterPose;
   }
 }

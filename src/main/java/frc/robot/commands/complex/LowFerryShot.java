@@ -20,7 +20,7 @@ import frc.robot.subsystems.lights.Light;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.util.MathUtil;
 
-public class Driveby extends Command {
+public class LowFerryShot extends Command {
     private static final double maintainToleranceTime = 0.1;
     ShooterPivot pivot;
     ShooterFlywheel flywheel;
@@ -30,11 +30,12 @@ public class Driveby extends Command {
     double realPivot;
     double targetPivot;
     double realFlywheel;
+    Pose2d targetLanding;
     double targetFlywheel;
     Rotation2d targetTurn;
     private double initialToleranceTime = 0;
 
-    public Driveby() {
+    public LowFerryShot() {
         pivot = ShooterPivot.getInstance();
         flywheel = ShooterFlywheel.getInstance();
         swerveSubsystem = SwerveSubsystem.getInstance();
@@ -51,24 +52,25 @@ public class Driveby extends Command {
     public void updateTargets() {
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
-        targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
-                ShooterSpeeds.DRIVE_BY.flywheels);
-        targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels;
+
+        if (Constants.isBlueAlliance) {
+            targetLanding = new Pose2d(realPose2d.getX() >= 10.65 ? 8.2 : 2.1, realPose2d.getX() >= 10.65 ? 5.7 : 6.5,
+                    new Rotation2d());
+        } else {
+            targetLanding = new Pose2d(realPose2d.getX() <= 5.85 ? 8.2 : 14.6, realPose2d.getX() <= 5.85 ? 5.7 : 6.5,
+                    new Rotation2d());
+        }
+        targetPivot = 0.63;
+        targetFlywheel = -20;
+        // SmartDashboard.putNumber("targetflywheeeeel", targetFlywheel);
         targetTurn = new Rotation2d(
-                ReverseKinematics.calcRobotAngle(
-                        ReverseKinematics.convert2dCoords(swerveSubsystem.getShooterPose()),
-                        ReverseKinematics.convertSpeed(
-                                ReverseKinematics.convert2dCoords(swerveSubsystem.getShooterPose()),
-                                swerveSubsystem.getRobotVelocity()),
-                        ShooterSpeeds.DRIVE_BY.flywheels));
-        // SmartDashboard.putString("realPose2dAhh", realPose2d.toString());
+                ReverseKinematics.calcFerryRotation(realPose2d, targetLanding));
     }
 
     @Override
     public void execute() {
         realSpeeds = swerveSubsystem.getRobotVelocity();
         realPose2d = swerveSubsystem.getPose();
-
         realFlywheel = flywheel.getFlywheelSpeedMeters();
         realPivot = pivot.getPosition();
         ReverseKinematics.configHeightDif(ReverseKinematics.getHeightDif()
@@ -76,15 +78,12 @@ public class Driveby extends Command {
         updateTargets();
         // SmartDashboard.putString("realPose2d", realPose2d.toString());
         swerveSubsystem.setShootingRequest(targetTurn);
+        // SmartDashboard.putNumber("flywheelgo", targetFlywheel);
         flywheel.setFlyWheelSpeedMeters(targetFlywheel);
         if (!pivot.notSoFastEggman) {
             pivot.setPosition(targetPivot);
         }
     }
-
-    private double flywheelTolerance = 0.2;
-    private double pivotTolerance = 0.005;
-    private double rotationTolerance = 0.05;
 
     @Override
     public boolean isFinished() {
@@ -107,9 +106,22 @@ public class Driveby extends Command {
         // SmartDashboard.putNumber("rotationTolerance", isInTolerance(realRotation) ? 1
         // : 0);
 
+        // same side ferrying protection
+        // if ((!Constants.isBlueAlliance && realPose2d.getX() >= 5.85)
+        // || (Constants.isBlueAlliance && realPose2d.getX() <= 10.65)) {
+        // return false;
+        // }
         // turn vs pose2d getturn, flywheelreal vs targetflywheel, pivot vs pivot
-        if (longTolerance(realRotation)) {
+        if (isInTolerance(realRotation)) {
             Light.getInstance().setAnimation(Animations.SHOT_READY);
+            System.out.println("Ferry shot authorized. Flywheels at " + targetFlywheel + " of " + realFlywheel
+                    + " with a tolerance of " + 3 + " and error of " + (targetFlywheel - realFlywheel) + " Pivot at "
+                    + realPivot + " of " + targetPivot + " with a tolerance of " + 0.05 + " and an error of "
+                    + (targetPivot - realPivot) + " Bot rotation at " + realPose2d.getRotation().getRadians() + " of "
+                    + targetTurn.getRadians() + " with a tolerance of " + 0.05 + " and an error of "
+                    + (realPose2d.getRotation().getRadians() - targetTurn.getRadians()) + "and a position of "
+                    + realPose2d.toString() + ". Good luck!");
+
             return true;
         } else {
             return false;
@@ -117,33 +129,11 @@ public class Driveby extends Command {
     }
 
     private boolean isInTolerance(double realRotation) {
-        return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, flywheelTolerance)
-                && MathUtil.isWithinTolerance(realPivot, targetPivot, pivotTolerance)
+        return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, 0.1)
+                && MathUtil.isWithinTolerance(realPivot, targetPivot, 0.05)
 
                 && MathUtil.isWithinTolerance(MathUtil.wrapToCircle(realRotation, 2 * Math.PI),
-                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), rotationTolerance));
-    }
-
-    private boolean longTolerance(double realFlywheel) {
-        if (isInTolerance(realFlywheel)) {
-            if (initialToleranceTime == 0) {
-                initialToleranceTime = Timer.getFPGATimestamp();
-            } else if (Timer.getFPGATimestamp() - initialToleranceTime > maintainToleranceTime) {
-                System.out.println("Teleop shot authorized. Flywheels at " + targetFlywheel + " of " + realFlywheel
-                        + " with a tolerance of " + flywheelTolerance + " and error of "
-                        + (targetFlywheel - realFlywheel) + " Pivot at " + realPivot + " of " + targetPivot
-                        + " with a tolerance of " + pivotTolerance + " and an error of " + (targetPivot - realPivot)
-                        + " Bot rotation at " + realPose2d.getRotation().getRadians() + " of " + targetTurn.getRadians()
-                        + " with a tolerance of " + rotationTolerance + " and an error of "
-                        + (realPose2d.getRotation().getRadians() - targetTurn.getRadians()) + "and a position of "
-                        + realPose2d.toString() + ". Good luck!");
-                return true;
-            }
-        } else {
-            initialToleranceTime = 0;
-        }
-
-        return false;
+                        MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI), 0.05));
     }
 
     @Override
@@ -151,10 +141,15 @@ public class Driveby extends Command {
         if (!inturupted) {
             CommandScheduler.getInstance().schedule(new TheBigYeet());
         } else {
-            System.out.println("Teleop shot canceled. Flywheels at " + targetFlywheel + " of " + realFlywheel + " with a tolerance of " + flywheelTolerance + " and error of " + (targetFlywheel-realFlywheel) + " Pivot at " + realPivot + " of " + targetPivot + " with a tolerance of " + pivotTolerance + " and an error of " + (targetPivot - realPivot) + " Bot rotation at " + realPose2d.getRotation().getRadians() + " of " + targetTurn.getRadians() + " with a tolerance of " + rotationTolerance +  " and an error of " + (realPose2d.getRotation().getRadians() - targetTurn.getRadians())+"and a position of "+realPose2d.toString() + ". RIP");
+            System.out.println("Ferry shot fired out of tolerance. Flywheels at " + targetFlywheel + " of "
+                    + realFlywheel
+                    + " with a tolerance of " + 3 + " and error of " + (targetFlywheel - realFlywheel) + " Pivot at "
+                    + realPivot + " of " + targetPivot + " with a tolerance of " + 0.05 + " and an error of "
+                    + (targetPivot - realPivot) + " Bot rotation at " + realPose2d.getRotation().getRadians() + " of "
+                    + targetTurn.getRadians() + " with a tolerance of " + 0.05 + " and an error of "
+                    + (realPose2d.getRotation().getRadians() - targetTurn.getRadians()) + "and a position of "
+                    + realPose2d.toString() + ". Good luck!");
         }
-
-
         swerveSubsystem.setShootingRequestActive(false);
         swerveSubsystem.targetAngleEnabled = false;
     }
