@@ -76,66 +76,71 @@ public class Vision implements Runnable {
 
     // Get AprilTag data and updating the pose estimator
     try {
-      if (photonPoseEstimator != null && photonCamera != null) {
+      if (photonCamera != null) {
+
         var photonResults = photonCamera.getLatestResult();
         var photonResultsDriver = photonCamera.getLatestResult();
-        if (photonResults.hasTargets()) {
-          for (int i = 0; i < photonResults.targets.size(); i++) {
-            if (photonResults.targets.get(i).getPoseAmbiguity() > 0.5) {
-              photonResults.targets.remove(i);
-              i++;
+        if (photonPoseEstimator != null) {
+          if (photonResults.hasTargets()) {
+            for (int i = 0; i < photonResults.targets.size(); i++) {
+              if (photonResults.targets.get(i).getPoseAmbiguity() > 0.5) {
+                photonResults.targets.remove(i);
+                i++;
+              }
             }
+
+            // Updates the pose estimator
+            photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
+              var estimatedPose = estimatedRobotPose.estimatedPose;
+
+              /**
+               * If present then makes sure the measurement is on the field and
+               * sets the atomic estimated pose to the current estimated pose
+               * from PhotonPoseEstimator
+               */
+              if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.LENGTH
+                  && estimatedPose.getY() > 0.0
+                  && estimatedPose.getY() <= FieldConstants.WIDTH
+                  && MathUtil.isWithinTolerance(estimatedPose.getZ(), 0, 0.1)) {
+                atomicEstimatedRobotPose.set(estimatedRobotPose);
+
+                // Update "set atomic count" telemetry
+                // setAtomicCountTelemetry.incCount(1);
+              }
+
+            });
           }
-
-          // Updates the pose estimator
-          photonPoseEstimator.update(photonResults).ifPresent(estimatedRobotPose -> {
-            var estimatedPose = estimatedRobotPose.estimatedPose;
-
-            /**
-             * If present then makes sure the measurement is on the field and
-             * sets the atomic estimated pose to the current estimated pose
-             * from PhotonPoseEstimator
-             */
-            if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.LENGTH
-                && estimatedPose.getY() > 0.0
-                && estimatedPose.getY() <= FieldConstants.WIDTH
-                && MathUtil.isWithinTolerance(estimatedPose.getZ(), 0, 0.05)) {
-              atomicEstimatedRobotPose.set(estimatedRobotPose);
-
-              // Update "set atomic count" telemetry
-              // setAtomicCountTelemetry.incCount(1);
-            }
-
-          });
         }
-        if (photonResultsDriver.hasTargets()) {
+        if (photonPoseEstimatorDriver != null) {
+          if (photonResultsDriver.hasTargets()) {
 
-          for (int i = 0; i < photonResultsDriver.targets.size(); i++) {
-            if (!(photonResultsDriver.targets.get(i).getFiducialId() == 7
-                || photonResultsDriver.targets.get(i).getFiducialId() == 8
-                || photonResultsDriver.targets.get(i).getFiducialId() == 5
-                || photonResultsDriver.targets.get(i).getFiducialId() == 4)) {
-              photonResultsDriver.targets.remove(i);
+            for (int i = 0; i < photonResultsDriver.targets.size(); i++) {
+              if (!(photonResultsDriver.targets.get(i).getFiducialId() == 7
+                  || photonResultsDriver.targets.get(i).getFiducialId() == 8
+                  || photonResultsDriver.targets.get(i).getFiducialId() == 5
+                  || photonResultsDriver.targets.get(i).getFiducialId() == 4)) {
+                photonResultsDriver.targets.remove(i);
 
-              i++;
+                i++;
+              }
             }
+            // Updates the pose estimator
+            photonPoseEstimatorDriver.update(photonResultsDriver).ifPresent(estimatedRobotPose -> {
+              var estimatedPose = estimatedRobotPose.estimatedPose;
+
+              if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.LENGTH
+                  && estimatedPose.getY() > 0.0
+                  && estimatedPose.getY() <= FieldConstants.WIDTH
+                  && MathUtil.isWithinTolerance(estimatedPose.getZ(), 0, 0.1)) {
+
+                atomicShooterEstimatedRobotPose.set(estimatedRobotPose);
+
+                // Update "set atomic count" telemetry
+                // setAtomicCountTelemetry.incCount(1);
+              }
+            });
+
           }
-          // Updates the pose estimator
-          photonPoseEstimatorDriver.update(photonResultsDriver).ifPresent(estimatedRobotPose -> {
-            var estimatedPose = estimatedRobotPose.estimatedPose;
-
-            if (estimatedPose.getX() > 0.0 && estimatedPose.getX() <= FieldConstants.LENGTH
-                && estimatedPose.getY() > 0.0
-                && estimatedPose.getY() <= FieldConstants.WIDTH
-                && MathUtil.isWithinTolerance(estimatedPose.getZ(), 0, 0.05)) {
-
-              atomicShooterEstimatedRobotPose.set(estimatedRobotPose);
-
-              // Update "set atomic count" telemetry
-              // setAtomicCountTelemetry.incCount(1);
-            }
-          });
-
         }
       }
     } catch (

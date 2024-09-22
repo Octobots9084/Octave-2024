@@ -18,6 +18,7 @@ import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+import frc.robot.subsystems.vision.VisionEstimation;
 import frc.robot.util.MathUtil;
 
 public class Driveby extends Command {
@@ -49,16 +50,21 @@ public class Driveby extends Command {
     }
 
     public void updateTargets() {
-        realPose2d = SwerveSubsystem.getInstance().getPose();
+        realPose2d = SwerveSubsystem.getInstance().getShooterPose();
+        if (Timer.getFPGATimestamp() > VisionEstimation.getInstance().lastGoodShooterUpdateTime + 0.2) {
+            realPose2d = SwerveSubsystem.getInstance().getPose();
+
+        }
+
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
         targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
                 ShooterSpeeds.DRIVE_BY.flywheels);
         targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels;
         targetTurn = new Rotation2d(
                 ReverseKinematics.calcRobotAngle(
-                        ReverseKinematics.convert2dCoords(swerveSubsystem.getShooterPose()),
+                        ReverseKinematics.convert2dCoords(realPose2d),
                         ReverseKinematics.convertSpeed(
-                                ReverseKinematics.convert2dCoords(swerveSubsystem.getShooterPose()),
+                                ReverseKinematics.convert2dCoords(realPose2d),
                                 swerveSubsystem.getRobotVelocity()),
                         ShooterSpeeds.DRIVE_BY.flywheels));
         // SmartDashboard.putString("realPose2dAhh", realPose2d.toString());
@@ -151,9 +157,15 @@ public class Driveby extends Command {
         if (!inturupted) {
             CommandScheduler.getInstance().schedule(new TheBigYeet());
         } else {
-            System.out.println("Teleop shot canceled. Flywheels at " + targetFlywheel + " of " + realFlywheel + " with a tolerance of " + flywheelTolerance + " and error of " + (targetFlywheel-realFlywheel) + " Pivot at " + realPivot + " of " + targetPivot + " with a tolerance of " + pivotTolerance + " and an error of " + (targetPivot - realPivot) + " Bot rotation at " + realPose2d.getRotation().getRadians() + " of " + targetTurn.getRadians() + " with a tolerance of " + rotationTolerance +  " and an error of " + (realPose2d.getRotation().getRadians() - targetTurn.getRadians())+"and a position of "+realPose2d.toString() + ". RIP");
+            System.out.println("Teleop shot canceled. Flywheels at " + targetFlywheel + " of " + realFlywheel
+                    + " with a tolerance of " + flywheelTolerance + " and error of " + (targetFlywheel - realFlywheel)
+                    + " Pivot at " + realPivot + " of " + targetPivot + " with a tolerance of " + pivotTolerance
+                    + " and an error of " + (targetPivot - realPivot) + " Bot rotation at "
+                    + realPose2d.getRotation().getRadians() + " of " + targetTurn.getRadians() + " with a tolerance of "
+                    + rotationTolerance + " and an error of "
+                    + (realPose2d.getRotation().getRadians() - targetTurn.getRadians()) + "and a position of "
+                    + realPose2d.toString() + ". RIP");
         }
-
 
         swerveSubsystem.setShootingRequestActive(false);
         swerveSubsystem.targetAngleEnabled = false;

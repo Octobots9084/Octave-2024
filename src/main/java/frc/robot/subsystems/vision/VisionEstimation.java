@@ -35,6 +35,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Notifier;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.FieldConstants;
@@ -62,6 +63,8 @@ public class VisionEstimation extends SubsystemBase {
                 frontLeftEstimator.run();
                 frontRightEstimator.run();
         });
+
+        public double lastGoodShooterUpdateTime = Timer.getFPGATimestamp();
 
         private OriginPosition originPosition = kBlueAllianceWallRightSide;
 
@@ -218,10 +221,11 @@ public class VisionEstimation extends SubsystemBase {
                         swerveSubsystem.setShooterPose(new Pose2d(shooterPose.estimatedPose.toPose2d().getX(),
                                         shooterPose.estimatedPose.toPose2d().getY(),
                                         swerveSubsystem.getPose().getRotation()));
-                } else {
-                        swerveSubsystem.setShooterPose(new Pose2d(swerveSubsystem.getPose().getX(),
-                                        swerveSubsystem.getPose().getY(),
-                                        swerveSubsystem.getPose().getRotation()));
+                        lastGoodShooterUpdateTime = Timer.getFPGATimestamp();
+                        SmartDashboard.putBoolean("Good Shot", true);
+                } else if (lastGoodShooterUpdateTime + 0.2 < Timer.getFPGATimestamp()) {
+                        SmartDashboard.putBoolean("Good Shot", false);
+
                 }
 
                 // final String smartDashboardCamPoseKey =

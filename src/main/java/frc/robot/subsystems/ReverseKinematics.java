@@ -33,10 +33,10 @@ public class ReverseKinematics {
         public static Pose2d convert2dCoords(Pose2d pos) {
                 if (Constants.isBlueAlliance) {
                         subwooferXPos = -0.2;
-                        subwooferYPos = 5.8;
+                        subwooferYPos = 5.5;
                 } else {
                         subwooferXPos = 16.7;
-                        subwooferYPos = 5.8;
+                        subwooferYPos = 5.5;
                 }
                 // SmartDashboard.putString("poseconvert",
                 // new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new
@@ -103,7 +103,7 @@ public class ReverseKinematics {
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
                 double distance = Math.sqrt(pos.getX() * pos.getX() + pos.getY() * pos.getY());
-                double k = 0.0075;
+                double k = 0.007;
                 SmartDashboard.putNumber("distance", distance);
                 double angle = Math.atan((constTargetHeightDiff + k * (distance * distance)) / distance);
                 SmartDashboard.putNumber("angle", angle / (2 * Math.PI));
