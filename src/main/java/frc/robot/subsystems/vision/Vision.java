@@ -79,11 +79,14 @@ public class Vision implements Runnable {
       if (photonCamera != null) {
 
         var photonResults = photonCamera.getLatestResult();
+
         var photonResultsDriver = photonCamera.getLatestResult();
         if (photonPoseEstimator != null) {
           if (photonResults.hasTargets()) {
             for (int i = 0; i < photonResults.targets.size(); i++) {
-              if (photonResults.targets.get(i).getPoseAmbiguity() > 0.5) {
+              if (photonResults.targets.get(i).getPoseAmbiguity() > 0.5
+                  || photonResults.targets.get(i).getFiducialId() == 9
+                  || photonResults.targets.get(i).getFiducialId() == 15) {
                 photonResults.targets.remove(i);
                 i++;
               }
