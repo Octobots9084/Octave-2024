@@ -48,6 +48,7 @@ public class ButtonConfig {
         // driverLeft.button(1).whileTrue(new TagAlign());
         driverButtons.button(10).whileTrue(new ParallelCommandGroup(new PrepAmp(), new AmpAlign()));
         driverLeft.button(2).whileTrue(new Driveby());
+        driverLeft.button(1).whileTrue(new FerryShot().withTimeout(2).andThen(new TheBigYeet()));
 
         driverRight.button(1).onTrue(new TheBigYeet());
         driverRight.button(2).whileTrue(new LowFerryShot().withTimeout(2).andThen(new TheBigYeet()));

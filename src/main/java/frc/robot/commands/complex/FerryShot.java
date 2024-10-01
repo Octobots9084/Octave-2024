@@ -62,7 +62,7 @@ public class FerryShot extends Command {
                     new Rotation2d());
         }
         targetPivot = 0.5;
-        targetFlywheel = -20;
+        targetFlywheel = -15;
         // SmartDashboard.putNumber("targetflywheeeeel", targetFlywheel);
         targetTurn = new Rotation2d(
                 ReverseKinematics.calcFerryRotation(realPose2d, targetLanding));
