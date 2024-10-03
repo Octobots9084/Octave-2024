@@ -1,0 +1,119 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3478960291253916,
+      "y": 2.4451782236897803
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Source 0"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectWithoutTimeout"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Source 8"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectWithoutTimeout"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Source 7"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectWithoutTimeout"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Source 6"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectWithoutTimeout"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Fast Paths",
+  "choreoAuto": false
+}

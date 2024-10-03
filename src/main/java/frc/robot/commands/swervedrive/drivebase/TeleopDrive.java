@@ -4,9 +4,16 @@
 
 package frc.robot.commands.swervedrive.drivebase;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.constants.ShooterSpeeds;
+import frc.robot.subsystems.ReverseKinematics;
+import frc.robot.subsystems.ShooterPivot;
+import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.PieceVision;
 
@@ -80,13 +87,34 @@ public class TeleopDrive extends Command {
           angleSpeed,
           driveMode.getAsBoolean());
     } else {
-      swerve.drive(
-          new Translation2d(xSpeed,
-              ySpeed),
-          omega.getAsDouble() * 3 * Math.PI - PieceVision.getInstance().getYaw() / 20,
-          driveMode.getAsBoolean());
-    }
+      ChassisSpeeds pieceVisionTranslation = new ChassisSpeeds();
+      if (PieceVision.getInstance().getYaw() != 0) {
+        pieceVisionTranslation = ChassisSpeeds.fromRobotRelativeSpeeds(0, 1, 0, swerve.getPose().getRotation());
+      }
 
+      Pose2d realPose2d = swerve.getShooterPose();
+      double aimingAngleAdjustmentRadians = 0;
+      if (!ShooterTrack.getInstance().getSensor()) {
+        aimingAngleAdjustmentRadians = ReverseKinematics.calcRobotAngle(
+            ReverseKinematics.convert2dCoords(realPose2d),
+            ReverseKinematics.convertSpeed(
+                ReverseKinematics.convert2dCoords(realPose2d),
+                new ChassisSpeeds()),
+            ShooterSpeeds.DRIVE_BY.flywheels) - realPose2d.getRotation().getRadians();
+
+        if (!ShooterPivot.getInstance().notSoFastEggman) {
+          ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, new ChassisSpeeds(),
+              ShooterSpeeds.DRIVE_BY.flywheels);
+        }
+      }
+      swerve.drive(
+          new Translation2d(xSpeed + pieceVisionTranslation.vxMetersPerSecond,
+              ySpeed + pieceVisionTranslation.vyMetersPerSecond),
+          omega.getAsDouble() * 3 * Math.PI - PieceVision.getInstance().getYaw() / 20
+              + aimingAngleAdjustmentRadians / 20,
+          driveMode.getAsBoolean());
+
+    }
   }
 
 }

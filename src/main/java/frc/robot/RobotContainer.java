@@ -20,6 +20,7 @@ import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.CollectDriveby;
 import frc.robot.commands.complex.CollectDrivebySafely;
+import frc.robot.commands.complex.Driveby;
 import frc.robot.commands.complex.DrivebyAuto;
 import frc.robot.commands.complex.DrivebyAutoHigher;
 import frc.robot.commands.complex.DrivebyAutoSniper;
@@ -96,6 +97,10 @@ public class RobotContainer {
                         NamedCommands.registerCommand("CollectDrivebyMFSafely", new CollectDrivebySafely());
 
                         NamedCommands.registerCommand("Collect", new Collect().withTimeout(9));
+                        NamedCommands.registerCommand("DrivebyWithShortTimeout",
+                                        new ConditionalCommand(new Driveby().withTimeout(2), new InstantCommand(),
+                                                        shooterSensorTrue));
+                        NamedCommands.registerCommand("CollectWithoutTimeout", new Collect());
                         NamedCommands.registerCommand("Snipe", new DrivebyAutoSniper(false));
 
                         NamedCommands.registerCommand("QuickDraw",

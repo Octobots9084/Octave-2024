@@ -3,10 +3,14 @@
   "robotLength": 0.97,
   "holonomicMode": true,
   "pathFolders": [
-    "Annie's Garbage"
+    "Annie's Garbage",
+    "Fast Amp Side",
+    "Fast Center",
+    "Fast Source Side"
   ],
   "autoFolders": [
-    "Choreo Paths"
+    "Choreo Paths",
+    "Fast Paths"
   ],
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 3.5,

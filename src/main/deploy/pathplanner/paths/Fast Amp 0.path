@@ -1,0 +1,68 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3374413054104277,
+        "y": 7.76428462985314
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.0167707730516957,
+        "y": 7.76428462985314
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.339994354739065,
+        "y": 7.76428462985314
+      },
+      "prevControl": {
+        "x": 2.806668920827862,
+        "y": 7.76428462985314
+      },
+      "nextControl": {
+        "x": 4.230326058790779,
+        "y": 7.76428462985314
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 4.16,
+        "y": 5.81
+      },
+      "prevControl": {
+        "x": 4.183174586035333,
+        "y": 6.2770083885388885
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 6.0,
+    "maxAcceleration": 6.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Fast Amp Side",
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

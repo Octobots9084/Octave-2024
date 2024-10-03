@@ -1,0 +1,169 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.3817627635255272,
+      "y": 5.52027770722208
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Center 0"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectWithoutTimeout"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Center 3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectWithoutTimeout"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Center 2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectWithoutTimeout"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Center 1"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectWithoutTimeout"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Amp 6"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectWithoutTimeout"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Amp 5"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "CollectWithoutTimeout"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Fast Paths",
+  "choreoAuto": false
+}
