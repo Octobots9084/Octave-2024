@@ -20,12 +20,6 @@
                 "data": {
                   "pathName": "Fast Center 0"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "CollectWithoutTimeout"
-                }
               }
             ]
           }

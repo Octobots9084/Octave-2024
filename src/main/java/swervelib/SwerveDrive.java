@@ -596,7 +596,7 @@ public class SwerveDrive {
   public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) {
     ChassisSpeeds pieceVisionTranslation = new ChassisSpeeds();
     if (PieceVision.getInstance().getYaw() != 0) {
-      pieceVisionTranslation = ChassisSpeeds.fromRobotRelativeSpeeds(1.75, 0, 0, getPose().getRotation());
+      pieceVisionTranslation = ChassisSpeeds.fromRobotRelativeSpeeds(1, 0, 0, getPose().getRotation());
     }
 
     Pose2d realPose2d = SwerveSubsystem.getInstance().getShooterPose();
@@ -618,16 +618,22 @@ public class SwerveDrive {
       if (!ShooterPivot.getInstance().notSoFastEggman) {
         ShooterPivot.getInstance().setPosition(ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, new ChassisSpeeds(),
             ShooterSpeeds.DRIVE_BY.flywheels));
-      }
-    }
 
-    SwerveDriveTelemetry.desiredChassisSpeeds[1] = chassisSpeeds.vyMetersPerSecond
-        + pieceVisionTranslation.vxMetersPerSecond;
-    SwerveDriveTelemetry.desiredChassisSpeeds[0] = chassisSpeeds.vxMetersPerSecond
-        + pieceVisionTranslation.vyMetersPerSecond;
+      }
+      // chassisSpeeds = new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond
+      //   ,chassisSpeeds.vyMetersPerSecond,chassisSpeeds.omegaRadiansPerSecond
+      //   + aimingAngleAdjustmentRadians/10);
+    }
+    // if (PieceVision.getInstance().getYaw()!=0) {
+    //   chassisSpeeds = new ChassisSpeeds(chassisSpeeds.vxMetersPerSecond,
+    //     chassisSpeeds.vyMetersPerSecond, - PieceVision.getInstance().getYaw() / 15);
+    // }
+    
+
+    SwerveDriveTelemetry.desiredChassisSpeeds[1] = chassisSpeeds.vyMetersPerSecond;
+    SwerveDriveTelemetry.desiredChassisSpeeds[0] = chassisSpeeds.vxMetersPerSecond;
     SwerveDriveTelemetry.desiredChassisSpeeds[2] = Math
-        .toDegrees(chassisSpeeds.omegaRadiansPerSecond) + PieceVision.getInstance().getYaw() / 20
-        + aimingAngleAdjustmentRadians / 20;
+        .toDegrees(chassisSpeeds.omegaRadiansPerSecond);
 
     setRawModuleStates(kinematics.toSwerveModuleStates(chassisSpeeds), false);
   }

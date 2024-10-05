@@ -98,7 +98,7 @@ public class RobotContainer {
 
                         NamedCommands.registerCommand("Collect", new Collect().withTimeout(9));
                         NamedCommands.registerCommand("DrivebyWithShortTimeout",
-                                        new ConditionalCommand(new Driveby().withTimeout(2), new InstantCommand(),
+                                        new ConditionalCommand(new DrivebyAuto(false).withTimeout(3).andThen(new TheBigYeet()), new InstantCommand(),
                                                         shooterSensorTrue));
                         NamedCommands.registerCommand("CollectWithoutTimeout", new Collect());
                         NamedCommands.registerCommand("Snipe", new DrivebyAutoSniper(false));
