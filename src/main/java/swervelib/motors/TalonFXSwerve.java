@@ -244,7 +244,7 @@ public class TalonFXSwerve extends SwerveMotor
     TalonFXConfigurator cfg = motor.getConfigurator();
     cfg.refresh(configuration.Slot0);
     cfg.apply(
-        configuration.Slot0.withKP(15).withKI(0).withKD(3).withKS(0).withKV(2)); //kv was 2
+        configuration.Slot0.withKP(15).withKI(0.4).withKD(3).withKS(0).withKV(2)); //kv was 2
     //    configuration.slot0.integralZone = config.iz;
     //    configuration.slot0.closedLoopPeakOutput = config.output.max;
   }
