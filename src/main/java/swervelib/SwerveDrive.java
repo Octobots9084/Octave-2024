@@ -29,6 +29,8 @@ import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.PieceVision;
+import frc.robot.subsystems.vision.VisionEstimation;
+import frc.robot.util.MathUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -556,10 +558,8 @@ public class SwerveDrive {
   private void setRawModuleStates(SwerveModuleState[] desiredStates, boolean isOpenLoop) {
     // Desaturates wheel speeds
     if (attainableMaxTranslationalSpeedMetersPerSecond != 0 || attainableMaxRotationalVelocityRadiansPerSecond != 0) {
-      SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, getRobotVelocity(),
-          maxSpeedMPS * 5,
-          attainableMaxTranslationalSpeedMetersPerSecond,
-          attainableMaxRotationalVelocityRadiansPerSecond);
+      SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates,
+          maxSpeedMPS +5);
     }
 
     // Sets states
@@ -596,22 +596,28 @@ public class SwerveDrive {
   public void setChassisSpeeds(ChassisSpeeds chassisSpeeds) {
     ChassisSpeeds pieceVisionTranslation = new ChassisSpeeds();
     if (PieceVision.getInstance().getYaw() != 0) {
-      pieceVisionTranslation = ChassisSpeeds.fromRobotRelativeSpeeds(0, 1, 0, getPose().getRotation());
+      pieceVisionTranslation = ChassisSpeeds.fromRobotRelativeSpeeds(1.75, 0, 0, getPose().getRotation());
     }
 
     Pose2d realPose2d = SwerveSubsystem.getInstance().getShooterPose();
+    if (Timer.getFPGATimestamp() > VisionEstimation.getInstance().lastGoodShooterUpdateTime + 0.2) {
+        realPose2d = SwerveSubsystem.getInstance().getPose();
+
+    }
     double aimingAngleAdjustmentRadians = 0;
     if (!ShooterTrack.getInstance().getSensor()) {
-      aimingAngleAdjustmentRadians = ReverseKinematics.calcRobotAngle(
-          ReverseKinematics.convert2dCoords(realPose2d),
-          ReverseKinematics.convertSpeed(
-              ReverseKinematics.convert2dCoords(realPose2d),
-              new ChassisSpeeds()),
-          ShooterSpeeds.DRIVE_BY.flywheels) - realPose2d.getRotation().getRadians();
+      aimingAngleAdjustmentRadians = SwerveSubsystem.getInstance().targetAngleController.calculate(SwerveSubsystem.getInstance().getHeading().getRadians(),
+          MathUtil.wrapToCircle(ReverseKinematics.calcRobotAngle(
+            ReverseKinematics.convert2dCoords(realPose2d),
+            ReverseKinematics.convertSpeed(
+                ReverseKinematics.convert2dCoords(realPose2d),
+                new ChassisSpeeds()),
+            ShooterSpeeds.DRIVE_BY.flywheels),Math.PI*2));
+
 
       if (!ShooterPivot.getInstance().notSoFastEggman) {
-        ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, new ChassisSpeeds(),
-            ShooterSpeeds.DRIVE_BY.flywheels);
+        ShooterPivot.getInstance().setPosition(ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, new ChassisSpeeds(),
+            ShooterSpeeds.DRIVE_BY.flywheels));
       }
     }
 

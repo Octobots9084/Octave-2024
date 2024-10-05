@@ -48,7 +48,7 @@ public class SwerveSubsystem extends SubsystemBase {
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public static final double MAXIMUM_SPEED = 5;
+  public static final double MAXIMUM_SPEED = 6.5; // Maximum speed that should ever be reached is 6.5 m/s theotrically but 12 m/s has worked.
   public Rotation2d targetAngle = new Rotation2d();
   public boolean targetAngleEnabled = false;
   public PIDController targetAngleController;
@@ -67,7 +67,7 @@ public class SwerveSubsystem extends SubsystemBase {
     // objects being created.
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.MACHINE;
     try {
-      swerveDrive = new SwerveParser(directory).createSwerveDrive(5, 360,
+      swerveDrive = new SwerveParser(directory).createSwerveDrive(6.5, 360,
 
           SwerveMath.calculateMetersPerRotation(0.076, 40.0 / 11.0));
 

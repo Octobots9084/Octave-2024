@@ -244,7 +244,7 @@ public class TalonFXSwerve extends SwerveMotor
     TalonFXConfigurator cfg = motor.getConfigurator();
     cfg.refresh(configuration.Slot0);
     cfg.apply(
-        configuration.Slot0.withKP(config.p).withKI(config.i).withKD(config.d).withKS(config.f));
+        configuration.Slot0.withKP(15).withKI(0).withKD(3).withKS(0).withKV(2)); //kv was 2
     //    configuration.slot0.integralZone = config.iz;
     //    configuration.slot0.closedLoopPeakOutput = config.output.max;
   }
@@ -316,7 +316,7 @@ public class TalonFXSwerve extends SwerveMotor
   @Override
   public void setReference(double setpoint, double feedforward)
   {
-    setReference(setpoint, feedforward, getPosition());
+    setReference(setpoint, 3, getPosition());
   }
 
   /**
@@ -336,7 +336,7 @@ public class TalonFXSwerve extends SwerveMotor
 
     if (isDriveMotor)
     {
-      motor.setControl(m_velocityVoltageSetter.withVelocity(setpoint).withFeedForward(feedforward));
+      motor.setControl(m_velocityVoltageSetter.withVelocity(setpoint));
     } else
     {
       motor.setControl(m_angleVoltageSetter.withPosition(setpoint / 360.0));

@@ -8,6 +8,8 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.constants.ShooterSpeeds;
@@ -16,6 +18,8 @@ import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.PieceVision;
+import frc.robot.subsystems.vision.VisionEstimation;
+import frc.robot.util.MathUtil;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -89,29 +93,34 @@ public class TeleopDrive extends Command {
     } else {
       ChassisSpeeds pieceVisionTranslation = new ChassisSpeeds();
       if (PieceVision.getInstance().getYaw() != 0) {
-        pieceVisionTranslation = ChassisSpeeds.fromRobotRelativeSpeeds(0, 1, 0, swerve.getPose().getRotation());
+        pieceVisionTranslation = ChassisSpeeds.fromRobotRelativeSpeeds(1.75, 0, 0, swerve.getPose().getRotation());
       }
 
-      Pose2d realPose2d = swerve.getShooterPose();
+      Pose2d realPose2d = SwerveSubsystem.getInstance().getShooterPose();
+      if (Timer.getFPGATimestamp() > VisionEstimation.getInstance().lastGoodShooterUpdateTime + 0.2) {
+          realPose2d = SwerveSubsystem.getInstance().getPose();
+
+      }
       double aimingAngleAdjustmentRadians = 0;
       if (!ShooterTrack.getInstance().getSensor()) {
-        aimingAngleAdjustmentRadians = ReverseKinematics.calcRobotAngle(
+        aimingAngleAdjustmentRadians = swerve.targetAngleController.calculate(swerve.getHeading().getRadians(),
+          MathUtil.wrapToCircle(ReverseKinematics.calcRobotAngle(
             ReverseKinematics.convert2dCoords(realPose2d),
             ReverseKinematics.convertSpeed(
                 ReverseKinematics.convert2dCoords(realPose2d),
                 new ChassisSpeeds()),
-            ShooterSpeeds.DRIVE_BY.flywheels) - realPose2d.getRotation().getRadians();
+            ShooterSpeeds.DRIVE_BY.flywheels),Math.PI*2));
 
         if (!ShooterPivot.getInstance().notSoFastEggman) {
-          ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, new ChassisSpeeds(),
-              ShooterSpeeds.DRIVE_BY.flywheels);
+          ShooterPivot.getInstance().setPosition(ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, new ChassisSpeeds(),
+              ShooterSpeeds.DRIVE_BY.flywheels));
         }
       }
       swerve.drive(
           new Translation2d(xSpeed + pieceVisionTranslation.vxMetersPerSecond,
               ySpeed + pieceVisionTranslation.vyMetersPerSecond),
-          omega.getAsDouble() * 3 * Math.PI - PieceVision.getInstance().getYaw() / 20
-              + aimingAngleAdjustmentRadians / 20,
+          omega.getAsDouble() * 2 * Math.PI - PieceVision.getInstance().getYaw() / 20
+              + aimingAngleAdjustmentRadians / 5,
           driveMode.getAsBoolean());
 
     }

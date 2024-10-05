@@ -72,7 +72,7 @@ public class ShooterPivot extends SubsystemBase {
         // SmartDashboard.putNumber("realPivot", );
         // up is down on the encoders. If something is going up too high, lower the
         // number. - Xanthe
-        leftMotor.getPIDController().setReference(target + .072, ControlType.kPosition, 0, 0.605);
+        leftMotor.getPIDController().setReference(target + .074, ControlType.kPosition, 0, 0.605);
 
         rightMotor.getPIDController().setReference(target + .06, ControlType.kPosition, 0,
                 0.605);
@@ -85,7 +85,7 @@ public class ShooterPivot extends SubsystemBase {
     }
 
     public double getPosition() {
-        return leftMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition() - .072;
+        return leftMotor.getAbsoluteEncoder(Type.kDutyCycle).getPosition() - .074;
     }
 
     public double getPositionSecondary() {
