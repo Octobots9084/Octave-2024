@@ -115,44 +115,25 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "5 Piece - 4.2"
+                  "pathName": "5 Piece - 4.2-1"
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 1.0
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Collect"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "StopShooterTrack"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.3
-                      }
-                    }
-                  ]
+                  "name": "AutoCollect"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "5 Piece - 4.2-2"
                 }
               }
             ]
@@ -161,7 +142,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootSafely"
+            "name": "DrivebyWithShortTimeout"
           }
         },
         {
