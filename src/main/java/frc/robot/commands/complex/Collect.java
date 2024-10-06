@@ -21,12 +21,15 @@ import frc.robot.commands.complex.collect.WaitForShooterSensor;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterTrack;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class Collect extends SequentialCommandGroup {
   public Collect() {
+    
     BooleanSupplier shooterHoldingNote = () -> ShooterTrack.getInstance().getSensor();
     addCommands(
         new ConditionalCommand(new SequentialCommandGroup(
+          new InstantCommand(()->{SwerveSubsystem.getInstance().setTargetSpeaker(true);}),
             new StartIntaking(),
             new ParallelCommandGroup(new SequentialCommandGroup(new WaitForIntakeSensor(),
                 new StopIntaking(),

@@ -102,7 +102,7 @@ public class TeleopDrive extends Command {
 
       }
       double aimingAngleAdjustmentRadians = 0;
-      if (!ShooterTrack.getInstance().getSensor()) {
+      if (!ShooterTrack.getInstance().getSensor() && swerve.getTargetSpeaker()) {
         aimingAngleAdjustmentRadians = swerve.targetAngleController.calculate(swerve.getHeading().getRadians(),
           MathUtil.wrapToCircle(ReverseKinematics.calcRobotAngle(
             ReverseKinematics.convert2dCoords(realPose2d),

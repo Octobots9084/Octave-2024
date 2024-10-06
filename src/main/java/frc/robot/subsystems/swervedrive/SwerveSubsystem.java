@@ -56,6 +56,26 @@ public class SwerveSubsystem extends SubsystemBase {
   public boolean collectAutoRunning = false;
   private Pose2d shooterPose = new Pose2d();
   private Field2d driveByField = new Field2d();
+  private boolean targetSpeaker = true;
+  private boolean canTargetSpeaker = true;
+
+
+  public void canTargetSpeaker(boolean no){
+    canTargetSpeaker = no;
+  }
+
+  public void setTargetSpeaker(boolean yes){
+    if(canTargetSpeaker && yes){
+      targetSpeaker = yes;
+    } else {
+      targetSpeaker = false;
+    }
+  }
+
+  public boolean getTargetSpeaker(){
+    return targetSpeaker;
+  }
+
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.

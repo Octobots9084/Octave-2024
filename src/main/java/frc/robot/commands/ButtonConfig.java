@@ -113,5 +113,17 @@ public class ButtonConfig {
         driverButtons.button(16).onFalse(new InstantCommand(() -> {
             PieceVision.getInstance().setCanUsePieceVision(true);
         }));
+
+        //Toggles the speaker auto aim.d
+        driverButtons.button(15).onTrue(new InstantCommand(()->{
+            SwerveSubsystem.getInstance().canTargetSpeaker(false);
+            SwerveSubsystem.getInstance().setTargetSpeaker(false);
+        }));
+        driverButtons.button(15).onFalse(new InstantCommand(()->{
+            SwerveSubsystem.getInstance().canTargetSpeaker(true);
+            SwerveSubsystem.getInstance().setTargetSpeaker(true);
+        }));
+        
+
     }
 }

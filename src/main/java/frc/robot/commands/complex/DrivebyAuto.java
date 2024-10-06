@@ -65,12 +65,12 @@ public class DrivebyAuto extends Command {
         realPose2d = SwerveSubsystem.getInstance().getPose();
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
         if (first) {
-            targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
+            targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, new ChassisSpeeds(),
                     ShooterSpeeds.DRIVE_BY.flywheels - 20);
             targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels - 20;
 
         } else {
-            targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
+            targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, new ChassisSpeeds(),
                     ShooterSpeeds.DRIVE_BY.flywheels);
             targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels;
 

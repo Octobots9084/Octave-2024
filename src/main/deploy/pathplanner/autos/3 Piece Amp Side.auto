@@ -30,38 +30,25 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3 Piece Amp Edge - 1"
+                  "pathName": "3 Piece Amp Edge - 1-1"
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "SpinUpFlywheels"
-                      }
-                    },
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.3
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Collect"
-                      }
-                    }
-                  ]
+                  "name": "AutoCollect"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "3 Piece Amp Edge - 1-2"
                 }
               }
             ]
@@ -74,32 +61,25 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3 Piece Amp Edge - 2"
+                  "pathName": "3 Piece Amp Edge - 2-1"
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "wait",
-                      "data": {
-                        "waitTime": 0.3
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Collect"
-                      }
-                    }
-                  ]
+                  "name": "AutoCollect"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "3 Piece Amp Edge - 2-2"
                 }
               }
             ]

@@ -20,6 +20,8 @@ import frc.robot.subsystems.lights.Light;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.VisionEstimation;
 import frc.robot.util.MathUtil;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
+
 
 public class Driveby extends Command {
     private static final double maintainToleranceTime = 0.1;
@@ -43,6 +45,7 @@ public class Driveby extends Command {
 
     @Override
     public void initialize() {
+        SwerveSubsystem.getInstance().setTargetSpeaker(true);
         swerveSubsystem.setShootingRequestActive(true);
         CommandScheduler.getInstance().schedule(new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT));
         // SmartDashboard.putNumber("targetPoseX", 3.0);
@@ -57,7 +60,7 @@ public class Driveby extends Command {
         }
 
         realSpeeds = SwerveSubsystem.getInstance().getFieldVelocity();
-        targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, realSpeeds,
+        targetPivot = ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, new ChassisSpeeds(),
                 ShooterSpeeds.DRIVE_BY.flywheels);
         targetFlywheel = ShooterSpeeds.DRIVE_BY.flywheels;
         targetTurn = new Rotation2d(

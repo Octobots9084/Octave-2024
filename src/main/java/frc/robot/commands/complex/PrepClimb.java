@@ -10,12 +10,14 @@ import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class PrepClimb extends SequentialCommandGroup {
     public PrepClimb() {
         addCommands(
             new InstantCommand(() -> {
                 System.out.println("Climb prep requested");
+                SwerveSubsystem.getInstance().setTargetSpeaker(false);
             }),
             new InstantCommand(()->{
                 if (ShooterPivot.getInstance().notSoFastEggman) {

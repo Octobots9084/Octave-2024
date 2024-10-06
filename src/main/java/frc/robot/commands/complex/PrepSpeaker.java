@@ -8,6 +8,7 @@ import frc.robot.subsystems.ShooterFlywheel;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class PrepSpeaker extends InstantCommand {
     private ShooterPivot shooterPivot;
@@ -22,6 +23,7 @@ public class PrepSpeaker extends InstantCommand {
 
     @Override
     public void initialize() {
+        SwerveSubsystem.getInstance().setTargetSpeaker(true);
         if (!shooterPivot.notSoFastEggman) {
             shooterElevator.setPosition(ArmPositions.SPEAKER_SHOT);
             shooterPivot.setPosition(ArmPositions.SPEAKER_SHOT);
