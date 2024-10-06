@@ -124,6 +124,11 @@ public class ButtonConfig {
             SwerveSubsystem.getInstance().setTargetSpeaker(true);
         }));
         
+        coDriverLeft.button(1).onTrue(new InstantCommand(()->{SwerveSubsystem.getInstance().jogY(SwerveSubsystem.getInstance().jogAmountY + 0.03);}));
+        coDriverLeft.button(2).onTrue(new InstantCommand(()->{SwerveSubsystem.getInstance().jogY(SwerveSubsystem.getInstance().jogAmountY - 0.03);}));
+
+        coDriverRight.button(1).onTrue(new InstantCommand(()->{SwerveSubsystem.getInstance().jogX(SwerveSubsystem.getInstance().jogAmountX - 0.03);}));
+        coDriverRight.button(2).onTrue(new InstantCommand(()->{SwerveSubsystem.getInstance().jogX(SwerveSubsystem.getInstance().jogAmountX + 0.03);}));
 
     }
 }

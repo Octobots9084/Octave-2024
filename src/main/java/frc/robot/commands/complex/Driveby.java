@@ -93,7 +93,7 @@ public class Driveby extends Command {
 
     private double flywheelTolerance = 0.2;
     private double pivotTolerance = 0.005;
-    private double rotationTolerance = 0.05;
+    private double rotationTolerance = 0.007;
 
     @Override
     public boolean isFinished() {

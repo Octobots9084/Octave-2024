@@ -58,7 +58,15 @@ public class SwerveSubsystem extends SubsystemBase {
   private Field2d driveByField = new Field2d();
   private boolean targetSpeaker = true;
   private boolean canTargetSpeaker = true;
+  public double jogAmountY = 0;
+  public double jogAmountX = 0;
 
+  public void jogY(double jogAmount){
+    this.jogAmountY = jogAmount;
+  }
+  public void jogX(double jogAmount){
+    this.jogAmountX = jogAmount;
+  }
 
   public void canTargetSpeaker(boolean no){
     canTargetSpeaker = no;

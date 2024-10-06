@@ -5,6 +5,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 // velocities are positive going towards the target and negative when moving away
 // all units should be in meters, m/s, rad, etc.
@@ -32,11 +33,11 @@ public class ReverseKinematics {
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
                 if (Constants.isBlueAlliance) {
-                        subwooferXPos = -0.05;
-                        subwooferYPos = 5.7;
+                        subwooferXPos = 0.03 + SwerveSubsystem.getInstance().jogAmountX;
+                        subwooferYPos = 5.7 + SwerveSubsystem.getInstance().jogAmountY;
                 } else {
-                        subwooferXPos = 16.85;
-                        subwooferYPos = 5.7;
+                        subwooferXPos = 16.47 - SwerveSubsystem.getInstance().jogAmountX;
+                        subwooferYPos = 5.7 - SwerveSubsystem.getInstance().jogAmountY;
                 }
                 // SmartDashboard.putString("poseconvert",
                 // new Pose2d(pos.getX() - subwooferXPos, pos.getY() - subwooferYPos, new
@@ -103,7 +104,7 @@ public class ReverseKinematics {
                 pos = convert2dCoords(pos);
                 speed = convertSpeed(pos, speed);
                 double distance = Math.sqrt(pos.getX() * pos.getX() + pos.getY() * pos.getY());
-                double k = 0.005;
+                double k = 0.004;
                 SmartDashboard.putNumber("distance", distance);
                 double angle = Math.atan((constTargetHeightDiff + k * (distance * distance)) / distance);
                 SmartDashboard.putNumber("angle", angle / (2 * Math.PI));

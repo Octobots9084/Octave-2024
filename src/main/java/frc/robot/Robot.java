@@ -243,6 +243,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     checkDoubleNotes();
+    
+    SmartDashboard.putNumber("Horizontal Speaker Jog",SwerveSubsystem.getInstance().jogAmountY);
+    SmartDashboard.putNumber("Forward-Back Speaker Jog",SwerveSubsystem.getInstance().jogAmountX);
 
     // ShooterFlywheel.getInstance().increaseFlywheelSpeed(MathUtil.applyDeadband(5*ControlMap.FLYWHEEL_JOYSTICK.getY(),
     // 0.05));

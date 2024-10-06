@@ -99,7 +99,7 @@ public class DrivebyAuto extends Command {
         flywheel.setFlyWheelSpeedMeters(targetFlywheel);
         pivot.setPosition(targetPivot);
         swerveSubsystem.drive(new Translation2d(), swerveSubsystem.targetAngleController
-                .calculate(swerveSubsystem.getHeading().getRadians(), targetTurn.getRadians()), true);
+                .calculate(swerveSubsystem.getHeading().getRadians(), targetTurn.getRadians())*1.5, true);
         // System.out.println("driveexe " + count + " " + count2);
     }
 
@@ -156,7 +156,7 @@ public class DrivebyAuto extends Command {
 
     private double flywheelTolerance = 0.2;
     private double pivotTolerance = 0.005;
-    private double rotationTolerance = 0.05;
+    private double rotationTolerance = 0.007;
 
     private boolean longTolerance(double realFlywheel) {
         if (isInTolerance(realFlywheel)) {
