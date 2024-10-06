@@ -48,7 +48,7 @@ public final class Constants {
 	}
 
 	public static final class Auton {
-		public static final PIDConstants TRANSLATION_PID = new PIDConstants(3, 0.0, 0.0); // 3,0,0
+		public static final PIDConstants TRANSLATION_PID = new PIDConstants(1, 0.0, 0.0); // 3,0,0
 		public static final PIDConstants ANGLE_AUTO_PID = new PIDConstants(3, 0, 0); // 3,0,0
 
 		public static final double MAX_ACCELERATION = 2;

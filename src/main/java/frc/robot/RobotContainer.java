@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.complex.AutoCollect;
 import frc.robot.commands.complex.Collect;
 import frc.robot.commands.complex.CollectAuto;
 import frc.robot.commands.complex.CollectDriveby;
@@ -101,6 +102,7 @@ public class RobotContainer {
                                         new ConditionalCommand(new DrivebyAuto(false).withTimeout(3).andThen(new TheBigYeet()), new InstantCommand(),
                                                         shooterSensorTrue));
                         NamedCommands.registerCommand("CollectWithoutTimeout", new Collect());
+                        NamedCommands.registerCommand("AutoCollect", new AutoCollect().withTimeout(9));
                         NamedCommands.registerCommand("Snipe", new DrivebyAutoSniper(false));
 
                         NamedCommands.registerCommand("QuickDraw",

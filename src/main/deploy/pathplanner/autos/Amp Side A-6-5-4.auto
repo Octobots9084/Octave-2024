@@ -20,11 +20,36 @@
                 "data": {
                   "pathName": "Fast Amp 0"
                 }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        },
+        {
+          "type": "sequential",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Amp 6-1"
+                }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "CollectWithoutTimeout"
+                  "name": "AutoCollect"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Amp 6-2"
                 }
               }
             ]
@@ -37,19 +62,25 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Fast Amp 6"
+                  "pathName": "Fast Amp 5-1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "CollectWithoutTimeout"
+                  "name": "AutoCollect"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Fast Amp 5-2"
                 }
               }
             ]
@@ -62,44 +93,25 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "sequential",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Fast Amp 5"
+                  "pathName": "Fast Amp 4-1"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "CollectWithoutTimeout"
+                  "name": "AutoCollect"
                 }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "DrivebyWithShortTimeout"
-          }
-        },
-        {
-          "type": "deadline",
-          "data": {
-            "commands": [
+              },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Fast Amp 4"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "CollectWithoutTimeout"
+                  "pathName": "Fast Amp 4-2"
                 }
               }
             ]
