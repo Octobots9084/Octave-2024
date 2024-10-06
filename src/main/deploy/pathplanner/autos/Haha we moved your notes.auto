@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.405719362364651,
+      "y": 7.745504426194038
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Disrupt 0"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "DrivebyWithShortTimeout"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Fast Paths",
+  "choreoAuto": false
+}

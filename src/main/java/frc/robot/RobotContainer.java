@@ -141,6 +141,10 @@ public class RobotContainer {
                         NamedCommands.registerCommand("FlywheelsCurrentNormal", new InstantCommand(() -> {
                                 ShooterFlywheel.getInstance().setFlywheelsCurrentNormal();
                         }));
+
+                        NamedCommands.registerCommand("Eject", new InstantCommand(() -> {
+                                ShooterFlywheel.getInstance().setFlywheelSpeed(ShooterSpeeds.DRIVE_BY);
+                        }).andThen(new WaitCommand(2)).andThen(new TheBigYeetAuto()));
                         AutoBuilder.configureHolonomic(
                                         SwerveSubsystem.getInstance()::getPose, // Robot pose supplier
                                         SwerveSubsystem.getInstance()::resetOdometry, // Method to reset odometry (will

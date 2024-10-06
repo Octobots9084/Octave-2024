@@ -1,0 +1,115 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.405719362364651,
+        "y": 7.745504426194038
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.037456843432206,
+        "y": 7.785885803253088
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.36455893282157,
+        "y": 7.421146953405018
+      },
+      "prevControl": {
+        "x": 7.569992650782082,
+        "y": 7.883501258407285
+      },
+      "nextControl": {
+        "x": 8.743074958372139,
+        "y": 7.200890295299111
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.36455893282157,
+        "y": 0.8231268638463202
+      },
+      "prevControl": {
+        "x": 8.367874263244397,
+        "y": 1.222624179797132
+      },
+      "nextControl": {
+        "x": 8.361114638895947,
+        "y": 0.40808944580852086
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.7510724465893377,
+        "y": 3.0790206163745664
+      },
+      "prevControl": {
+        "x": 3.0395617550494363,
+        "y": 2.7560289842801917
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0999999999999999,
+      "rotationDegrees": -45.0,
+      "rotateFast": true
+    },
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    },
+    {
+      "waypointRelativePos": 2.0999999999999996,
+      "rotationDegrees": -45.0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 0.0,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "CollectWithoutTimeout"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 6.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -30.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Disrupt",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
