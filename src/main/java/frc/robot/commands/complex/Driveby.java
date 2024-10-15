@@ -7,6 +7,8 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
 import frc.robot.commands.arm.ShooterElevatorPosInstant;
 import frc.robot.constants.ArmPositions;
@@ -163,7 +165,10 @@ public class Driveby extends Command {
     public void end(boolean inturupted) {
         if (!inturupted) {
             CommandScheduler.getInstance().schedule(new TheBigYeet());
+
         } else {
+            swerveSubsystem.setShootingRequestActive(false);
+
             System.out.println("Teleop shot canceled. Flywheels at " + targetFlywheel + " of " + realFlywheel
                     + " with a tolerance of " + flywheelTolerance + " and error of " + (targetFlywheel - realFlywheel)
                     + " Pivot at " + realPivot + " of " + targetPivot + " with a tolerance of " + pivotTolerance
@@ -174,7 +179,6 @@ public class Driveby extends Command {
                     + realPose2d.toString() + ". RIP");
         }
 
-        swerveSubsystem.setShootingRequestActive(false);
         swerveSubsystem.targetAngleEnabled = false;
     }
 }

@@ -47,7 +47,7 @@ public class ShooterFlywheel extends SubsystemBase {
         motorOne.setIdleMode(IdleMode.kCoast);
         motorOne.setSmartCurrentLimit(40, 40);
         motorOne.setInverted(false);
-        motorOne.getPIDController().setP(0.0007);
+        motorOne.getPIDController().setP(0.0009);
         motorOne.getPIDController().setI(0);
         motorOne.getPIDController().setD(0);
         motorOne.getPIDController().setFF(0.000175);

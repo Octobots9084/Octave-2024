@@ -15,6 +15,7 @@ import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
 import frc.robot.subsystems.lights.Animations;
 import frc.robot.subsystems.lights.Light;
+import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
 public class TheBigYeet extends SequentialCommandGroup {
     public TheBigYeet() {
@@ -30,6 +31,10 @@ public class TheBigYeet extends SequentialCommandGroup {
                             + ShooterFlywheel.getInstance().getAuxiluryFlywheelSpeedMeters());
                 }),
                 new WaitCommand(0.4),
+                new InstantCommand(() -> {
+                    SwerveSubsystem.getInstance().setShootingRequestActive(false);
+                    SwerveSubsystem.getInstance().targetAngleEnabled = false;
+                }),
                 new ShooterTrackSpeedInstant(ShooterSpeeds.STOP),
                 new ShooterElevatorPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
                 new ShooterPivotPosInstant(ArmPositions.HANDOFF_AND_DEFAULT_SHOT),
@@ -41,6 +46,7 @@ public class TheBigYeet extends SequentialCommandGroup {
                 }),
                 new InstantCommand(() -> {
                     ShooterFlywheel.getInstance().setFlywheelActive(false);
+
                 }));
     }
 }
