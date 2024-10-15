@@ -28,6 +28,7 @@ import frc.robot.commands.complex.DrivebyAutoSniper;
 import frc.robot.commands.complex.InitalSpeakerAuto;
 import frc.robot.commands.complex.InitalSpeakerAutoFast;
 import frc.robot.commands.complex.SpeakerAutoFast;
+import frc.robot.commands.complex.SpeakerAutoSlow;
 import frc.robot.commands.complex.TheBigYeet;
 import frc.robot.commands.complex.TheBigYeetAuto;
 import frc.robot.commands.swervedrive.drivebase.TeleopDrive;
@@ -93,13 +94,16 @@ public class RobotContainer {
                         NamedCommands.registerCommand("SpeakerAuto", new SpeakerAutoFast());
                         NamedCommands.registerCommand("SpeakerAutoInital", new InitalSpeakerAutoFast());
                         NamedCommands.registerCommand("SpeakerAutoSlow", new InitalSpeakerAuto());
+                        NamedCommands.registerCommand("SpeakerAutoSlower", new SpeakerAutoSlow());
 
                         NamedCommands.registerCommand("CollectDrivebyMF", new CollectDriveby());
                         NamedCommands.registerCommand("CollectDrivebyMFSafely", new CollectDrivebySafely());
 
                         NamedCommands.registerCommand("Collect", new Collect().withTimeout(9));
                         NamedCommands.registerCommand("DrivebyWithShortTimeout",
-                                        new ConditionalCommand(new DrivebyAuto(false).withTimeout(3).andThen(new TheBigYeet()), new InstantCommand(),
+                                        new ConditionalCommand(
+                                                        new DrivebyAuto(false).withTimeout(3).andThen(new TheBigYeet()),
+                                                        new InstantCommand(),
                                                         shooterSensorTrue));
                         NamedCommands.registerCommand("CollectWithoutTimeout", new Collect());
                         NamedCommands.registerCommand("AutoCollect", new AutoCollect().withTimeout(9));
