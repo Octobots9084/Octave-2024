@@ -39,7 +39,7 @@ public final class Constants {
 		public static final double SHOOTER_FLYWHEEL_TOLERANCE_RPM = 10;
 		public static final double SHOOTER_FLYWHEEL_TOLERANCE_METERS = 0.2;
 		public static final double SHOOTER_PIVOT_TOLERANCE = 0.09;
-		//TODO: will have to retune pivot
+		// TODO: will have to retune pivot
 	}
 
 	public static final class Climb {

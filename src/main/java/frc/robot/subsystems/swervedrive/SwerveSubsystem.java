@@ -61,29 +61,29 @@ public class SwerveSubsystem extends SubsystemBase {
   public double jogAmountY = 0;
   public double jogAmountX = 0;
 
-  public void jogY(double jogAmount){
+  public void jogY(double jogAmount) {
     this.jogAmountY = jogAmount;
   }
-  public void jogX(double jogAmount){
+
+  public void jogX(double jogAmount) {
     this.jogAmountX = jogAmount;
   }
 
-  public void canTargetSpeaker(boolean no){
+  public void canTargetSpeaker(boolean no) {
     canTargetSpeaker = no;
   }
 
-  public void setTargetSpeaker(boolean yes){
-    if(canTargetSpeaker && yes){
+  public void setTargetSpeaker(boolean yes) {
+    if (canTargetSpeaker && yes) {
       targetSpeaker = yes;
     } else {
       targetSpeaker = false;
     }
   }
 
-  public boolean getTargetSpeaker(){
+  public boolean getTargetSpeaker() {
     return targetSpeaker;
   }
-
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.

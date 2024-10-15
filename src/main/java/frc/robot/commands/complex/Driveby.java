@@ -22,7 +22,6 @@ import frc.robot.subsystems.vision.VisionEstimation;
 import frc.robot.util.MathUtil;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 
-
 public class Driveby extends Command {
     private static final double maintainToleranceTime = 0.1;
     ShooterPivot pivot;
@@ -93,7 +92,7 @@ public class Driveby extends Command {
 
     private double flywheelTolerance = 0.2;
     private double pivotTolerance = 0.005;
-    private double rotationTolerance = 0.007;
+    private double rotationTolerance = 0.05;
 
     @Override
     public boolean isFinished() {
@@ -126,6 +125,11 @@ public class Driveby extends Command {
     }
 
     private boolean isInTolerance(double realRotation) {
+        SmartDashboard.putNumber("flywheel diff", realFlywheel - targetFlywheel);
+        SmartDashboard.putNumber("pivot diff", realPivot - targetPivot);
+        SmartDashboard.putNumber("rotation diff", MathUtil.wrapToCircle(realRotation, 2 * Math.PI)
+                - MathUtil.wrapToCircle(targetTurn.getRadians(), 2 * Math.PI));
+
         return (MathUtil.isWithinTolerance(realFlywheel, targetFlywheel, flywheelTolerance)
                 && MathUtil.isWithinTolerance(realPivot, targetPivot, pivotTolerance)
 

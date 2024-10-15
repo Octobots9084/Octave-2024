@@ -203,4 +203,50 @@ public class ReverseKinematics {
 
                 return !Double.isNaN(angle) ? angle : encoderOffset - 0.07;
         }
+
+        public static boolean isPastXAndColliding(Pose2d pose, double minX, double maxX, Box box) {
+                // Check if the Pose2d is past the x-limit and also colliding with the box
+                if (pose.getX() < maxX && pose.getX() > minX) {
+                        return !box.contains(pose); // Use the Box's contains() method
+                }
+                return false;
+        }
+
+        public static class Box {
+                private double xMin, yMin, xMax, yMax;
+
+                // Constructor
+                public Box(double xMin, double yMin, double xMax, double yMax) {
+                        this.xMin = xMin;
+                        this.yMin = yMin;
+                        this.xMax = xMax;
+                        this.yMax = yMax;
+                }
+
+                // Getter for xMin
+                public double getXMin() {
+                        return xMin;
+                }
+
+                // Getter for yMin
+                public double getYMin() {
+                        return yMin;
+                }
+
+                // Getter for xMax
+                public double getXMax() {
+                        return xMax;
+                }
+
+                // Getter for yMax
+                public double getYMax() {
+                        return yMax;
+                }
+
+                // Check if a given Pose2d is inside the box
+                public boolean contains(Pose2d pose) {
+                        return pose.getX() >= xMin && pose.getX() <= xMax && pose.getY() >= yMin && pose.getY() <= yMax;
+                }
+        }
+
 }

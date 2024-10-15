@@ -12,10 +12,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Constants.Arm;
+import frc.robot.constants.ArmPositions;
 import frc.robot.constants.ShooterSpeeds;
 import frc.robot.subsystems.ReverseKinematics;
 import frc.robot.subsystems.ShooterPivot;
 import frc.robot.subsystems.ShooterTrack;
+import frc.robot.subsystems.ReverseKinematics.Box;
 import frc.robot.subsystems.swervedrive.SwerveSubsystem;
 import frc.robot.subsystems.vision.PieceVision;
 import frc.robot.subsystems.vision.VisionEstimation;
@@ -34,6 +37,8 @@ public class TeleopDrive extends Command {
   private final DoubleSupplier vY;
   private final DoubleSupplier omega;
   private final BooleanSupplier driveMode;
+  private Box blueStageArea = new Box(2.7, 2, 6.5, 5.95);
+  private Box redStageArea = new Box(10, 2, 13.9, 5.95);
 
   /**
    * Creates a new ExampleCommand.
@@ -98,23 +103,36 @@ public class TeleopDrive extends Command {
 
       Pose2d realPose2d = SwerveSubsystem.getInstance().getShooterPose();
       if (Timer.getFPGATimestamp() > VisionEstimation.getInstance().lastGoodShooterUpdateTime + 0.2) {
-          realPose2d = SwerveSubsystem.getInstance().getPose();
+        realPose2d = SwerveSubsystem.getInstance().getPose();
 
       }
       double aimingAngleAdjustmentRadians = 0;
-      if (!ShooterTrack.getInstance().getSensor() && swerve.getTargetSpeaker()) {
-        aimingAngleAdjustmentRadians = swerve.targetAngleController.calculate(swerve.getHeading().getRadians(),
-          MathUtil.wrapToCircle(ReverseKinematics.calcRobotAngle(
-            ReverseKinematics.convert2dCoords(realPose2d),
-            ReverseKinematics.convertSpeed(
-                ReverseKinematics.convert2dCoords(realPose2d),
-                new ChassisSpeeds()),
-            ShooterSpeeds.DRIVE_BY.flywheels),Math.PI*2));
 
-        if (!ShooterPivot.getInstance().notSoFastEggman) {
-          ShooterPivot.getInstance().setPosition(ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, new ChassisSpeeds(),
-              ShooterSpeeds.DRIVE_BY.flywheels));
+      boolean inShootingArea = false;
+      if (Constants.isBlueAlliance) {
+        inShootingArea = ReverseKinematics.isPastXAndColliding(realPose2d, 0, 5.5, blueStageArea);
+      } else {
+        inShootingArea = ReverseKinematics.isPastXAndColliding(realPose2d, 10.7, 16.5, redStageArea);
+      }
+      if (!ShooterTrack.getInstance().getSensor() && swerve.getTargetSpeaker()) {
+        if (inShootingArea) {
+          aimingAngleAdjustmentRadians = swerve.targetAngleController.calculate(swerve.getHeading().getRadians(),
+              MathUtil.wrapToCircle(ReverseKinematics.calcRobotAngle(
+                  ReverseKinematics.convert2dCoords(realPose2d),
+                  ReverseKinematics.convertSpeed(
+                      ReverseKinematics.convert2dCoords(realPose2d),
+                      new ChassisSpeeds()),
+                  ShooterSpeeds.DRIVE_BY.flywheels), Math.PI * 2));
+
+          if (!ShooterPivot.getInstance().notSoFastEggman) {
+            ShooterPivot.getInstance()
+                .setPosition(ReverseKinematics.calcSubwooferLaunchAngle(realPose2d, new ChassisSpeeds(),
+                    ShooterSpeeds.DRIVE_BY.flywheels));
+          }
+        } else {
+          ShooterPivot.getInstance().setPosition(ArmPositions.HANDOFF_AND_DEFAULT_SHOT);
         }
+
       }
       swerve.drive(
           new Translation2d(xSpeed + pieceVisionTranslation.vxMetersPerSecond,
