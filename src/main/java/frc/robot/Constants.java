@@ -127,6 +127,9 @@ public final class Constants {
 		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
 				new Translation3d(-.32, -0.28, 0.35),
 				new Rotation3d(0, Math.toRadians(-13), Math.toRadians(195)));
+		public static final Transform3d ROBOT_TO_STINKY = new Transform3d(
+				new Translation3d(-.3, 0, 0.57),
+				new Rotation3d(0, Math.toRadians(-25), Math.toRadians(180)));
 
 		/** Minimum target ambiguity. Targets with higher ambiguity will be discarded */
 		public static final double POSE_AMBIGUITY_SHIFTER = 0.2;

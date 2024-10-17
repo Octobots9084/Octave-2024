@@ -52,16 +52,21 @@ public class VisionEstimation extends SubsystemBase {
 
         public final Vision backRightEstimator = new Vision(new PhotonCamera("Inky"), VisionConstants.ROBOT_TO_INKY);
         public final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"), VisionConstants.ROBOT_TO_PINKY);
-        public final Vision frontLeftEstimator = new Vision(new PhotonCamera("Blinky"),
-                        VisionConstants.ROBOT_TO_BLINKY);
-        public final Vision frontRightEstimator = new Vision(new PhotonCamera("Clyde"),
-                        VisionConstants.ROBOT_TO_CLYDE);
+        // public final Vision frontLeftEstimator = new Vision(new
+        // PhotonCamera("Blinky"),
+        // VisionConstants.ROBOT_TO_BLINKY);
+        // public final Vision frontRightEstimator = new Vision(new
+        // PhotonCamera("Clyde"),
+        // VisionConstants.ROBOT_TO_CLYDE);
+        public final Vision centerEstimator = new Vision(new PhotonCamera("Stinky"),
+                        VisionConstants.ROBOT_TO_STINKY);
 
         private final Notifier allNotifier = new Notifier(() -> {
                 backRightEstimator.run();
                 backLeftEstimator.run();
-                frontLeftEstimator.run();
-                frontRightEstimator.run();
+                // frontLeftEstimator.run();
+                // frontRightEstimator.run();
+                centerEstimator.run();
         });
 
         public double lastGoodShooterUpdateTime = Timer.getFPGATimestamp();
@@ -129,10 +134,11 @@ public class VisionEstimation extends SubsystemBase {
                 if (VisionConstants.USE_VISION) {
                         // Update "run count" telemetry
                         // runCountTelemetry.incCount(1);
-                        estimatorChecker(frontLeftEstimator);
-                        estimatorChecker(frontRightEstimator);
+                        // estimatorChecker(frontLeftEstimator);
+                        // estimatorChecker(frontRightEstimator);
                         estimatorChecker(backRightEstimator);
                         estimatorChecker(backLeftEstimator);
+                        estimatorChecker(centerEstimator);
 
                 } else {
                         allNotifier.close();
