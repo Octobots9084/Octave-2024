@@ -95,6 +95,23 @@
           ]
         }
       }
+    },
+    {
+      "name": "New Event Marker",
+      "waypointRelativePos": 1.2000000000000002,
+      "command": {
+        "type": "sequential",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "SpeakerAutoSlower"
+              }
+            }
+          ]
+        }
+      }
     }
   ],
   "globalConstraints": {
