@@ -112,7 +112,7 @@ public final class Constants {
 		 * does pitch
 		 */
 
-		public static final Transform3d ROBOT_TO_CLYDE = new Transform3d(
+		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
 				new Translation3d(0.15, 0.29, 0.37),
 				new Rotation3d(Math.toRadians(0), Math.toRadians(-14.5), Math.toRadians(15)));
 
@@ -124,9 +124,10 @@ public final class Constants {
 				new Translation3d(-.32, 0.28, 0.35),
 				new Rotation3d(0, Math.toRadians(-13), Math.toRadians(165)));
 
-		public static final Transform3d ROBOT_TO_INKY = new Transform3d(
+		public static final Transform3d ROBOT_TO_CLYDE = new Transform3d(
 				new Translation3d(-.32, -0.28, 0.35),
 				new Rotation3d(0, Math.toRadians(-13), Math.toRadians(195)));
+
 		public static final Transform3d ROBOT_TO_STINKY = new Transform3d(
 				new Translation3d(-.3, 0, 0.57),
 				new Rotation3d(0, Math.toRadians(-25), Math.toRadians(180)));
