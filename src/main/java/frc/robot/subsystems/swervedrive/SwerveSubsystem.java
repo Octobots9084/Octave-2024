@@ -48,7 +48,7 @@ public class SwerveSubsystem extends SubsystemBase {
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public static final double MAXIMUM_SPEED = 6.5; // theotrical max speed is 6.85
+  public static final double MAXIMUM_SPEED = 6; // theotrical max speed is 6.85
   public Rotation2d targetAngle = new Rotation2d();
   public boolean targetAngleEnabled = false;
   public PIDController targetAngleController;
