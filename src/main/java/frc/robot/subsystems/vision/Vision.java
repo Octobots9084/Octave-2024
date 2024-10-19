@@ -120,7 +120,7 @@ public class Vision implements Runnable {
             for (int i = 0; i < photonResultsDriver.targets.size(); i++) {
               if (!(photonResultsDriver.targets.get(i).getFiducialId() == 7
                   || photonResultsDriver.targets.get(i).getFiducialId() == 8
-                  || photonResultsDriver.targets.get(i).getFiducialId() == 5
+                  || photonResultsDriver.targets.get(i).getFiducialId() == 3
                   || photonResultsDriver.targets.get(i).getFiducialId() == 4)) {
                 photonResultsDriver.targets.remove(i);
 
