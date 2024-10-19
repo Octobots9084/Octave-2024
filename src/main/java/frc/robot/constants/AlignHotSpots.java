@@ -20,7 +20,7 @@ public class AlignHotSpots {
                         new Triangle(new Point(0.0, FieldConstants.WIDTH), new Point(1.84, 4.1),
                                         new Point(4.05, FieldConstants.WIDTH)),
                         new Triangle(new Point(0.0, 0.0), new Point(4.05, FieldConstants.WIDTH), new Point(4.05, 0)),
-        }, new Translation2d(1.82, FieldConstants.WIDTH),
+        }, new Translation2d(2.3, FieldConstants.WIDTH),
                         new Rotation2d(-Math.PI / 2));
 
         public static final AlignHotSpots BlueClimbOne = new AlignHotSpots(

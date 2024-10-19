@@ -37,8 +37,8 @@ public class TeleopDrive extends Command {
   private final DoubleSupplier vY;
   private final DoubleSupplier omega;
   private final BooleanSupplier driveMode;
-  private Box blueStageArea = new Box(2.7, 2, 6.5, 5.95);
-  private Box redStageArea = new Box(10, 2, 13.9, 5.95);
+  private Box blueStageArea = new Box(2.7, 2, 7, 5.95);
+  private Box redStageArea = new Box(9.6, 2, 13.9, 5.95);
 
   /**
    * Creates a new ExampleCommand.

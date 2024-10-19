@@ -50,8 +50,10 @@ public class VisionEstimation extends SubsystemBase {
                         0.5,
                         0.5);
 
-        public final Vision backRightEstimator = new Vision(new PhotonCamera("Clyde"), VisionConstants.ROBOT_TO_CLYDE);
-        public final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"), VisionConstants.ROBOT_TO_PINKY);
+        // public final Vision backRightEstimator = new Vision(new
+        // PhotonCamera("Clyde"), VisionConstants.ROBOT_TO_CLYDE);
+        // public final Vision backLeftEstimator = new Vision(new PhotonCamera("Pinky"),
+        // VisionConstants.ROBOT_TO_PINKY);
         // public final Vision frontLeftEstimator = new Vision(new
         // PhotonCamera("Blinky"),
         // VisionConstants.ROBOT_TO_BLINKY);
@@ -62,8 +64,8 @@ public class VisionEstimation extends SubsystemBase {
                         VisionConstants.ROBOT_TO_STINKY);
 
         private final Notifier allNotifier = new Notifier(() -> {
-                backRightEstimator.run();
-                backLeftEstimator.run();
+                // backRightEstimator.run();
+                // backLeftEstimator.run();
                 // frontLeftEstimator.run();
                 // frontRightEstimator.run();
                 centerEstimator.run();
@@ -136,8 +138,8 @@ public class VisionEstimation extends SubsystemBase {
                         // runCountTelemetry.incCount(1);
                         // estimatorChecker(frontLeftEstimator);
                         // estimatorChecker(frontRightEstimator);
-                        estimatorChecker(backRightEstimator);
-                        estimatorChecker(backLeftEstimator);
+                        // estimatorChecker(backRightEstimator);
+                        // estimatorChecker(backLeftEstimator);
                         estimatorChecker(centerEstimator);
 
                 } else {
