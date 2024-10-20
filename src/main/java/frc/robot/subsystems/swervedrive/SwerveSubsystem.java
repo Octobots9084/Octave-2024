@@ -56,8 +56,8 @@ public class SwerveSubsystem extends SubsystemBase {
   public boolean collectAutoRunning = false;
   private Pose2d shooterPose = new Pose2d();
   private Field2d driveByField = new Field2d();
-  private boolean targetSpeaker = true;
-  private boolean canTargetSpeaker = true;
+  private boolean targetSpeaker = false;
+  private boolean canTargetSpeaker = false;
   public double jogAmountY = 0;
   public double jogAmountX = 0;
 

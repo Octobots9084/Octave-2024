@@ -114,21 +114,29 @@ public class ButtonConfig {
             PieceVision.getInstance().setCanUsePieceVision(true);
         }));
 
-        //Toggles the speaker auto aim.d
-        driverButtons.button(15).onTrue(new InstantCommand(()->{
+        // Toggles the speaker auto aim.d
+        driverButtons.button(15).onTrue(new InstantCommand(() -> {
             SwerveSubsystem.getInstance().canTargetSpeaker(false);
             SwerveSubsystem.getInstance().setTargetSpeaker(false);
         }));
-        driverButtons.button(15).onFalse(new InstantCommand(()->{
-            SwerveSubsystem.getInstance().canTargetSpeaker(true);
-            SwerveSubsystem.getInstance().setTargetSpeaker(true);
+        driverButtons.button(15).onFalse(new InstantCommand(() -> {
+            SwerveSubsystem.getInstance().canTargetSpeaker(false);
+            SwerveSubsystem.getInstance().setTargetSpeaker(false);
         }));
-        
-        coDriverLeft.button(1).onTrue(new InstantCommand(()->{SwerveSubsystem.getInstance().jogY(SwerveSubsystem.getInstance().jogAmountY + 0.03);}));
-        coDriverLeft.button(2).onTrue(new InstantCommand(()->{SwerveSubsystem.getInstance().jogY(SwerveSubsystem.getInstance().jogAmountY - 0.03);}));
 
-        coDriverRight.button(1).onTrue(new InstantCommand(()->{SwerveSubsystem.getInstance().jogX(SwerveSubsystem.getInstance().jogAmountX - 0.03);}));
-        coDriverRight.button(2).onTrue(new InstantCommand(()->{SwerveSubsystem.getInstance().jogX(SwerveSubsystem.getInstance().jogAmountX + 0.03);}));
+        coDriverLeft.button(1).onTrue(new InstantCommand(() -> {
+            SwerveSubsystem.getInstance().jogY(SwerveSubsystem.getInstance().jogAmountY + 0.03);
+        }));
+        coDriverLeft.button(2).onTrue(new InstantCommand(() -> {
+            SwerveSubsystem.getInstance().jogY(SwerveSubsystem.getInstance().jogAmountY - 0.03);
+        }));
+
+        coDriverRight.button(1).onTrue(new InstantCommand(() -> {
+            SwerveSubsystem.getInstance().jogX(SwerveSubsystem.getInstance().jogAmountX - 0.03);
+        }));
+        coDriverRight.button(2).onTrue(new InstantCommand(() -> {
+            SwerveSubsystem.getInstance().jogX(SwerveSubsystem.getInstance().jogAmountX + 0.03);
+        }));
 
     }
 }
