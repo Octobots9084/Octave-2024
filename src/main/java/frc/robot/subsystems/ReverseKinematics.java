@@ -33,11 +33,11 @@ public class ReverseKinematics {
         // converts Pose2d coords into positions relative to the target
         public static Pose2d convert2dCoords(Pose2d pos) {
                 if (Constants.isBlueAlliance) {
-                        subwooferXPos = -0.4 + SwerveSubsystem.getInstance().jogAmountX;
-                        subwooferYPos = 5.7 + SwerveSubsystem.getInstance().jogAmountY;
+                        subwooferXPos = 0.0 + SwerveSubsystem.getInstance().jogAmountX;
+                        subwooferYPos = 5.5 + SwerveSubsystem.getInstance().jogAmountY;
                 } else {
-                        subwooferXPos = 16.5 + 0.4 - SwerveSubsystem.getInstance().jogAmountX;
-                        subwooferYPos = 5.7 - SwerveSubsystem.getInstance().jogAmountY;
+                        subwooferXPos = 16.5 + 0.0 - SwerveSubsystem.getInstance().jogAmountX;
+                        subwooferYPos = 5.5 - SwerveSubsystem.getInstance().jogAmountY;
 
                 }
                 // SmartDashboard.putString("poseconvert",
