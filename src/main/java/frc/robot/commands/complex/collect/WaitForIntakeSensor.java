@@ -8,7 +8,7 @@ public class WaitForIntakeSensor extends Command {
   @Override
   public boolean isFinished() {
 
-    return !IntakeTrack.getInstance().getSensor();
+    return !IntakeTrack.getInstance().getAnalogDigital() || !IntakeTrack.getInstance().getSensor();
   }
 
   @Override
